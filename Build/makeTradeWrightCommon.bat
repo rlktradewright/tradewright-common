@@ -4,12 +4,6 @@ set PROJECT-PATH=\Projects\tradewright-common
 %PROJECT-DRIVE%
 cd %PROJECT-PATH%
 
-cd typelib
-midl /mktyplib203 TWWin32API.idl
-rem pause
-regtlib TWWin32API.tlb
-cd ..
-rem pause
 vb6 /m TWUtilities\TWUtilities.vbp
 if errorlevel 1 pause
 vb6 /m ExtProps\ExtProps.vbp

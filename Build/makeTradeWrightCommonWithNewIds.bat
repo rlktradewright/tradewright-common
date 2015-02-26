@@ -7,21 +7,6 @@ cd %PROJECT-PATH%
 :: Ensure the Build folder is on the path for use of SetProjectComp.exe
 path %PROJECT-DRIVE%%PROJECT-PATH%\Build;%PATH%
 
-cd typelib
-:: you will need to edit the following to locate your copy of midl.exe. I've been unable
-:: to run midl since moving everything from Windows XP to Windows 8.1, because I didn't
-:: install Visual C++ 6. I also have VS 2008 on this machine, but for some reason it
-:: doesn't seem to have midl either. And I've got the Windows 8 and 8.1 SDKs installed,
-:: and they have midl but it won't run because it needs the C-preprocessor (cl.exe) which
-:: should be in the VS 2008, but isn't. Grrrrr!!...
-midl.exe /mktyplib203 TWWin32API.idl
-pause
-
-regtlib TWWin32API.tlb
-pause
-
-cd ..
-
 setprojectcomp TWUtilities\TWUtilities.vbp -mode:P
 vb6 /m TWUtilities\TWUtilities.vbp
 copy TWUtilities\TWUtilities40.dll TWUtilities\Compat\TWUtilities40.dll 
