@@ -26,7 +26,13 @@ if errorlevel 1 pause
 vb6 /m GraphObj\GraphObj.vbp
 if errorlevel 1 pause
 
-vb6 /m LayeredGraphics\SpriteControlLib\SpriteControlLib.vbp
+vb6 /m SampleApps\ClockTester\ClockTester.vbp
 if errorlevel 1 pause
-vb6 /m LayeredGraphics\LayeredGraphicsTest1\LayeredGraphicsTest1.vbp
+vb6 /m SampleApps\IntervalTimerTester\IntervalTimerTester.vbp
+if errorlevel 1 pause
+vb6 /m SampleApps\LayeredGraphicsTest1\SpriteControlLib\SpriteControlLib.vbp
+if errorlevel 1 pause
+vb6 /m SampleApps\LayeredGraphicsTest1\LayeredGraphicsTest1.vbp
+if errorlevel 1 pause
+vb6 /m SampleApps\TasksDemo\TasksDemo.vbp
 if errorlevel 1 pause
