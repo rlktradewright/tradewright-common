@@ -3,3 +3,4 @@ Tools/RegExpTest/RegexpTest.exe
 Tools/SetProjectComp/SetProjectComp.exe
 *.exp
 *.lib
+*.vbw
