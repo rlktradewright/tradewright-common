@@ -1,6 +1,9 @@
-Tools/RegExpTest/RegexpTest.exe
 *.SCC
-Tools/SetProjectComp/SetProjectComp.exe
 *.exp
 *.lib
 *.vbw
+*.dll
+*.ocx
+*.exe
+*.tlb
+*.oca
