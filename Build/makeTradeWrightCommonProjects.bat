@@ -15,10 +15,10 @@ set BIN-PATH=%PROJECT-PATH%\Bin
 %PROJECT-DRIVE%
 cd %PROJECT-PATH%
 
-set TWUTILS-VERSION="40"
-
 :: Ensure the Build folder is on the path for use of SetProjectComp.exe
 path %PROJECT-DRIVE%%PROJECT-PATH%\Build;%PATH%
+
+call setVersion
 
 set binarycompat="B"
 if "%1" == "P" set binarycompat="P"
