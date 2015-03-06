@@ -1,5 +1,5 @@
 Attribute VB_Name = "Module1"
-yOption Explicit
+Option Explicit
 
 Public Sub Main()
 
