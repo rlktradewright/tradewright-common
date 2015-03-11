@@ -7,3 +7,6 @@
 *.exe
 *.tlb
 *.oca
+*.msi
+*.msm
+*.suo
