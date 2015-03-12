@@ -14,7 +14,6 @@ echo =================================
 echo Building %1
 
 call setVersion
-set FILENAME=%1%TWUTILS-MAJOR%%TWUTILS-MINOR%.%EXTENSION%
 
 set EXTENSION="dll"
 if "%2" == "dll" set EXTENSION="dll"
@@ -27,6 +26,8 @@ if "%3" == "B" set BINARY_COMPAT="B"
 set COMPAT="no"
 if "%4" == "COMPAT" set COMPAT="yes"
 if "%4" == "compat" set COMPAT="yes"
+
+set FILENAME=%1%TWUTILS-MAJOR%%TWUTILS-MINOR%.%EXTENSION%
 
 if not exist %1\Prev (
 	echo Making %1\Prev directory
