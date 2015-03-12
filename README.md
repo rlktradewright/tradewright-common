@@ -26,4 +26,20 @@ Having this on GitHub will also ease the process of porting relevant parts of it
 
 I don't expect there to be much change here in future. The software is pretty robust, and of course the VB6 development platform is pretty much a dead duck (at least as far as Microsoft is concerned: though I have to say it's one of the most lively dead ducks I've ever come across - it just won't lie down and die properly!). I also don't really expect anyone else to have the slightest interest in it!
 
-Building this thing is not without its trials - it pushes the VB6 IDE to its limits in many ways. I will eventually include everything necessary to build it here, with instructions on how to do it. In the meantime, I'll just post new releases here in the form of a Windows Installer .msi file as and when appropriate.
+If by chance you do want to modify the software, here's what to do:
+
+* Clone the repository to your computer. Note that you'll need Visual Basic 6 to be able to compile the code.
+
+* Set up the following environment variables:
+  
+  `TW-PROJECTS-DRIVE` - set this to the drive containing your repository clone, eg C:
+  `TW-PROJECTS-PATH` - set this to the path to your repository folder, eg \Projects\tradewright-common
+
+* Now run the `registerTradeWrightCommon.bat` file in the `Build` folder: note you should run this as Administrator to avoid a series of privilege elevation prompts (you'll still get one of course!)
+
+* You should now find that the sample .exe files in the Bin folder run nicely.
+
+If you make changes that you want to contribute to the official version, create a pull request and I'll evaluate them.
+
+There is a lot more to be said about working with this code, because of the niceties of such things as binary compatibility, but I won't say it now because I doubt anyone will ever need it, but if you do, feel free to contact me or raise an issue.
+
