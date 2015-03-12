@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonInstaller", "TradeWrightCommonInstaller\TradeWrightCommonInstaller.vdproj", "{8852E8F7-E97C-43BF-8D76-ABCACE629F81}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB5106AB-818C-4EC8-858C-D847A914987A} = {DB5106AB-818C-4EC8-858C-D847A914987A}
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5} = {812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonMerge", "TradeWrightCommonMerge\TradeWrightCommonMerge.vdproj", "{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonSampleAppsMerge", "TradeWrightCommonSampleApps\TradeWrightCommonSampleApps.vdproj", "{DB5106AB-818C-4EC8-858C-D847A914987A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5} = {812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8852E8F7-E97C-43BF-8D76-ABCACE629F81}.Debug|Default.ActiveCfg = Release
+		{8852E8F7-E97C-43BF-8D76-ABCACE629F81}.Debug|Default.Build.0 = Release
+		{8852E8F7-E97C-43BF-8D76-ABCACE629F81}.Release|Default.ActiveCfg = Release
+		{8852E8F7-E97C-43BF-8D76-ABCACE629F81}.Release|Default.Build.0 = Release
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}.Debug|Default.ActiveCfg = Release
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}.Debug|Default.Build.0 = Release
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}.Release|Default.ActiveCfg = Release
+		{812449AF-1EB2-475F-ABB1-1A6FDF5F05E5}.Release|Default.Build.0 = Release
+		{DB5106AB-818C-4EC8-858C-D847A914987A}.Debug|Default.ActiveCfg = Release
+		{DB5106AB-818C-4EC8-858C-D847A914987A}.Debug|Default.Build.0 = Release
+		{DB5106AB-818C-4EC8-858C-D847A914987A}.Release|Default.ActiveCfg = Release
+		{DB5106AB-818C-4EC8-858C-D847A914987A}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
