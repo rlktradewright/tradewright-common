@@ -5,42 +5,34 @@
 :: builds all the dll and ocx projects
 ::
 :: Parameters:
-::   %1 Binary compatibility ('P' or 'B')
+::   %1 Binary compatibility setting- 'P' (project)or 'B' (binary)
 ::
 
-set PROJECT-DRIVE=E:
-set PROJECT-PATH=\Projects\tradewright-common
-set BIN-PATH=%PROJECT-PATH%\Bin
+set BINARY_COMPAT="B"
+if "%1" == "P" set BINARY_COMPAT="P"
+if "%1" == "B" set BINARY_COMPAT="B"
+if "%1" == "N" set BINARY_COMPAT="N"
 
-%PROJECT-DRIVE%
-cd %PROJECT-PATH%
-
-:: Ensure the Build folder is on the path for use of SetProjectComp.exe
-path %PROJECT-DRIVE%%PROJECT-PATH%\Build;%PATH%
-
-call setVersion
-
-set binarycompat="B"
-if "%1" == "P" set binarycompat="P"
-if "%1" == "B" set binarycompat="B"
-if "%1" == "N" set binarycompat="N"
+pushd %TW-PROJECTS-PATH%
 
 :: note that we have to store the compatible version of
 :: TWUtilities in the compat folder, because using the one
 :: in Bin results in linker errors
-call makedll TWUtilities dll %binarycompat% compat
+call makedll TWUtilities dll %BINARY_COMPAT% compat
 
-if not %binarycompat% == "B" call makeSetProjectComp
+if not %BINARY_COMPAT% == "B" call makeSetProjectComp
 
-call makedll ExtProps dll %binarycompat%
-call makedll ExtEvents dll %binarycompat%
-call makedll BusObjUtils dll %binarycompat%
-call makedll TWControls ocx %binarycompat%
-call makedll GraphicsUtils dll %binarycompat%
-call makedll LayeredGraphics dll %binarycompat%
-call makedll GraphObj dll %binarycompat%
-call makedll GraphObjUtils dll %binarycompat%
+call makedll ExtProps dll %BINARY_COMPAT%
+call makedll ExtEvents dll %BINARY_COMPAT%
+call makedll BusObjUtils dll %BINARY_COMPAT%
+call makedll TWControls ocx %BINARY_COMPAT%
+call makedll GraphicsUtils dll %BINARY_COMPAT%
+call makedll LayeredGraphics dll %BINARY_COMPAT%
+call makedll GraphObj dll %BINARY_COMPAT%
+call makedll GraphObjUtils dll %BINARY_COMPAT%
 
 pushd SampleApps\LayeredGraphicsTest\
-call makedll SpriteControlLib dll %binarycompat%
+call makedll SpriteControlLib dll %BINARY_COMPAT%
+popd
+
 popd

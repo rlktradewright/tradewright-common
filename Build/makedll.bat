@@ -12,18 +12,21 @@
 
 echo =================================
 echo Building %1
-set filenamestub=%1
 
-set extension="dll"
-if "%2" == "dll" set extension="dll"
-if "%2" == "ocx" set extension="ocx"
+call setVersion
+set FILENAME=%1%TWUTILS-MAJOR%%TWUTILS-MINOR%.%EXTENSION%
 
-set binarycompat="B"
-if "%3" == "P" set binarycompat="P"
-if "%3" == "B" set binarycompat="B"
+set EXTENSION="dll"
+if "%2" == "dll" set EXTENSION="dll"
+if "%2" == "ocx" set EXTENSION="ocx"
 
-set compat="no"
-if "%4" == "compat" set compat="yes"
+set BINARY_COMPAT="B"
+if "%3" == "P" set BINARY_COMPAT="P"
+if "%3" == "B" set BINARY_COMPAT="B"
+
+set COMPAT="no"
+if "%4" == "COMPAT" set COMPAT="yes"
+if "%4" == "compat" set COMPAT="yes"
 
 if not exist %1\Prev (
 	echo Making %1\Prev directory
@@ -31,28 +34,28 @@ if not exist %1\Prev (
 )
 
 echo Copying previous binary
-copy %BIN-PATH%\%filenamestub%%twutils-version%.%extension% %1\Prev\* 
+copy %BIN-PATH%\%FILENAME% %1\Prev\* 
 
-echo Setting binary compatibility mode = %binarycompat%; revision version = %twutils-version%
+echo Setting binary compatibility mode = %BINARY_COMPAT%; version = %TWUTILS-MAJOR%.%TWUTILS-MINOR%.%TWUTILS-REVISION%
 echo ... for file: %1\%1.vbp 
-setprojectcomp %1\%1.vbp %twutils-version% -mode:%binarycompat%
+setprojectcomp %1\%1.vbp %TWUTILS-REVISION% -mode:%BINARY_COMPAT%
 if errorlevel 1 pause
 
 echo Compiling
 vb6 /m %1\%1.vbp
 if errorlevel 1 pause
 
-echo Setting binary compatibility mode = B; revision version = 0
-setprojectcomp %1\%1.vbp 0 -mode:B
+echo Setting binary compatibility mode = B
+setprojectcomp %1\%1.vbp %TWUTILS-REVISION% -mode:B
 if errorlevel 1 pause
 
-if %compat% == "yes" (
+if %COMPAT% == "yes" (
 	if not exist %1\Compat (
 		echo Making %1\Compat directory
 		mkdir %1\Compat
 	)
-	if not %binarycompat% == "B" (
+	if not %BINARY_COMPAT% == "B" (
 		echo Copying binary to %1\Compat
-		copy %BIN-PATH%\%filenamestub%%twutils-version%.%extension% %1\Compat\* 
+		copy %BIN-PATH%\%FILENAME% %1\COMPAT\* 
 	)
 )

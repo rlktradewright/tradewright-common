@@ -1,14 +1,11 @@
 @echo off
-set PROJECT-DRIVE=E:
-set PROJECT-PATH=\Projects\tradewright-common
 
-%PROJECT-DRIVE%
+%TW-PROJECTS-DRIVE%
+path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build;%PATH%
 
-path %PROJECT-DRIVE%%PROJECT-PATH%\Build;%PATH%
+set BIN-PATH=%TW-PROJECTS-PATH%\Bin
 
-pushd %PROJECT-PATH%\SampleApps
-
-call setversion
+pushd %TW-PROJECTS-PATH%\SampleApps
 
 call makeExe ClockTester
 call makeExe IntervalTimerTester
