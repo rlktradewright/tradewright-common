@@ -1,11 +1,7 @@
 :: registers the TradeWright Common dlls
 
-set PROJECT-DRIVE=E:
-set BIN-PATH=\Projects\tradewright-common\Bin
-
-%PROJECT-DRIVE%
-cd %BIN-PATH%
-
+%TW-PROJECTS-DRIVE%
+pushd %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Bin
 
 regsvr32 TWUtilities40.dll
 
@@ -26,5 +22,7 @@ regsvr32 GraphObjUtils40.dll
 regsvr32 GraphObj40.dll
 
 regsvr32 SpriteControlLib.dll
+
+popd
 
 
