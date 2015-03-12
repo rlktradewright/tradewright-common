@@ -21,6 +21,6 @@ regsvr32 GraphObjUtils40.dll -u
 
 regsvr32 GraphObj40.dll -u
 
-regsvr32 SpriteControlLib.dll -u
+regsvr32 SpriteControlLib40.dll -u
 
 popd
