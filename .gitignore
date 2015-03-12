@@ -2,10 +2,6 @@
 *.exp
 *.lib
 *.vbw
-*.dll
-*.ocx
-*.exe
-*.tlb
 *.oca
 *.msi
 *.msm
