@@ -5,4 +5,4 @@ path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build;%TW-PROJECTS-DRIVE%%TW-PROJECTS
 
 set BIN-PATH=%TW-PROJECTS-PATH%\Bin
 
-call makeTradeWrightCommonProjects B
+call makeComponents B
