@@ -33,6 +33,7 @@ If by chance you do want to modify the software, here's what to do:
 * Set up the following environment variables:
   
   `TW-PROJECTS-DRIVE` - set this to the drive containing your repository clone, eg C:
+
   `TW-PROJECTS-PATH` - set this to the path to your repository folder, eg \Projects\tradewright-common
 
 * Now run the `registerTradeWrightCommon.bat` file in the `Build` folder: note you should run this as Administrator to avoid a series of privilege elevation prompts (you'll still get one of course!)
