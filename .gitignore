@@ -1,6 +1,9 @@
 *.SCC
+*.dll
+*.exe
 *.exp
 *.lib
+*.ocx
 *.vbw
 *.oca
 *.msi

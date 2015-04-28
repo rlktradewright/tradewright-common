@@ -1,1 +1,3 @@
-setup.exe
+!*.dll
+!*.exe
+!*.ocx
