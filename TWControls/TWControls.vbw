@@ -15,6 +15,6 @@ GridCell = 0, 0, 0, 0, C
 TWControls = 0, 0, 0, 0, C
 GGridCell = 0, 0, 0, 0, C
 TransparentPanel = 0, 0, 0, 0, C, 0, 0, 0, 0, C
-TWGrid = 0, 0, 0, 0, C, 0, 0, 0, 0, C
+TWGrid = 26, 26, 812, 622, , 0, 0, 0, 0, C
 TWImageCombo = 0, 0, 0, 0, C, 0, 0, 0, 0, C
 Globals = 0, 0, 0, 0, C
