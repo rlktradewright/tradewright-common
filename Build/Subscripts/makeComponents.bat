@@ -8,10 +8,10 @@
 ::   %1 Binary compatibility setting- 'P' (project)or 'B' (binary)
 ::
 
-set BINARY_COMPAT="B"
-if "%1" == "P" set BINARY_COMPAT="P"
-if "%1" == "B" set BINARY_COMPAT="B"
-if "%1" == "N" set BINARY_COMPAT="N"
+set BINARY_COMPAT=B
+if "%1" == "P" set BINARY_COMPAT=P
+if "%1" == "B" set BINARY_COMPAT=B
+if "%1" == "N" set BINARY_COMPAT=N
 
 pushd %TW-PROJECTS-PATH%
 
@@ -20,7 +20,7 @@ pushd %TW-PROJECTS-PATH%
 :: in Bin results in linker errors
 call makedll TWUtilities dll %BINARY_COMPAT% compat
 
-if not %BINARY_COMPAT% == "B" call makeSetProjectComp
+if not "%BINARY_COMPAT%" == "B" call makeSetProjectComp
 
 call makedll ExtProps dll %BINARY_COMPAT%
 call makedll ExtEvents dll %BINARY_COMPAT%
@@ -30,9 +30,12 @@ call makedll GraphicsUtils dll %BINARY_COMPAT%
 call makedll LayeredGraphics dll %BINARY_COMPAT%
 call makedll GraphObj dll %BINARY_COMPAT%
 call makedll GraphObjUtils dll %BINARY_COMPAT%
+popd
 
-pushd SampleApps\LayeredGraphicsTest\
+pushd %TW-PROJECTS-PATH%\SampleApps\LayeredGraphicsTest\
 call makedll SpriteControlLib dll %BINARY_COMPAT%
 popd
 
-popd
+call includeExternalLibrary TLBINF32 dll
+call includeExternalLibrary MSCOMCTL ocx
+
