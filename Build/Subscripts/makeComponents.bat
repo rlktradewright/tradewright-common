@@ -28,8 +28,8 @@ call makedll BusObjUtils dll %BINARY_COMPAT%
 call makedll TWControls ocx %BINARY_COMPAT%
 call makedll GraphicsUtils dll %BINARY_COMPAT%
 call makedll LayeredGraphics dll %BINARY_COMPAT%
-call makedll GraphObj dll %BINARY_COMPAT%
 call makedll GraphObjUtils dll %BINARY_COMPAT%
+call makedll GraphObj dll %BINARY_COMPAT%
 popd
 
 pushd %TW-PROJECTS-PATH%\SampleApps\LayeredGraphicsTest\
