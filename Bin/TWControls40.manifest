@@ -9,10 +9,10 @@
     </dependency>
     <dependency>
         <dependentAssembly>
-            <assemblyIdentity name="MSCOMCTL" processorArchitecture="X86" type="win32" version="6.1.98.34"></assemblyIdentity>
+            <assemblyIdentity name="mscomctl" processorArchitecture="X86" type="win32" version="6.1.98.34"></assemblyIdentity>
         </dependentAssembly>
     </dependency>
-    <file name="TWControls40.ocx" hashalg="SHA1" hash="e48eaae17a5c4fa37a2f2f6c454d7ac8358d2c55">
+    <file name="TWControls40.ocx" hashalg="SHA1" hash="703783b1968746b0d48001f39ce51e445897ff16">
         <typelib tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" version="29.1" flags="control,hasDiskImage" helpdir=""></typelib>
         <comClass clsid="{47FA8CB3-A276-4409-B059-D09BD2E11D6C}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWModelessMsgBox" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,actsLikeButton,setClientSiteFirst"></comClass>
         <comClass clsid="{882C211D-37EB-4327-9E81-9AC0451449C9}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.PathChooser" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,setClientSiteFirst"></comClass>
@@ -21,13 +21,5 @@
         <comClass clsid="{1F3DEBC4-2A89-40F3-93F1-5475AFC13DC2}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWButton" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,actsLikeButton,setClientSiteFirst"></comClass>
         <comClass clsid="{7167706A-3D4C-499A-B6E1-E029F0DBE2DC}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWControls" threadingModel="Apartment"></comClass>
         <comClass clsid="{1DA54BBA-E268-4407-8F33-BD9E2EF99C30}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TransparentPanel" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,simpleFrame,setClientSiteFirst"></comClass>
-    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><dsig:Transforms><dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity"></dsig:Transform></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></dsig:DigestMethod><dsig:DigestValue>pgBT+mluy9Nd5No3BGb47gvUf5s=</dsig:DigestValue></asmv2:hash></file>
-    <comInterfaceExternalProxyStub name="_MouseTracker" iid="{CF4E885B-DA12-4512-9E4B-4FF3823BD188}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TWModelessMsgBox" iid="{D9D2E8CF-E0DD-499D-A71D-ECC89FB607BE}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_PathChooser" iid="{49AFDC8E-3FC9-4D2D-A1B3-1555FEFE7852}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TWImageCombo" iid="{3F5ADF82-31E4-4DC3-860B-D4CE640D08C3}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TWGrid" iid="{CE9BEFA2-99A2-4B31-B4A9-7B7FED8137D9}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TWButton" iid="{EB4A52D9-F075-41AB-8988-3CFC39694DDA}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TWControls" iid="{7F465BB9-0B7E-4C27-9906-06843FF22D7E}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TransparentPanel" iid="{387663DF-D869-46E8-BE47-4B4687347A86}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><dsig:Transforms><dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity"></dsig:Transform></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></dsig:DigestMethod><dsig:DigestValue>AAmHeWsRb4qAt0Gv9FUlOL3oLxc=</dsig:DigestValue></asmv2:hash></file>
 </assembly>

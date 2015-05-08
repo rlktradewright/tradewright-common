@@ -8,7 +8,4 @@
         <comClass clsid="{8B217746-717D-11CE-AB5B-D41203C10000}" tlbid="{8B217740-717D-11CE-AB5B-D41203C10000}" threadingModel="Apartment"></comClass>
         <comClass clsid="{8B21775E-717D-11CE-AB5B-D41203C10000}" tlbid="{8B217740-717D-11CE-AB5B-D41203C10000}" threadingModel="Apartment"></comClass>
     <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><dsig:Transforms><dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity"></dsig:Transform></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></dsig:DigestMethod><dsig:DigestValue>5FryM3g2cRHa3cQ3eQOuYP/s7Wk=</dsig:DigestValue></asmv2:hash></file>
-    <comInterfaceExternalProxyStub name="_SearchHelper" iid="{8B217751-717D-11CE-AB5B-D41203C10000}" tlbid="{8B217740-717D-11CE-AB5B-D41203C10000}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TypeLibInfo" iid="{8B217745-717D-11CE-AB5B-D41203C10000}" tlbid="{8B217740-717D-11CE-AB5B-D41203C10000}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
-    <comInterfaceExternalProxyStub name="_TLIApplication" iid="{8B21775D-717D-11CE-AB5B-D41203C10000}" tlbid="{8B217740-717D-11CE-AB5B-D41203C10000}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"></comInterfaceExternalProxyStub>
 </assembly>
