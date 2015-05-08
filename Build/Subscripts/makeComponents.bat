@@ -18,24 +18,22 @@ pushd %TW-PROJECTS-PATH%
 :: note that we have to store the compatible version of
 :: TWUtilities in the compat folder, because using the one
 :: in Bin results in linker errors
-call makedll TWUtilities dll %BINARY_COMPAT% compat
+call makedll.bat TWUtilities TWUtilities .dll %BINARY_COMPAT% /compat
 
-if not "%BINARY_COMPAT%" == "B" call makeSetProjectComp
+if not "%BINARY_COMPAT%" == "B" call makeSetProjectComp.bat
 
-call makedll ExtProps dll %BINARY_COMPAT%
-call makedll ExtEvents dll %BINARY_COMPAT%
-call makedll BusObjUtils dll %BINARY_COMPAT%
-call makedll TWControls ocx %BINARY_COMPAT%
-call makedll GraphicsUtils dll %BINARY_COMPAT%
-call makedll LayeredGraphics dll %BINARY_COMPAT%
-call makedll GraphObjUtils dll %BINARY_COMPAT%
-call makedll GraphObj dll %BINARY_COMPAT%
+call makedll.bat ExtProps ExtProps .dll %BINARY_COMPAT%
+call makedll.bat ExtEvents ExtEvents .dll %BINARY_COMPAT%
+call makedll.bat BusObjUtils BusObjUtils .dll %BINARY_COMPAT%
+call makedll.bat TWControls TWControls .ocx %BINARY_COMPAT%
+call makedll.bat GraphicsUtils GraphicsUtils .dll %BINARY_COMPAT%
+call makedll.bat LayeredGraphics LayeredGraphics .dll %BINARY_COMPAT%
+call makedll.bat GraphObjUtils GraphObjUtils .dll %BINARY_COMPAT%
+call makedll.bat GraphObj GraphObj .dll %BINARY_COMPAT%
 popd
 
 pushd %TW-PROJECTS-PATH%\SampleApps\LayeredGraphicsTest\
-call makedll SpriteControlLib dll %BINARY_COMPAT%
+call makedll.bat SpriteControlLib SpriteControlLib .dll %BINARY_COMPAT%
 popd
 
-call includeExternalLibrary TLBINF32 dll
-call includeExternalLibrary MSCOMCTL ocx
 

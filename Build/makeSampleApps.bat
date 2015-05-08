@@ -1,18 +1,18 @@
 @echo off
+setlocal 
 
 %TW-PROJECTS-DRIVE%
-path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build;%PATH%
 path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
-path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Tools;%PATH%
-path C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin;%PATH%
 
 set BIN-PATH=%TW-PROJECTS-PATH%\Bin
 
+call setMyVersion.bat
+
 pushd %TW-PROJECTS-PATH%\SampleApps
 
-call makeExe ClockTester V6CC
-call makeExe IntervalTimerTester V6CC
-call makeExe LayeredGraphicsTest V6CC
-call makeExe TasksDemo V6CC
+call makeExe.bat ClockTester ClockTester
+call makeExe.bat IntervalTimerTester IntervalTimerTester 
+call makeExe.bat LayeredGraphicsTest LayeredGraphicsTest 
+call makeExe.bat TasksDemo TasksDemo 
 
 popd
