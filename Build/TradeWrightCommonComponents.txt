@@ -1,0 +1,22 @@
+..\Bin\TradeWright.Common\TWUtilities40.dll
+
+..\Bin\TradeWright.Common\ExtProps40.dll
+..\Bin\TradeWright.Common\ExtEvents40.dll
+
+..\Bin\TradeWright.Common\BusObjUtils40.dll
+
+..\Bin\TradeWright.Common\TWControls40.ocx
+
+..\Bin\TradeWright.Common\GraphicsUtils40.dll
+
+..\Bin\TradeWright.Common\LayeredGraphics40.dll
+..\Bin\TradeWright.Common\GraphObjUtils40.dll
+..\Bin\TradeWright.Common\GraphObj40.dll
+
+// Perhaps this shouldn't be part of TradeWright.Common
+// assembly?
+..\Bin\TradeWright.Common\SpriteControlLib40.dll
+
+..\Bin\TradeWright.Common\mscomctl.OCX
+..\Bin\TradeWright.Common\TLBINF32.dll
+

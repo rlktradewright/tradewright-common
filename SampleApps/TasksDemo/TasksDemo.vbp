@@ -37,6 +37,5 @@ Unattended=0
 Retained=0
 ThreadPerObject=0
 MaxNumberOfThreads=1
-
 [MS Transaction Server]
 AutoRefresh=1

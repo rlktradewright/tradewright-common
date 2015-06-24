@@ -3,7 +3,7 @@
 %TW-PROJECTS-DRIVE%
 path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build;%PATH%
 
-set BIN-PATH=%TW-PROJECTS-PATH%\Bin
+set BIN-PATH=%TW-PROJECTS-PATH%\Bin\TradeWright.Common
 
 :: you may need to edit the following to locate your copy of midl.exe. 
 :: It's for Visual Studio 2008 installed in the default location
@@ -20,7 +20,7 @@ set "WindowsSdkDir=C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
 
 :: we have to pushd into typelib to ensure midl
 :: picks up the copy of oaidl.idl that's in there
-pushd %TW-PROJECTS-PATH%\typelib
+pushd %TW-PROJECTS-PATH%\src\typelib
 
 @echo on
 midl /mktyplib203 TWWin32API.idl /out %BIN-PATH%

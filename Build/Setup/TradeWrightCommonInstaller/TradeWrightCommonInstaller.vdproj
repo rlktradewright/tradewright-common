@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_01E39662FD134D02806FA205914D40FA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1603448540124520A9BFCD9087BD78E9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -242,26 +236,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_01E39662FD134D02806FA205914D40FA"
-            {
-            "SourcePath" = "8:..\\..\\..\\Bin\\setup.exe"
-            "TargetName" = "8:setup.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1603448540124520A9BFCD9087BD78E9"
             {
             "SourcePath" = "8:..\\..\\..\\Bin\\TLBINF32.DLL"
@@ -766,9 +740,9 @@
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:TRUE"
+        "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:4.0.108"
-        "Manufacturer" = "8:TradeWright"
+        "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:TradeWright Utilities Sample Apps Installer"
