@@ -4,8 +4,9 @@ setlocal
 :: unregisters the TradeWright Common dlls
 
 %TW-PROJECTS-DRIVE%
+path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
 
-call setMyVersion
+call setMyVersion.bat
 
 pushd %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Bin\TradeWright.Common
 
