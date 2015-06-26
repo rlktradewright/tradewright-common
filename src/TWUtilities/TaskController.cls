@@ -168,7 +168,7 @@ End Property
 ' @param listener
 '   The object which is to act as a listener.
 '@/
-Public Sub AddTaskNotificationListener(ByVal pListener As TaskNotificationListener)
+Public Sub AddTaskNotificationListener(ByVal pListener As ITaskNotificationListener)
 Const ProcName As String = "AddTaskNotificationListener"
 On Error GoTo Err
 
@@ -336,7 +336,7 @@ gSetVariant ev.Cookie, mCookie
 mTaskNotificationListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mTaskNotificationListeners.Count
-    Dim lListener As TaskNotificationListener
+    Dim lListener As ITaskNotificationListener
     Set lListener = mTaskNotificationListeners.GetListener(i)
     lListener.Notify ev
 Next
@@ -490,7 +490,7 @@ End Sub
 '
 '@/
 Public Sub RemoveTaskNotificationListener( _
-                ByVal pListener As TaskNotificationListener)
+                ByVal pListener As ITaskNotificationListener)
 Const ProcName As String = "RemoveTaskNotificationListener"
 On Error GoTo Err
 
