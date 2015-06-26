@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "Stringable"
+Attribute VB_Name = "IStringable"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -40,7 +40,7 @@ Option Explicit
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "Stringable"
+Private Const ModuleName                    As String = "IStringable"
 
 '@================================================================================
 ' Member variables

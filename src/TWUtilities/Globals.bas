@@ -1624,8 +1624,8 @@ If IsArray(Value) Then
 Else
 
     If IsObject(Value) Then
-        If TypeOf Value Is Stringable Then
-            Dim obj As Stringable
+        If TypeOf Value Is IStringable Then
+            Dim obj As IStringable
             Set obj = Value
             s = obj.ToString
         ElseIf TypeOf Value Is IJSONable Then

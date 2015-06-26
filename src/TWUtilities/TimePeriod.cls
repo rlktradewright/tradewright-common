@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Stringable
+Implements IStringable
 
 '@================================================================================
 ' Events
@@ -58,8 +58,8 @@ Private mUnits                              As TimePeriodUnits
 ' Stringable Interface Members
 '@================================================================================
 
-Private Function Stringable_ToString() As String
-Stringable_ToString = ToString
+Private Function IStringable_ToString() As String
+IStringable_ToString = ToString
 End Function
 
 '@================================================================================
@@ -98,74 +98,74 @@ mUnits = Units
 End Sub
 
 Public Function ToString() As String
-Static value As String
-If value = "" Then
+Static Value As String
+If Value = "" Then
     Select Case mUnits
     Case TimePeriodNone
-        value = "0"
+        Value = "0"
     Case TimePeriodSecond
         If mLength = 1 Then
-            value = mLength & " " & TimePeriodNameSecond
+            Value = mLength & " " & TimePeriodNameSecond
         Else
-            value = mLength & " " & TimePeriodNameSeconds
+            Value = mLength & " " & TimePeriodNameSeconds
         End If
     Case TimePeriodMinute
         If mLength = 1 Then
-            value = mLength & " " & TimePeriodNameMinute
+            Value = mLength & " " & TimePeriodNameMinute
         Else
-            value = mLength & " " & TimePeriodNameMinutes
+            Value = mLength & " " & TimePeriodNameMinutes
         End If
     Case TimePeriodHour
         If mLength = 1 Then
-            value = TimePeriodNameHour
+            Value = TimePeriodNameHour
         Else
-            value = mLength & " " & TimePeriodNameHours
+            Value = mLength & " " & TimePeriodNameHours
         End If
     Case TimePeriodDay
         If mLength = 1 Then
-            value = TimePeriodNameDay
+            Value = TimePeriodNameDay
         Else
-            value = mLength & " " & TimePeriodNameDays
+            Value = mLength & " " & TimePeriodNameDays
         End If
     Case TimePeriodWeek
         If mLength = 1 Then
-            value = TimePeriodNameWeek
+            Value = TimePeriodNameWeek
         Else
-            value = mLength & " " & TimePeriodNameWeeks
+            Value = mLength & " " & TimePeriodNameWeeks
         End If
     Case TimePeriodMonth
         If mLength = 1 Then
-            value = TimePeriodNameMonth
+            Value = TimePeriodNameMonth
         Else
-            value = mLength & " " & TimePeriodNameMonths
+            Value = mLength & " " & TimePeriodNameMonths
         End If
     Case TimePeriodYear
         If mLength = 1 Then
-            value = TimePeriodNameYear
+            Value = TimePeriodNameYear
         Else
-            value = mLength & " " & TimePeriodNameYears
+            Value = mLength & " " & TimePeriodNameYears
         End If
     Case TimePeriodVolume
-        value = mLength & " " & TimePeriodNameVolumeIncrement
+        Value = mLength & " " & TimePeriodNameVolumeIncrement
     Case TimePeriodTickVolume
-        value = mLength & " " & TimePeriodNameTickVolumeIncrement
+        Value = mLength & " " & TimePeriodNameTickVolumeIncrement
     Case TimePeriodTickMovement
-        value = mLength & " " & TimePeriodNameTickIncrement
+        Value = mLength & " " & TimePeriodNameTickIncrement
     End Select
 End If
-ToString = value
+ToString = Value
 End Function
 
 Public Function ToShortString() As String
-Static value As String
-If value = "" Then
+Static Value As String
+If Value = "" Then
     If mUnits = TimePeriodNone Then
-        value = "0"
+        Value = "0"
     Else
-        value = mLength & gTimePeriodUnitsToShortString(mUnits)
+        Value = mLength & gTimePeriodUnitsToShortString(mUnits)
     End If
 End If
-ToShortString = value
+ToShortString = Value
 End Function
 
 '@================================================================================

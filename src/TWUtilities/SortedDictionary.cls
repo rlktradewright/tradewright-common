@@ -39,7 +39,7 @@ Option Explicit
 
 Implements IEnumerable
 Implements IJSONable
-Implements Stringable
+Implements IStringable
 
 '@================================================================================
 ' Events
@@ -185,12 +185,12 @@ End Function
 ' Stringable Interface Members
 '@================================================================================
 
-Private Function Stringable_ToString() As String
-Const ProcName As String = "Stringable_ToString"
+Private Function IStringable_ToString() As String
+Const ProcName As String = "IStringable_ToString"
 
 On Error GoTo Err
 
-Stringable_ToString = ToString
+IStringable_ToString = ToString
 
 Exit Function
 
