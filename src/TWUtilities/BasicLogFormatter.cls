@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements LogFormatter
+Implements ILogFormatter
 
 '@================================================================================
 ' Events
@@ -60,7 +60,7 @@ Private mIncludeLogLevel As Boolean
 ' LogFormatter Interface Members
 '@================================================================================
 
-Private Function LogFormatter_FormatRecord(ByVal Logrec As LogRecord) As String
+Private Function ILogFormatter_FormatRecord(ByVal Logrec As LogRecord) As String
 Const ProcName As String = "LogFormatter_FormatRecord"
 On Error GoTo Err
 
@@ -75,7 +75,7 @@ Dim s1 As String
 gVariantToString Logrec.Data, s1
 s = s & s1
 
-LogFormatter_FormatRecord = s
+ILogFormatter_FormatRecord = s
 
 Exit Function
 
@@ -83,11 +83,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get LogFormatter_Header() As String
+Private Property Get ILogFormatter_Header() As String
 
 End Property
 
-Private Property Get LogFormatter_Trailer() As String
+Private Property Get ILogFormatter_Trailer() As String
 
 End Property
 

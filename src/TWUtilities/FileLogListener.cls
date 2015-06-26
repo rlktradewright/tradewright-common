@@ -54,7 +54,7 @@ Private mFilename                           As String
 
 Private mTs                                 As TextStream
 
-Private mFormatter                          As LogFormatter
+Private mFormatter                          As ILogFormatter
 
 Private mFinished                           As Boolean
 
@@ -94,7 +94,7 @@ End Sub
 
 Friend Sub Initialise( _
                 ByVal pFilename As String, _
-                ByVal formatter As LogFormatter, _
+                ByVal formatter As ILogFormatter, _
                 ByVal pOverwrite As Boolean, _
                 ByVal pCreateBackup As Boolean, _
                 ByVal pUnicode As Boolean, _

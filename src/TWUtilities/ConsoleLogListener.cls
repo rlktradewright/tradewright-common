@@ -52,7 +52,7 @@ Private Const ModuleName                    As String = "ConsoleLogListener"
 
 Private mConsole                            As Console
 
-Private mFormatter                          As LogFormatter
+Private mFormatter                          As ILogFormatter
 
 Private mFinished                           As Boolean
 
@@ -108,7 +108,7 @@ End Sub
 '@================================================================================
 
 Friend Sub Initialise( _
-                ByVal formatter As LogFormatter, _
+                ByVal formatter As ILogFormatter, _
                 ByVal timestampFormat As TimestampFormats, _
                 ByVal includeInfoType As Boolean, _
                 ByVal includeTimestamp As Boolean, _

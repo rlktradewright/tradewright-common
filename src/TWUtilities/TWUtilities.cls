@@ -1642,7 +1642,7 @@ Public Function CreateBasicLogFormatter( _
                 Optional ByVal timestampFormat As TimestampFormats = TimestampDateAndTimeISO8601, _
                 Optional ByVal includeInfoType As Boolean, _
                 Optional ByVal includeTimestamp As Boolean = True, _
-                Optional ByVal includeLogLevel As Boolean = True) As LogFormatter
+                Optional ByVal includeLogLevel As Boolean = True) As ILogFormatter
 Const ProcName As String = "CreateBasicLogFormatter"
 On Error GoTo Err
 
@@ -1725,7 +1725,7 @@ End Function
 '   relevant if the<code>formatter</code> argument is not supplied.
 '@/
 Public Function CreateConsoleLogListener( _
-                Optional ByVal formatter As LogFormatter, _
+                Optional ByVal formatter As ILogFormatter, _
                 Optional ByVal timestampFormat As TimestampFormats = TimestampDateAndTimeISO8601, _
                 Optional ByVal includeInfoType As Boolean, _
                 Optional ByVal includeTimestamp As Boolean = True, _
@@ -1797,7 +1797,7 @@ End Function
 '@/
 Public Function CreateFileLogListener( _
                 ByVal pFilename As String, _
-                Optional ByVal formatter As LogFormatter, _
+                Optional ByVal formatter As ILogFormatter, _
                 Optional ByVal pOverwrite As Boolean, _
                 Optional ByVal pCreateBackup As Boolean, _
                 Optional ByVal pUnicode As Boolean, _
