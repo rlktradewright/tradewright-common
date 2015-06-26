@@ -23,7 +23,7 @@ Option Explicit
 '@================================================================================
 
 Implements IDeferredAction
-Implements StateChangeListener
+Implements IStateChangeListener
 
 '@================================================================================
 ' Events
@@ -80,8 +80,8 @@ End Sub
 ' StateChangeListener Interface Members
 '@================================================================================
 
-Private Sub StateChangeListener_Change(ev As StateChangeEventData)
-Const ProcName As String = "StateChangeListener_Change"
+Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
+Const ProcName As String = "IStateChangeListener_Change"
 On Error GoTo Err
 
 If ev.State <> FutureStates.FutureStatePending Then notifyCompletion ev.Source

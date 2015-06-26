@@ -163,7 +163,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddStateChangeListener( _
-                ByVal pListener As StateChangeListener)
+                ByVal pListener As IStateChangeListener)
 Const ProcName As String = "AddStateChangeListener"
 On Error GoTo Err
 
@@ -231,7 +231,7 @@ End Sub
 ' @see
 '
 '@/
-Public Sub RemoveStateChangeListener(ByVal pListener As StateChangeListener)
+Public Sub RemoveStateChangeListener(ByVal pListener As IStateChangeListener)
 Const ProcName As String = "RemoveStateChangeListener"
 On Error GoTo Err
 
@@ -258,7 +258,7 @@ ev.State = NewState
 mStateChangeListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mStateChangeListeners.Count
-    Dim lListener As StateChangeListener
+    Dim lListener As IStateChangeListener
     Set lListener = mStateChangeListeners.GetListener(i)
     lListener.Change ev
 Next

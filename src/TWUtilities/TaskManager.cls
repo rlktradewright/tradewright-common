@@ -31,7 +31,7 @@ Option Explicit
 '@================================================================================
 
 Implements IEnumerable
-Implements StateChangeListener
+Implements IStateChangeListener
 
 '@================================================================================
 ' Events
@@ -345,11 +345,11 @@ End Property
 ' StateChangeListener Interface Members
 '@================================================================================
 
-Private Sub StateChangeListener_Change(ev As StateChangeEventData)
+Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
 Dim tli As TimerListItem
 Dim lIndex As Long
 
-Const ProcName As String = "StateChangeListener_Change"
+Const ProcName As String = "IStateChangeListener_Change"
 
 On Error GoTo Err
 

@@ -68,7 +68,7 @@ Private mCookie                                     As Variant
 ' IFuture Interface Members
 '@================================================================================
 
-Private Sub IFuture_AddStateChangeListener(ByVal pListener As StateChangeListener)
+Private Sub IFuture_AddStateChangeListener(ByVal pListener As IStateChangeListener)
 Const ProcName As String = "IFuture_AddStateChangeListener"
 On Error GoTo Err
 
@@ -132,7 +132,7 @@ Private Property Get IFuture_IsPending() As Boolean
 IFuture_IsPending = Not (mIsAvailable Or mIsCancelled Or mIsFaulted)
 End Property
 
-Private Sub IFuture_RemoveStateChangeListener(ByVal pListener As StateChangeListener)
+Private Sub IFuture_RemoveStateChangeListener(ByVal pListener As IStateChangeListener)
 Const ProcName As String = "IFuture_RemoveStateChangeListener"
 On Error GoTo Err
 
@@ -286,7 +286,7 @@ ev.State = pState
 lListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To lListeners.Count
-    Dim lListener As StateChangeListener
+    Dim lListener As IStateChangeListener
     Set lListener = lListeners.GetListener(i)
     lListener.Change ev
 Next
