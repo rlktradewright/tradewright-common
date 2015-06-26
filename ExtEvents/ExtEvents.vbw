@@ -1,7 +1,0 @@
-ExtEvents = 0, 0, 0, 0, C
-Globals = 0, 0, 0, 0, C
-ExtendedEvent = 0, 0, 0, 0, C
-GExtendedEvent = 0, 0, 0, 0, C
-IExtendedEventListener = 0, 0, 0, 0, C
-GExtendedEventManager = 0, 0, 0, 0, C
-IExtendedEventsSource = 0, 0, 0, 0, C
