@@ -131,7 +131,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddErrorListener( _
-                ByVal pListener As ErrorListener)
+                ByVal pListener As IErrorListener)
 Const ProcName As String = "AddErrorListener"
 
 On Error GoTo Err
@@ -223,7 +223,7 @@ End Sub
 '   The object which is to be unregistered.
 '@/
 Public Sub RemoveErrorListener( _
-                ByVal pListener As ErrorListener)
+                ByVal pListener As IErrorListener)
 Const ProcName As String = "RemoveErrorListener"
 On Error GoTo Err
 
@@ -245,7 +245,7 @@ mListeners.SetCurrentListeners
 
 Dim i As Long
 For i = 1 To mListeners.Count
-    Dim lListener As ErrorListener
+    Dim lListener As IErrorListener
     Set lListener = mListeners.GetListener(i)
     lListener.Notify ev
 Next
