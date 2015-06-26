@@ -192,7 +192,7 @@ End Sub
 ' @param listener
 '   The object which is to act as a listener.
 '@/
-Public Sub AddTaskStateChangeListener(ByVal pListener As TaskStateChangeListener)
+Public Sub AddTaskStateChangeListener(ByVal pListener As ITaskStateChangeListener)
 Const ProcName As String = "AddTaskStateChangeListener"
 On Error GoTo Err
 
@@ -398,7 +398,7 @@ gSetVariant ev.Cookie, mCookie
 mTaskStateChangeListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mTaskStateChangeListeners.Count
-    Dim lListener As TaskStateChangeListener
+    Dim lListener As ITaskStateChangeListener
     Set lListener = mTaskStateChangeListeners.GetListener(i)
     lListener.Change ev
 Next
@@ -442,7 +442,7 @@ End Sub
 '
 '@/
 Public Sub RemoveTaskStateChangeListener( _
-                ByVal pListener As TaskStateChangeListener)
+                ByVal pListener As ITaskStateChangeListener)
 Const ProcName As String = "RemoveTaskStateChangeListener"
 On Error GoTo Err
 
