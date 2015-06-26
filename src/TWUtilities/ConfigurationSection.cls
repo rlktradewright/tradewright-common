@@ -47,7 +47,7 @@ Private Const ModuleName                            As String = "ConfigurationSe
 '@================================================================================
 
 Private mConfigFile                                 As ConfigurationStore
-Private mConfig                                     As ConfigItem
+Private mConfig                                     As IConfigItem
 Private mConfigEnumble                              As Enumerable
 Private mRelativePath                               As String
 Private mCache                                      As ConfigSectionCache
@@ -78,7 +78,7 @@ End Property
 
 Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 Dim en As Enumerator
-Dim ci As ConfigItem
+Dim ci As IConfigItem
 Dim section As ConfigurationSection
 Dim relPath As String
 
@@ -127,7 +127,7 @@ End Function
 
 Private Sub Enumerable_Remove(pCookie As Variant)
 Dim en As Enumerator
-Dim ci As ConfigItem
+Dim ci As IConfigItem
 Dim Path As String
 
 Const ProcName As String = "Enumerable_Remove"
@@ -233,7 +233,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Friend Property Get Config() As ConfigItem
+Friend Property Get Config() As IConfigItem
 Const ProcName As String = "Config"
 
 On Error GoTo Err
@@ -388,12 +388,12 @@ End Property
 ' Methods
 '@================================================================================
 
-Friend Sub AddChildSections(ByVal pConfigItem As ConfigItem)
+Friend Sub AddChildSections(ByVal pConfigItem As IConfigItem)
 Const ProcName As String = "AddChildSections"
 
 On Error GoTo Err
 
-Dim lItem As ConfigItem
+Dim lItem As IConfigItem
 Dim en As Enumerator
 
 Set en = pConfigItem.ChildItems.Enumerator
@@ -471,7 +471,7 @@ Set lNewConfigSection = mConfigFile.GetConfigurationSection(Path & ConfigSection
 If Not lNewConfigSection Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Target config section already exists"
     
 Set lNewConfigSection = New ConfigurationSection
-Dim lClonedConfigItem As ConfigItem
+Dim lClonedConfigItem As IConfigItem
 Set lClonedConfigItem = mConfig.ChildItems.AddClone(pConfigSection.Config, True)
 lNewConfigSection.Initialise mConfigFile, _
                                 lRelativePath, _
@@ -510,7 +510,7 @@ End Function
 Public Function GetConfigurationSection( _
                 ByVal configSectionPath As String) As ConfigurationSection
 Dim relativeSectionPath As ConfigurationPath
-Dim childItem As ConfigItem
+Dim childItem As IConfigItem
 
 Dim absPath As String
 
@@ -644,7 +644,7 @@ End Function
 Friend Function Initialise( _
                 ByVal pConfigFile As ConfigurationStore, _
                 ByVal relativePath As String, _
-                ByVal Config As ConfigItem, _
+                ByVal Config As IConfigItem, _
                 ByVal parentConfigSection As ConfigurationSection, _
                 ByVal cache As ConfigSectionCache, _
                 ByVal isPrivate As Boolean)
@@ -881,7 +881,7 @@ On Error GoTo Err
 
 Dim section As ConfigurationSection
 Dim permittedValue As Variant
-Dim selsItem As ConfigItem
+Dim selsItem As IConfigItem
 
 Dim relSettingPath As ConfigurationPath
 
@@ -1024,7 +1024,7 @@ End Function
 
 Private Function getChildItem( _
                 ByVal Name As String, _
-                ByVal qualifier) As ConfigItem
+                ByVal qualifier) As IConfigItem
 Dim childEnum As Enumerator
 
 Const ProcName As String = "getChildItem"

@@ -25,7 +25,7 @@ Option Explicit
 ' <pre>
 ' <tt>
 ' Dim cf As ConfigStoreProvider<br />
-' Dim root As ConfigItem<br />
+' Dim root As IConfigItem<br />
 ' Dim outputFilename As String<br />
 ' <br />
 ' Set cf = LoadConfigProviderFromXMLFile("C:\MyConfig.xml")<br />
@@ -40,7 +40,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ConfigItem
+Implements IConfigItem
 
 '@================================================================================
 ' Events
@@ -83,24 +83,24 @@ Private mIndent                             As Long
 ' ConfigItem Interface Members
 '@================================================================================
 
-Private Property Get ConfigItem_childItems() As ConfigItems
-Set ConfigItem_childItems = ChildItems
+Private Property Get IConfigItem_childItems() As IConfigItems
+Set IConfigItem_childItems = ChildItems
 End Property
 
-Private Property Let ConfigItem_Comment(ByVal RHS As String)
+Private Property Let IConfigItem_Comment(ByVal RHS As String)
 Comment = RHS
 End Property
 
-Private Property Get ConfigItem_Comment() As String
-ConfigItem_Comment = Comment
+Private Property Get IConfigItem_Comment() As String
+IConfigItem_Comment = Comment
 End Property
 
-Private Function ConfigItem_getAttribute(ByVal Name As String) As String
-Const ProcName As String = "ConfigItem_getAttribute"
+Private Function IConfigItem_getAttribute(ByVal Name As String) As String
+Const ProcName As String = "IConfigItem_getAttribute"
 
 On Error GoTo Err
 
-ConfigItem_getAttribute = GetAttribute(Name)
+IConfigItem_getAttribute = GetAttribute(Name)
 
 Exit Function
 
@@ -108,19 +108,19 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function ConfigItem_getDefaultableAttribute(ByVal Name As String, ByVal default As String) As String
+Private Function IConfigItem_getDefaultableAttribute(ByVal Name As String, ByVal default As String) As String
 On Error Resume Next
-ConfigItem_getDefaultableAttribute = default
-ConfigItem_getDefaultableAttribute = GetAttribute(Name)
-If ConfigItem_getDefaultableAttribute = "" Then ConfigItem_getDefaultableAttribute = default
+IConfigItem_getDefaultableAttribute = default
+IConfigItem_getDefaultableAttribute = GetAttribute(Name)
+If IConfigItem_getDefaultableAttribute = "" Then IConfigItem_getDefaultableAttribute = default
 End Function
 
-Private Property Get ConfigItem_Name() As String
-ConfigItem_Name = Name
+Private Property Get IConfigItem_Name() As String
+IConfigItem_Name = Name
 End Property
 
-Private Sub ConfigItem_removeAttribute(ByVal Name As String)
-Const ProcName As String = "ConfigItem_removeAttribute"
+Private Sub IConfigItem_removeAttribute(ByVal Name As String)
+Const ProcName As String = "IConfigItem_removeAttribute"
 
 On Error GoTo Err
 
@@ -132,8 +132,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function ConfigItem_setAttribute(ByVal Name As String, ByVal Value As String) As String
-Const ProcName As String = "ConfigItem_setAttribute"
+Private Function IConfigItem_setAttribute(ByVal Name As String, ByVal Value As String) As String
+Const ProcName As String = "IConfigItem_setAttribute"
 
 On Error GoTo Err
 
@@ -145,12 +145,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Let ConfigItem_Value(ByVal RHS As String)
+Private Property Let IConfigItem_Value(ByVal RHS As String)
 Value = RHS
 End Property
 
-Private Property Get ConfigItem_Value() As String
-ConfigItem_Value = Value
+Private Property Get IConfigItem_Value() As String
+IConfigItem_Value = Value
 End Property
 
 '@================================================================================

@@ -165,7 +165,7 @@ End Property
 ' @see
 '
 '@/
-Public Property Get RootItem() As ConfigItem
+Public Property Get RootItem() As IConfigItem
 End Property
 
 '@================================================================================

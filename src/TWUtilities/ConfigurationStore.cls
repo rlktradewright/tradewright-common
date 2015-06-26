@@ -422,7 +422,7 @@ Dim section As ConfigurationSection
 Set section = SetSettingEx(settingPath, CStr(Value))
 section.SetAttribute AttributeNameType, AttributeValueTypeSelection
 
-Dim selsItem As ConfigItem
+Dim selsItem As IConfigItem
 On Error Resume Next
 Set selsItem = section.Config.ChildItems.Item(ConfigNameSelections)
 On Error GoTo Err

@@ -27,7 +27,7 @@ Option Explicit
 ' <pre>
 ' <tt>
 ' Dim cf As ConfigStoreProvider<br />
-' Dim root As ConfigItem<br />
+' Dim root As IConfigItem<br />
 ' Dim outputFilename As String<br />
 ' <br />
 ' Set cf = LoadConfigProviderFromXMLFile("C:\MyConfig.xml")<br />
@@ -140,7 +140,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Property Get ConfigStoreProvider_rootItem() As ConfigItem
+Private Property Get ConfigStoreProvider_rootItem() As IConfigItem
 Set ConfigStoreProvider_rootItem = RootItem
 End Property
 

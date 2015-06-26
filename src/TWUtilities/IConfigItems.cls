@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "ConfigItems"
+Attribute VB_Name = "IConfigItems"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -50,7 +50,7 @@ Option Explicit
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "ConfigItems"
+Private Const ModuleName                    As String = "IConfigItems"
 
 '@================================================================================
 ' Member variables
@@ -101,8 +101,8 @@ End Property
 '@/
 Public Function AddItem( _
                 ByVal Name As String, _
-                Optional ByVal value As String, _
-                Optional ByVal Comment As String) As ConfigItem
+                Optional ByVal Value As String, _
+                Optional ByVal Comment As String) As IConfigItem
 End Function
 
 ''
@@ -118,8 +118,8 @@ End Function
 '
 '@/
 Public Function AddClone( _
-                ByVal pItem As ConfigItem, _
-                ByVal pDeep As Boolean) As ConfigItem
+                ByVal pItem As IConfigItem, _
+                ByVal pDeep As Boolean) As IConfigItem
 End Function
 
 ''
@@ -158,9 +158,9 @@ End Function
 '@/
 Public Function InsertItemBefore( _
                 ByVal Name As String, _
-                Optional ByVal value As String, _
+                Optional ByVal Value As String, _
                 Optional ByVal Comment As String, _
-                Optional ByVal targetItem As ConfigItem) As ConfigItem
+                Optional ByVal targetItem As IConfigItem) As IConfigItem
 End Function
 
 ''
@@ -180,8 +180,7 @@ End Function
 '
 '@/
 Public Function Item( _
-                ByVal Name As String) As ConfigItem
-Attribute Item.VB_UserMemId = 0
+                ByVal Name As String) As IConfigItem
 End Function
 
 ''
@@ -201,7 +200,7 @@ End Function
 '@/
 Public Sub MoveItemBefore( _
                 ByVal itemSpecifier As Variant, _
-                Optional ByVal targetItem As ConfigItem)
+                Optional ByVal targetItem As IConfigItem)
 End Sub
 
 ''

@@ -25,7 +25,7 @@ Option Explicit
 ' <pre>
 ' <tt>
 ' Dim cf As ConfigStoreProvider<br />
-' Dim root As ConfigItem<br />
+' Dim root As IConfigItem<br />
 ' Dim outputFilename As String<br />
 ' <br />
 ' Set cf = LoadConfigProviderFromXMLFile("C:\MyConfig.xml")<br />
@@ -40,7 +40,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ConfigItems
+Implements IConfigItems
 Implements Enumerable
 
 '@================================================================================
@@ -56,7 +56,7 @@ Implements Enumerable
 '@================================================================================
 
 Private Type ConfigItemTableEntry
-    ci              As ConfigItem
+    ci              As IConfigItem
     Next            As Long
     Prev            As Long
 End Type
@@ -105,10 +105,10 @@ End Sub
 ' ConfigItems Interface Members
 '@================================================================================
 
-Private Function ConfigItems_AddClone( _
-                ByVal pItem As ConfigItem, _
-                ByVal pDeep As Boolean) As ConfigItem
-Const ProcName As String = "ConfigItems_AddClone"
+Private Function IConfigItems_AddClone( _
+                ByVal pItem As IConfigItem, _
+                ByVal pDeep As Boolean) As IConfigItem
+Const ProcName As String = "IConfigItems_AddClone"
 
 On Error GoTo Err
 
@@ -126,8 +126,8 @@ End If
 mElement.insertBefore mConfigStoreProvider.XMLDoc.createTextNode(vbNewLine & String(mIndent, vbTab)), mEndTagSpacer
 mElement.insertBefore lClonedElement, mEndTagSpacer
 
-Set ConfigItems_AddClone = AddItemFromNode(lClonedElement, Nothing)
-If pItem.Comment <> "" Then ConfigItems_AddClone.Comment = pItem.Comment
+Set IConfigItems_AddClone = AddItemFromNode(lClonedElement, Nothing)
+If pItem.Comment <> "" Then IConfigItems_AddClone.Comment = pItem.Comment
 
 changed
 
@@ -137,15 +137,15 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function ConfigItems_addItem( _
+Private Function IConfigItems_addItem( _
                 ByVal Name As String, _
                 Optional ByVal Value As String, _
-                Optional ByVal Comment As String) As ConfigItem
-Const ProcName As String = "ConfigItems_addItem"
+                Optional ByVal Comment As String) As IConfigItem
+Const ProcName As String = "IConfigItems_addItem"
 
 On Error GoTo Err
 
-Set ConfigItems_addItem = AddItem(Name, Value, Comment)
+Set IConfigItems_addItem = AddItem(Name, Value, Comment)
 
 Exit Function
 
@@ -153,8 +153,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub ConfigItems_Clear()
-Const ProcName As String = "ConfigItems_Clear"
+Private Sub IConfigItems_Clear()
+Const ProcName As String = "IConfigItems_Clear"
 
 On Error GoTo Err
 
@@ -166,12 +166,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function ConfigItems_Count() As Long
-Const ProcName As String = "ConfigItems_Count"
+Private Function IConfigItems_Count() As Long
+Const ProcName As String = "IConfigItems_Count"
 
 On Error GoTo Err
 
-ConfigItems_Count = Count
+IConfigItems_Count = Count
 
 Exit Function
 
@@ -179,12 +179,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get ConfigItems_Enumerator() As Enumerator
-Const ProcName As String = "ConfigItems_Enumerator"
+Private Property Get IConfigItems_Enumerator() As Enumerator
+Const ProcName As String = "IConfigItems_Enumerator"
 
 On Error GoTo Err
 
-Set ConfigItems_Enumerator = getEnumerator
+Set IConfigItems_Enumerator = getEnumerator
 
 Exit Property
 
@@ -192,16 +192,16 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function ConfigItems_insertItemBefore( _
+Private Function IConfigItems_insertItemBefore( _
                 ByVal Name As String, _
                 Optional ByVal Value As String, _
                 Optional ByVal Comment As String, _
-                Optional ByVal targetItem As ConfigItem) As ConfigItem
-Const ProcName As String = "ConfigItems_insertItemBefore"
+                Optional ByVal targetItem As IConfigItem) As IConfigItem
+Const ProcName As String = "IConfigItems_insertItemBefore"
 
 On Error GoTo Err
 
-Set ConfigItems_insertItemBefore = InsertItemBefore(Name, _
+Set IConfigItems_insertItemBefore = InsertItemBefore(Name, _
                                                 Value, _
                                                 Comment, _
                                                 targetItem)
@@ -212,13 +212,13 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function ConfigItems_Item( _
-                ByVal Name As String) As ConfigItem
-Const ProcName As String = "ConfigItems_Item"
+Private Function IConfigItems_Item( _
+                ByVal Name As String) As IConfigItem
+Const ProcName As String = "IConfigItems_Item"
 
 On Error GoTo Err
 
-Set ConfigItems_Item = Item(Name)
+Set IConfigItems_Item = Item(Name)
 
 Exit Function
 
@@ -226,10 +226,10 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub ConfigItems_moveItemBefore( _
+Private Sub IConfigItems_moveItemBefore( _
                 ByVal itemSpecifier As Variant, _
-                Optional ByVal targetItem As ConfigItem)
-Const ProcName As String = "ConfigItems_moveItemBefore"
+                Optional ByVal targetItem As IConfigItem)
+Const ProcName As String = "IConfigItems_moveItemBefore"
 
 On Error GoTo Err
 
@@ -241,12 +241,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function ConfigItems_NewEnum() As IUnknown
-Const ProcName As String = "ConfigItems_NewEnum"
+Private Function IConfigItems_NewEnum() As IUnknown
+Const ProcName As String = "IConfigItems_NewEnum"
 
 On Error GoTo Err
 
-Set ConfigItems_NewEnum = getEnumerator
+Set IConfigItems_NewEnum = getEnumerator
 
 Exit Function
 
@@ -254,15 +254,15 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub ConfigItems_Remove(ByVal itemSpecifier As Variant)
-Const ProcName As String = "ConfigItems_Remove"
+Private Sub IConfigItems_Remove(ByVal itemSpecifier As Variant)
+Const ProcName As String = "IConfigItems_Remove"
 
 On Error GoTo Err
 
 If IsObject(itemSpecifier) Then
     Dim obj As Object
     Set obj = itemSpecifier
-    If Not TypeOf obj Is ConfigItem Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid object type"
+    If Not TypeOf obj Is IConfigItem Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid object type"
     removeItemByIdentity obj
 Else
     removeItemByName CStr(itemSpecifier)
@@ -655,7 +655,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub removeItemByIdentity( _
-                ByVal obj As ConfigItem)
+                ByVal obj As IConfigItem)
 Dim en As Enumerator
 Const ProcName As String = "removeItemByIdentity"
 
@@ -767,7 +767,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function findItemIndex( _
-                ByVal Item As ConfigItem) As Long
+                ByVal Item As IConfigItem) As Long
 Dim lIndex As Variant
 Dim en As Enumerator
 
