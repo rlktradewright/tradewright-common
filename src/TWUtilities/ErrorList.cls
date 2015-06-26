@@ -128,7 +128,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddCollectionChangeListener( _
-                ByVal pListener As CollectionChangeListener)
+                ByVal pListener As ICollectionChangeListener)
 Const ProcName As String = "AddCollectionChangeListener"
 On Error GoTo Err
 
@@ -270,7 +270,7 @@ End Function
 ' @param listener
 '   The object which is to be unregistered.
 '@/
-Public Sub RemoveCollectionChangeListener(ByVal pListener As CollectionChangeListener)
+Public Sub RemoveCollectionChangeListener(ByVal pListener As ICollectionChangeListener)
 Const ProcName As String = "RemoveCollectionChangeListener"
 On Error GoTo Err
 
@@ -300,7 +300,7 @@ If Not affectedObject Is Nothing Then Set ev.AffectedItem = affectedObject
 mChangeListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mChangeListeners.Count
-    Dim lListener As CollectionChangeListener
+    Dim lListener As ICollectionChangeListener
     Set lListener = mChangeListeners.GetListener(i)
     lListener.Change ev
 Next
