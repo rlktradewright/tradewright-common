@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "LogListener"
+Attribute VB_Name = "ILogListener"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -40,7 +40,7 @@ Option Explicit
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "LogListener"
+Private Const ModuleName                    As String = "ILogListener"
 
 '@================================================================================
 ' Member variables

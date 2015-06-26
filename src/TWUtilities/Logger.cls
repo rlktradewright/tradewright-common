@@ -200,7 +200,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddLogListener( _
-                ByVal pListener As LogListener)
+                ByVal pListener As ILogListener)
 Const ProcName As String = "AddLogListener"
 On Error GoTo Err
 
@@ -223,7 +223,7 @@ mFinished = True
 mLogListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mLogListeners.Count
-    Dim lListener As LogListener
+    Dim lListener As ILogListener
     Set lListener = mLogListeners.GetListener(i)
     lListener.Finish
 Next
@@ -345,7 +345,7 @@ End Sub
 '   The object which is to be unregistered.
 '@/
 Public Sub RemoveLogListener( _
-                ByVal pListener As LogListener)
+                ByVal pListener As ILogListener)
 Const ProcName As String = "RemoveLogListener"
 On Error GoTo Err
 
@@ -371,7 +371,7 @@ On Error GoTo Err
 mLogListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mLogListeners.Count
-    Dim lListener As LogListener
+    Dim lListener As ILogListener
     Set lListener = mLogListeners.GetListener(i)
     lListener.Notify Logrec
 Next

@@ -1729,7 +1729,7 @@ Public Function CreateConsoleLogListener( _
                 Optional ByVal timestampFormat As TimestampFormats = TimestampDateAndTimeISO8601, _
                 Optional ByVal includeInfoType As Boolean, _
                 Optional ByVal includeTimestamp As Boolean = True, _
-                Optional ByVal includeLogLevel As Boolean = True) As LogListener
+                Optional ByVal includeLogLevel As Boolean = True) As ILogListener
 Const ProcName As String = "CreateConsoleLogListener"
 On Error GoTo Err
 
@@ -1804,7 +1804,7 @@ Public Function CreateFileLogListener( _
                 Optional ByVal timestampFormat As TimestampFormats = TimestampDateAndTimeISO8601, _
                 Optional ByVal includeInfoType As Boolean, _
                 Optional ByVal includeTimestamp As Boolean = True, _
-                Optional ByVal includeLogLevel As Boolean = True) As LogListener
+                Optional ByVal includeLogLevel As Boolean = True) As ILogListener
 Const ProcName As String = "CreateFileLogListener"
 On Error GoTo Err
 

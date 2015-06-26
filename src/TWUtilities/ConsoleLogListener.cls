@@ -25,7 +25,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements LogListener
+Implements ILogListener
 
 '@================================================================================
 ' Events
@@ -64,9 +64,9 @@ Private mFinished                           As Boolean
 ' LogListener Interface Members
 '@================================================================================
 
-Private Sub LogListener_finish()
+Private Sub ILogListener_finish()
 
-Const ProcName As String = "LogListener_finish"
+Const ProcName As String = "ILogListener_finish"
 
 On Error GoTo Err
 
@@ -81,8 +81,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Sub LogListener_notify(ByVal Logrec As LogRecord)
-Const ProcName As String = "LogListener_notify"
+Private Sub ILogListener_notify(ByVal Logrec As LogRecord)
+Const ProcName As String = "ILogListener_notify"
 
 On Error GoTo Err
 

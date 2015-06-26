@@ -89,7 +89,7 @@ Private mLogTokens(9)                               As String
 '   The object which is to act as a listener.
 '@/
 Public Sub AddLogListener( _
-                ByVal pListener As LogListener)
+                ByVal pListener As ILogListener)
 Const ProcName As String = "AddLogListener"
 On Error GoTo Err
 
@@ -210,7 +210,7 @@ End Sub
 '   The object which is to be unregistered.
 '@/
 Public Sub RemoveLogListener( _
-                ByVal pListener As LogListener)
+                ByVal pListener As ILogListener)
 Const ProcName As String = "RemoveLogListener"
 On Error GoTo Err
 

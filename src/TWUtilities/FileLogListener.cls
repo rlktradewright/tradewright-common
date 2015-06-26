@@ -25,7 +25,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements LogListener
+Implements ILogListener
 
 '@================================================================================
 ' Events
@@ -66,7 +66,7 @@ Private mFinished                           As Boolean
 ' LogListener Interface Members
 '@================================================================================
 
-Private Sub LogListener_finish()
+Private Sub ILogListener_finish()
 
 mFinished = True
 
@@ -75,7 +75,7 @@ mTs.Close
 Set mTs = Nothing
 End Sub
 
-Private Sub LogListener_notify(ByVal Logrec As LogRecord)
+Private Sub ILogListener_notify(ByVal Logrec As LogRecord)
 If mFinished Then Exit Sub
 mTs.WriteLine mFormatter.FormatRecord(Logrec)
 End Sub

@@ -42,7 +42,7 @@ Private Const SwitchSettings                        As String = "Settings"
 
 Private mApplicationName As String
 Private mApplicationGroupName As String
-Private mDefaultLogListener As LogListener
+Private mDefaultLogListener As ILogListener
 
 '@================================================================================
 ' Class Event Handlers
@@ -92,11 +92,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Public Property Let gDefaultLogListener(ByVal Value As LogListener)
+Public Property Let gDefaultLogListener(ByVal Value As ILogListener)
 Set mDefaultLogListener = Value
 End Property
 
-Public Property Get gDefaultLogListener() As LogListener
+Public Property Get gDefaultLogListener() As ILogListener
 Set gDefaultLogListener = mDefaultLogListener
 End Property
 
