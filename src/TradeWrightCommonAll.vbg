@@ -1,0 +1,11 @@
+VBGROUP 5.0
+StartupProject=TWUtilities\TWUtilities.vbp
+Project=ExtProps\ExtProps.vbp
+Project=ExtEvents\ExtEvents.vbp
+Project=BusObjUtils\BusObjUtils.vbp
+Project=TWControls\TWControls.vbp
+Project=GraphicsUtils\GraphicsUtils.vbp
+Project=LayeredGraphics\LayeredGraphics.vbp
+Project=GraphObjUtils\GraphObjUtils.vbp
+Project=GraphObj\GraphObj.vbp
+Project=SampleApps\LayeredGraphicsTest\SpriteControlLib\SpriteControlLib.vbp

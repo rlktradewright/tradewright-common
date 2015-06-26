@@ -1,5 +1,5 @@
 Type=OleDll
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\System32\stdole2.tlb#OLE Automation
 Reference=*\G{84EF934D-EBFF-4233-A499-48E77ACC10E2}#1.0#0#..\ExtProps\ExtProps40.dll#TradeWright Extended Properties Service Version 4.0
 Reference=*\G{313B419D-EDE6-4910-9D4B-CD1FF3B27454}#1.0#0#..\GraphicsUtils\GraphicsUtils40.dll#TradeWright Graphics Utilities v4.0
 Reference=*\G{24FFB904-29C6-4CF5-AEB4-ECC3216B7A79}#1.0#0#..\LayeredGraphics\LayeredGraphics40.dll#TradeWright Layered Graphics Engine v4.0
