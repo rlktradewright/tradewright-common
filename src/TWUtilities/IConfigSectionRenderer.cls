@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "ConfigSectionRenderer"
+Attribute VB_Name = "IConfigSectionRenderer"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -38,7 +38,7 @@ Option Explicit
 ' Constants
 '@================================================================================
 
-Private Const ModuleName                            As String = "ConfigSectionRenderer"
+Private Const ModuleName                            As String = "IConfigSectionRenderer"
 
 '@================================================================================
 ' Member variables
@@ -73,7 +73,7 @@ Public Sub ApplyChanges()
 End Sub
 
 Public Sub Initialise( _
-                ByVal configHost As ConfigSectionHost, _
+                ByVal configHost As IConfigSectionHost, _
                 ByVal configSection As ConfigurationSection, _
                 ByVal readonly As Boolean)
                 
