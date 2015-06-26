@@ -26,10 +26,6 @@ set BIN-PATH=%BIN-PATH%\TradeWright.Common
 
 call makedll.bat TWUtilities TWUtilities /T:DLL /B:%BINARY_COMPAT% /c
 if errorlevel 1 pause
-
-if not "%BINARY_COMPAT%" == "B" call makeSetProjectComp.bat
-if errorlevel 1 pause
-
 call makedll.bat ExtProps ExtProps /T:DLL /B:%BINARY_COMPAT%
 if errorlevel 1 pause
 call makedll.bat ExtEvents ExtEvents /T:DLL /B:%BINARY_COMPAT%
