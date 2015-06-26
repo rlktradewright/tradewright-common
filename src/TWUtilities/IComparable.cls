@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "Comparable"
+Attribute VB_Name = "IComparable"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -41,7 +41,7 @@ Option Explicit
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "Comparable"
+Private Const ModuleName                    As String = "IComparable"
 
 '@================================================================================
 ' Member variables
@@ -91,7 +91,7 @@ Private Const ModuleName                    As String = "Comparable"
 '   The object to which this object is to be compared.
 '@/
 Public Function CompareTo( _
-                ByVal obj As Comparable) As Long
+                ByVal obj As IComparable) As Long
                 
 End Function
 

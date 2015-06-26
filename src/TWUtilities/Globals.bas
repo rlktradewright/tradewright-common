@@ -1100,7 +1100,7 @@ Public Sub gSortObjectsAsc( _
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
-Dim obj As Comparable
+Dim obj As IComparable
 
 ' holds the address pointer for one object when switching object references. It
 ' is necessary to do this by copying memory rather than setting references to
@@ -1165,7 +1165,7 @@ Public Sub gSortObjectsDesc( _
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
-Dim obj As Comparable
+Dim obj As IComparable
 
 ' holds the address pointer for one object when switching object references. It
 ' is necessary to do this by copying memory rather than setting references to

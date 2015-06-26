@@ -402,7 +402,7 @@ Case KeyTypeCaseSensitiveString
 Case KeyTypeDate
     If Not IsDate(Key) Then Err.Raise ErrorCodes.ErrClassCastException
 Case KeyTypeComparable
-    If Not TypeOf Key Is Comparable Then Err.Raise ErrorCodes.ErrClassCastException
+    If Not TypeOf Key Is IComparable Then Err.Raise ErrorCodes.ErrClassCastException
 End Select
 
 If mRoot Is Nothing Then
@@ -674,8 +674,8 @@ Case KeyTypeString
 Case KeyTypeCaseSensitiveString
     compare = StrComp(value1, value2, vbBinaryCompare)
 Case KeyTypeComparable
-    Dim obj1 As Comparable
-    Dim obj2 As Comparable
+    Dim obj1 As IComparable
+    Dim obj2 As IComparable
     Set obj1 = value1
     Set obj2 = value2
     compare = obj1.CompareTo(obj2)

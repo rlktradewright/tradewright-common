@@ -26,7 +26,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Comparable
+Implements IComparable
 Implements Configurable
 
 '@================================================================================
@@ -68,17 +68,17 @@ Private mConfig                                         As ConfigurationSection
 ' Comparable Interface Members
 '@================================================================================
 
-Private Function Comparable_compareTo(ByVal obj As Comparable) As Long
+Private Function IComparable_compareTo(ByVal obj As IComparable) As Long
 Dim param As Parameter
 
-Const ProcName As String = "Comparable_compareTo"
+Const ProcName As String = "IComparable_compareTo"
 
 On Error GoTo Err
 
 If obj Is Nothing Then Err.Raise ErrorCodes.ErrNullPointerException, , "obj argument must not be Nothing"
 
 Set param = obj
-Comparable_compareTo = StrComp(mName, param.Name, vbTextCompare)
+IComparable_compareTo = StrComp(mName, param.Name, vbTextCompare)
 
 Exit Function
 
