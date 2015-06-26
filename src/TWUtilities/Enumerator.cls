@@ -34,31 +34,31 @@ Option Explicit
 ' As an example, such a collection class should include code like the following:
 ' <pre>
 ' <code>
-'    Implements Enumerable
+'    Implements IEnumerable
 '
 '    Private mUpdateSeq As Long
 '
-'    Public Property Get Enumerable_Enumerator() As Enumerator
+'    Public Property Get IEnumerable_Enumerator() As Enumerator
 '        Set Enumerator = CreateEnumerator(Me)
 '    End Property
 '
-'    Public Property Get Enumerable_UpdateSequence() As Long
-'        Enumerable_UpdateSequence = mUpdateSeq
+'    Public Property Get IEnumerable_UpdateSequence() As Long
+'        IEnumerable_UpdateSequence = mUpdateSeq
 '    End Property
 '
-'    Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+'    Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 '        .
 '        . <em>Code to implement this method</em>
 '        .
 '    End Function
 '
-'    Private Sub Enumerable_Remove(pCookie As Variant)
+'    Private Sub IEnumerable_Remove(pCookie As Variant)
 '        .
 '        . <em>Code to implement this method</em>
 '        .
 '    End Sub
 '
-'    Private Function Enumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
+'    Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
 '        .
 '        . <em>Code to implement this method</em>
 '        .
@@ -102,7 +102,7 @@ Private Const ModuleName                    As String = "Enumerator"
 ' Member variables
 '@================================================================================
 
-Private mTarget                             As Enumerable
+Private mTarget
 
 Private mInitialCookie                      As Variant
 Private mCookie                             As Variant
@@ -235,7 +235,7 @@ gNotifyUnhandledError ProcName, ModuleName
 End Function
 
 Friend Sub Initialise( _
-                ByVal target As Enumerable, _
+                ByVal target, _
                 Optional ByVal pCookie As Variant)
 Const ProcName As String = "Initialise"
 On Error GoTo Err

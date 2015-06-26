@@ -30,7 +30,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 Implements StateChangeListener
 
 '@================================================================================
@@ -198,12 +198,12 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator(EnumeratorTypes.Runnable)
+Set IEnumerable_Enumerator = getEnumerator(EnumeratorTypes.Runnable)
 
 Exit Property
 
@@ -211,13 +211,13 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem(pItem As Variant, pCookie As Variant) As Boolean
+Private Function IEnumerable_NextItem(pItem As Variant, pCookie As Variant) As Boolean
 Const NoMoreItems As Long = &H7FFFFFFF
 Dim lIndex As Long
 Dim enumType As Long
 Dim enumAll As Boolean
 
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 
 On Error GoTo Err
 
@@ -318,7 +318,7 @@ Else
     pCookie = mTaskTable(lIndex).Next Or enumType Or IIf(enumAll, EnumeratorTypes.All, 0)
 End If
 
-Enumerable_NextItem = True
+IEnumerable_NextItem = True
 
 Exit Function
 
@@ -326,19 +326,19 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(pCookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 Err.Raise ErrorCodes.ErrUnsupportedOperationException, , "Tasks cannot be removed via an enumerator"
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_Skip"
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
+Const ProcName As String = "IEnumerable_Skip"
 Err.Raise ErrorCodes.ErrUnsupportedOperationException, , "Skip not suported"
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Const ProcName As String = "Enumerable_UpdateSequence"
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+Const ProcName As String = "IEnumerable_UpdateSequence"
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================
@@ -1199,7 +1199,7 @@ Do While en.MoveNext
         "; State: " & ts.State & _
         "; Start time: " & gFormatTimestamp(ts.StartTime, TimestampDateAndTimeISO8601) & _
         "; Last Run time: " & gFormatTimestamp(ts.LastRunTime, TimestampDateAndTimeISO8601) & _
-        "; CPU time (ms): " & format(ts.TotalCPUTime, "0.0") & vbCrLf
+        "; CPU time (ms): " & Format(ts.TotalCPUTime, "0.0") & vbCrLf
         
 Loop
 getTaskSummaryInfoFromEnumerator = s

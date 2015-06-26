@@ -680,7 +680,7 @@ ElseIf TypeOf Value Is Dictionary Then
 'ElseIf TypeOf Value Is SortedDictionary Then
 '    encodeSortedDictionary Value, sb
 ElseIf TypeOf Value Is Collection Or _
-    TypeOf Value Is Enumerable _
+    TypeOf Value Is IEnumerable _
 Then
     encodeEnumerableObject Value, sb
 Else

@@ -32,7 +32,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -96,12 +96,12 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator
 
 Exit Property
 
@@ -109,10 +109,10 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem( _
+Private Function IEnumerable_NextItem( _
                 Item As Variant, _
                 pCookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 
 On Error GoTo Err
 
@@ -133,7 +133,7 @@ lCookie.Current = Abs(lCookie.Current) + 1
 
 en.Next 1, Item, VarPtr(numFetched)
 
-Enumerable_NextItem = (numFetched <> 0)
+IEnumerable_NextItem = (numFetched <> 0)
 
 pCookie = lCookie
 
@@ -146,8 +146,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(pCookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 
 On Error GoTo Err
 
@@ -170,11 +170,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip( _
+Private Function IEnumerable_Skip( _
                 ByVal numToSkip As Long, _
                 pCookie As Variant) As Boolean
 
-Const ProcName As String = "Enumerable_Skip"
+Const ProcName As String = "IEnumerable_Skip"
 
 On Error GoTo Err
 
@@ -202,8 +202,8 @@ gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================

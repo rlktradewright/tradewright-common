@@ -546,7 +546,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Friend Function GetAllVisibleObjects() As Enumerable
+Friend Function GetAllVisibleObjects()
 Const ProcName As String = "GetAllVisibleObjects"
 On Error GoTo Err
 
@@ -561,7 +561,7 @@ End Function
 Friend Function GetObjectsInAreas( _
                 ByRef areasToRedraw() As TRectangle, _
                 ByVal pCount As Long, _
-                ByVal pLowestLayer As Long) As Enumerable
+                ByVal pLowestLayer As Long)
 Const ProcName As String = "GetObjectsInAreas"
 On Error GoTo Err
 

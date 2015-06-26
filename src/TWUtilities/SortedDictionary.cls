@@ -37,7 +37,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 Implements JSONable
 Implements Stringable
 
@@ -84,12 +84,12 @@ Private mUpdateSequence                     As Long
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator
 
 Exit Property
 
@@ -97,11 +97,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 Dim lCookie As EnumerationCookie
 Dim lEntry As DictionaryEntry
 
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 
 On Error GoTo Err
 
@@ -122,7 +122,7 @@ Else
 End If
 
 pCookie = lCookie
-If Not IsEmpty(Item) Then Enumerable_NextItem = True
+If Not IsEmpty(Item) Then IEnumerable_NextItem = True
 
 Exit Function
 
@@ -130,9 +130,9 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
+Private Sub IEnumerable_Remove(pCookie As Variant)
 Dim lCookie As EnumerationCookie
-Const ProcName As String = "Enumerable_Remove"
+Const ProcName As String = "IEnumerable_Remove"
 
 On Error GoTo Err
 
@@ -146,8 +146,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_Skip"
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
+Const ProcName As String = "IEnumerable_Skip"
 
 On Error GoTo Err
 
@@ -159,8 +159,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================
@@ -225,7 +225,7 @@ End Property
 '@/
 Public Property Get EntryEnumerator() As Enumerator
 Dim ee As New DictionaryEntriesEnum
-Dim en As Enumerable
+Dim en
 Const ProcName As String = "EntryEnumerator"
 
 On Error GoTo Err
@@ -339,7 +339,7 @@ End Property
 '@/
 Public Property Get KeyEnumerator() As Enumerator
 Dim ke As New DictionaryKeysEnum
-Dim en As Enumerable
+Dim en
 Const ProcName As String = "KeyEnumerator"
 
 On Error GoTo Err

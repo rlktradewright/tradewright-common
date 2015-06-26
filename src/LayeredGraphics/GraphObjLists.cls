@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -81,19 +81,19 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Set Enumerable_Enumerator = Enumerator
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Set IEnumerable_Enumerator = Enumerator
 End Property
 
-Private Function Enumerable_NextItem(Item As Variant, cookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_NextItem"
+Private Function IEnumerable_NextItem(Item As Variant, cookie As Variant) As Boolean
+Const ProcName As String = "IEnumerable_NextItem"
 On Error GoTo Err
 
 Dim lCookie As GraphObjListCookie
 Dim lIndex As Long
 
 If IsEmpty(cookie) Then
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
 Else
     lCookie = cookie
     If lCookie.Current < lCookie.From Then
@@ -104,14 +104,14 @@ Else
         
     Item = Empty
     cookie = Empty
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
     
     Do While lCookie.Current <= lCookie.To
         lIndex = mStripTableIndex.GetEntry(lCookie.Current)
         If filterValidIndex(lIndex) Then
             Set Item = mStripTable(lIndex).GraphobjList
             cookie = lCookie
-            Enumerable_NextItem = True
+            IEnumerable_NextItem = True
             Exit Do
         End If
         lCookie.Current = lCookie.Current + 1
@@ -127,8 +127,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(cookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(cookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 On Error GoTo Err
 
 Err.Raise ErrorCodes.ErrUnsupportedOperationException
@@ -139,8 +139,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_Skip"
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
+Const ProcName As String = "IEnumerable_Skip"
 On Error GoTo Err
 
 Err.Raise ErrorCodes.ErrUnsupportedOperationException
@@ -151,7 +151,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
+Private Property Get IEnumerable_UpdateSequence() As Long
 
 End Property
 

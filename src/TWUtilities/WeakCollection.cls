@@ -45,7 +45,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -83,11 +83,11 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Set Enumerable_Enumerator = getEnumerator
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Set IEnumerable_Enumerator = getEnumerator
 End Property
 
-Private Function Enumerable_NextItem( _
+Private Function IEnumerable_NextItem( _
                 Item As Variant, _
                 pCookie As Variant) As Boolean
 Dim ref As WeakReference
@@ -99,21 +99,21 @@ Else
 End If
 
 If pCookie > mCollection.Count Then
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
     Exit Function
 End If
 
 ref = mCollection.Item(pCookie)
 Set Item = ref.target
 
-Enumerable_NextItem = True
+IEnumerable_NextItem = True
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
+Private Sub IEnumerable_Remove(pCookie As Variant)
 mCollection.Remove pCookie
 End Sub
 
-Private Function Enumerable_Skip( _
+Private Function IEnumerable_Skip( _
                 ByVal numToSkip As Long, _
                 pCookie As Variant) As Boolean
 If IsEmpty(pCookie) Then pCookie = 1&
@@ -122,12 +122,12 @@ pCookie = pCookie + numToSkip
 
 If pCookie > mCollection.Count Then Exit Function
 
-Enumerable_Skip = True
+IEnumerable_Skip = True
 
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================

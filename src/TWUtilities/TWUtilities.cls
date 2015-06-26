@@ -1757,7 +1757,7 @@ End Function
 '   The initial Value for the pCookie used to keep track of the iteration.
 '@/
 Public Function CreateEnumerator( _
-                ByVal pTarget As Enumerable, _
+                ByVal pTarget, _
                 Optional ByVal pCookie As Variant) As Enumerator
 Set CreateEnumerator = New Enumerator
 CreateEnumerator.Initialise pTarget, pCookie

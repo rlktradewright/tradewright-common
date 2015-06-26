@@ -41,7 +41,7 @@ Option Explicit
 '@================================================================================
 
 Implements IConfigItems
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -278,12 +278,12 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator
 
 Exit Property
 
@@ -291,12 +291,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem( _
+Private Function IEnumerable_NextItem( _
                 ByRef Item As Variant, _
                 ByRef pCookie As Variant) As Boolean
 Dim i As Long
 
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 
 On Error GoTo Err
 
@@ -312,14 +312,14 @@ Do While i <> TailEntryIndex
     If Not mConfigItems(i).ci Is Nothing Then
         Set Item = mConfigItems(i).ci
         pCookie = i
-        Enumerable_NextItem = True
+        IEnumerable_NextItem = True
         Exit Function
     End If
     i = mConfigItems(i).Next
 Loop
 
 pCookie = &H7FFFFFFF
-Enumerable_NextItem = False
+IEnumerable_NextItem = False
 
 Exit Function
 
@@ -327,8 +327,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(pCookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 
 On Error GoTo Err
 
@@ -340,12 +340,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip( _
+Private Function IEnumerable_Skip( _
                 ByVal numToSkip As Long, _
                 ByRef pCookie As Variant) As Boolean
 Dim i As Long
 
-Const ProcName As String = "Enumerable_Skip"
+Const ProcName As String = "IEnumerable_Skip"
 
 On Error GoTo Err
 
@@ -357,7 +357,7 @@ Do While i <> TailEntryIndex
         pCookie = mConfigItems(i).Next
         numToSkip = numToSkip - 1
         If numToSkip = 0 Then
-            Enumerable_Skip = True
+            IEnumerable_Skip = True
             Exit Function
         End If
     End If
@@ -365,7 +365,7 @@ Do While i <> TailEntryIndex
 Loop
 
 pCookie = &H7FFFFFFF
-Enumerable_Skip = False
+IEnumerable_Skip = False
 
 Exit Function
 
@@ -374,12 +374,12 @@ gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Const ProcName As String = "Enumerable_UpdateSequence"
+Private Property Get IEnumerable_UpdateSequence() As Long
+Const ProcName As String = "IEnumerable_UpdateSequence"
 
 On Error GoTo Err
 
-Enumerable_UpdateSequence = mUpdateSequence
+IEnumerable_UpdateSequence = mUpdateSequence
 
 Exit Property
 

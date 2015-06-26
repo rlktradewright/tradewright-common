@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -65,33 +65,33 @@ Private mCycle                  As Long
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Set Enumerable_Enumerator = Enumerator
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Set IEnumerable_Enumerator = Enumerator
 End Property
 
-Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 Dim lCookie As LayeredListCookie
 
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 On Error GoTo Err
 
 If IsEmpty(pCookie) Then
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
 Else
     lCookie = pCookie
     getCookie lCookie
     If lCookie.En Is Nothing Then
-        Enumerable_NextItem = False
+        IEnumerable_NextItem = False
     ElseIf lCookie.En.MoveNext Then
-        Enumerable_NextItem = True
+        IEnumerable_NextItem = True
     ElseIf getNextCookie(lCookie) Then
-        Enumerable_NextItem = lCookie.En.MoveNext
+        IEnumerable_NextItem = lCookie.En.MoveNext
     Else
-        Enumerable_NextItem = False
+        IEnumerable_NextItem = False
     End If
 End If
 
-If Enumerable_NextItem Then
+If IEnumerable_NextItem Then
     Item = lCookie.En.Current
     pCookie = lCookie
 Else
@@ -109,9 +109,9 @@ Private Sub getCookie(ByRef pCookie As LayeredListCookie)
 If pCookie.En Is Nothing Then getNextCookie pCookie
 End Sub
 
-Private Sub Enumerable_Remove(cookie As Variant)
+Private Sub IEnumerable_Remove(cookie As Variant)
 Dim lCookie As LayeredListCookie
-Const ProcName As String = "Enumerable_Remove"
+Const ProcName As String = "IEnumerable_Remove"
 On Error GoTo Err
 
 lCookie = cookie
@@ -123,12 +123,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
 
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================

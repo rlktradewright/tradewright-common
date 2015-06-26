@@ -43,7 +43,7 @@ Option Explicit
 '@================================================================================
 
 Implements IConfigurable
-Implements Enumerable
+Implements IEnumerable
 Implements JSONable
 
 '@================================================================================
@@ -175,11 +175,11 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator
 
 Exit Property
 
@@ -187,10 +187,10 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem( _
+Private Function IEnumerable_NextItem( _
                 ByRef pItem As Variant, _
                 ByRef pCookie As Variant) As Boolean
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 On Error GoTo Err
 
 If IsEmpty(pCookie) Then
@@ -206,7 +206,7 @@ End If
 
 Set pItem = mParams(CLng(pCookie))
 
-Enumerable_NextItem = True
+IEnumerable_NextItem = True
 
 Exit Function
 
@@ -214,8 +214,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(pCookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 On Error GoTo Err
 
 removeParam CLng(pCookie), True
@@ -226,11 +226,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip( _
+Private Function IEnumerable_Skip( _
                 ByVal numToSkip As Long, _
                 ByRef pCookie As Variant) As Boolean
 
-Const ProcName As String = "Enumerable_Skip"
+Const ProcName As String = "IEnumerable_Skip"
 On Error GoTo Err
 
 If IsEmpty(pCookie) Then
@@ -246,7 +246,7 @@ If pCookie > mParamsIndex Then
     Exit Function
 End If
 
-Enumerable_Skip = True
+IEnumerable_Skip = True
 
 Exit Function
 
@@ -254,8 +254,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================

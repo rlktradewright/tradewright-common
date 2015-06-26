@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -67,11 +67,11 @@ End Sub
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Set Enumerable_Enumerator = Enumerator
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Set IEnumerable_Enumerator = Enumerator
 End Property
 
-Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 
 Dim lCookie As Long
 
@@ -82,23 +82,23 @@ Else
 End If
 
 If lCookie = mLastIndex Then
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
     Exit Function
 End If
     
 lCookie = gNextListEntryIndex(lCookie)
 If lCookie = mLastIndex Then
-    Enumerable_NextItem = False
+    IEnumerable_NextItem = False
 Else
     Item = gGetListItem(lCookie)
-    Enumerable_NextItem = True
+    IEnumerable_NextItem = True
 End If
 
 pCookie = lCookie
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
-Const ProcName As String = "Enumerable_Remove"
+Private Sub IEnumerable_Remove(pCookie As Variant)
+Const ProcName As String = "IEnumerable_Remove"
 On Error GoTo Err
 
 Assert Not IsEmpty(pCookie), "No current item"
@@ -116,12 +116,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, cookie As Variant) As Boolean
 
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mUpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================

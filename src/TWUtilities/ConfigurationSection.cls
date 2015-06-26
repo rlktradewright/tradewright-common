@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Enumerable
+Implements IEnumerable
 
 '@================================================================================
 ' Events
@@ -48,7 +48,7 @@ Private Const ModuleName                            As String = "ConfigurationSe
 
 Private mConfigFile                                 As ConfigurationStore
 Private mConfig                                     As IConfigItem
-Private mConfigEnumble                              As Enumerable
+Private mConfigEnumble
 Private mRelativePath                               As String
 Private mCache                                      As ConfigSectionCache
 Private mIsPrivate                                  As Boolean
@@ -63,12 +63,12 @@ Private mParentRef                                  As WeakReference
 ' Enumerable Interface Members
 '@================================================================================
 
-Private Property Get Enumerable_Enumerator() As Enumerator
-Const ProcName As String = "Enumerable_Enumerator"
+Private Property Get IEnumerable_Enumerator() As Enumerator
+Const ProcName As String = "IEnumerable_Enumerator"
 
 On Error GoTo Err
 
-Set Enumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator
 
 Exit Property
 
@@ -76,13 +76,13 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Private Function Enumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
 Dim en As Enumerator
 Dim ci As IConfigItem
 Dim section As ConfigurationSection
 Dim relPath As String
 
-Const ProcName As String = "Enumerable_NextItem"
+Const ProcName As String = "IEnumerable_NextItem"
 
 On Error GoTo Err
 
@@ -114,7 +114,7 @@ If en.MoveNext Then
         mCache.Add section
     End If
     Set Item = section
-    Enumerable_NextItem = True
+    IEnumerable_NextItem = True
 Else
     Item = Empty
 End If
@@ -125,12 +125,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub Enumerable_Remove(pCookie As Variant)
+Private Sub IEnumerable_Remove(pCookie As Variant)
 Dim en As Enumerator
 Dim ci As IConfigItem
 Dim Path As String
 
-Const ProcName As String = "Enumerable_Remove"
+Const ProcName As String = "IEnumerable_Remove"
 
 On Error GoTo Err
 
@@ -146,11 +146,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function Enumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
+Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
 Dim en As Enumerator
 Dim i As Long
 
-Const ProcName As String = "Enumerable_Skip"
+Const ProcName As String = "IEnumerable_Skip"
 
 On Error GoTo Err
 
@@ -160,7 +160,7 @@ For i = 1 To numToSkip
     If Not en.MoveNext Then Exit Function
 Next
 
-Enumerable_Skip = True
+IEnumerable_Skip = True
 
 Exit Function
 
@@ -168,8 +168,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Property Get Enumerable_UpdateSequence() As Long
-Enumerable_UpdateSequence = mConfigEnumble.UpdateSequence
+Private Property Get IEnumerable_UpdateSequence() As Long
+IEnumerable_UpdateSequence = mConfigEnumble.UpdateSequence
 End Property
 
 '@================================================================================
