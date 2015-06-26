@@ -213,7 +213,7 @@ End Sub
 ' @param listener
 '   The object which is to act as a listener.
 '@/
-Public Sub AddTaskCompletionListener(ByVal pListener As TaskCompletionListener)
+Public Sub AddTaskCompletionListener(ByVal pListener As ITaskCompletionListener)
 Const ProcName As String = "AddTaskCompletionListener"
 On Error GoTo Err
 
@@ -304,7 +304,7 @@ failPoint = "Notifying listeners"
 mTaskCompletionListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mTaskCompletionListeners.Count
-    Dim lListener As TaskCompletionListener
+    Dim lListener As ITaskCompletionListener
     Set lListener = mTaskCompletionListeners.GetListener(i)
     lListener.TaskCompleted ev
 Next
@@ -466,7 +466,7 @@ End Sub
 '
 '@/
 Public Sub RemoveTaskCompletionListener( _
-                ByVal pListener As TaskCompletionListener)
+                ByVal pListener As ITaskCompletionListener)
 Const ProcName As String = "RemoveTaskCompletionListener"
 On Error GoTo Err
 
