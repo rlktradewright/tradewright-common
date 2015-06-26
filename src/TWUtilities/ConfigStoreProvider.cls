@@ -185,7 +185,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddChangeListener( _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
                 
 End Sub
 
@@ -196,7 +196,7 @@ End Sub
 '   The object to be unregistered.
 '@/
 Public Sub RemoveChangeListener( _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
                 
 End Sub
 

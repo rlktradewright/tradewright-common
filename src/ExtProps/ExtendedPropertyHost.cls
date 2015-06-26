@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ChangeListener
+Implements IChangeListener
 Implements IExtPropertyChangedListener
 
 '@================================================================================
@@ -70,7 +70,7 @@ End Sub
 ' ChangeListener Interface Members
 '@================================================================================
 
-Private Sub ChangeListener_Change(ev As ChangeEventData)
+Private Sub IChangeListener_Change(ev As ChangeEventData)
 fireChange ev.ChangeType
 End Sub
 
@@ -122,7 +122,7 @@ End Property
 '@================================================================================
 
 Public Sub AddChangeListener( _
-            ByVal pListener As ChangeListener)
+            ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener
 End Sub
 
@@ -310,7 +310,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Sub RemoveChangeListener( _
-            ByVal pListener As ChangeListener)
+            ByVal pListener As IChangeListener)
 gRemoveChangeListener Me, pListener
 End Sub
 

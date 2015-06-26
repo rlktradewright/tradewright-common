@@ -104,11 +104,11 @@ End Property
 ' Methods
 '@================================================================================
 
-Public Sub AddChangeListener(ByVal pListener As ChangeListener)
+Public Sub AddChangeListener(ByVal pListener As IChangeListener)
 
 End Sub
 
-Public Sub RemoveChangeListener(ByVal pListener As ChangeListener)
+Public Sub RemoveChangeListener(ByVal pListener As IChangeListener)
 
 End Sub
 

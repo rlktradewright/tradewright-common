@@ -96,7 +96,7 @@ End Sub
 ' ConfigStoreProvider Interface Members
 '@================================================================================
 
-Private Sub ConfigStoreProvider_addChangeListener(ByVal pListener As ChangeListener)
+Private Sub ConfigStoreProvider_addChangeListener(ByVal pListener As IChangeListener)
 Const ProcName As String = "ConfigStoreProvider_addChangeListener"
 On Error GoTo Err
 
@@ -128,7 +128,7 @@ Private Property Get ConfigStoreProvider_dirty() As Boolean
 ConfigStoreProvider_dirty = mDirty
 End Property
 
-Private Sub ConfigStoreProvider_removeChangeListener(ByVal pListener As ChangeListener)
+Private Sub ConfigStoreProvider_removeChangeListener(ByVal pListener As IChangeListener)
 Const ProcName As String = "ConfigStoreProvider_removeChangeListener"
 On Error GoTo Err
 
@@ -346,7 +346,7 @@ ev.ChangeType = ChangeType
 mChangeListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mChangeListeners.Count
-    Dim lListener As ChangeListener
+    Dim lListener As IChangeListener
     Set lListener = mChangeListeners.GetListener(i)
     lListener.Change ev
 Next

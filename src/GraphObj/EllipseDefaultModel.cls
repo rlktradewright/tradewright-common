@@ -62,7 +62,7 @@ End Sub
 ' IEllipseModel Interface Members
 '@================================================================================
 
-Private Sub IEllipseModel_AddChangeListener(ByVal pListener As ChangeListener)
+Private Sub IEllipseModel_AddChangeListener(ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener
 End Sub
 
@@ -119,7 +119,7 @@ Private Property Get IEllipseModel_Position() As Point
 Set IEllipseModel_Position = mPosition
 End Property
 
-Private Sub IEllipseModel_RemoveChangeListener(ByVal pListener As ChangeListener)
+Private Sub IEllipseModel_RemoveChangeListener(ByVal pListener As IChangeListener)
 gRemoveChangeListener Me, pListener
 End Sub
 

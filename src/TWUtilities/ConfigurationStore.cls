@@ -46,7 +46,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ChangeListener
+Implements IChangeListener
 
 '@================================================================================
 ' Events
@@ -95,7 +95,7 @@ End Sub
 ' ChangeListener Interface Members
 '@================================================================================
 
-Private Sub ChangeListener_Change(ev As ChangeEventData)
+Private Sub IChangeListener_Change(ev As ChangeEventData)
 Const ProcName As String = "ChangeListener_Change"
 On Error GoTo Err
 
@@ -104,7 +104,7 @@ Set ev.Source = Me
 mChangeListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mChangeListeners.Count
-    Dim lListener As ChangeListener
+    Dim lListener As IChangeListener
     Set lListener = mChangeListeners.GetListener(i)
     lListener.Change ev
 Next
@@ -178,7 +178,7 @@ End Property
 '   The object which is to act as a listener.
 '@/
 Public Sub AddChangeListener( _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
 Const ProcName As String = "addChangeListener"
 On Error GoTo Err
 
@@ -316,7 +316,7 @@ End Sub
 '   The object to be unregistered.
 '@/
 Public Sub RemoveChangeListener( _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
 Const ProcName As String = "removeChangeListener"
 On Error GoTo Err
 

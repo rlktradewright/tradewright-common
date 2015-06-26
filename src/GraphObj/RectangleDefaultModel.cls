@@ -61,7 +61,7 @@ End Sub
 ' IRectangleModel Interface Members
 '@================================================================================
 
-Private Sub IRectangleModel_AddChangeListener(ByVal pListener As ChangeListener)
+Private Sub IRectangleModel_AddChangeListener(ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener
 End Sub
 
@@ -118,7 +118,7 @@ Private Property Get IRectangleModel_Position() As Point
 Set IRectangleModel_Position = mPosition
 End Property
 
-Private Sub IRectangleModel_RemoveChangeListener(ByVal pListener As ChangeListener)
+Private Sub IRectangleModel_RemoveChangeListener(ByVal pListener As IChangeListener)
 gRemoveChangeListener Me, pListener
 End Sub
 

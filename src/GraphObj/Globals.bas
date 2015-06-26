@@ -64,7 +64,7 @@ Private mChangeListeners                            As New Collection
 
 Public Sub gAddChangeListener( _
                 ByVal pSource As Object, _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
 Const ProcName As String = "gAddChangeListener"
 On Error GoTo Err
 
@@ -106,7 +106,7 @@ If lListeners Is Nothing Then Exit Function
 lListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To lListeners.Count
-    Dim lListener As ChangeListener
+    Dim lListener As IChangeListener
     Set lListener = lListeners.GetListener(i)
     lListener.Change ev
 Next
@@ -156,7 +156,7 @@ End Sub
 
 Public Sub gRemoveChangeListener( _
                 ByVal pSource As Object, _
-                ByVal pListener As ChangeListener)
+                ByVal pListener As IChangeListener)
 Const ProcName As String = "gRemoveChangeListener"
 On Error GoTo Err
 

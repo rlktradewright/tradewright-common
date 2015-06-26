@@ -61,7 +61,7 @@ Private mValue                                      As Double
 ' IDataPointModel Interface Members
 '@================================================================================
 
-Private Sub IDataPointModel_AddChangeListener(ByVal pListener As ChangeListener)
+Private Sub IDataPointModel_AddChangeListener(ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener
 End Sub
 
@@ -118,7 +118,7 @@ Private Property Get IDataPointModel_Position() As Point
 Set IDataPointModel_Position = mPosition
 End Property
 
-Private Sub IDataPointModel_RemoveChangeListener(ByVal pListener As ChangeListener)
+Private Sub IDataPointModel_RemoveChangeListener(ByVal pListener As IChangeListener)
 gRemoveChangeListener Me, pListener
 End Sub
 

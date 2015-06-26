@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ChangeListener
+Implements IChangeListener
 Implements IExtendedEventsSource
 Implements IGraphicObject
 
@@ -95,10 +95,10 @@ End Sub
 ' ChangeListener Interface Members
 '@================================================================================
 
-Private Sub ChangeListener_Change(ev As ChangeEventData)
+Private Sub IChangeListener_Change(ev As ChangeEventData)
 ' TODO: correct the change types enum name
 Dim lChangeType As DataPointChangeTypes
-lChangeType = ev.changeType
+lChangeType = ev.ChangeType
 Select Case lChangeType
 Case DataPointChangeTypes.DataPointValueChanged
     recordUpdateFromModel GDataPoint.gValueProperty, mModel.Value

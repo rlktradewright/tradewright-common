@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ChangeListener
+Implements IChangeListener
 Implements IGraphicObject
 Implements ISprite
 
@@ -94,9 +94,9 @@ End Sub
 ' ChangeListener Interface Members
 '@================================================================================
 
-Private Sub ChangeListener_Change(ev As ChangeEventData)
+Private Sub IChangeListener_Change(ev As ChangeEventData)
 Dim lChangeType As EllipseChangeTypes
-lChangeType = ev.changeType
+lChangeType = ev.ChangeType
 Select Case lChangeType
 Case EllipseChangeTypes.EllipseOrientationChanged
     recordUpdateFromModel GEllipse.gOrientationProperty, mModel.Orientation

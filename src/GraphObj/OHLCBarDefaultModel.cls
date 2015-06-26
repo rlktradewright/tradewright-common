@@ -104,11 +104,11 @@ End Property
 ' IOHLCBarModel Interface Members
 '@================================================================================
 
-Private Sub IOHLCBarModel_AddChangeListener(ByVal pListener As ChangeListener)
+Private Sub IOHLCBarModel_AddChangeListener(ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener
 End Sub
 
-Private Sub IOHLCBarModel_RemoveChangeListener(ByVal pListener As ChangeListener)
+Private Sub IOHLCBarModel_RemoveChangeListener(ByVal pListener As IChangeListener)
 gRemoveChangeListener Me, pListener
 End Sub
 
