@@ -234,7 +234,7 @@ End Sub
 ' @param listener
 '   The object which is to act as a listener.
 '@/
-Public Sub AddTaskProgressListener(ByVal pListener As TaskProgressListener)
+Public Sub AddTaskProgressListener(ByVal pListener As ITaskProgressListener)
 Const ProcName As String = "AddTaskProgressListener"
 On Error GoTo Err
 
@@ -368,7 +368,7 @@ gSetVariant ev.InterimResult, pInterimResult
 mTaskProgressListeners.SetCurrentListeners
 Dim i As Long
 For i = 1 To mTaskProgressListeners.Count
-    Dim lListener As TaskProgressListener
+    Dim lListener As ITaskProgressListener
     Set lListener = mTaskProgressListeners.GetListener(i)
     lListener.Progress ev
 Next
@@ -514,7 +514,7 @@ End Sub
 '
 '@/
 Public Sub RemoveTaskProgressListener( _
-                ByVal pListener As TaskProgressListener)
+                ByVal pListener As ITaskProgressListener)
 Const ProcName As String = "RemoveTaskProgressListener"
 On Error GoTo Err
 
