@@ -24,7 +24,7 @@ Option Explicit
 '
 ' <pre>
 ' <tt>
-' Dim cf As ConfigStoreProvider<br />
+' Dim cf As IConfigStoreProvider<br />
 ' Dim root As IConfigItem<br />
 ' Dim outputFilename As String<br />
 ' <br />

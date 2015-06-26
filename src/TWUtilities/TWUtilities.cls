@@ -1688,7 +1688,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Function CreateConfigurationStore( _
-                ByVal pConfigStoreProvider As ConfigStoreProvider, _
+                ByVal pConfigStoreProvider As IConfigStoreProvider, _
                 ByVal pFilename As String) As ConfigurationStore
 Const ProcName As String = "CreateConfigurationStore"
 
@@ -2243,7 +2243,7 @@ End Function
 '@/
 Public Function CreateXMLConfigurationProvider( _
                 Optional ByVal pApplicationName As String, _
-                Optional ByVal pApplicationVersion As String) As ConfigStoreProvider
+                Optional ByVal pApplicationVersion As String) As IConfigStoreProvider
 Const ProcName As String = "CreateXMLConfigurationProvider"
 On Error GoTo Err
 
@@ -3359,7 +3359,7 @@ End Function
 '   Data.
 '@/
 Public Function LoadConfigProviderFromXMLFile( _
-                ByVal filePath As String) As ConfigStoreProvider
+                ByVal filePath As String) As IConfigStoreProvider
 Const ProcName As String = "LoadConfigProviderFromXMLFile"
 On Error GoTo Err
 

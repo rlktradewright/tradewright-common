@@ -26,7 +26,7 @@ Option Explicit
 '
 ' <pre>
 ' <tt>
-' Dim cf As ConfigStoreProvider<br />
+' Dim cf As IConfigStoreProvider<br />
 ' Dim root As IConfigItem<br />
 ' Dim outputFilename As String<br />
 ' <br />
@@ -42,7 +42,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements ConfigStoreProvider
+Implements IConfigStoreProvider
 
 '@================================================================================
 ' Events
@@ -96,8 +96,8 @@ End Sub
 ' ConfigStoreProvider Interface Members
 '@================================================================================
 
-Private Sub ConfigStoreProvider_addChangeListener(ByVal pListener As IChangeListener)
-Const ProcName As String = "ConfigStoreProvider_addChangeListener"
+Private Sub IConfigStoreProvider_addChangeListener(ByVal pListener As IChangeListener)
+Const ProcName As String = "IConfigStoreProvider_addChangeListener"
 On Error GoTo Err
 
 mChangeListeners.Add pListener
@@ -108,28 +108,28 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Property Get ConfigStoreProvider_applicationName() As String
-ConfigStoreProvider_applicationName = ApplicationName
+Private Property Get IConfigStoreProvider_applicationName() As String
+IConfigStoreProvider_applicationName = ApplicationName
 End Property
 
-Private Property Let ConfigStoreProvider_applicationName(ByVal RHS As String)
+Private Property Let IConfigStoreProvider_applicationName(ByVal RHS As String)
 ApplicationName = RHS
 End Property
 
-Private Property Let ConfigStoreProvider_applicationVersion(ByVal RHS As String)
+Private Property Let IConfigStoreProvider_applicationVersion(ByVal RHS As String)
 ApplicationVersion = RHS
 End Property
 
-Private Property Get ConfigStoreProvider_applicationVersion() As String
-ConfigStoreProvider_applicationVersion = ApplicationVersion
+Private Property Get IConfigStoreProvider_applicationVersion() As String
+IConfigStoreProvider_applicationVersion = ApplicationVersion
 End Property
 
-Private Property Get ConfigStoreProvider_dirty() As Boolean
-ConfigStoreProvider_dirty = mDirty
+Private Property Get IConfigStoreProvider_dirty() As Boolean
+IConfigStoreProvider_dirty = mDirty
 End Property
 
-Private Sub ConfigStoreProvider_removeChangeListener(ByVal pListener As IChangeListener)
-Const ProcName As String = "ConfigStoreProvider_removeChangeListener"
+Private Sub IConfigStoreProvider_removeChangeListener(ByVal pListener As IChangeListener)
+Const ProcName As String = "IConfigStoreProvider_removeChangeListener"
 On Error GoTo Err
 
 mChangeListeners.Remove pListener
@@ -140,12 +140,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Property Get ConfigStoreProvider_rootItem() As IConfigItem
-Set ConfigStoreProvider_rootItem = RootItem
+Private Property Get IConfigStoreProvider_rootItem() As IConfigItem
+Set IConfigStoreProvider_rootItem = RootItem
 End Property
 
-Private Sub ConfigStoreProvider_save(Optional ByVal filePath As String)
-Const ProcName As String = "ConfigStoreProvider_save"
+Private Sub IConfigStoreProvider_save(Optional ByVal filePath As String)
+Const ProcName As String = "IConfigStoreProvider_save"
 On Error GoTo Err
 
 Save filePath

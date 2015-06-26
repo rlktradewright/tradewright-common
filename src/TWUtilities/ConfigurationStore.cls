@@ -72,7 +72,7 @@ Private Const ModuleName                            As String = "ConfigurationSt
 ' Member variables
 '@================================================================================
 
-Private mConfigStoreProvider                        As ConfigStoreProvider
+Private mConfigStoreProvider                        As IConfigStoreProvider
 
 Private mFilename                                   As String
 
@@ -288,7 +288,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Friend Sub Initialise( _
-                ByVal pConfigStoreProvider As ConfigStoreProvider, _
+                ByVal pConfigStoreProvider As IConfigStoreProvider, _
                 ByVal pFilename As String)
 Const ProcName As String = "Initialise"
 On Error GoTo Err

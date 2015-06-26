@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "ConfigStoreProvider"
+Attribute VB_Name = "IConfigStoreProvider"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -77,7 +77,7 @@ Option Explicit
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "ConfigStoreProvider"
+Private Const ModuleName                    As String = "IConfigStoreProvider"
 
 '@================================================================================
 ' Member variables

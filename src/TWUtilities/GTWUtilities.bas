@@ -105,7 +105,7 @@ End Property
 '@================================================================================
 
 Public Function gCreateConfigurationStore( _
-                ByVal pConfigStoreProvider As ConfigStoreProvider, _
+                ByVal pConfigStoreProvider As IConfigStoreProvider, _
                 ByVal pFilename As String) As ConfigurationStore
 Const ProcName As String = "gCreateConfigurationStore"
 
@@ -123,7 +123,7 @@ End Function
 
 Public Function gCreateXMLConfigurationProvider( _
                 Optional ByVal pApplicationName As String, _
-                Optional ByVal pApplicationVersion As String) As ConfigStoreProvider
+                Optional ByVal pApplicationVersion As String) As IConfigStoreProvider
                 
 Dim xmlConfigProvider As xmlConfigProvider
 
@@ -166,7 +166,7 @@ Public Function gGetDefaultConfigurationStore( _
                 ByVal pIgnoreInvalid As Boolean, _
                 ByVal pOptions As ConfigFileOptions) As ConfigurationStore
 Const ProcName As String = "gGetDefaultConfigurationStore"
-Dim baseConfigStoreProvider As ConfigStoreProvider
+Dim baseConfigStoreProvider As IConfigStoreProvider
 
 Select Case pOptions
     Case ConfigFileOptionNone
@@ -228,7 +228,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Function gLoadConfigProviderFromXMLFile( _
-                ByVal filePath As String) As ConfigStoreProvider
+                ByVal filePath As String) As IConfigStoreProvider
 Dim xmlConfigProvider As xmlConfigProvider
 
 Const ProcName As String = "gLoadConfigProviderFromXMLFile"
