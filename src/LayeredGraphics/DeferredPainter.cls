@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements DeferredAction
+Implements IDeferredAction
 
 '@================================================================================
 ' Events
@@ -78,10 +78,10 @@ End Sub
 ' DeferredAction Interface Members
 '================================================================================
 
-Private Sub DeferredAction_run(ByVal Data As Variant)
+Private Sub IDeferredAction_run(ByVal Data As Variant)
 Static et As ElapsedTimer
 
-Const ProcName As String = "DeferredAction_run"
+Const ProcName As String = "IDeferredAction_run"
 
 On Error GoTo Err
 

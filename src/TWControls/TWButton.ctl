@@ -34,7 +34,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements DeferredAction
+Implements IDeferredAction
 Implements ISubclassable
 Implements IThemeable
 
@@ -279,8 +279,8 @@ End Sub
 ' DeferredAction Interface Members
 '@================================================================================
 
-Private Sub DeferredAction_Run(ByVal Data As Variant)
-Const ProcName As String = "DeferredAction_Run"
+Private Sub IDeferredAction_Run(ByVal Data As Variant)
+Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
 If CLng(Data) = DeferredActions.DeferredActionFireMouseEnter Then

@@ -785,7 +785,7 @@ End Type
 ' @param Data
 '@/
 Public Type DeferredActionEntry
-    Action              As DeferredAction
+    Action              As IDeferredAction
     Data                As Variant
 End Type
 
@@ -2281,7 +2281,7 @@ End Function
 '   yielded.
 '@/
 Public Sub DeferAction( _
-                ByVal pAction As DeferredAction, _
+                ByVal pAction As IDeferredAction, _
                 Optional ByVal pData As Variant, _
                 Optional ByVal pDeferTime As Variant, _
                 Optional ByVal pDeferTimeUnits As ExpiryTimeUnits = ExpiryTimeUnits.ExpiryTimeUnitMilliseconds, _

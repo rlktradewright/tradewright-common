@@ -24,7 +24,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements DeferredAction
+Implements IDeferredAction
 
 '@================================================================================
 ' Events
@@ -105,9 +105,9 @@ End Sub
 ' DeferredAction Interface Members
 '@================================================================================
 
-Private Sub DeferredAction_Run( _
+Private Sub IDeferredAction_Run( _
                 ByVal Data As Variant)
-Const ProcName As String = "DeferredAction_Run"
+Const ProcName As String = "IDeferredAction_Run"
 
 On Error GoTo Err
 

@@ -110,7 +110,7 @@ End Sub
 '@================================================================================
 
 Friend Sub DeferAction( _
-                ByVal pAction As DeferredAction, _
+                ByVal pAction As IDeferredAction, _
                 Optional ByVal pData As Variant, _
                 Optional ByVal pDeferTime As Variant, _
                 Optional ByVal pDeferTimeUnits As ExpiryTimeUnits = ExpiryTimeUnits.ExpiryTimeUnitMilliseconds, _
