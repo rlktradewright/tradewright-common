@@ -26,7 +26,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements JSONable
+Implements IJSONable
 Implements Stringable
 
 '@================================================================================
@@ -76,8 +76,8 @@ Private mDisplayName                        As String
 ' JSONable Interface Members
 '@================================================================================
 
-Private Function JSONable_ToJSON() As String
-JSONable_ToJSON = ToString
+Private Function IJSONable_ToJSON() As String
+IJSONable_ToJSON = ToString
 End Function
 
 '@================================================================================

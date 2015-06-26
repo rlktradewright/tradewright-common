@@ -547,7 +547,7 @@ End Sub
 Private Sub encodeJSONableObject( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim obj As JSONable
+Dim obj As IJSONable
 Const ProcName As String = "encodeJSONableObject"
 
 On Error GoTo Err
@@ -673,7 +673,7 @@ baseType = VarType(Value) And (Not VbVarType.vbArray)
 
 If Value Is Nothing Then
     encodeNothing sb
-ElseIf TypeOf Value Is JSONable Then
+ElseIf TypeOf Value Is IJSONable Then
     encodeJSONableObject Value, sb
 ElseIf TypeOf Value Is Dictionary Then
     encodeDictionary Value, sb

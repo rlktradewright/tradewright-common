@@ -38,7 +38,7 @@ Option Explicit
 '@================================================================================
 
 Implements IEnumerable
-Implements JSONable
+Implements IJSONable
 Implements Stringable
 
 '@================================================================================
@@ -167,12 +167,12 @@ End Property
 ' JSONable Interface Members
 '@================================================================================
 
-Private Function JSONable_ToJSON() As String
-Const ProcName As String = "JSONable_ToJSON"
+Private Function IJSONable_ToJSON() As String
+Const ProcName As String = "IJSONable_ToJSON"
 
 On Error GoTo Err
 
-JSONable_ToJSON = ToString
+IJSONable_ToJSON = ToString
 
 Exit Function
 

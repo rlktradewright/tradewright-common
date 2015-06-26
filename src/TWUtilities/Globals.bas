@@ -1628,8 +1628,8 @@ Else
             Dim obj As Stringable
             Set obj = Value
             s = obj.ToString
-        ElseIf TypeOf Value Is JSONable Then
-            Dim objJ As JSONable
+        ElseIf TypeOf Value Is IJSONable Then
+            Dim objJ As IJSONable
             Set objJ = Value
             s = objJ.ToJSON
         Else
