@@ -1,0 +1,3 @@
+..\Bin\TradeWright.Common.ExternalComponents\MSCOMCTL.OCX
+..\Bin\TradeWright.Common.ExternalComponents\TLBINF32.DLL
+

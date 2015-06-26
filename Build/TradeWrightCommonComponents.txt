@@ -17,6 +17,4 @@
 // assembly?
 ..\Bin\TradeWright.Common\SpriteControlLib40.dll
 
-..\Bin\TradeWright.Common\mscomctl.OCX
-..\Bin\TradeWright.Common\TLBINF32.dll
 
