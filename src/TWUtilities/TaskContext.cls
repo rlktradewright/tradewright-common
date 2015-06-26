@@ -54,7 +54,7 @@ Private mTaskController                     As TaskController
 Private mTaskId                             As Long
 Private mName                               As String
 
-Private mTarget                             As Task
+Private mTarget                             As ITask
 
 Private mElapsedTimer                       As ElapsedTimer
 
@@ -191,7 +191,7 @@ Public Property Get State() As TaskStates
 State = mState
 End Property
 
-Friend Property Get target() As Task
+Friend Property Get target() As ITask
 Set target = mTarget
 End Property
 
@@ -351,7 +351,7 @@ gHandleUnexpectedError ProcName, ModuleName, failPoint
 End Sub
 
 Friend Sub Initialise( _
-                ByVal pTarget As Task, _
+                ByVal pTarget As ITask, _
                 ByVal pData As Variant, _
                 ByVal id As Long, _
                 ByVal pName As String, _

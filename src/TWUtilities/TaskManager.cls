@@ -780,7 +780,7 @@ gHandleUnexpectedError ProcName, ModuleName, failPoint
 End Sub
 
 Friend Function StartTask( _
-                ByVal pTarget As Task, _
+                ByVal pTarget As ITask, _
                 ByVal pPriority As TaskPriorities, _
                 Optional ByVal pName As String, _
                 Optional ByVal pCookie As Variant, _

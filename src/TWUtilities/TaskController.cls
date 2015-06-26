@@ -93,7 +93,7 @@ Private mTaskProgressListeners          As Listeners
 Private mTaskStateChangeListeners       As Listeners
 Private mTaskNotificationListeners      As Listeners
 
-Private mTarget                         As Task
+Private mTarget                         As ITask
 Private mCookie                         As Variant
 Private mTaskName                       As String
 
@@ -411,7 +411,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub Initialise( _
-                ByVal pTarget As Task, _
+                ByVal pTarget As ITask, _
                 ByVal pCookie As Variant, _
                 ByVal pTaskName As String, _
                 ByVal pTC As TaskContext)

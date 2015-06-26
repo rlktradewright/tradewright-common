@@ -4052,7 +4052,7 @@ End Sub
 '
 '@/
 Public Function StartTask( _
-                ByVal target As Task, _
+                ByVal target As ITask, _
                 ByVal Priority As TaskPriorities, _
                 Optional ByVal Name As String, _
                 Optional ByVal pCookie As Variant, _

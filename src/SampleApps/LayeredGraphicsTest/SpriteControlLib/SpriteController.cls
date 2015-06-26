@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Task
+Implements ITask
 
 '@================================================================================
 ' Events
@@ -72,12 +72,12 @@ Private mDisableDrawingDuringUpdates                As Boolean
 ' Task Interface Members
 '@================================================================================
 
-Private Sub Task_Cancel()
+Private Sub ITask_Cancel()
 mController.IsDrawingEnabled = True
 mTaskContext.Finish 0, True
 End Sub
 
-Private Sub Task_Run()
+Private Sub ITask_Run()
 Static et As ElapsedTimer
 Static et1 As ElapsedTimer
 Static et2 As ElapsedTimer
@@ -156,11 +156,11 @@ mTaskContext.Suspend 10
 
 End Sub
 
-Private Property Let Task_TaskContext(ByVal RHS As TaskContext)
+Private Property Let ITask_TaskContext(ByVal RHS As TaskContext)
 Set mTaskContext = RHS
 End Property
 
-Private Property Get Task_TaskName() As String
+Private Property Get ITask_TaskName() As String
 
 End Property
 

@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Task
+Implements ITask
 
 '@================================================================================
 ' Events
@@ -83,11 +83,11 @@ End Sub
 ' Task Interface Members
 '@================================================================================
 
-Private Sub Task_Cancel()
+Private Sub ITask_Cancel()
 
 End Sub
 
-Private Sub Task_Run()
+Private Sub ITask_Run()
 Dim et As Single
 
 
@@ -106,11 +106,11 @@ If Not mFinished Then
 End If
 End Sub
 
-Private Property Let Task_TaskContext(ByVal RHS As TaskContext)
+Private Property Let ITask_TaskContext(ByVal RHS As TaskContext)
 Set mTaskContext = RHS
 End Property
 
-Private Property Get Task_TaskName() As String
+Private Property Get ITask_TaskName() As String
 
 End Property
 
@@ -123,7 +123,7 @@ Private Sub mAppearanceTLI_StateChange(ev As StateChangeEventData)
 Const ProcName As String = "mAppearanceTLI_StateChange"
 On Error GoTo Err
 
-Select Case ev.state
+Select Case ev.State
 Case TimerListItemStates.TimerListItemStateExpired
     If Not mFinished Then
         changeAppearance
@@ -148,7 +148,7 @@ On Error GoTo Err
 
 Dim et As Single
 
-Select Case ev.state
+Select Case ev.State
 Case TimerListItemStates.TimerListItemStateExpired
     If Not mFinished Then
         et = mElapsedTimer.ElapsedTimeMicroseconds / 1000000

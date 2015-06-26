@@ -22,7 +22,7 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
-Implements Task
+Implements ITask
 
 '@================================================================================
 ' Events
@@ -72,13 +72,13 @@ End Sub
 ' Task Interface Members
 '@================================================================================
 
-Private Sub Task_Cancel()
+Private Sub ITask_Cancel()
 Cancel
 End Sub
 
-Private Sub Task_run()
+Private Sub ITask_run()
 
-Const ProcName As String = "Task_run"
+Const ProcName As String = "ITask_run"
 Dim failpoint As String
 On Error GoTo Err
 
@@ -116,13 +116,13 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Property Let Task_TaskContext( _
+Private Property Let ITask_TaskContext( _
                 ByVal value As TaskContext)
 Set mTaskContext = value
 End Property
 
-Private Property Get task_TaskName() As String
-task_TaskName = mTaskContext.Name
+Private Property Get ITask_TaskName() As String
+ITask_TaskName = mTaskContext.Name
 End Property
 
 '@================================================================================
