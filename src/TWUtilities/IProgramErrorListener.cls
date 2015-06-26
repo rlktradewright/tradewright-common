@@ -6,7 +6,7 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "ProgramErrorListener"
+Attribute VB_Name = "IProgramErrorListener"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -39,7 +39,7 @@ Option Explicit
 ' Constants
 '@================================================================================
 
-Private Const ModuleName                            As String = "ProgramErrorListener"
+Private Const ModuleName                            As String = "IProgramErrorListener"
 
 '@================================================================================
 ' Member variables
