@@ -555,7 +555,7 @@ Option Explicit
 ' Interfaces
 '================================================================================
 
-Implements StateChangeListener
+Implements IStateChangeListener
 
 '================================================================================
 ' Events
@@ -672,10 +672,10 @@ Err.Raise errNumber, errSource, errDescription
 End Sub
 
 '================================================================================
-' StateChangeListener Interface Members
+' IStateChangeListener Interface Members
 '================================================================================
 
-Private Sub StateChangeListener_Change(ev As StateChangeEventData)
+Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
 Dim tli As TimerListItem
 If ev.State <> TimerListItemStates.TimerListItemStateExpired Then Exit Sub
 Set tli = ev.Source

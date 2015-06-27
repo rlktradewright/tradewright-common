@@ -23,7 +23,7 @@ Option Explicit
 ' Interfaces
 '================================================================================
 
-Implements Task
+Implements ITask
 
 '================================================================================
 ' Events
@@ -59,14 +59,14 @@ Private mPause As Boolean
 '================================================================================
 
 '================================================================================
-' Task Interface Members
+' ITask Interface Members
 '================================================================================
 
-Private Sub Task_Cancel()
+Private Sub ITask_Cancel()
 mTaskContext.Finish 0, True
 End Sub
 
-Private Sub Task_run()
+Private Sub ITask_run()
 Dim i As Long
 
 If mTaskContext.CancelPending Then
@@ -100,7 +100,10 @@ End If
 
 End Sub
 
-Private Property Let Task_TaskContext(ByVal RHS As TaskContext)
+Private Property Get ITask_TaskName() As String
+ITask_TaskName = mTaskContext.Name
+End Property
+Private Property Let ITask_TaskContext(ByVal RHS As TaskContext)
 Set mTaskContext = RHS
 End Property
 
@@ -131,6 +134,3 @@ End Sub
 
 
 
-Private Property Get Task_taskName() As String
-Task_taskName = mTaskContext.Name
-End Property

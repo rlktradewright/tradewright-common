@@ -686,8 +686,8 @@ Option Explicit
 ' Interfaces
 '================================================================================
 
-Implements TaskCompletionListener
-Implements TaskProgressListener
+Implements ITaskCompletionListener
+Implements ITaskProgressListener
 
 '================================================================================
 ' Events
@@ -737,10 +737,10 @@ TerminateTWUtilities
 End Sub
 
 '================================================================================
-' TaskCompletionListener Interface Members
+' iTaskCompletionListener Interface Members
 '================================================================================
 
-Private Sub TaskCompletionListener_taskCompleted( _
+Private Sub iTaskCompletionListener_taskCompleted( _
                 ByRef ev As TaskCompletionEventData)
 Dim Index As Long
 Index = ev.Cookie
@@ -757,10 +757,10 @@ Set mTaskControllers(Index) = Nothing
 End Sub
 
 '================================================================================
-' TaskProgressListener Interface Members
+' ITaskProgressListener Interface Members
 '================================================================================
 
-Private Sub TaskProgressListener_progress( _
+Private Sub ITaskProgressListener_progress( _
                 ByRef ev As TaskProgressEventData)
 Dim Index As Long
 Index = ev.Cookie

@@ -3,11 +3,10 @@
     <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.108" />
     <description>TradeWright Common</description>
     <file name="TWUtilities40.dll">
-        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="24.7" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="26.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{6F7719B8-9530-4534-954C-89C8B5762A48}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.StateTableBuilder" threadingModel="Apartment" />
         <comClass clsid="{B6615105-28CE-48E7-8E8C-BFD7FDEC8695}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.WeakCollection" threadingModel="Apartment" />
         <comClass clsid="{DD635E2C-4052-4DC8-B003-C756023A3356}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.ElapsedTimer" threadingModel="Apartment" />
-        <comClass clsid="{0B6D6951-38C7-4CCF-B332-0B6112C30B42}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.JSONBuilder" threadingModel="Apartment" />
         <comClass clsid="{7876275F-A744-465E-BEE5-EE60799C8E7B}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.ErrorList" threadingModel="Apartment" />
         <comClass clsid="{330A6089-5F7C-4FA9-94F1-E8E5C2D880EF}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.FutureBuilder" threadingModel="Apartment" />
         <comClass clsid="{5B92201B-1702-4850-9EEC-9D16B977B497}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.FutureWaiter" threadingModel="Apartment" />
@@ -16,43 +15,44 @@
         <comClass clsid="{AAB46CF4-D538-417E-932F-A00C8AFFF869}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.Parameters" threadingModel="Apartment" />
         <comClass clsid="{4131C663-EF52-4C22-AB17-71119AC628EE}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.Listeners" threadingModel="Apartment" />
         <comClass clsid="{A1333AA1-4B82-46E1-8AF4-49E9AE20C5D7}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.TWUtilities" threadingModel="Apartment" />
+        <comClass clsid="{0B6D6951-38C7-4CCF-B332-0B6112C30B42}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.JSONBuilder" threadingModel="Apartment" />
     </file>
     <file name="ExtProps40.dll">
-        <typelib tlbid="{84EF934D-EBFF-4233-A499-48E77ACC10E2}" version="25.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{84EF934D-EBFF-4233-A499-48E77ACC10E2}" version="27.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{37A0E19C-8AA5-463D-8F73-1CC455E994F5}" tlbid="{84EF934D-EBFF-4233-A499-48E77ACC10E2}" progid="ExtProps40.ExtProps" threadingModel="Apartment" />
         <comClass clsid="{3C84B02D-C3DF-4BAB-924F-A67FD48A2603}" tlbid="{84EF934D-EBFF-4233-A499-48E77ACC10E2}" progid="ExtProps40.ExtendedPropertyHost" threadingModel="Apartment" />
     </file>
     <file name="ExtEvents40.dll">
-        <typelib tlbid="{65A96F63-A4D5-4BBC-AF9F-280A0627EAA5}" version="24.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{65A96F63-A4D5-4BBC-AF9F-280A0627EAA5}" version="26.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{F12AFB22-3C21-48B3-A644-42A63660C3AB}" tlbid="{65A96F63-A4D5-4BBC-AF9F-280A0627EAA5}" progid="ExtEvents40.ExtEvents" threadingModel="Apartment" />
     </file>
     <file name="BusObjUtils40.dll">
-        <typelib tlbid="{DF7D0763-2DB2-48E6-B72F-FED6AB7339B9}" version="23.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{DF7D0763-2DB2-48E6-B72F-FED6AB7339B9}" version="25.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{A2A650EB-40BE-4C7F-B83A-9A22B0730743}" tlbid="{DF7D0763-2DB2-48E6-B72F-FED6AB7339B9}" progid="BusObjUtils40.BusObjUtils" threadingModel="Apartment" />
         <comClass clsid="{2E689356-2A52-473B-AAC7-2593B78183D0}" tlbid="{DF7D0763-2DB2-48E6-B72F-FED6AB7339B9}" progid="BusObjUtils40.BusinessObjEventRaiser" threadingModel="Apartment" />
         <comClass clsid="{7C84B980-DBE3-484C-A751-FAF91A0B3F01}" tlbid="{DF7D0763-2DB2-48E6-B72F-FED6AB7339B9}" progid="BusObjUtils40.SimpleConditionBuilder" threadingModel="Apartment" />
     </file>
     <file name="TWControls40.ocx">
-        <typelib tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" version="29.1" flags="control,hasDiskImage" helpdir="" />
+        <typelib tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" version="31.0" flags="control,hasDiskImage" helpdir="" />
         <comClass clsid="{47FA8CB3-A276-4409-B059-D09BD2E11D6C}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWModelessMsgBox" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,actsLikeButton,setClientSiteFirst" />
         <comClass clsid="{882C211D-37EB-4327-9E81-9AC0451449C9}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.PathChooser" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,setClientSiteFirst" />
-        <comClass clsid="{9EB40A63-0122-4CA6-A5E4-EC149E0C2BA1}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWImageCombo" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,setClientSiteFirst" />
-        <comClass clsid="{CCC9E9BF-90AD-4B98-ACAE-0AEBABB98033}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWGrid" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,simpleFrame,setClientSiteFirst" />
         <comClass clsid="{1F3DEBC4-2A89-40F3-93F1-5475AFC13DC2}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWButton" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,actsLikeButton,setClientSiteFirst" />
         <comClass clsid="{7167706A-3D4C-499A-B6E1-E029F0DBE2DC}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWControls" threadingModel="Apartment" />
         <comClass clsid="{1DA54BBA-E268-4407-8F33-BD9E2EF99C30}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TransparentPanel" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,simpleFrame,setClientSiteFirst" />
+        <comClass clsid="{CCC9E9BF-90AD-4B98-ACAE-0AEBABB98033}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWGrid" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,simpleFrame,setClientSiteFirst" />
+        <comClass clsid="{9EB40A63-0122-4CA6-A5E4-EC149E0C2BA1}" tlbid="{99CC0176-59AF-4A52-B7C0-192026D3FE5D}" progid="TWControls40.TWImageCombo" threadingModel="Apartment" miscStatusContent="recomposeOnResize,cantLinkInside,insideOut,activateWhenVisible,setClientSiteFirst" />
     </file>
     <file name="GraphicsUtils40.dll">
-        <typelib tlbid="{313B419D-EDE6-4910-9D4B-CD1FF3B27454}" version="22.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{313B419D-EDE6-4910-9D4B-CD1FF3B27454}" version="24.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{0A156318-BF23-48DE-A9F9-C163D34D4D48}" tlbid="{313B419D-EDE6-4910-9D4B-CD1FF3B27454}" progid="GraphicsUtils40.GraphicsUtils" threadingModel="Apartment" />
     </file>
     <file name="LayeredGraphics40.dll">
-        <typelib tlbid="{24FFB904-29C6-4CF5-AEB4-ECC3216B7A79}" version="23.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{24FFB904-29C6-4CF5-AEB4-ECC3216B7A79}" version="25.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{9E0BCC78-C54E-4866-913F-EDFCE2FAC170}" tlbid="{24FFB904-29C6-4CF5-AEB4-ECC3216B7A79}" progid="LayGraph40.LayeredGraphics" threadingModel="Apartment" />
         <comClass clsid="{D71D5AA4-A592-4C73-ACFF-470FC3594465}" tlbid="{24FFB904-29C6-4CF5-AEB4-ECC3216B7A79}" progid="LayGraph40.GraphObjLists" threadingModel="Apartment" />
     </file>
     <file name="GraphObjUtils40.dll">
-        <typelib tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" version="23.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" version="25.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{9DE41991-3093-4912-ABAB-EF3767E4E7ED}" tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" progid="GraphObjUtils40.GraphicExtPropMetadata" threadingModel="Apartment" />
         <comClass clsid="{79205471-9909-4F26-9CDB-73B9F5894A0F}" tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" progid="GraphObjUtils40.EditController" threadingModel="Apartment" />
         <comClass clsid="{C6559597-33A8-489C-B74E-FEBCBFC57C75}" tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" progid="GraphObjUtils40.GraphicObjectBase" threadingModel="Apartment" />
@@ -60,7 +60,7 @@
         <comClass clsid="{95133A02-8AC4-44AC-810A-C0086CAC2A74}" tlbid="{36AA5A83-59BD-4DAF-B4D7-17A0F4ED5A3C}" progid="GraphObjUtils40.GraphicObjectSeriesBase" threadingModel="Apartment" />
     </file>
     <file name="GraphObj40.dll">
-        <typelib tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" version="23.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" version="25.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{98EF1D82-43BE-4EBD-8376-80F621C6C25D}" tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" progid="GraphObj40.RectangleSeries" threadingModel="Apartment" />
         <comClass clsid="{2827F4B2-9897-4D71-99CE-7282D50E1982}" tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" progid="GraphObj40.RectangleStyle" threadingModel="Apartment" />
         <comClass clsid="{2D41D8ED-95FC-4A7D-948B-BBBCB1FB8397}" tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" progid="GraphObj40.GraphObj" threadingModel="Apartment" />
@@ -72,168 +72,168 @@
         <comClass clsid="{523213C9-832F-414F-A8AB-235A095EE05C}" tlbid="{5E502923-947C-49FF-8D83-0AC8F405623E}" progid="GraphObj40.DataPointStyle" threadingModel="Apartment" />
     </file>
     <file name="SpriteControlLib40.dll">
-        <typelib tlbid="{C7328738-0F3B-488D-B854-257402D525A9}" version="26.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{C7328738-0F3B-488D-B854-257402D525A9}" version="28.0" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{A9B85B90-7636-4E8F-998B-0D2AF1C98511}" tlbid="{C7328738-0F3B-488D-B854-257402D525A9}" progid="SpriteControlLib40.SpriteController" threadingModel="Apartment" />
         <comClass clsid="{773A91B8-3D53-412C-A8BD-9CF02116BFE9}" tlbid="{C7328738-0F3B-488D-B854-257402D525A9}" progid="SpriteControlLib40.Sprite" threadingModel="Apartment" />
     </file>
-    <comInterfaceExternalProxyStub name="_XMLConfigItems" iid="{6B21E6E4-CB72-4DC9-83EB-9FB68D115F20}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigurationSection" iid="{94025F4F-05AB-4BBF-9007-E70C29304FAA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_XMLConfigItem" iid="{FD3C3EA8-AE14-4FA8-9AC9-5BE96DF58F34}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigSectionRenderer" iid="{BDF0F4CE-79F9-4C93-8289-AFAF87367BB0}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigSectionHost" iid="{605892A5-7B4C-4C54-81BC-81B825DC20A8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_StateTableBuilder" iid="{11D9F3CD-32AF-4614-ABD3-00D0493B485F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ChangeListener" iid="{2F11D5B1-D84E-482A-A350-8497F2D1EF71}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_CollectionChangeListener" iid="{73EA347D-0E12-4375-B990-C4CFC6962D48}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_StateChangeListener" iid="{5AAAA483-4DCD-4148-909F-E11B09FB4AE9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ErrorListener" iid="{85DB4B91-6EAE-4EEF-A2DC-FC92C6B4F1CE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ErrorItem" iid="{42A2D6A6-B6DB-4A8A-B4E7-1703064864D5}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ParameterStringParser" iid="{799FCA82-27E2-41CF-8A25-96C723D67170}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskCompletionListener" iid="{E794AF3C-6089-4877-AE35-D138781D600F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigItem" iid="{203E786E-7DE6-4DB2-B70D-DB1BE5CBBA3B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Comparable" iid="{A9C66777-4547-45D2-9AAC-CAF09E2644AA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskProgressListener" iid="{7065974A-3E64-48CC-AD2B-B4068C505C8D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LogListener" iid="{A4AD2589-994A-43A7-BE47-EC092935329A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Stringable" iid="{CAB7710C-52E2-4056-9DB2-CA122E4BB97E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LogFormatter" iid="{64C4926B-ACB6-46B3-9166-B80DAB70A655}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_StringBuilder" iid="{6E04AECE-3D96-4F69-BCFE-11E414B4F238}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_WeakReference" iid="{8CC09AC6-8576-4D7E-9B8B-1D4BBA687100}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Console" iid="{028566FB-3536-4DA2-A92C-6DE38564A820}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_CommandLineParser" iid="{A2554EB8-484C-4818-94B3-CA48491B7A80}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LogRecord" iid="{CD7A8D22-5359-4AF4-9F29-59C2CAE60C34}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigItems" iid="{FEC0B6FB-BC21-4AC5-BD0D-43AF529C8B12}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Enumerable" iid="{08047C8F-E97B-4CD6-A3F3-FD407693AB20}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_WeakCollection" iid="{5AA4F223-7EE6-403D-B0F5-560B2B48ED55}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Task" iid="{EFFC477A-DFD6-4411-AFF1-FDB0BF5CBF15}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DeferredAction" iid="{59843867-B109-4064-B76E-A629A97BF0EA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ElapsedTimer" iid="{46E602D9-2FA4-4543-BDA4-95902CDAD6B1}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TimeZone" iid="{F4BE9F41-351C-4A83-9587-CD19E7A5B4E4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_NotificationListener" iid="{98253F60-96C9-4168-9FC4-FB5C4D6D3E38}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskNotificationListener" iid="{2C42F223-205C-4DAB-9904-B050B92A3354}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskStateChangeListener" iid="{E2DBBCC7-0630-4151-88A7-1D366596BC51}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Tracer" iid="{F6163AD8-8B30-4296-9572-16FEE4860633}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_JSONable" iid="{50348F0B-596F-4797-8433-D53AAA9B4FC8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_JSONBuilder" iid="{DBFC125A-053B-4101-B4D3-955223EA44F9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DictionaryEntry" iid="{9AE76839-546E-4257-B5E9-055870877B47}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SortedDictionary" iid="{B1D4E1F1-A142-49CE-B3A2-716647924B0B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigStoreProvider" iid="{110F26D7-393A-472D-BB48-DC8DEFC91F5F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TimePeriod" iid="{2C38E632-DAAF-4DE2-B0EC-9A021A7496F2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ProgramErrorListener" iid="{DA744D18-62D5-4B15-A4BE-CEEF8C9F9D89}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Configurable" iid="{2659C95A-23B9-4A01-A268-CBBD5156B728}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Parameter" iid="{967E98CE-3E03-4845-B8BE-3ED89222BB2E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ITimerExpiryListener" iid="{E5CCE9AA-6209-4DE0-9BC5-F06D68A6B1BE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IFuture" iid="{3F7A437C-1F06-4641-A80E-AA22AB1384C9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Clock" iid="{EAA9473E-00D0-4E4F-B02B-BEC923E4E94D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ErrorList" iid="{07A5D2A4-42C9-4815-882D-5EBA2C96FA94}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskManager" iid="{32BBDB07-5863-427C-BAD1-CA98B6FCD73B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskContext" iid="{DDED0DCE-C881-4BAE-BE1E-911C31E9002E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_XMLConfigProvider" iid="{6F003512-164A-476F-9F2C-997F1318BC93}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_StateEngine" iid="{D9FB949B-12B4-4353-98FD-3148BB3C09C5}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_FutureBuilder" iid="{861CFAC0-6203-4F90-83B4-5E5026F8D571}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_FutureWaiter" iid="{04FC2FC4-1BE5-4893-A682-53F30C4F6FE4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TimerList" iid="{04782461-D3AF-4321-AF8B-0662D3AB9613}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Enumerator" iid="{46DB5543-ED4C-4CDD-BBF6-4821EDEB8374}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_UnhandledErrorHandler" iid="{91CA45D4-7DCB-4940-8DFA-FBBC752C1E12}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TaskController" iid="{2D6DED09-0B05-4B7D-B996-1A7EC9644E8D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IntervalTimer" iid="{4D25D2E0-43FE-4BC5-BA2A-A92E27145571}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TimerListItem" iid="{8D3EF94F-B450-44E5-8208-967AFCCC03D9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_EnumerableCollection" iid="{0F1F8973-B68D-4B5B-A9C8-2176504CE6B7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConfigurationStore" iid="{59C30C6D-B77F-40F9-8191-EAE07E30A163}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GenericFuture" iid="{4F13BF31-0960-40B2-B233-92A757E87B88}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_BasicLogFormatter" iid="{40958A00-E2EC-4A14-81FD-791AB06110F8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ConsoleLogListener" iid="{74986C7E-0108-4439-B388-A073C11B6F53}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_FileLogListener" iid="{8F6FB2CD-3635-4BA2-8B42-8195CC950151}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Parameters" iid="{6E8A1BFC-09AB-4968-8E07-FA2D97FB1B3C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Listeners" iid="{741B4095-16EB-434E-8E7C-5FA0BA72EE15}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Logger" iid="{BF79436A-28E0-4D98-84DF-E2697784D45C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_FormattingLogger" iid="{CE3F60DD-A259-4588-84DE-13271695C3D9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ISubclassable" iid="{F55D7EDA-39C2-4F5F-B374-AEC4C06F7F41}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IThemeable" iid="{AFCB47A7-0BFB-4931-A69B-7E6BAFF8F39F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ITheme" iid="{B98D61B1-4FE8-4C65-B9B1-F6B8A0512DBF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWUtilities" iid="{1D39E7AB-FE7F-471F-A571-C04F79FBC5CA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ExtProps" iid="{32AC6653-1CA7-4528-A84B-27F42EC3ADCA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ExtendedProperty" iid="{47E554D8-5683-451F-9D66-BE7A4461C1A0}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ExtendedPropertyHost" iid="{95CEA809-0082-41AE-B187-7EA6C477D011}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IExtPropertyChangedListener" iid="{353248EC-926C-4803-9DB3-90B4C77283F5}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_PropertyValidator" iid="{FEE986F6-0B14-411E-8D6A-39326AA00DA0}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ExtEvents" iid="{84178BE1-EB19-492D-96DF-3BAC588F89F8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ExtendedEvent" iid="{41EC0A60-B1D3-42C7-80A9-43924195A655}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IExtendedEventListener" iid="{6918A780-5B32-4548-8EEB-86FADB56A666}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IExtendedEventsSource" iid="{22E317CF-71B3-4C68-861A-2B963ED6F3C8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_QueryTask" iid="{F4CF656F-EA26-4D55-A4D0-40BD9A876770}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_BusObjUtils" iid="{27641B6C-F0DC-4CF9-8786-E2A70DDD9317}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_QueryObjectsTask" iid="{6D19D292-7E7C-4EC1-A4DB-636E59253429}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_BusinessObjEventSource" iid="{C63039F5-C988-48F0-908A-2E902A1BFB12}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_BusinessObjEventRaiser" iid="{1D92D674-3782-449D-BD47-6C2C92A0CB86}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataObjectSummary" iid="{8B8BE857-B190-4B6A-B813-CD91A0BBF149}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SimpleConditionBuilder" iid="{0F2BE986-266B-4C53-9DF2-2FE70FC73102}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_FieldSpecifiers" iid="{B4621BEC-55A3-4C8A-B93E-92197569DAF7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataObjectSummaries" iid="{B5038DC7-4BA4-45E2-B834-7DB3955E85EF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataObjects" iid="{D2EECCAF-EA1E-4817-BCF7-E723A82C3FB8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_BusinessDataObject" iid="{44B2541F-CB0D-4A77-AB98-2DFAF43E845D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_AbstractDOFactory" iid="{CBEE7AA6-EDB8-4099-9C12-ECD121A6B357}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataObjectFactory" iid="{E0998832-6157-43E6-8951-447E051CCD3B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LoadTask" iid="{C9F49A9A-441D-4F14-BB18-D5DF71CCC103}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_AbstractDataObject" iid="{CEFB13B5-1380-4545-B577-273E46631D2E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_MouseTracker" iid="{CF4E885B-DA12-4512-9E4B-4FF3823BD188}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWModelessMsgBox" iid="{D9D2E8CF-E0DD-499D-A71D-ECC89FB607BE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_PathChooser" iid="{49AFDC8E-3FC9-4D2D-A1B3-1555FEFE7852}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWImageCombo" iid="{3F5ADF82-31E4-4DC3-860B-D4CE640D08C3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWGrid" iid="{CE9BEFA2-99A2-4B31-B4A9-7B7FED8137D9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWButton" iid="{EB4A52D9-F075-41AB-8988-3CFC39694DDA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWControls" iid="{7F465BB9-0B7E-4C27-9906-06843FF22D7E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TransparentPanel" iid="{387663DF-D869-46E8-BE47-4B4687347A86}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Graphics" iid="{9C44EFEC-2721-48B2-9C59-48A2D6EE6824}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphicsUtils" iid="{327A46B4-7AE1-4149-B6F5-B29F05042A75}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Size" iid="{3F329E17-41AB-4EF7-8316-35D5C774A788}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Point" iid="{0D06A16B-5873-4CBE-97E7-FEC1A8476263}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Dimension" iid="{FA57BF9F-98B0-42C1-8E26-EDCE4F4AAEF6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SolidBrush" iid="{6BACE2D1-AA07-4F58-AE8C-D2CED420BB5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Pen" iid="{9C6CF040-A7A5-49BE-9849-A32F3671A16F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TiledGradientBrush" iid="{903B1AB9-BB05-4BCB-95A5-6868A5D25262}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_RadialGradientBrush" iid="{83977CAD-E73B-4661-9522-A62CFB8F9ADA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IBrush" iid="{14806374-9EE5-4F08-A263-32945223D603}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_INativeBrush" iid="{1EB90DAA-4065-4D93-AE4C-C64F0EFBF4EF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ISyntheticBrush" iid="{F7802C74-325E-41A3-B9C8-A4C7360FA434}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_HatchedBrush" iid="{B03F2C70-C70B-4BA2-9267-FA0853E3D419}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Bitmap" iid="{B3C37241-1F07-45E7-8795-17FE1C6372D3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TextureBrush" iid="{C724A7B0-60DC-4387-940A-FC486FA107FE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphicsMonitor" iid="{98501C4B-9598-45D9-B650-569E8B06C0A7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphObjSeriesRemovalTask" iid="{71FD4FB1-B01F-4463-ABC2-67185903762A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IGraphicObject" iid="{CA6EB08E-1504-48C5-808A-6EB2F98A9D1D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IGraphicObjectSeries" iid="{89C3F489-BC9A-40D1-88EA-2B0A3F9FE973}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Controller" iid="{8F39E04A-51C9-4217-AF45-3498AAC68BDB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LinkedList" iid="{B7860D51-AC05-4869-B828-14182C6D46A7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LayeredGraphics" iid="{61D0109E-1971-4C0E-A21D-F26CB62FCABF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphObjSeriesCollection" iid="{53DC10CC-6116-42B3-8ED6-7BFD5990DDD8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SelectionManager" iid="{300A8395-3B16-40FE-AEFB-6BBBB1E2202D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IGraphicObjectStyle" iid="{3A2D7060-5193-4954-BF96-4CD6DECBBBA3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_LayeredGraphicsModel" iid="{511BE3BE-C0CB-4B14-A5D3-61F8CB368078}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_MouseMovementManager" iid="{E7BAE9EF-B70E-4193-A452-B753C655DC4E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IRenderer" iid="{7FB6A0F4-3819-439B-B9A9-B86350F37A5D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphObjLists" iid="{F798FAA8-B7E5-4E69-8D64-97E2FB162598}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphicExtPropMetadata" iid="{CB04002F-6258-4552-9D8B-3872863C7F67}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_EditController" iid="{5B78AFCE-D483-4A59-A69A-780BA8D6CD7D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphicObjectBase" iid="{C13B1EFA-44FC-47D2-BF04-4A0986EBC606}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphObjUtils" iid="{D1DE9EEA-8024-4DA5-BC8D-83FEC59C97DE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_ISprite" iid="{76AFDED6-E790-490B-B0B2-0CD61C98F980}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphicObjectSeriesBase" iid="{4E7F85AA-EE19-461D-8436-EA3B9AB632C8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Rectangle" iid="{BD60B2C7-DC6C-4737-99D6-5BE1B2C9A354}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_RectangleSeries" iid="{D339644D-FC8B-44B6-924F-FDB7E3EA2423}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_RectangleStyle" iid="{F0871CCE-F937-4F90-A10C-A0BB40C441D0}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IRectangleModel" iid="{A9B70B9B-C2D8-4824-9ED8-D8B1F3BC7A3B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_GraphObj" iid="{04AF5822-0DD5-4D98-9318-C30851B88EBD}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Ellipse" iid="{72E79CB5-BE7E-4762-A72D-B59E26208393}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_EllipseSeries" iid="{0C2ACA24-9E4A-4ACB-9445-2B09489431CB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_EllipseStyle" iid="{392AAEBE-3CAC-4DDB-A5E4-E12EBD08EA59}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_OHLCBar" iid="{82F288F8-525A-4E55-BE60-D0D77562E916}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_OHLCBarStyle" iid="{541D989C-ECA1-4F43-9A65-1B7ABD109C79}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_OHLCBarSeries" iid="{D2A9F8F3-1D30-4921-8024-E1CD8D46B74B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IEllipseModel" iid="{AAB2C134-EA25-4AF3-9656-0691E77C6809}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IOHLCBarModel" iid="{3637C55B-DAE9-4B72-9E24-86BE719F306E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataPoint" iid="{310E2680-0311-4F09-B6BD-5D9F751862E1}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataPointSeries" iid="{FD40658F-A008-4A8E-9C01-DA537D7AA7BB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_DataPointStyle" iid="{9F13D3A6-0679-4B00-AC88-6CF5DB06B245}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_IDataPointModel" iid="{587B0A5D-36A9-4D45-ABD0-A470B085859E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SpriteController" iid="{FE48E4D0-0AA5-403B-953C-60B8C8A3E33B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_Sprite" iid="{2107CFB4-DCD4-47B5-A8CA-8396F9AB3263}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_XMLConfigItems" iid="{82F2A247-501F-4C45-ADF8-F8085B96E359}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ConfigurationSection" iid="{5D0A824B-DFB3-4742-9688-17F5B0FFF2CF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_XMLConfigItem" iid="{08122FB9-5FC6-46C3-852A-7596FB6D971C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigSectionRenderer" iid="{ADDAA938-0A69-443C-90E0-3EC9DCBAB1E7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigSectionHost" iid="{EC5B9156-9D60-49D0-A1EC-DD3765CC02F3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_StateTableBuilder" iid="{7FD922A2-9BBD-4AA3-8961-910DEAEEE1BF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IChangeListener" iid="{9E2E6187-6CC4-4328-BA24-F4704865D25A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ICollectionChangeListener" iid="{A3CE7AE4-9D38-4479-A9BC-C3FA930537F3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IStateChangeListener" iid="{F27612E2-CAA9-4F9A-8CCA-6CD20E762A52}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IErrorListener" iid="{7493B83D-9225-4F6A-9462-E6A38F82A2F7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ErrorItem" iid="{FB660C14-1163-4D66-BBDE-9BD6B89C9F75}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ParameterStringParser" iid="{BBC89B70-1264-4FB6-9CCC-EFA2CFB634F1}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITaskCompletionListener" iid="{A2F36E74-9C19-4B32-9430-A385F6AC6948}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigItem" iid="{C267F0A3-190A-4401-978E-D058E5202EE6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IComparable" iid="{C57988D1-76C4-4F32-969F-A5247BD0778A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITaskProgressListener" iid="{4F62702D-94CA-4649-BBE4-CEAFB9E48B4F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ILogListener" iid="{D599349B-D710-4EC5-81B5-30F5CEE1AA40}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IStringable" iid="{C303A64C-F590-480F-B7C4-189018296D09}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ILogFormatter" iid="{FC78B2B5-75B3-441D-8702-1C3013CC41A7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_StringBuilder" iid="{4D561CF7-B686-475B-902B-742920F4EFEC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_WeakReference" iid="{25EAE943-4B84-4CAA-BE88-5DBC155362CC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Console" iid="{ACAA99A0-FEC5-4B0D-A2AD-17CFF8E21173}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_CommandLineParser" iid="{D2B99FE5-BC0A-4512-93B0-ECEB390759E2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_LogRecord" iid="{A90C95D4-07E0-48EB-9951-E2A4D598DFE7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigItems" iid="{C4C4191D-0A6D-4B06-90B6-8619EE074F76}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IEnumerable" iid="{4480799B-2FB5-44C0-930E-D64B09D75993}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_WeakCollection" iid="{FB773583-2EA4-4639-952B-F267E2A00E0D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITask" iid="{502C08BE-B675-487B-8D5A-E2AD63200EBC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IDeferredAction" iid="{21302FD0-A5C2-456F-8848-C40D2EE6E6F9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ElapsedTimer" iid="{C2162D79-10AB-4870-BAA1-DABE92EAA5A2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TimeZone" iid="{F3AFCC52-F9A0-48F4-8C7E-26F7650E6FE2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_INotificationListener" iid="{95349ED2-7886-4392-A57E-044E5EDEC8CB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITaskNotificationListener" iid="{E2581AA1-F494-456B-95E7-F4D426835826}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITaskStateChangeListener" iid="{5371C82B-CD6C-4E70-9203-4449D1DDB202}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Tracer" iid="{4079502E-B218-458C-AC41-584F84273817}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IJSONable" iid="{D3905A4D-CC03-458A-BFC9-6AD086194D5F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DictionaryEntry" iid="{C9A16C22-E437-4270-BA8C-B97A116B800D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SortedDictionary" iid="{3454E33B-C24F-470F-92E2-1349A4964CA2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigStoreProvider" iid="{1DBBB783-081A-4614-8BBA-ABD146CC57FD}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TimePeriod" iid="{C860F8AC-0732-4E03-92F7-9DD4FD3F9D36}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IProgramErrorListener" iid="{0D52169B-011F-400B-A6C0-06CECEAD165C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IConfigurable" iid="{47F7AC02-4A24-46BD-9846-9232AE38FD04}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Parameter" iid="{A66F54DF-5359-4C7F-BD2F-137B870C4F64}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITimerExpiryListener" iid="{A91E8085-B7AF-4F2F-B8CD-469901668E75}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IFuture" iid="{B234A331-F093-4021-8C9A-835C98D9DCE6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Clock" iid="{99A01157-CE43-48AD-AFEB-DBE080144A31}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ErrorList" iid="{5BF80E72-70EB-41C5-A14E-55DFBE37BBC2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TaskManager" iid="{FC1A2A25-7852-4979-A8E2-2D49347B58D4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TaskContext" iid="{450D5340-E6EF-41B7-9E77-3D4D71B74283}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_XMLConfigProvider" iid="{AF95F3FF-5893-4993-9494-5670740D3793}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_StateEngine" iid="{87F87069-FCB6-40E8-9BF9-3DBB6C16CAF9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_FutureBuilder" iid="{2D450D13-356E-458B-B247-0D06FD5925FC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_FutureWaiter" iid="{2FF8F020-CE24-464C-B70A-05D36AEB7B75}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TimerList" iid="{4E4A92CA-5D35-4ED7-827A-A9355536AE91}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Enumerator" iid="{0649B16D-EEE4-457E-B923-C270F40BEF4F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_UnhandledErrorHandler" iid="{643EF7AF-B3DA-400A-A73F-89E4E144192A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TaskController" iid="{1F49E882-0394-4624-B56F-80C71FB8B449}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IntervalTimer" iid="{0775A921-1EE4-44B3-8FBD-691BF3693AED}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TimerListItem" iid="{EE088D4F-3609-4C5E-896A-73B340298AB4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_EnumerableCollection" iid="{7B352493-429D-44D8-82F0-D9F2F8482E9B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ConfigurationStore" iid="{AF39A3E5-1B36-40D0-8536-EED7FEFC6A26}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GenericFuture" iid="{FD5AB9D5-E0EC-4031-A5AA-1107A8002DF9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_BasicLogFormatter" iid="{B0AA4E70-4ED6-4ED5-B6F0-C5F2A31F10AB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ConsoleLogListener" iid="{3E3EEEFA-DAFC-40F1-8D44-8FA816BF0CCB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_FileLogListener" iid="{D984CE8A-91C8-4F0A-8BFA-075767F467AA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Parameters" iid="{804D07BC-C19A-4468-A022-7664448D74EE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Listeners" iid="{570A4FBE-7B2B-4EF4-97E9-100AE7FA0D24}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Logger" iid="{4C01D082-1783-4CF4-9EBA-2F2DCE6EB6B7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_FormattingLogger" iid="{B723F70A-E1C7-4841-B70C-8E1315D75A7C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ISubclassable" iid="{561A83CD-0D52-4DFA-AC1A-2B6E231A7BA7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IThemeable" iid="{82F75C56-86F1-472A-8AB2-7F0BA0366D67}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWUtilities" iid="{B614222E-B800-450E-B2C3-431C4444C571}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ITheme" iid="{76080057-4BD0-42F4-BC0F-F9646C6B5AD1}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_JSONBuilder" iid="{C62D0A9A-B96A-4E96-8FFD-F37E0FEE047E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ExtProps" iid="{FA0CE99C-2650-4A5F-AE09-AFD3AF532735}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ExtendedProperty" iid="{46D021E0-D067-4A94-A937-4E22CA8AE048}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ExtendedPropertyHost" iid="{EB01996A-6D57-4700-A97F-61E70F0B27A4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IExtPropertyChangedListener" iid="{BBD4577B-F8FA-4431-A304-0D797EB01FAF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_PropertyValidator" iid="{0E849764-85F4-4B9A-BB3B-3FFD67869A2A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ExtEvents" iid="{FEA39303-F0DC-4078-81EF-58D8EFBC8FD8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ExtendedEvent" iid="{BA0D3C34-2F6B-4F06-8EE2-01AF8EA8F8D3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IExtendedEventListener" iid="{2450B917-03B5-46EC-8D15-048B5A733839}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IExtendedEventsSource" iid="{9712B441-F87C-4D9E-ACFC-63A85C0C1D61}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_QueryTask" iid="{F6F5C1FC-C316-404B-B211-215382A4ACDD}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_BusObjUtils" iid="{261D958F-1775-4995-B5E1-A72C6534AD86}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_QueryObjectsTask" iid="{87A7E08E-44A0-41A6-B2E0-5EC09FBD28AE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_BusinessObjEventSource" iid="{43F7C68B-86C3-44DC-9C5F-70CFF9057E30}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_BusinessObjEventRaiser" iid="{C1FF214C-0602-4E6F-88B3-81E5261C148B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataObjectSummary" iid="{64234D8D-0427-4B30-A279-928CF9C07090}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SimpleConditionBuilder" iid="{26CB0738-96F5-4C31-905D-068ADE1D2D4A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_FieldSpecifiers" iid="{C73BE48B-B20A-4F7D-9AA6-F02EDADD8082}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataObjectSummaries" iid="{92A9C9A3-38FE-4B16-B8E8-DE363F6B2026}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataObjects" iid="{1DC4157A-DE6C-44BE-909B-4C783E7AC5F2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_BusinessDataObject" iid="{C6849374-AC73-4D96-BC25-DB5795157417}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_AbstractDOFactory" iid="{7A0EC53A-10B9-4857-8D47-C1186A4B0133}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataObjectFactory" iid="{EA676408-82F3-46F0-829A-9F604EF3C0A3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_LoadTask" iid="{8761DF1A-BDEE-4D81-A599-AE950823969F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_AbstractDataObject" iid="{5388A8C8-5B1A-470A-B9B2-3309C6F6E6AC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_MouseTracker" iid="{071D7785-1EB0-4945-93DF-F37D013BFCC8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWModelessMsgBox" iid="{46C24219-2B2F-4387-BBA3-5888705C3D94}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_PathChooser" iid="{B26BDDB2-7AB7-4AD7-9595-C73BC01099B6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWButton" iid="{102FF0C7-BEA4-424F-8D2C-2F4DD6A17D65}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWControls" iid="{057BCF31-AB55-4DB5-B276-F4B8D2931BE2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TransparentPanel" iid="{308BE7DB-B6B9-4446-8F68-2A9AE513C597}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWGrid" iid="{3E15C240-02B8-40C9-A7B9-EE386AD2B59D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWImageCombo" iid="{1876357E-F83D-4BA0-80AB-85EC90309965}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Graphics" iid="{D69BE4A3-863B-425E-B4EB-A838F10B7BDE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphicsUtils" iid="{3DF59BD9-FB69-480A-89E6-E2E103857C33}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Size" iid="{98ECAEA6-9FE9-453F-B53A-1CE1E3456915}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Point" iid="{43E3D685-FDAB-48EA-968F-F4D1D20F73AC}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Dimension" iid="{1B373E47-53CF-4AF9-9076-D34D4476F763}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SolidBrush" iid="{D2F82CAB-8C98-4CD0-B736-E9F02235E29F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Pen" iid="{5D6DBE29-A261-4470-B84E-4371F61D9618}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TiledGradientBrush" iid="{B1D43AD2-2ABE-4254-AB9D-11931A9BB27D}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_RadialGradientBrush" iid="{9813A5B8-E008-4281-8AE3-33507891E43B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IBrush" iid="{826511CA-2344-478D-8036-E6ABFE48A721}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_INativeBrush" iid="{EB401402-3F6D-4A7B-B87F-264E1A942F5E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ISyntheticBrush" iid="{488180B0-3802-419C-995D-48F43B766DAA}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_HatchedBrush" iid="{7E3CD311-C3F4-4208-B8F8-E9F4DF375276}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Bitmap" iid="{0F4B868D-4A5D-4440-9163-B4F5E692CF5E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TextureBrush" iid="{7D02C407-2723-4822-9E03-5EEE6027C093}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphicsMonitor" iid="{E9051C9B-74FC-431E-A2BA-165F08559C99}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphObjSeriesRemovalTask" iid="{B944C980-1FBB-49A5-8974-54620B7B384C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IGraphicObject" iid="{9AFCC663-31EB-4D40-A435-1D7B74459AE9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IGraphicObjectSeries" iid="{51141985-DD45-4724-AED5-8236FE5C649B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Controller" iid="{C5E950B8-BE05-4844-AF05-CC9ED045EA5A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_LinkedList" iid="{11270CFA-E871-490E-AAAB-C804AA3F0CD8}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_LayeredGraphics" iid="{223431B5-EED8-4791-8527-E416E22F78CE}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphObjSeriesCollection" iid="{0F310A28-D0AF-4DB3-9A69-19C52CEB9A71}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SelectionManager" iid="{F18D0A64-0466-4809-88EE-E16C4EAC69BF}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IGraphicObjectStyle" iid="{13E7DB30-D2EC-48D8-A774-4315F9CF97B7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_LayeredGraphicsModel" iid="{6053654C-6411-4FF4-B863-76282F148D6E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_MouseMovementManager" iid="{97F9BDAA-D951-4B5A-81C1-4A7C90703840}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IRenderer" iid="{7AD91C8D-8ABB-49A2-9F29-B16E90748E1B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphObjLists" iid="{303A6D15-357A-4B20-AEF3-96A326FC43E9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphicExtPropMetadata" iid="{415142FB-C32B-41DF-A907-3E949F872C68}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_EditController" iid="{40091DDA-60B2-47FC-BD38-2CE3E894B794}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphicObjectBase" iid="{AA0F333B-8DA7-4A0D-82D8-4D0B83B15BE7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphObjUtils" iid="{18BE921F-F2D5-4C27-9F63-DE190EC6BB24}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_ISprite" iid="{BB6CD755-3990-4A8F-8CF7-1244159F308F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphicObjectSeriesBase" iid="{E80FD605-CFC7-4275-A473-82CAC293A39F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Rectangle" iid="{22E5FF9F-1E9C-4C60-A8ED-0269112BCE96}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_RectangleSeries" iid="{56537917-8E55-429B-BB84-D339F973FBCD}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_RectangleStyle" iid="{F4705167-732D-43E4-8019-C1CBBB99FEA2}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IRectangleModel" iid="{42A1B7FB-E04B-4E20-84A0-E31AFEB0A9D7}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_GraphObj" iid="{777EB801-120C-4EAD-8408-E4B96EF7D111}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Ellipse" iid="{59FDC8D3-AE86-47E1-A643-7311769B5831}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_EllipseSeries" iid="{C726328E-3020-4222-98B8-1DD414B3BC94}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_EllipseStyle" iid="{B640753F-0D89-4E89-BE0F-6D6E9538C6EB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_OHLCBar" iid="{63C9273A-C7D6-442C-9388-A3E4E6C93865}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_OHLCBarStyle" iid="{F2DF5EDF-6AAF-4B73-91B1-FD58D3D408F5}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_OHLCBarSeries" iid="{6548E199-89AA-48E1-9928-18F2CB49A02E}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IEllipseModel" iid="{0E62AA34-E1B9-406D-B428-C165FEDFD519}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IOHLCBarModel" iid="{711356B5-5752-47C7-8326-E744B1F1100C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataPoint" iid="{E99D309D-FDFB-4F48-A23D-B0C4DE317A4A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataPointSeries" iid="{B8125C0A-7545-427D-8DEB-4D6B8AC53E72}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_DataPointStyle" iid="{E8872C8B-A200-4BE6-8B46-12A62F2D02E0}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_IDataPointModel" iid="{2437DC63-5BD8-4EB8-B0A1-6FEAD44CD96A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SpriteController" iid="{01A3C6BB-4AF6-49F9-A3DF-38D006539627}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_Sprite" iid="{E77A22E4-F756-40F0-AE88-EF85DB9BAE99}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
 </assembly>
