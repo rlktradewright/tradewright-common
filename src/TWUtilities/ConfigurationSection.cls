@@ -48,7 +48,7 @@ Private Const ModuleName                            As String = "ConfigurationSe
 
 Private mConfigFile                                 As ConfigurationStore
 Private mConfig                                     As IConfigItem
-Private mConfigEnumble
+Private mConfigEnumble                              As IEnumerable
 Private mRelativePath                               As String
 Private mCache                                      As ConfigSectionCache
 Private mIsPrivate                                  As Boolean

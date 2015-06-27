@@ -654,7 +654,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function paintObjects( _
-                ByVal pEnumble) As Long
+                ByVal pEnumble As IEnumerable) As Long
 Const ProcName As String = "paintObjects"
 On Error GoTo Err
 

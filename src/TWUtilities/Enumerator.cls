@@ -102,7 +102,7 @@ Private Const ModuleName                    As String = "Enumerator"
 ' Member variables
 '@================================================================================
 
-Private mTarget
+Private mTarget                             As IEnumerable
 
 Private mInitialCookie                      As Variant
 Private mCookie                             As Variant
@@ -235,7 +235,7 @@ gNotifyUnhandledError ProcName, ModuleName
 End Function
 
 Friend Sub Initialise( _
-                ByVal target, _
+                ByVal target As IEnumerable, _
                 Optional ByVal pCookie As Variant)
 Const ProcName As String = "Initialise"
 On Error GoTo Err

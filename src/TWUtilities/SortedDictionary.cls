@@ -225,7 +225,7 @@ End Property
 '@/
 Public Property Get EntryEnumerator() As Enumerator
 Dim ee As New DictionaryEntriesEnum
-Dim en
+Dim en As IEnumerable
 Const ProcName As String = "EntryEnumerator"
 
 On Error GoTo Err
@@ -339,7 +339,7 @@ End Property
 '@/
 Public Property Get KeyEnumerator() As Enumerator
 Dim ke As New DictionaryKeysEnum
-Dim en
+Dim en As IEnumerable
 Const ProcName As String = "KeyEnumerator"
 
 On Error GoTo Err

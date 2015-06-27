@@ -173,7 +173,7 @@ End Property
 '   <code>setTime</code> method.
 '
 '   If <code>units</code> has any other Value, this argument must be a positive numeric
-'   Value representing the amount of time (in the relevant pUnits) to lExpiry.
+'   Value representing the amount of time (in the relevant units) to expiry.
 ' @param pUnits
 '   Specifies the pUnits in which the<code>expiryTime</code> argument is expressed.
 '@/
