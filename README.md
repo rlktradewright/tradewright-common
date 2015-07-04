@@ -36,7 +36,7 @@ If by chance you do want to modify the software, here's what to do:
 
   `TW-PROJECTS-PATH` - set this to the path to your repository folder, eg \Projects\tradewright-common
 
-* Now run the `registerTradeWrightCommon.bat` file in the `Build` folder: note you should run this as Administrator to avoid a series of privilege elevation prompts (you'll still get one of course!)
+* Now run the `registerDlls.bat` file in the `Build` folder: note you should run this as Administrator to avoid a series of privilege elevation prompts (you'll still get one of course!)
 
 * You should now find that the sample .exe files in the Bin folder run nicely.
 
