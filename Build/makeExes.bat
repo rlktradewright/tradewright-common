@@ -29,4 +29,5 @@ if errorlevel 1 pause
 
 popd
 
+call makeTradeWrightCommonExternalComponentsAssemblyManifest.bat
 
