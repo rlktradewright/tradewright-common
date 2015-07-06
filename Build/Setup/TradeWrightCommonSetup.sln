@@ -4,9 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonInstaller", "TradeWrightCommonInstaller\TradeWrightCommonInstaller.vdproj", "{8852E8F7-E97C-43BF-8D76-ABCACE629F81}"
 	ProjectSection(ProjectDependencies) = postProject
 		{79B3E548-FC69-4625-B08B-6E548836FCDA} = {79B3E548-FC69-4625-B08B-6E548836FCDA}
+		{372BB661-7559-4FDB-9C29-86B6199886CF} = {372BB661-7559-4FDB-9C29-86B6199886CF}
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonMerge", "TradeWrightCommonMerge\TradeWrightCommonMerge.vdproj", "{79B3E548-FC69-4625-B08B-6E548836FCDA}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TradeWrightCommonExternalComponentsMerge", "TradeWrightCommonExternalComponentsMerge\TradeWrightCommonExternalComponentsMerge.vdproj", "{372BB661-7559-4FDB-9C29-86B6199886CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +25,10 @@ Global
 		{79B3E548-FC69-4625-B08B-6E548836FCDA}.Debug|Default.Build.0 = Debug
 		{79B3E548-FC69-4625-B08B-6E548836FCDA}.Release|Default.ActiveCfg = Release
 		{79B3E548-FC69-4625-B08B-6E548836FCDA}.Release|Default.Build.0 = Release
+		{372BB661-7559-4FDB-9C29-86B6199886CF}.Debug|Default.ActiveCfg = Debug
+		{372BB661-7559-4FDB-9C29-86B6199886CF}.Debug|Default.Build.0 = Debug
+		{372BB661-7559-4FDB-9C29-86B6199886CF}.Release|Default.ActiveCfg = Release
+		{372BB661-7559-4FDB-9C29-86B6199886CF}.Release|Default.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
