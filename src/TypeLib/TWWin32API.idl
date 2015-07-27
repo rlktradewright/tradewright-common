@@ -1166,13 +1166,6 @@ library TWWin32API
 			[in, out] GDI_POINT* lppt, 
 			[in] long c);
 
-		[entry("MapWindowPoints")]
-		long MapWindowPoints(
-		  [in] long hWndFrom,
-		  [in] long hWndTo,
-		  [in] long lpPoints,
-		  [in] long cPoints);
-
 		[entry("MaskBlt")]
 		long MaskBlt( 
 			[in] long hdcDest, 
@@ -2113,6 +2106,13 @@ library TWWin32API
 		[entry("LockWindowUpdate")]
 		long LockWindowUpdate( 
 			[in] long hwnd);
+
+		[entry("MapWindowPoints")]
+		long MapWindowPoints(
+		  [in] long hWndFrom,
+		  [in] long hWndTo,
+		  [in] long lpPoints,
+		  [in] long cPoints);
 
 		[entry("MoveWindow")]
 		long MoveWindow(
