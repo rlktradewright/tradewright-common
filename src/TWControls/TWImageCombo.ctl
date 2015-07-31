@@ -43,18 +43,18 @@ Implements IThemeable
 ' Events
 '@================================================================================
 
-Event Change() 'MappingInfo=Combo1,Combo1,-1,Change
-Event Click() 'MappingInfo=Combo1,Combo1,-1,Click
-Event DropDown() 'MappingInfo=Combo1,Combo1,-1,DropDown
-Event KeyDown(KeyCode As Integer, Shift As Integer) 'MappingInfo=Combo1,Combo1,-1,KeyDown
-Event KeyPress(KeyAscii As Integer) 'MappingInfo=Combo1,Combo1,-1,KeyPress
-Event KeyUp(KeyCode As Integer, Shift As Integer) 'MappingInfo=Combo1,Combo1,-1,KeyUp
-Event OLECompleteDrag(Effect As Long) 'MappingInfo=Combo1,Combo1,-1,OLECompleteDrag
-Event OLEDragDrop(Data As DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single) 'MappingInfo=Combo1,Combo1,-1,OLEDragDrop
-Event OLEDragOver(Data As DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single, State As Integer) 'MappingInfo=Combo1,Combo1,-1,OLEDragOver
-Event OLEGiveFeedback(Effect As Long, DefaultCursors As Boolean) 'MappingInfo=Combo1,Combo1,-1,OLEGiveFeedback
-Event OLESetData(Data As DataObject, DataFormat As Integer) 'MappingInfo=Combo1,Combo1,-1,OLESetData
-Event OLEStartDrag(Data As DataObject, AllowedEffects As Long) 'MappingInfo=Combo1,Combo1,-1,OLEStartDrag
+Event Change()
+Event Click()
+Event DropDown()
+Event KeyDown(KeyCode As Integer, Shift As Integer)
+Event KeyPress(KeyAscii As Integer)
+Event KeyUp(KeyCode As Integer, Shift As Integer)
+Event OLECompleteDrag(Effect As Long)
+Event OLEDragDrop(Data As DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Event OLEDragOver(Data As DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single, State As Integer)
+Event OLEGiveFeedback(Effect As Long, DefaultCursors As Boolean)
+Event OLESetData(Data As DataObject, DataFormat As Integer)
+Event OLEStartDrag(Data As DataObject, AllowedEffects As Long)
 
 '@================================================================================
 ' Enums
@@ -132,7 +132,6 @@ End Sub
 
 'Write property values to storage
 Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
-
 Const ProcName As String = "UserControl_WriteProperties"
 On Error GoTo Err
 
@@ -182,26 +181,22 @@ End Property
 '@================================================================================
 
 Private Sub Combo1_Change()
-Dim l As Long
-Dim selItem As Long
-Static prevValue As String
-
 Const ProcName As String = "Combo1_Change"
 On Error GoTo Err
 
+Static prevValue As String
 If Combo1.Text <> "" And Combo1.Text = prevValue Then Exit Sub
 
 If Not Combo1.SelectedItem Is Nothing Then
     If Combo1.Text = Combo1.SelectedItem.Text Then Exit Sub
 End If
 
+Dim l As Long
 l = Len(Combo1.Text)
 If Combo1.Text <> "" Then
-    'selItem = SendMessageW(Combo1.hWnd, CB_FINDSTRING, -1, StrPtr(Combo1.Text))
+    Dim selItem As Long
     selItem = findSubStringIndex(Combo1.Text)
-    'If selItem <> CB_ERR Then
     If selItem <> 0 Then
-        'SendMessageW Combo1.hWnd, CB_SETCURSEL, selItem, 0
         Combo1.ComboItems(selItem).Selected = True
         Combo1.SelStart = l
         Combo1.SelLength = Len(Combo1.Text) - l
@@ -233,11 +228,11 @@ Private Sub Combo1_DropDown()
 End Sub
 
 Private Sub Combo1_KeyDown(KeyCode As Integer, Shift As Integer)
-Dim i As Long
-Dim posn As Long
 Const ProcName As String = "Combo1_KeyDown"
 On Error GoTo Err
 
+Dim i As Long
+Dim posn As Long
 If KeyCode = vbKeyUp Then
     posn = 0
     If Combo1.SelectedItem Is Nothing Then
@@ -330,12 +325,12 @@ Private Sub Combo1_OLECompleteDrag(Effect As Long)
 End Sub
 
 Private Sub Combo1_Validate(Cancel As Boolean)
-Dim i As Long
 Const ProcName As String = "Combo1_Validate"
 On Error GoTo Err
 
 If Combo1.Text = "" Then Exit Sub
 If Combo1.SelectedItem Is Nothing Then
+    Dim i As Long
     For i = 1 To Combo1.ComboItems.Count
         If Combo1.Text = Combo1.ComboItems(i).Text Then
             Combo1.ComboItems(i).Selected = True
@@ -356,17 +351,23 @@ End Sub
 '@================================================================================
 
 Public Property Let Appearance(ByVal Value As AppearanceSettings)
+Const ProcName As String = "Appearance"
+On Error GoTo Err
+
 mAppearance = Value
 PropertyChanged "Appearance"
 resize
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Appearance() As AppearanceSettings
 Appearance = mAppearance
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,BackColor
 Public Property Get BackColor() As OLE_COLOR
 Attribute BackColor.VB_UserMemId = -501
 Const ProcName As String = "BackColor"
@@ -393,8 +394,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,CausesValidation
 Public Property Get CausesValidation() As Boolean
 Const ProcName As String = "CausesValidation"
 On Error GoTo Err
@@ -420,8 +419,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,ComboItems
 Public Property Get ComboItems() As IComboItems
 Const ProcName As String = "ComboItems"
 On Error GoTo Err
@@ -447,8 +444,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Enabled
 Public Property Get Enabled() As Boolean
 Attribute Enabled.VB_UserMemId = -514
 Const ProcName As String = "Enabled"
@@ -475,8 +470,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Font
 Public Property Get Font() As Font
 Attribute Font.VB_UserMemId = -512
 Const ProcName As String = "Font"
@@ -504,8 +497,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,ForeColor
 Public Property Get ForeColor() As OLE_COLOR
 Attribute ForeColor.VB_UserMemId = -513
 Const ProcName As String = "ForeColor"
@@ -532,8 +523,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,GetFirstVisible
 Public Function GetFirstVisible() As IComboItem
 Const ProcName As String = "GetFirstVisible"
 On Error GoTo Err
@@ -546,8 +535,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-''WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-''MappingInfo=Combo1,Combo1,-1,hWnd
 Public Property Get hWnd() As Long
 Attribute hWnd.VB_UserMemId = -515
 Const ProcName As String = "hWnd"
@@ -561,8 +548,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,ImageList
 Public Property Get ImageList() As Object
 Const ProcName As String = "ImageList"
 On Error GoTo Err
@@ -588,8 +573,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Indentation
 Public Property Get Indentation() As Integer
 Const ProcName As String = "Indentation"
 On Error GoTo Err
@@ -615,8 +598,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Locked
 Public Property Get Locked() As Boolean
 Attribute Locked.VB_Description = "Determines whether a control can be edited."
 Const ProcName As String = "Locked"
@@ -669,8 +650,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,MouseIcon
 Public Property Get MouseIcon() As Picture
 Const ProcName As String = "MouseIcon"
 On Error GoTo Err
@@ -696,8 +675,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,MousePointer
 Public Property Get MousePointer() As Integer
 Const ProcName As String = "MousePointer"
 On Error GoTo Err
@@ -723,8 +700,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,OLEDrag
 Public Sub OLEDrag()
 Const ProcName As String = "OLEDrag"
 On Error GoTo Err
@@ -737,8 +712,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,OLEDragMode
 Public Property Get OLEDragMode() As Integer
 Const ProcName As String = "OLEDragMode"
 On Error GoTo Err
@@ -764,8 +737,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,OLEDropMode
 Public Property Get OLEDropMode() As Integer
 Const ProcName As String = "OLEDropMode"
 On Error GoTo Err
@@ -827,8 +798,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-''WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-''MappingInfo=Combo1,Combo1,-1,SelLength
 Public Property Get SelLength() As Long
 Const ProcName As String = "SelLength"
 On Error GoTo Err
@@ -854,8 +823,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-''WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-''MappingInfo=Combo1,Combo1,-1,SelStart
 Public Property Get SelStart() As Long
 Const ProcName As String = "SelStart"
 On Error GoTo Err
@@ -881,8 +848,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-''WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-''MappingInfo=Combo1,Combo1,-1,SelText
 Public Property Get SelText() As String
 Const ProcName As String = "SelText"
 On Error GoTo Err
@@ -908,8 +873,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Text
+
+
 Public Property Get Text() As String
 Attribute Text.VB_UserMemId = 0
 Attribute Text.VB_MemberFlags = "34"
@@ -957,8 +922,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,ToolTipText
+
+
 Public Property Get ToolTipText() As String
 Const ProcName As String = "ToolTipText"
 On Error GoTo Err
@@ -984,8 +949,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,WhatsThisHelpID
+
+
 Public Property Get WhatsThisHelpID() As Long
 Const ProcName As String = "WhatsThisHelpID"
 On Error GoTo Err
@@ -1015,8 +980,8 @@ End Property
 ' Methods
 '@================================================================================
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Combo1,Combo1,-1,Refresh
+
+
 Public Sub Refresh()
 Const ProcName As String = "Refresh"
 On Error GoTo Err
@@ -1035,10 +1000,10 @@ End Sub
 
 Private Function findSubStringIndex( _
                 ByRef str As String) As Long
-Dim i As Long
 Const ProcName As String = "findSubStringIndex"
 On Error GoTo Err
 
+Dim i As Long
 For i = 1 To Combo1.ComboItems.Count
     If Len(Combo1.ComboItems(i).Text) >= Len(str) Then
         If StrComp(str, Left$(Combo1.ComboItems(i).Text, Len(str)), vbTextCompare) = 0 Then
@@ -1055,6 +1020,9 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub resize()
+Const ProcName As String = "resize"
+On Error GoTo Err
+
 If mAppearance = cc3D Then
     Combo1.Move 0, 0, UserControl.Width
     UserControl.Height = Combo1.Height
@@ -1062,4 +1030,9 @@ Else
     Combo1.Move -2 * Screen.TwipsPerPixelX, -2 * Screen.TwipsPerPixelY, UserControl.Width + 4 * Screen.TwipsPerPixelX
     UserControl.Height = Combo1.Height - 4 * Screen.TwipsPerPixelY
 End If
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub

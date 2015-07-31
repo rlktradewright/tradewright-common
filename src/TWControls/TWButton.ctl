@@ -562,8 +562,8 @@ Public Property Let BackColor(ByVal Value As OLE_COLOR)
 setBrushProperty "BackColor", mBackColor, Value, mhBackBrush
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,Caption
+
+
 Public Property Get Caption() As String
 Attribute Caption.VB_UserMemId = -518
 Caption = Button.Caption
@@ -574,8 +574,8 @@ Button.Caption() = New_Caption
 PropertyChanged "Caption"
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,CausesValidation
+
+
 Public Property Get CausesValidation() As Boolean
 CausesValidation = Button.CausesValidation
 End Property
@@ -646,8 +646,8 @@ If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 0
 End Property
 
 '
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,Enabled
+
+
 Public Property Get Enabled() As Boolean
 Attribute Enabled.VB_UserMemId = -514
 Enabled = UserControl.Enabled
@@ -667,8 +667,8 @@ Public Property Let FocusedBorderColor(ByVal Value As OLE_COLOR)
 setPenProperty "FocusedBorderColor", mFocusedBorderColor, Value, mhFocusedBorderPen
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,Font
+
+
 Public Property Get Font() As Font
 Attribute Font.VB_UserMemId = -512
 Set Font = mFont
@@ -702,7 +702,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
+
 'MemberInfo=10,0,0,0
 Public Property Get ForeColor() As OLE_COLOR
 Attribute ForeColor.VB_UserMemId = -513
@@ -715,15 +715,15 @@ PropertyChanged "ForeColor"
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 0
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,hWnd
+
+
 Public Property Get hWnd() As Long
 Attribute hWnd.VB_UserMemId = -515
 hWnd = UserControl.hWnd ' Button.hwnd
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,MouseIcon
+
+
 Public Property Get MouseIcon() As Picture
 Set MouseIcon = Button.MouseIcon
 End Property
@@ -785,8 +785,8 @@ mMouseOverForeColor = Value
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 0
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,MousePointer
+
+
 Public Property Get MousePointer() As Integer
 MousePointer = Button.MousePointer
 End Property
@@ -804,8 +804,8 @@ Public Property Let NonDefaultBorderColor(ByVal Value As OLE_COLOR)
 setPenProperty "NonDefaultBorderColor", mNonDefaultBorderColor, Value, mhNonDefaultBorderPen
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,OLEDropMode
+
+
 Public Property Get OLEDropMode() As Integer
 OLEDropMode = Button.OLEDropMode
 End Property
@@ -815,8 +815,8 @@ Button.OLEDropMode() = New_OLEDropMode
 PropertyChanged "OLEDropMode"
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,OLEDrag
+
+
 Public Sub OLEDrag()
 Button.OLEDrag
 End Sub
@@ -874,14 +874,14 @@ PropertyChanged "PushedForeColor"
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 0
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,Refresh
+
+
 Public Sub Refresh()
 Attribute Refresh.VB_UserMemId = -550
 Button.Refresh
 End Sub
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
+
 'MemberInfo=0,0,0,False
 Public Property Get RightToLeft() As Boolean
 Attribute RightToLeft.VB_UserMemId = -611
@@ -893,8 +893,8 @@ Button.RightToLeft = New_RightToLeft
 PropertyChanged "RightToLeft"
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,Style
+
+
 Public Property Get Style() As Integer
 Style = Button.Style
 End Property
@@ -942,8 +942,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Button,Button,-1,ToolTipText
+
+
 Public Property Get ToolTipText() As String
 ToolTipText = Button.ToolTipText
 End Property

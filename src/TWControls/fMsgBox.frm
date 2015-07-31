@@ -14,13 +14,13 @@ Begin VB.Form fMsgBox
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
    Begin TWControls40.TWModelessMsgBox TWModelessMsgBox1 
-      Height          =   1500
+      Height          =   1590
       Left            =   0
       TabIndex        =   0
       Top             =   0
-      Width           =   5055
-      _ExtentX        =   8916
-      _ExtentY        =   2646
+      Width           =   5655
+      _ExtentX        =   9975
+      _ExtentY        =   2805
    End
 End
 Attribute VB_Name = "fMsgBox"

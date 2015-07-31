@@ -41,9 +41,9 @@ Option Explicit
 ' Events
 '@================================================================================
 
-Event Click() 'MappingInfo=UserControl,UserControl,-1,Click
+Event Click()
 
-Event DblClick() 'MappingInfo=UserControl,UserControl,-1,DblClick
+Event DblClick()
 Event KeyDown(KeyCode As Integer, Shift As Integer)
 
 Event KeyPress(KeyAscii As Integer)
@@ -212,12 +212,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let TransparencyColor( _
-                ByVal value As OLE_COLOR)
+                ByVal Value As OLE_COLOR)
 Const ProcName As String = "TransparencyColor"
 On Error GoTo Err
 
-UserControl.MaskColor = value
-UserControl.BackColor = value
+UserControl.MaskColor = Value
+UserControl.BackColor = Value
 
 Exit Property
 
@@ -264,8 +264,8 @@ End Sub
 
 'The Underscore following "Scale" is necessary because it
 'is a Reserved Word in VBA.
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,Scale
+
+
 Public Sub Scale_(Optional x1 As Variant, Optional y1 As Variant, Optional x2 As Variant, Optional y2 As Variant)
 Const ProcName As String = "Scale_"
 On Error GoTo Err
@@ -292,8 +292,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleHeight
+
+
 Public Property Get ScaleHeight() As Single
 Const ProcName As String = "ScaleHeight"
 On Error GoTo Err
@@ -320,8 +320,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleLeft
+
+
 Public Property Get ScaleLeft() As Single
 Const ProcName As String = "ScaleLeft"
 On Error GoTo Err
@@ -348,8 +348,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleMode
+
+
 Public Property Get ScaleMode() As Integer
 Const ProcName As String = "ScaleMode"
 On Error GoTo Err
@@ -376,8 +376,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleTop
+
+
 Public Property Get ScaleTop() As Single
 Const ProcName As String = "ScaleTop"
 On Error GoTo Err
@@ -404,8 +404,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleWidth
+
+
 Public Property Get ScaleWidth() As Single
 Const ProcName As String = "ScaleWidth"
 On Error GoTo Err
@@ -418,8 +418,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleX
+
+
 Public Function ScaleX(ByVal Width As Single, ByVal FromScale As Variant, ByVal ToScale As Variant) As Single
 Attribute ScaleX.VB_Description = "Converts the value for the width of a Form, PictureBox, or Printer from one unit of measure to another."
 Const ProcName As String = "ScaleX"
@@ -433,8 +433,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-'WARNING! DO NOT REMOVE OR MODIFY THE FOLLOWING COMMENTED LINES!
-'MappingInfo=Picture1,Picture1,-1,ScaleY
+
+
 Public Function ScaleY(ByVal Height As Single, ByVal FromScale As Variant, ByVal ToScale As Variant) As Single
 Const ProcName As String = "ScaleY"
 On Error GoTo Err
