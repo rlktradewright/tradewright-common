@@ -72,9 +72,12 @@ Private WithEvents mTimer As IntervalTimer
 Attribute mTimer.VB_VarHelpID = -1
 Private mList As SortedDictionary
 
-Private WithEvents mClock As Clock
-Attribute mClock.VB_VarHelpID = -1
 Private mIsSimulated As Boolean
+
+Private WithEvents mSimulatedClock As Clock
+Attribute mSimulatedClock.VB_VarHelpID = -1
+Private mClock As Clock
+Attribute mClock.VB_VarHelpID = -1
 
 Private mNextExpiry As Date
 
@@ -102,14 +105,14 @@ End Sub
 '@================================================================================
 
 '@================================================================================
-' mClock Event Handlers
+' mSimulatedClock Event Handlers
 '@================================================================================
 
-Private Sub mClock_Tick()
-Const ProcName As String = "mClock_Tick"
+Private Sub mSimulatedClock_Tick()
+Const ProcName As String = "mSimulatedClock_Tick"
 On Error GoTo Err
 
-If IsSimulated Then SetTime mClock.Timestamp
+SetTime mSimulatedClock.Timestamp
 
 Exit Sub
 
@@ -282,7 +285,8 @@ Friend Sub Initialise( _
                 ByVal pIsSimulated As Boolean, _
                 ByVal pClock As Clock)
 mIsSimulated = pIsSimulated
-If mIsSimulated Then Set mClock = pClock
+Set mClock = pClock
+If mIsSimulated Then Set mSimulatedClock = mClock
 End Sub
 
 ''
