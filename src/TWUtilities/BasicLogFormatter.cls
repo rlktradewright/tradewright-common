@@ -64,18 +64,23 @@ Private Function ILogFormatter_FormatRecord(ByVal Logrec As LogRecord) As String
 Const ProcName As String = "LogFormatter_FormatRecord"
 On Error GoTo Err
 
-Dim s As String
-If mIncludeTimestamp Then s = gFormatTimestamp(Logrec.Timestamp, mTimestampFormat) & " "
+Dim lPrefix As String
+If mIncludeTimestamp Then lPrefix = gFormatTimestamp(Logrec.Timestamp, mTimestampFormat) & " "
 
-If mIncludeLogLevel Then s = s & gLogLevelToShortString(Logrec.LogLevel)
+If mIncludeLogLevel Then lPrefix = lPrefix & gLogLevelToShortString(Logrec.LogLevel)
 
-If mIncludeInfoType Then s = s & Logrec.InfoType & ": "
+If mIncludeInfoType Then lPrefix = lPrefix & Logrec.InfoType & ": "
 
-Dim s1 As String
-gVariantToString Logrec.Data, s1
-s = s & s1
+Dim lData As String
+gVariantToString Logrec.Data, lData
 
-ILogFormatter_FormatRecord = s
+If InStr(1, lData, vbCrLf) <> 0 Then
+    Dim lSpacer As String
+    lSpacer = Space(Len(lPrefix))
+    lData = Replace$(lData, vbCrLf, vbCrLf & lSpacer)
+End If
+
+ILogFormatter_FormatRecord = lPrefix & lData
 
 Exit Function
 
