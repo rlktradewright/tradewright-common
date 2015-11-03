@@ -39,7 +39,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-110.msm"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-111.msm"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -223,7 +223,7 @@
         "Module"
         {
         "ModuleSignature" = "8:MergeModule.1B89D150F6B6407EA210D9517AA64D26"
-        "Version" = "8:4.0.0.110"
+        "Version" = "8:4.0.0.111"
         "Title" = "8:TradeWrightCommonExternalComponentsMerge"
         "Subject" = "8:"
         "Author" = "8:TradeWright Software Systems"
