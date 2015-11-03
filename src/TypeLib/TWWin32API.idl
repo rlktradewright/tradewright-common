@@ -60,6 +60,9 @@ library TWWin32API
 	const long BS_NULL							= 1;
 	const long BS_HOLLOW						= BS_NULL;
 
+	const long IOC_IN                    		= 0x80000000;
+	const long IOC_VENDOR                		= 0x18000000;
+
 	const long Key_Enumerate_Sub_Keys         = 0x8;
 	const long Key_Notify                     = 0x10;
 	const long Key_Query_Value                = 0x1;
@@ -472,6 +475,12 @@ library TWWin32API
         SYSTEMTIME DaylightDate;
 	} REG_TIME_ZONE_INFORMATION;
 
+	typedef struct TcpKeepalive {
+		long	Onoff; 
+		long 	KeepaliveTime;
+		long 	KeepaliveInterval;
+	} TcpKeepalive;
+
 	typedef struct TEXTMETRICW	{
 		long        tmHeight;
 		long        tmAscent;
@@ -529,6 +538,14 @@ library TWWin32API
 		byte Filler4;
 		byte Alpha;
 	} TRIVERTEX;
+
+	typedef struct WSAOVERLAPPED {
+		long Internal;
+		long InternalHigh;
+		long Offset;
+		long OffsetHigh;
+		long hEvent;
+	} WSAOVERLAPPED;
 
 	typedef struct XFORM {
         float eM11;
@@ -2337,7 +2354,26 @@ library TWWin32API
             [in] long uSize);
 	
 	};
+	
+	[dllname("ws2_32")]
+	module ws2_32
+	{
+	
+		[entry("WSAIoctl")]
+		long WSAIoctl(
+			[in] long s, 
+			[in] long dwIoControlCode, 
+			[in] long lpvInBuffer,
+			[in] long cbInBuffer, 
+			[in] long lpvOutBuffer,
+			[in] long cbOutBuffer,
+			[in, out] long* lpcbBytesReturned,
+			[in, out] WSAOVERLAPPED* lpOverlapped,
+			[in] long lpCompletionRoutine);
 
+	};
+	
+	
 	module Windows {
 
 		const long AD_COUNTERCLOCKWISE				= 1;
@@ -2685,6 +2721,9 @@ library TWWin32API
 		const long INFINITE							= 0xFFFF;
 		
 		const long INVALID_HANDLE_VALUE				= 0xFFFF;
+
+		const long IOC_IN                    		= 0x80000000;
+		const long IOC_VENDOR                		= 0x18000000;
 
 		const long KEY_ENUMERATE_SUB_KEYS         	= Key_Enumerate_Sub_Keys;
 		const long KEY_NOTIFY                     	= Key_Notify;
@@ -3215,6 +3254,8 @@ library TWWin32API
 		const long SWP_DEFERERASE                 = 0x2000;
 		const long SWP_ASYNCWINDOWPOS             = 0x4000;
 
+		const long SIO_KEEPALIVE_VALS        		= IOC_IN | IOC_VENDOR | 4;
+
 		const long TA_NOUPDATECP					= 0;
 		const long TA_UPDATECP						= 1;
 		const long TA_LEFT							= 0;
@@ -3245,6 +3286,8 @@ library TWWin32API
         const long TME_HOVER 						= 0x1;
         const long TME_LEAVE 						= 0x2;
         const long TME_QUERY 						= 0x40000000;
+
+		const long WSA_IO_PENDING            		= 997;
 
 		const long VK_LBUTTON      = 0x01;
 		const long VK_RBUTTON      = 0x02;
