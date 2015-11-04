@@ -60,8 +60,6 @@ Private mCurrentListeners()                         As Object
 Private mCurrentListenersValid                      As Boolean
 Private mCurrentListenersCount                      As Long
 
-Private mListenersCollection                        As Collection
-
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
@@ -108,14 +106,7 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-Dim lKey As String
-lKey = gGetObjectKey(pListener)
-
-Dim lObj As Object
-Set lObj = mListenersCollection.Item(gGetObjectKey(pListener))
-If Not lObj Is Nothing Then Exit Sub
-
-mListenersCollection.Add pListener, lKey
+If findEntry(pListener) <> NullIndex Then Exit Sub
 
 Dim lIndex As Long
 If mFirstFreeIndex <> NullIndex Then
@@ -134,7 +125,6 @@ mCurrentListenersValid = False
 Exit Sub
 
 Err:
-If Err.number = VBErrorCodes.VbErrInvalidProcedureCall Then Resume Next
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
@@ -181,20 +171,15 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-Dim i As Long
-For i = 0 To mListenersNextIndex - 1
-    If Not mListeners(i).Listener Is Nothing Then
-        If mListeners(i).Listener Is pListener Then
-            Set mListeners(i).Listener = Nothing
-            mListeners(i).Next = mFirstFreeIndex
-            mFirstFreeIndex = i
-            mCount = mCount - 1
-            mListenersCollection.Remove gGetObjectKey(pListener)
-            mCurrentListenersValid = False
-            Exit For
-        End If
-    End If
-Next
+Dim i As Long: i = findEntry(pListener)
+
+If i <> NullIndex Then
+    Set mListeners(i).Listener = Nothing
+    mListeners(i).Next = mFirstFreeIndex
+    mFirstFreeIndex = i
+    mCount = mCount - 1
+    mCurrentListenersValid = False
+End If
 
 Exit Sub
 
@@ -226,6 +211,26 @@ End Sub
 ' Helper Functions
 '@================================================================================
 
+Private Function findEntry(ByVal pListener As Object) As Long
+Const ProcName As String = "findEntry"
+On Error GoTo Err
+
+findEntry = NullIndex
+
+Dim i As Long
+For i = 0 To mListenersNextIndex - 1
+    If mListeners(i).Listener Is pListener Then
+        findEntry = i
+        Exit For
+    End If
+Next
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Private Sub Initialise()
 ReDim mListeners(1) As ListenerEntry
 ReDim mCurrentListeners(1) As Object
@@ -234,6 +239,5 @@ mFirstFreeIndex = NullIndex
 mCurrentListenersValid = False
 mCurrentListenersCount = 0
 mCount = 0
-Set mListenersCollection = New Collection
 End Sub
 
