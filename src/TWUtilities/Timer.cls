@@ -279,13 +279,22 @@ Dim ev As TimerExpiredEventData
 Set ev.Source = Me
 gSetVariant ev.Data, mData
 
-mTimerExpiryListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mTimerExpiryListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mTimerExpiryListeners.Valid Then
+    sInit = True
+    sSomeListeners = mTimerExpiryListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ITimerExpiryListener
-    Set lListener = mTimerExpiryListeners.GetListener(i)
-    lListener.TimerExpired ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.TimerExpired ev
+    Next
+End If
 
 RaiseEvent TimerExpired(ev)
 

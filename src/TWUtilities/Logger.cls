@@ -220,13 +220,22 @@ On Error GoTo Err
 
 mFinished = True
 
-mLogListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mLogListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mLogListeners.Valid Then
+    sInit = True
+    sSomeListeners = mLogListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ILogListener
-    Set lListener = mLogListeners.GetListener(i)
-    lListener.Finish
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Finish
+    Next
+End If
 
 mLogListeners.Clear
 
@@ -368,13 +377,22 @@ Private Sub fireNotify( _
 Const ProcName As String = "fireNotify"
 On Error GoTo Err
 
-mLogListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mLogListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mLogListeners.Valid Then
+    sInit = True
+    sSomeListeners = mLogListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ILogListener
-    Set lListener = mLogListeners.GetListener(i)
-    lListener.Notify Logrec
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Notify Logrec
+    Next
+End If
 
 Exit Sub
 

@@ -34,31 +34,22 @@ Option Explicit
 ' Types
 '@================================================================================
 
-Private Type ListenerEntry
-    Listener        As Object
-    Next            As Long
-End Type
-
 '@================================================================================
 ' Constants
 '@================================================================================
 
 Private Const ModuleName                            As String = "Listeners"
 
-Private Const NullIndex                             As Long = -1
-
 '@================================================================================
 ' Member variables
 '@================================================================================
 
-Private mListeners()                                As ListenerEntry
-Private mListenersNextIndex                         As Long
-Private mFirstFreeIndex                             As Long
-Private mCount                                      As Long
+Private mListeners                                  As Collection
 
 Private mCurrentListeners()                         As Object
 Private mCurrentListenersValid                      As Boolean
-Private mCurrentListenersCount                      As Long
+
+Private mCount                                      As Long
 
 '@================================================================================
 ' Class Event Handlers
@@ -80,20 +71,19 @@ End Sub
 ' Properties
 '@================================================================================
 
-Public Property Get CurrentListeners() As Object()
-Const ProcName As String = "CurrentListeners"
-On Error GoTo Err
-
-gAssert mCount <> 0, "No current listeners"
-
+Public Function GetCurrentListeners(ByRef pListeners() As Object) As Boolean
 If Not mCurrentListenersValid Then SetCurrentListeners
 
-CurrentListeners = mCurrentListeners
+If mCount = 0 Then
+    GetCurrentListeners = False
+Else
+    pListeners = mCurrentListeners
+    GetCurrentListeners = True
+End If
+End Function
 
-Exit Property
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
+Public Property Get Valid() As Boolean
+Valid = mCurrentListenersValid
 End Property
 
 '@================================================================================
@@ -106,63 +96,23 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-If findEntry(pListener) <> NullIndex Then Exit Sub
-
-Dim lIndex As Long
-If mFirstFreeIndex <> NullIndex Then
-    lIndex = mFirstFreeIndex
-    mFirstFreeIndex = mListeners(mFirstFreeIndex).Next
-Else
-    If mListenersNextIndex > UBound(mListeners) Then ReDim Preserve mListeners(2 * (UBound(mListeners) + 1) - 1) As ListenerEntry
-    lIndex = mListenersNextIndex
-    mListenersNextIndex = mListenersNextIndex + 1
-End If
-    
-Set mListeners(lIndex).Listener = pListener
+mListeners.Add pListener, gGetObjectKey(pListener)
 mCount = mCount + 1
 mCurrentListenersValid = False
 
 Exit Sub
 
 Err:
+If Err.number = VBErrorCodes.VbErrElementAlreadyExists Then Exit Sub
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Clear()
-Const ProcName As String = "Clear"
-On Error GoTo Err
-
 Initialise
-
-Exit Sub
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Function Count() As Long
-Const ProcName As String = "Count"
-On Error GoTo Err
-
 Count = mCount
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
-
-Public Function GetListener(ByVal pIndex As Long) As Object
-Const ProcName As String = "GetListener"
-On Error GoTo Err
-
-gAssertArgument pIndex > 0 And pIndex <= mCurrentListenersCount, "Index out of range"
-Set GetListener = mCurrentListeners(pIndex - 1)
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Sub Remove(ByVal pListener As Object)
@@ -171,73 +121,45 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-Dim i As Long: i = findEntry(pListener)
-
-If i <> NullIndex Then
-    Set mListeners(i).Listener = Nothing
-    mListeners(i).Next = mFirstFreeIndex
-    mFirstFreeIndex = i
-    mCount = mCount - 1
-    mCurrentListenersValid = False
-End If
+mListeners.Remove gGetObjectKey(pListener)
+mCount = mCount - 1
+mCurrentListenersValid = False
 
 Exit Sub
 
 Err:
+If Err.number = VBErrorCodes.VbErrInvalidProcedureCall Then Exit Sub
 gHandleUnexpectedError ProcName, ModuleName
-End Sub
-
-Public Sub SetCurrentListeners()
-If mCurrentListenersValid Then Exit Sub
-If mCount = 0 Then
-    mCurrentListenersCount = 0
-    Exit Sub
-End If
-
-If UBound(mCurrentListeners) < mCount - 1 Then ReDim mCurrentListeners(mCount - 1) As Object
-mCurrentListenersCount = mCount
-Dim i As Long
-Dim j As Long
-For i = 0 To mListenersNextIndex - 1
-    If Not mListeners(i).Listener Is Nothing Then
-        Set mCurrentListeners(j) = mListeners(i).Listener
-        j = j + 1
-    End If
-Next
-mCurrentListenersValid = True
 End Sub
 
 '@================================================================================
 ' Helper Functions
 '@================================================================================
 
-Private Function findEntry(ByVal pListener As Object) As Long
-Const ProcName As String = "findEntry"
-On Error GoTo Err
-
-findEntry = NullIndex
-
-Dim i As Long
-For i = 0 To mListenersNextIndex - 1
-    If mListeners(i).Listener Is pListener Then
-        findEntry = i
-        Exit For
-    End If
-Next
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
-
 Private Sub Initialise()
-ReDim mListeners(1) As ListenerEntry
-ReDim mCurrentListeners(1) As Object
-mListenersNextIndex = 0
-mFirstFreeIndex = NullIndex
+Set mListeners = New Collection
 mCurrentListenersValid = False
-mCurrentListenersCount = 0
 mCount = 0
 End Sub
+
+Private Sub SetCurrentListeners()
+If mCurrentListenersValid Then Exit Sub
+
+If mCount = 0 Then
+    mCurrentListenersValid = True
+    Exit Sub
+End If
+
+ReDim mCurrentListeners(mCount - 1) As Object
+
+Dim lListener As Object
+Dim i As Long
+For Each lListener In mListeners
+    Set mCurrentListeners(i) = lListener
+    i = i + 1
+Next
+mCurrentListenersValid = True
+End Sub
+
+
 

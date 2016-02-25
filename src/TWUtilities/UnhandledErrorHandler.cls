@@ -241,14 +241,22 @@ End Sub
 
 Private Sub fireUnhandledError( _
                 ByRef ev As ErrorEventData)
-mListeners.SetCurrentListeners
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
 
-Dim i As Long
-For i = 1 To mListeners.Count
+If Not sInit Or Not mListeners.Valid Then
+    sInit = True
+    sSomeListeners = mListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As IErrorListener
-    Set lListener = mListeners.GetListener(i)
-    lListener.Notify ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Notify ev
+    Next
+End If
 
 RaiseEvent UnhandledError(ev)
 

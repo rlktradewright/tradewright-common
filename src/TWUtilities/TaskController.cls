@@ -301,13 +301,23 @@ Else
 End If
 
 failPoint = "Notifying listeners"
-mTaskCompletionListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mTaskCompletionListeners.Count
+
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mTaskCompletionListeners.Valid Then
+    sInit = True
+    sSomeListeners = mTaskCompletionListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ITaskCompletionListener
-    Set lListener = mTaskCompletionListeners.GetListener(i)
-    lListener.TaskCompleted ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.TaskCompleted ev
+    Next
+End If
 
 failPoint = "Raising event"
 RaiseEvent Completed(ev)
@@ -333,13 +343,22 @@ Set ev.Source = Me
 
 gSetVariant ev.Cookie, mCookie
     
-mTaskNotificationListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mTaskNotificationListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mTaskNotificationListeners.Valid Then
+    sInit = True
+    sSomeListeners = mTaskNotificationListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ITaskNotificationListener
-    Set lListener = mTaskNotificationListeners.GetListener(i)
-    lListener.Notify ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Notify ev
+    Next
+End If
 RaiseEvent Notification(ev)
 
 Exit Sub
@@ -365,13 +384,22 @@ Set ev.Source = Me
 gSetVariant ev.Cookie, mCookie
 gSetVariant ev.InterimResult, pInterimResult
     
-mTaskProgressListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mTaskProgressListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mTaskProgressListeners.Valid Then
+    sInit = True
+    sSomeListeners = mTaskProgressListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ITaskProgressListener
-    Set lListener = mTaskProgressListeners.GetListener(i)
-    lListener.Progress ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Progress ev
+    Next
+End If
 RaiseEvent Progress(ev)
 
 Exit Sub
@@ -395,13 +423,22 @@ Set ev.Source = Me
 
 gSetVariant ev.Cookie, mCookie
     
-mTaskStateChangeListeners.SetCurrentListeners
-Dim i As Long
-For i = 1 To mTaskStateChangeListeners.Count
+Static sInit As Boolean
+Static sCurrentListeners() As Object
+Static sSomeListeners As Boolean
+
+If Not sInit Or Not mTaskStateChangeListeners.Valid Then
+    sInit = True
+    sSomeListeners = mTaskStateChangeListeners.GetCurrentListeners(sCurrentListeners)
+End If
+If sSomeListeners Then
     Dim lListener As ITaskStateChangeListener
-    Set lListener = mTaskStateChangeListeners.GetListener(i)
-    lListener.Change ev
-Next
+    Dim i As Long
+    For i = 0 To UBound(sCurrentListeners)
+        Set lListener = sCurrentListeners(i)
+        lListener.Change ev
+    Next
+End If
 RaiseEvent StateChange(ev)
 
 Exit Sub
