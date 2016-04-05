@@ -14,6 +14,7 @@ Begin VB.UserControl TWModelessMsgBox
       Left            =   3240
       TabIndex        =   4
       Top             =   840
+      Visible         =   0   'False
       Width           =   1095
       _ExtentX        =   1931
       _ExtentY        =   556
@@ -32,6 +33,7 @@ Begin VB.UserControl TWModelessMsgBox
       Left            =   2040
       TabIndex        =   3
       Top             =   840
+      Visible         =   0   'False
       Width           =   1095
       _ExtentX        =   1931
       _ExtentY        =   556
@@ -50,6 +52,7 @@ Begin VB.UserControl TWModelessMsgBox
       Left            =   840
       TabIndex        =   2
       Top             =   840
+      Visible         =   0   'False
       Width           =   1095
       _ExtentX        =   1931
       _ExtentY        =   556

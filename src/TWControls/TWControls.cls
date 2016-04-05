@@ -198,14 +198,7 @@ Public Sub ModelessMsgBox( _
 Const ProcName As String = "ModelessMsgBox"
 On Error GoTo Err
 
-Dim lMsgBox As New fMsgBox
-lMsgBox.Initialise pPrompt, pButtons, pTitle
-If Not pTheme Is Nothing Then lMsgBox.Theme = pTheme
-If Not pOwner Is Nothing Then
-    lMsgBox.show vbModeless, pOwner
-Else
-    lMsgBox.show vbModeless
-End If
+gModelessMsgBox pPrompt, pButtons, pTitle, pOwner, pTheme
 
 Exit Sub
 

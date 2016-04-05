@@ -149,6 +149,30 @@ Public Function gMaximumLongs(ByVal pValue1 As Long, ByVal pValue2 As Long) As L
 gMaximumLongs = IIf(pValue1 > pValue2, pValue1, pValue2)
 End Function
 
+Public Sub gModelessMsgBox( _
+                ByVal pPrompt As String, _
+                ByVal pButtons As MsgBoxStyles, _
+                Optional ByVal pTitle As String, _
+                Optional pOwner As Variant = Nothing, _
+                Optional ByVal pTheme As ITheme = Nothing)
+Const ProcName As String = "gModelessMsgBox"
+On Error GoTo Err
+
+Dim lMsgBox As New fMsgBox
+lMsgBox.Initialise pPrompt, pButtons, pTitle
+If Not pTheme Is Nothing Then lMsgBox.Theme = pTheme
+If Not pOwner Is Nothing Then
+    lMsgBox.show vbModeless, pOwner
+Else
+    lMsgBox.show vbModeless
+End If
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
 Public Sub gNotifyUnhandledError( _
                 ByRef pProcedureName As String, _
                 ByRef pModuleName As String, _

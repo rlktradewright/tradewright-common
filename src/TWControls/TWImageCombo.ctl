@@ -1,12 +1,12 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Begin VB.UserControl TWImageCombo 
-   ClientHeight    =   1470
+   ClientHeight    =   330
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   2625
-   ScaleHeight     =   1470
-   ScaleWidth      =   2625
+   ClientWidth     =   1935
+   ScaleHeight     =   330
+   ScaleWidth      =   1935
    ToolboxBitmap   =   "TWImageCombo.ctx":0000
    Begin MSComctlLib.ImageCombo Combo1 
       Height          =   330
@@ -84,15 +84,10 @@ Private mTheme                                      As ITheme
 ' Class Event Handlers
 '@================================================================================
 
-Private Sub UserControl_EnterFocus()
-If Enabled Then Combo1.SetFocus
-End Sub
-
 Private Sub UserControl_Initialize()
 mAppearance = cc3D
 End Sub
 
-'Load property values from storage
 Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
 Const ProcName As String = "UserControl_ReadProperties"
 On Error GoTo Err
@@ -227,54 +222,54 @@ Private Sub Combo1_DropDown()
     RaiseEvent DropDown
 End Sub
 
-Private Sub Combo1_KeyDown(KeyCode As Integer, Shift As Integer)
-Const ProcName As String = "Combo1_KeyDown"
-On Error GoTo Err
-
-Dim i As Long
-Dim posn As Long
-If KeyCode = vbKeyUp Then
-    posn = 0
-    If Combo1.SelectedItem Is Nothing Then
-        For i = 1 To Combo1.ComboItems.Count
-            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
-                Combo1.ComboItems(i).Selected = True
-                Exit Sub
-            End If
-            If StrComp(Combo1.ComboItems(i).Text, Combo1.Text, vbTextCompare) < 0 Then posn = i
-        Next
-        If posn = Combo1.ComboItems.Count Then
-            KeyCode = 0
-        Else
-            posn = posn + 1
-        End If
-        Combo1.ComboItems(posn).Selected = True
-    End If
-ElseIf KeyCode = vbKeyDown Then
-    posn = Combo1.ComboItems.Count
-    If Combo1.SelectedItem Is Nothing Then
-        For i = Combo1.ComboItems.Count To 1 Step -1
-            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
-                Combo1.ComboItems(i).Selected = True
-                Exit Sub
-            End If
-            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) < 0 Then posn = i
-        Next
-        If posn = 1 Then
-            KeyCode = 0
-        Else
-            posn = posn - 1
-        End If
-        Combo1.ComboItems(posn).Selected = True
-    End If
-End If
-RaiseEvent KeyDown(KeyCode, Shift)
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName, ProjectName
-End Sub
+'Private Sub Combo1_KeyDown(KeyCode As Integer, Shift As Integer)
+'Const ProcName As String = "Combo1_KeyDown"
+'On Error GoTo Err
+'
+'Dim i As Long
+'Dim posn As Long
+'If KeyCode = vbKeyUp Then
+'    posn = 0
+'    If Combo1.SelectedItem Is Nothing Then
+'        For i = 1 To Combo1.ComboItems.Count
+'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
+'                Combo1.ComboItems(i).Selected = True
+'                Exit Sub
+'            End If
+'            If StrComp(Combo1.ComboItems(i).Text, Combo1.Text, vbTextCompare) < 0 Then posn = i
+'        Next
+'        If posn = Combo1.ComboItems.Count Then
+'            KeyCode = 0
+'        Else
+'            posn = posn + 1
+'        End If
+'        Combo1.ComboItems(posn).Selected = True
+'    End If
+'ElseIf KeyCode = vbKeyDown Then
+'    posn = Combo1.ComboItems.Count
+'    If Combo1.SelectedItem Is Nothing Then
+'        For i = Combo1.ComboItems.Count To 1 Step -1
+'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
+'                Combo1.ComboItems(i).Selected = True
+'                Exit Sub
+'            End If
+'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) < 0 Then posn = i
+'        Next
+'        If posn = 1 Then
+'            KeyCode = 0
+'        Else
+'            posn = posn - 1
+'        End If
+'        Combo1.ComboItems(posn).Selected = True
+'    End If
+'End If
+'RaiseEvent KeyDown(KeyCode, Shift)
+'
+'Exit Sub
+'
+'Err:
+'gNotifyUnhandledError ProcName, ModuleName, ProjectName
+'End Sub
 
 Private Sub Combo1_KeyPress(KeyAscii As Integer)
 Const ProcName As String = "Combo1_KeyPress"
@@ -882,6 +877,7 @@ Const ProcName As String = "Text"
 On Error GoTo Err
 
     Text = Combo1.Text
+    PropertyChanged "Text"
 
 Exit Property
 
@@ -894,7 +890,7 @@ Const ProcName As String = "Text"
 On Error GoTo Err
 
     Combo1.Text() = Value
-    PropertyChanged "Text"
+    'PropertyChanged "Text"
 
 Exit Property
 
