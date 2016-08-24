@@ -1587,21 +1587,18 @@ Else
 End If
 End Function
 
-Public Sub gVariantToString( _
-                ByRef Value As Variant, _
-                ByRef outstr As String)
-Dim baseType As VbVarType
-Dim Var As Variant
-Dim s As String
-
+Public Function gVariantToString( _
+                ByRef Value As Variant) As String
 Const ProcName As String = "gVariantToString"
-
 On Error GoTo Err
 
+Dim baseType As VbVarType
 baseType = VarType(Value) And (Not VbVarType.vbArray)
 
+Dim s As String
 If IsArray(Value) Then
     Dim sb As New StringBuilder
+    Dim Var As Variant
     For Each Var In Value
         If sb.Length = 0 Then
             sb.Append "Array["
@@ -1610,56 +1607,46 @@ If IsArray(Value) Then
         End If
         If baseType = VbVarType.vbString Then
             sb.Append """"
-            gVariantToString Var, s
-            sb.Append s
+            sb.Append gVariantToString(Var)
             sb.Append """"
         Else
-            gVariantToString Var, s
+            sb.Append gVariantToString(Var)
             sb.Append s
         End If
     Next
     sb.Append "]"
-    outstr = sb.ToString
+    gVariantToString = sb.ToString
     
-Else
-
-    If IsObject(Value) Then
-        If TypeOf Value Is IStringable Then
-            Dim obj As IStringable
-            Set obj = Value
-            s = obj.ToString
-        ElseIf TypeOf Value Is IJSONable Then
-            Dim objJ As IJSONable
-            Set objJ = Value
-            s = objJ.ToJSON
-        Else
-            ' object has no string representation
-            If baseType <> VbVarType.vbObject Then
-                ' this means the Value has a default property - we'll use
-                ' that Value instead
-                varToString Value, s
-                s = "DefaultProp(" & s & ")"
-            Else
-                ' nothing we can find out about this object
-                s = "?"
-            End If
-        End If
-        outstr = "Obj(" & TypeName(Value) & "){" & s & "}"
+ElseIf IsObject(Value) Then
+    If TypeOf Value Is IStringable Then
+        Dim obj As IStringable
+        Set obj = Value
+        s = obj.ToString
+    ElseIf TypeOf Value Is IJSONable Then
+        Dim objJ As IJSONable
+        Set objJ = Value
+        s = objJ.ToJSON
+    ElseIf baseType <> VbVarType.vbObject Then
+        ' this means the Value has a default property - we'll use
+        ' that Value instead
+        s = "DefaultProp(" & varToString(Value) & ")"
     Else
-        varToString Value, outstr
+        ' nothing we can find out about this object
+        s = "?"
     End If
+    gVariantToString = "Obj(" & TypeName(Value) & "){" & s & "}"
+Else
+    gVariantToString = varToString(Value)
 End If
 
-Exit Sub
+Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
-End Sub
+End Function
 
 Public Function gXMLEncode(ByVal Value As String) As String
 Const ProcName As String = "gXMLEncode"
-
 On Error GoTo Err
 
 gXMLEncode = Replace(Replace(Replace(Replace(Replace(Value, "&", "&amp;"), "'", "&apos;"), """", "&quot;"), "<", "&lt;"), ">", "&gt;")
@@ -1695,7 +1682,6 @@ Private Function convertHexToByte( _
                 ByVal asc1 As Integer, _
                 ByVal asc2 As Integer) As Byte
 Const ProcName As String = "convertHexToByte"
-
 On Error GoTo Err
 
 convertHexToByte = 16 * hexCharToBin(asc1) + hexCharToBin(asc2)
@@ -1707,13 +1693,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function findMainWindowHandle() As Long
-Dim hwnd As Long
 Const ProcName As String = "findMainWindowHandle"
-
 On Error GoTo Err
 
 mMainWindowHandle = mPostMessageForm.hwnd
 Do
+    Dim hwnd As Long
     hwnd = GetWindow(mMainWindowHandle, GW_OWNER)
     If hwnd = 0 Then Exit Do
     mMainWindowHandle = hwnd
@@ -1746,7 +1731,6 @@ End Function
 Private Function hexCharToBin( _
                 ByVal hexChar As Integer) As Integer
 Const ProcName As String = "hexCharToBin"
-
 On Error GoTo Err
 
 gAssertArgument hexChar >= vbKey0, "Invalid hex Character"
@@ -1767,7 +1751,6 @@ End Function
 
 Private Sub hook()
 Const ProcName As String = "hook"
-
 On Error GoTo Err
 
 If mPrevWndProc <> 0 Then Exit Sub
@@ -1863,7 +1846,6 @@ End Sub
 
 Private Sub unhook()
 Const ProcName As String = "unhook"
-
 On Error GoTo Err
 
 If mPrevWndProc = 0 Then Exit Sub
@@ -1876,16 +1858,9 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Sub varToString( _
-                ByRef Value As Variant, _
-                ByRef outstr As String)
-                
-Dim s As String
-Dim fn As Variant
-Dim dataObj As DataObject
-
+Private Function varToString( _
+                ByRef Value As Variant) As String
 Const ProcName As String = "varToString"
-
 On Error GoTo Err
 
 gAssertArgument Not IsArray(Value), "Argument must not be an array variant"
@@ -1900,40 +1875,44 @@ Case VbVarType.vbBoolean, _
         VbVarType.vbLong, _
         VbVarType.vbSingle, _
         VbVarType.vbString
-    outstr = CStr(Value)
+    varToString = CStr(Value)
 Case VbVarType.vbByte
-    outstr = Hex$(Value)
+    varToString = Hex$(Value)
 Case VbVarType.vbDataObject
+    Dim dataObj As DataObject
     Set dataObj = Value
+    
+    Dim s As String
+    Dim fn As Variant
     For Each fn In dataObj
         If Len(s) <> 0 Then s = s & ", "
         s = s & fn
     Next
-    outstr = "DataObject{" & s & "}"
+    varToString = "DataObject{" & s & "}"
 Case VbVarType.vbDate
     If Int(Value) = Value Then
-        outstr = gFormatTimestamp(Value, TimestampDateOnlyISO8601)
+        varToString = gFormatTimestamp(Value, TimestampDateOnlyISO8601)
     ElseIf Int(Value) = 0 Then
-        outstr = gFormatTimestamp(Value, TimestampTimeOnlyISO8601)
+        varToString = gFormatTimestamp(Value, TimestampTimeOnlyISO8601)
     Else
-        outstr = gFormatTimestamp(Value, TimestampDateAndTimeISO8601)
+        varToString = gFormatTimestamp(Value, TimestampDateAndTimeISO8601)
     End If
 Case VbVarType.vbEmpty
-    outstr = "EMPTY"
+    varToString = "EMPTY"
 Case VbVarType.vbNull
-    outstr = "NULL"
+    varToString = "NULL"
 Case VbVarType.vbObject
     gAssertArgument False, "Argument must not be an object with no default property"
 Case VbVarType.vbUserDefinedType
-    outstr = "UDT{?}"
+    varToString = "UDT{?}"
 
 End Select
 
-Exit Sub
+Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-End Sub
+End Function
 
 Private Function WindowProc( _
                 ByVal hwnd As Long, _

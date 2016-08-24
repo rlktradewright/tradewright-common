@@ -4299,7 +4299,7 @@ Public Function VariantToString( _
 Const ProcName As String = "VariantToString"
 On Error GoTo Err
 
-gVariantToString Value, VariantToString
+VariantToString = gVariantToString(Value)
 
 Exit Function
 

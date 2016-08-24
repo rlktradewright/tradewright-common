@@ -72,7 +72,7 @@ If mIncludeLogLevel Then lPrefix = lPrefix & gLogLevelToShortString(Logrec.LogLe
 If mIncludeInfoType Then lPrefix = lPrefix & Logrec.InfoType & ": "
 
 Dim lData As String
-gVariantToString Logrec.Data, lData
+lData = gVariantToString(Logrec.Data)
 
 If InStr(1, lData, vbCrLf) <> 0 Then
     Dim lSpacer As String

@@ -126,9 +126,7 @@ Const ProcName As String = "IStringable_ToString"
 On Error GoTo Err
 
 IStringable_ToString = ToString
-Dim s As String
-gVariantToString mTimeZone, s
-IStringable_ToString = "Timezone=" & s & _
+IStringable_ToString = "Timezone=" & gVariantToString(mTimeZone) & _
                     "; Simulated=" & mSimulateTime & _
                     IIf(mSimulateTime, "; Paused=" & mTimePaused & "; Rate=" & mRate, "") & _
                     "; Curr time=" & gFormatTimestamp(Timestamp, TimestampDateAndTimeISO8601)
