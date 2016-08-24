@@ -824,8 +824,17 @@ End If
 
 lTaskContext.Initialise pTarget, pData, id, pName, lTaskController
 
-'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log  "Starting task", ProcName, ModuleName, pName, LogLevelHighDetail
-    
+If gLogger.IsLoggable(LogLevelHighDetail) Then
+    Dim s As String
+    s = "Starting task: taskType=" & _
+        TypeName(pTarget) & _
+        " pCookie=" & gVariantToString(pCookie) & _
+        " pData=" & gVariantToString(pData) & _
+        " pName=""" & pName & """"
+
+    gLogger.Log s, ProcName, ModuleName, , LogLevelHighDetail
+End If
+
 Set StartTask = lTaskController
 
 startScheduler
