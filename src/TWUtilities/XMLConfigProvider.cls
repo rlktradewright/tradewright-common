@@ -375,6 +375,7 @@ mXMLdoc.load xmlSource
 
 Dim element As IXMLDOMElement
 Set element = mXMLdoc.documentElement
+gAssert Not element Is Nothing, "Invalid XML in " & CStr(xmlSource)
 Set mRootItem = New XMLConfigItem
 mRootItem.InitialiseFromNode Me, element, Nothing, 1
 
