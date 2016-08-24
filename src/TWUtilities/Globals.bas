@@ -1592,6 +1592,13 @@ Public Function gVariantToString( _
 Const ProcName As String = "gVariantToString"
 On Error GoTo Err
 
+If IsObject(Value) Then
+    If Value Is Nothing Then
+        gVariantToString = "NOTHING"
+        Exit Function
+    End If
+End If
+
 Dim baseType As VbVarType
 baseType = VarType(Value) And (Not VbVarType.vbArray)
 
