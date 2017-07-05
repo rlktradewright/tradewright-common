@@ -39,7 +39,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-111.msm"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-112.msm"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -127,7 +127,7 @@
             "SourcePath" = "8:..\\..\\..\\Bin\\TradeWright.Common.ExternalComponents\\TradeWright.Common.ExternalComponents.manifest"
             "TargetName" = "8:TradeWright.Common.ExternalComponents.manifest"
             "Tag" = "8:"
-            "Folder" = "8:_39AAB26FC1E940D3B0B3C61B183E7B2B"
+            "Folder" = "8:_7EA1F2AB4D9949C08F0545EBA964F675"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -147,7 +147,7 @@
             "SourcePath" = "8:..\\..\\..\\Bin\\TradeWright.Common.ExternalComponents\\mscomctl.OCX"
             "TargetName" = "8:mscomctl.OCX"
             "Tag" = "8:"
-            "Folder" = "8:_39AAB26FC1E940D3B0B3C61B183E7B2B"
+            "Folder" = "8:_7EA1F2AB4D9949C08F0545EBA964F675"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -167,7 +167,7 @@
             "SourcePath" = "8:..\\..\\..\\Bin\\TradeWright.Common.ExternalComponents\\TLBINF32.DLL"
             "TargetName" = "8:TLBINF32.DLL"
             "Tag" = "8:"
-            "Folder" = "8:_39AAB26FC1E940D3B0B3C61B183E7B2B"
+            "Folder" = "8:_7EA1F2AB4D9949C08F0545EBA964F675"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -200,15 +200,26 @@
             "Property" = "8:NEWRETARGETABLEPROPERTY1"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_39AAB26FC1E940D3B0B3C61B183E7B2B"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_2D365AD7F25942319308BC633C6027C2"
                     {
-                    "Name" = "8:TradeWright.Common.ExternalComponents"
+                    "Name" = "8:Bin"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_A535F11B5EC04F6AB9CB6163010BDE38"
+                    "Property" = "8:_6648808DBDCC405CB62F6B20C779D329"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_7EA1F2AB4D9949C08F0545EBA964F675"
+                            {
+                            "Name" = "8:TradeWright.Common.ExternalComponents"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_A535F11B5EC04F6AB9CB6163010BDE38"
+                                "Folders"
+                                {
+                                }
+                            }
                         }
                     }
                 }
@@ -223,7 +234,7 @@
         "Module"
         {
         "ModuleSignature" = "8:MergeModule.1B89D150F6B6407EA210D9517AA64D26"
-        "Version" = "8:4.0.0.111"
+        "Version" = "8:4.0.0.112"
         "Title" = "8:TradeWrightCommonExternalComponentsMerge"
         "Subject" = "8:"
         "Author" = "8:TradeWright Software Systems"
