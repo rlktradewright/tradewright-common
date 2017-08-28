@@ -276,13 +276,11 @@ End Property
 '@/
 Public Property Get Item( _
                 ByVal Key As Variant) As Variant
-Dim entry As DictionaryEntry
-
 Const ProcName As String = "Item"
-
 On Error GoTo Err
 
-Set entry = findEntry(Key)
+Dim entry As DictionaryEntry
+findEntry Key, entry
 
 If Not entry Is Nothing Then
     gSetVariant Item, entry.Data
@@ -313,13 +311,11 @@ End Property
 Public Property Let Item( _
                 ByVal Key As Variant, _
                 ByVal Value As Variant)
-Dim entry As DictionaryEntry
-
 Const ProcName As String = "Item"
-
 On Error GoTo Err
 
-Set entry = findEntry(Key)
+Dim entry As DictionaryEntry
+findEntry Key, entry
 If Not entry Is Nothing Then
     gSetVariant entry.Data, Value
 End If
@@ -478,10 +474,10 @@ End Sub
 '@/
 Public Function Contains(ByVal Key As Variant) As Boolean
 Const ProcName As String = "Contains"
-
 On Error GoTo Err
 
-Contains = (Not findEntry(Key) Is Nothing)
+Dim entry As DictionaryEntry
+Contains = (findEntry(Key, entry) = 0)
 
 Exit Function
 
@@ -568,6 +564,94 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
+' Returns the lowest key strictly greater than the supplied key.
+'
+' @remarks
+'
+' @return
+'    The lowest key higher than <code>Key</code>, or <code>Empty</code> if there
+'    is no such key.
+' @param key
+'    The key
+' @see
+'
+'@/
+'
+Public Function NextKey(ByVal Key As Variant) As Variant
+Const ProcName As String = "NextKey"
+On Error GoTo Err
+
+Dim entry As DictionaryEntry
+Dim Result As Integer
+Result = findEntry(Key, entry)
+
+If Result <= 0 Then
+    ' either we found an entry with the supplied key, or
+    ' the entry found is lower than the supplied key, so it must be the
+    ' successor that we want
+    Set entry = successor(entry)
+    If entry Is Nothing Then
+        NextKey = Empty
+    Else
+        gSetVariant NextKey, entry.Key
+    End If
+Else
+    ' the entry found is higher than the supplied key, so it must be the
+    ' one we want
+    gSetVariant NextKey, entry.Key
+End If
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+''
+' Returns the greatest key strictly less than the supplied key.
+'
+' @remarks
+'
+' @return
+'    The highest key lower than <code>Key</code>, or <code>Empty</code> if there
+'    is no such key.
+' @param key
+'    The key
+' @see
+'
+'@/
+'
+Public Function PreviousKey(ByVal Key As Variant) As Variant
+Const ProcName As String = "PreviousKey"
+On Error GoTo Err
+
+Dim entry As DictionaryEntry
+Dim Result As Integer
+Result = findEntry(Key, entry)
+
+If Result >= 0 Then
+    ' either we found an entry with the supplied key, or
+    ' the entry found is lower than the supplied key, so it must be the
+    ' predecessor that we want
+    Set entry = predecessor(entry)
+    If entry Is Nothing Then
+        PreviousKey = Empty
+    Else
+        gSetVariant PreviousKey, entry.Key
+    End If
+Else
+    ' the entry found is lower than the supplied key, so it must be the
+    ' one we want
+    gSetVariant PreviousKey, entry.Key
+End If
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+''
 ' Removes an Item from the collection.
 '
 ' @remarks
@@ -582,12 +666,11 @@ End Function
 '   Identifies the Item to be removed from the collection.
 '@/
 Public Function Remove(ByVal Key As Variant) As Variant
-Dim entry As DictionaryEntry
 Const ProcName As String = "Remove"
-
 On Error GoTo Err
 
-Set entry = findEntry(Key)
+Dim entry As DictionaryEntry
+findEntry Key, entry
 
 If entry Is Nothing Then
     ' raise the same Error as the VB6 Collection object
@@ -659,15 +742,16 @@ Private Function compare( _
                 ByVal value1 As Variant, _
                 ByVal value2 As Variant) As Long
 Const ProcName As String = "compare"
-
 On Error GoTo Err
 
 Select Case mKeyType
 Case KeyTypeInteger, KeyTypeFloat, KeyTypeDate
     If value1 = value2 Then
         compare = 0
+    ElseIf value1 > value2 Then
+        compare = 1
     Else
-        compare = IIf((value1 - value2) > 0, 1, -1)
+        compare = -1
     End If
 Case KeyTypeString
     compare = StrComp(value1, value2, vbTextCompare)
@@ -775,27 +859,29 @@ gHandleUnexpectedError ProcName, ModuleName
 
 End Sub
 
-Private Function findEntry(ByVal Key As Variant) As DictionaryEntry
-Dim Current As DictionaryEntry
-Dim cmp As Long
-
+Private Function findEntry(ByVal Key As Variant, ByRef entry As DictionaryEntry) As Long
 Const ProcName As String = "findEntry"
-
 On Error GoTo Err
 
-Set Current = mRoot
+Dim currentEntry As DictionaryEntry
+Set currentEntry = mRoot
+Set entry = currentEntry
 
-Do While Not Current Is Nothing
-    cmp = compare(Key, Current.Key)
+Do While Not currentEntry Is Nothing
+    Dim cmp As Long
+    cmp = compare(Key, currentEntry.Key)
     If cmp = 0 Then
-        Set findEntry = Current
+        Set entry = currentEntry
+        findEntry = 0
         Exit Function
+    ElseIf cmp < 0 Then
+        Set entry = currentEntry
+        findEntry = 1
+        Set currentEntry = currentEntry.Left
     Else
-        If cmp < 0 Then
-            Set Current = Current.Left
-        Else
-            Set Current = Current.Right
-        End If
+        Set entry = currentEntry
+        findEntry = -1
+        Set currentEntry = currentEntry.Right
     End If
 Loop
 
@@ -1007,6 +1093,41 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Private Function predecessor( _
+                ByVal t As DictionaryEntry) As DictionaryEntry
+Const ProcName As String = "predecessor"
+On Error GoTo Err
+
+Dim p As DictionaryEntry
+
+If t Is Nothing Then
+
+ElseIf Not t.Left Is Nothing Then
+    Set p = t.Left
+    Do While Not p.Right Is Nothing
+        Set p = p.Right
+    Loop
+    Set predecessor = p
+Else
+    Set p = t.Parent
+    
+    Dim ch As DictionaryEntry
+    Set ch = t
+    
+    Do While Not p Is Nothing
+        If Not ch Is p.Left Then Exit Do
+        Set ch = p
+        Set p = p.Parent
+    Loop
+    Set predecessor = p
+End If
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Private Function rightOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "rightOf"
@@ -1102,12 +1223,10 @@ End Sub
 
 Private Function successor( _
                 ByVal t As DictionaryEntry) As DictionaryEntry
-Dim p As DictionaryEntry
-Dim ch As DictionaryEntry
-
 Const ProcName As String = "successor"
-
 On Error GoTo Err
+
+Dim p As DictionaryEntry
 
 If t Is Nothing Then
 
@@ -1119,7 +1238,10 @@ ElseIf Not t.Right Is Nothing Then
     Set successor = p
 Else
     Set p = t.Parent
+    
+    Dim ch As DictionaryEntry
     Set ch = t
+    
     Do While Not p Is Nothing
         If Not ch Is p.Right Then Exit Do
         Set ch = p
