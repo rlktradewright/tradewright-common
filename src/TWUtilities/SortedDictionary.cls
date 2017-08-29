@@ -260,6 +260,20 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
+Public Property Get FirstItem() As Variant
+Const ProcName As String = "FirstItem"
+On Error GoTo Err
+
+gAssert mCount > 0, "No items"
+
+gSetVariant FirstItem, firstEntry.Data
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Property
+
 ''
 ' Returns a specific Item in the collection, identified by key.
 '
@@ -731,7 +745,7 @@ End Sub
 Public Function TryItem( _
                 ByVal Key As Variant, _
                 ByRef Item As Variant) As Boolean
-Const ProcName As String = "Item"
+Const ProcName As String = "TryItem"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
