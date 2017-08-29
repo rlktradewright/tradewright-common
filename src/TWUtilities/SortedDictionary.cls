@@ -279,12 +279,9 @@ Public Property Get Item( _
 Const ProcName As String = "Item"
 On Error GoTo Err
 
-Dim entry As DictionaryEntry
-Dim result As Long
-result = findEntry(Key, entry)
-
-If result = 0 Then
-    gSetVariant Item, entry.Data
+Dim requiredItem As Variant
+If TryItem(Key, requiredItem) Then
+    gSetVariant Item, requiredItem
 Else
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, , "Key not found"
 End If
@@ -316,9 +313,9 @@ Const ProcName As String = "Item"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim result As Long
-result = findEntry(Key, entry)
-If result = 0 Then
+Dim Result As Long
+Result = findEntry(Key, entry)
+If Result = 0 Then
     gSetVariant entry.Data, Value
 End If
 
@@ -584,10 +581,10 @@ Const ProcName As String = "NextKey"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim result As Integer
-result = findEntry(Key, entry)
+Dim Result As Integer
+Result = findEntry(Key, entry)
 
-If result <= 0 Then
+If Result <= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' successor that we want
@@ -628,10 +625,10 @@ Const ProcName As String = "PreviousKey"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim result As Integer
-result = findEntry(Key, entry)
+Dim Result As Integer
+Result = findEntry(Key, entry)
 
-If result >= 0 Then
+If Result >= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' predecessor that we want
@@ -672,10 +669,10 @@ Const ProcName As String = "Remove"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim result As Long
-result = findEntry(Key, entry)
+Dim Result As Long
+Result = findEntry(Key, entry)
 
-If result <> 0 Then
+If Result <> 0 Then
     ' raise the same Error as the VB6 Collection object
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, _
                 , _
@@ -714,6 +711,45 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 
 End Sub
+
+''
+' Gets a specific Item in the collection, identified by key.
+'
+' @remarks
+'   If the key provided doesn’t match any existing member of the
+'   collection, <code>False</code> is returned.
+'
+'   If the collection contains more than one Item with the specified key, the
+'   first such Item is returned.
+' @return
+'   <code>True</code> is the required item is found. Otherwise <code>False</code>.
+' @param Key
+'   An expression that specifies the key of a member of the collection.
+' @param Item
+'   The required item, if it has been found. If not found, the parameter is not changed.
+'@/
+Public Function TryItem( _
+                ByVal Key As Variant, _
+                ByRef Item As Variant) As Boolean
+Const ProcName As String = "Item"
+On Error GoTo Err
+
+Dim entry As DictionaryEntry
+Dim Result As Long
+Result = findEntry(Key, entry)
+
+If Result = 0 Then
+    gSetVariant Item, entry.Data
+    TryItem = True
+Else
+    TryItem = False
+End If
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
 
 '@================================================================================
 ' Helper Functions
