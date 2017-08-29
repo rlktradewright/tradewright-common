@@ -280,9 +280,10 @@ Const ProcName As String = "Item"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-findEntry Key, entry
+Dim result As Long
+result = findEntry(Key, entry)
 
-If Not entry Is Nothing Then
+If result = 0 Then
     gSetVariant Item, entry.Data
 Else
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, , "Key not found"
@@ -315,8 +316,9 @@ Const ProcName As String = "Item"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-findEntry Key, entry
-If Not entry Is Nothing Then
+Dim result As Long
+result = findEntry(Key, entry)
+If result = 0 Then
     gSetVariant entry.Data, Value
 End If
 
@@ -582,10 +584,10 @@ Const ProcName As String = "NextKey"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim Result As Integer
-Result = findEntry(Key, entry)
+Dim result As Integer
+result = findEntry(Key, entry)
 
-If Result <= 0 Then
+If result <= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' successor that we want
@@ -626,10 +628,10 @@ Const ProcName As String = "PreviousKey"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim Result As Integer
-Result = findEntry(Key, entry)
+Dim result As Integer
+result = findEntry(Key, entry)
 
-If Result >= 0 Then
+If result >= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' predecessor that we want
@@ -670,9 +672,10 @@ Const ProcName As String = "Remove"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-findEntry Key, entry
+Dim result As Long
+result = findEntry(Key, entry)
 
-If entry Is Nothing Then
+If result <> 0 Then
     ' raise the same Error as the VB6 Collection object
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, _
                 , _
