@@ -489,6 +489,8 @@ Public Function Contains(ByVal Key As Variant) As Boolean
 Const ProcName As String = "Contains"
 On Error GoTo Err
 
+If mCount = 0 Then Exit Function
+
 Dim entry As DictionaryEntry
 Contains = (findEntry(Key, entry) = 0)
 
