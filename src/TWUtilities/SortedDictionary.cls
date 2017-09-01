@@ -727,16 +727,16 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Gets a specific Item in the collection, identified by key.
+' Gets a specific item in the collection, identified by key.
 '
 ' @remarks
 '   If the key provided doesn’t match any existing member of the
 '   collection, <code>False</code> is returned.
 '
-'   If the collection contains more than one Item with the specified key, the
-'   first such Item is returned.
+'   If the collection contains more than one item with the specified key, the
+'   first such item is returned.
 ' @return
-'   <code>True</code> is the required item is found. Otherwise <code>False</code>.
+'   <code>True</code> if the required item is found. Otherwise <code>False</code>.
 ' @param Key
 '   An expression that specifies the key of a member of the collection.
 ' @param Item
@@ -747,6 +747,8 @@ Public Function TryItem( _
                 ByRef Item As Variant) As Boolean
 Const ProcName As String = "TryItem"
 On Error GoTo Err
+
+If mCount = 0 Then Exit Function
 
 Dim entry As DictionaryEntry
 Dim Result As Long
