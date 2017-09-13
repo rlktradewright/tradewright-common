@@ -15,25 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_30F9A7698F5D47C48E55C63122B55C25"
+        "MsmKey" = "8:_46DD3BBFA8F648718D4A2B12E47A0A58"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3528203EFAE84E81BF796291B81CEDE9"
+        "MsmKey" = "8:_4B7E005FBEA54AF5B5EFB82F170A16DA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_373A87E1AA9245A8A516FD9CA87AFCA2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_409FD5CF6ED143BF9826C678571F87AD"
+        "MsmKey" = "8:_541780C8D3644E1BA61AC9DD111AC442"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,13 +39,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_68FCC80F6C274CBEBE2A6D7DD8EA12EF"
+        "MsmKey" = "8:_7E5465F686FE4D869ABA609FD609C3E6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9C797AF33403487E9AD9DD91A57ADCD7"
+        "MsmKey" = "8:_8AAEF87655C348E68EB4CC624E195B61"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_90C315188EE14158BA05E24FFD02E76A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,13 +63,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A4891906C469497AB4560BC00B26B127"
+        "MsmKey" = "8:_A87B9E505C5946389A4C5F0464A9FE6C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A87B9E505C5946389A4C5F0464A9FE6C"
+        "MsmKey" = "8:_A99322B5BAFB416DB54A66079A4DCC6F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B8A1AF877D48439BB4E065FAF3D8361B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BFF40F467F46452986C49CFBC02E905D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -81,7 +93,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C6C25FE910184BEEB67D99001E8A9F5E"
+        "MsmKey" = "8:_C7FA407E553949D680F6D14302FF6FCA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -136,7 +148,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-112.msi"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-113.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -184,74 +196,22 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_EADB0983C11042E0B6CEC189D83B94A9"
+                {
+                "Name" = "8:.NET Framework"
+                "Message" = "8:[VSDNETMSG]"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.5"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=395269"
+                }
             }
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30F9A7698F5D47C48E55C63122B55C25"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B7E005FBEA54AF5B5EFB82F170A16DA"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\vb6-build\\Scripts\\setVersion.bat"
-            "TargetName" = "8:setVersion.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3528203EFAE84E81BF796291B81CEDE9"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\vb6-build\\Scripts\\registerComponent.bat"
-            "TargetName" = "8:registerComponent.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_373A87E1AA9245A8A516FD9CA87AFCA2"
-            {
-            "SourcePath" = "8:..\\..\\registerDlls.bat"
+            "SourcePath" = "8:..\\DeploymentScripts\\registerDlls.bat"
             "TargetName" = "8:registerDlls.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_409FD5CF6ED143BF9826C678571F87AD"
-            {
-            "SourcePath" = "8:..\\..\\unregisterDlls.bat"
-            "TargetName" = "8:unregisterDlls.bat"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             "Condition" = "8:"
@@ -288,12 +248,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A477BA1DF0084C6FB1F71E3B9E8262FB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E5465F686FE4D869ABA609FD609C3E6"
             {
-            "SourcePath" = "8:..\\..\\..\\Bin\\IntervalTimerTester40.exe"
-            "TargetName" = "8:IntervalTimerTester40.exe"
+            "SourcePath" = "8:..\\DeploymentScripts\\setVersion.bat"
+            "TargetName" = "8:setVersion.bat"
             "Tag" = "8:"
-            "Folder" = "8:_51B01951AAF64B0F82528024E4AD6258"
+            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -308,12 +268,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4891906C469497AB4560BC00B26B127"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8AAEF87655C348E68EB4CC624E195B61"
             {
-            "SourcePath" = "8:..\\..\\Subscripts\\setMyVersion.bat"
-            "TargetName" = "8:setMyVersion.bat"
+            "SourcePath" = "8:..\\..\\makeComInteropFiles.bat"
+            "TargetName" = "8:makeComInteropFiles.bat"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_90C315188EE14158BA05E24FFD02E76A"
+            {
+            "SourcePath" = "8:..\\DeploymentScripts\\unregisterDlls.bat"
+            "TargetName" = "8:unregisterDlls.bat"
+            "Tag" = "8:"
+            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A477BA1DF0084C6FB1F71E3B9E8262FB"
+            {
+            "SourcePath" = "8:..\\..\\..\\Bin\\IntervalTimerTester40.exe"
+            "TargetName" = "8:IntervalTimerTester40.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_51B01951AAF64B0F82528024E4AD6258"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -348,6 +348,66 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A99322B5BAFB416DB54A66079A4DCC6F"
+            {
+            "SourcePath" = "8:..\\DeploymentScripts\\README.txt"
+            "TargetName" = "8:README.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B8A1AF877D48439BB4E065FAF3D8361B"
+            {
+            "SourcePath" = "8:..\\DeploymentScripts\\setTradeWrightCommonVersion.bat"
+            "TargetName" = "8:setTradeWrightCommonVersion.bat"
+            "Tag" = "8:"
+            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BFF40F467F46452986C49CFBC02E905D"
+            {
+            "SourcePath" = "8:..\\DeploymentScripts\\unregisterComponent.bat"
+            "TargetName" = "8:unregisterComponent.bat"
+            "Tag" = "8:"
+            "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C0D25056E7BF47879A7D8BD0BCAEFBB8"
             {
             "SourcePath" = "8:..\\..\\..\\Bin\\LayeredGraphicsTest40.exe"
@@ -368,10 +428,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C6C25FE910184BEEB67D99001E8A9F5E"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C7FA407E553949D680F6D14302FF6FCA"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\vb6-build\\Scripts\\unregisterComponent.bat"
-            "TargetName" = "8:unregisterComponent.bat"
+            "SourcePath" = "8:..\\DeploymentScripts\\registerComponent.bat"
+            "TargetName" = "8:registerComponent.bat"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             "Condition" = "8:"
@@ -427,7 +487,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\TradeWrightCommonSampleApps-v4.0.112"
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\TradeWrightCommonSampleApps-v4.0.113"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -444,6 +504,17 @@
                     "Property" = "8:_28F3D21837D940968CDC21EA3D572D60"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_77B056593E8343C4BFE8F475816196F5"
+                            {
+                            "Name" = "8:TradeWright.Common.ComInterop"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_E35C1CE8FDCF48F0AF498555AD930C35"
+                                "Folders"
+                                {
+                                }
+                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_91C04ADA9BB74847A8173C20262A5721"
                             {
                             "Name" = "8:TradeWright.Common.ExternalComponents"
@@ -507,15 +578,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.112"
-        "ProductCode" = "8:{507CA798-9182-49D5-B007-F5B26FF959B5}"
-        "PackageCode" = "8:{4DD81881-83F1-4B72-9C59-7F7B2F86DE5F}"
+        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.113"
+        "ProductCode" = "8:{A9F36FD1-DC6F-43A2-A419-CBF3FE7E8ADA}"
+        "PackageCode" = "8:{68BF491F-CEFA-44E4-82C6-081DBCFD16B9}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
+        "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:4.0.112"
+        "ProductVersion" = "8:4.0.113"
         "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1071,11 +1143,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_68FCC80F6C274CBEBE2A6D7DD8EA12EF"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_46DD3BBFA8F648718D4A2B12E47A0A58"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-112.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-113.msm"
                 "Properties"
                 {
                     "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
@@ -1096,11 +1168,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_9C797AF33403487E9AD9DD91A57ADCD7"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_541780C8D3644E1BA61AC9DD111AC442"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-112.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-113.msm"
                 "Properties"
                 {
                     "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"

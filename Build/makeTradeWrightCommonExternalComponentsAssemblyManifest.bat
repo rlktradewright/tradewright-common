@@ -3,6 +3,7 @@ setlocal
 
 echo =================================
 echo Making assembly manifest for TradeWright.Common.ExternalComponents
+echo.
 
 %TW-PROJECTS-DRIVE%
 path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%

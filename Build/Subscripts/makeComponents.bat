@@ -17,6 +17,7 @@ pushd %TW-PROJECTS-PATH%\src
 
 echo =================================
 echo Making components for TradeWright.Common
+echo.
 
 set BIN-PATH=%BIN-PATH%\TradeWright.Common
 

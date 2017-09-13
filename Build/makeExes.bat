@@ -12,6 +12,7 @@ set DEP=/DEP:%TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\ExternalDependencies.tx
 
 echo =================================
 echo Making sample apps
+echo.
 
 pushd %TW-PROJECTS-PATH%\src\SampleApps
 
@@ -29,5 +30,4 @@ if errorlevel 1 pause
 
 popd
 
-call makeTradeWrightCommonExternalComponentsAssemblyManifest.bat
 

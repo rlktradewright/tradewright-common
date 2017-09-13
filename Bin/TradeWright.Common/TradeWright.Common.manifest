@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <assembly manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1">
-    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.112" />
+    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.113" />
     <description>TradeWright Common</description>
     <file name="TWUtilities40.dll">
-        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.0" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.1" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{6F7719B8-9530-4534-954C-89C8B5762A48}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.StateTableBuilder" threadingModel="Apartment" />
         <comClass clsid="{B6615105-28CE-48E7-8E8C-BFD7FDEC8695}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.WeakCollection" threadingModel="Apartment" />
         <comClass clsid="{DD635E2C-4052-4DC8-B003-C756023A3356}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.ElapsedTimer" threadingModel="Apartment" />
@@ -113,7 +113,7 @@
     <comInterfaceExternalProxyStub name="_Tracer" iid="{9868D6C5-FE6A-45E6-A361-23F247C6939A}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_IJSONable" iid="{A262192A-B793-4FFF-8B8B-F7D60E2A4D8C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_DictionaryEntry" iid="{CA44E5AB-745D-44F3-904C-7793C97770B4}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_SortedDictionary" iid="{D7E3C820-B507-4E13-AC66-AD8015F629A6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_SortedDictionary" iid="{7932B6F3-882A-4C5D-9B12-C8FD9CABF4D9}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_IConfigStoreProvider" iid="{940D442D-6985-492E-A87B-94001D4DF00C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_TimePeriod" iid="{3E723023-AD3C-4D68-8068-92A9CF3AB17B}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_IProgramErrorListener" iid="{430A3523-5097-4D81-B0A8-0526A00B37EB}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
