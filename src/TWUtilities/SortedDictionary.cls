@@ -996,7 +996,7 @@ Do While (Not x Is mRoot) And colorOf(x) = BLACK
                 setColor leftOf(w), BLACK
                 setColor w, Red
                 rotateRight w
-                w = rightOf(parentOf(x))
+                Set w = rightOf(parentOf(x))
             End If
             setColor w, colorOf(parentOf(x))
             setColor parentOf(x), BLACK
@@ -1043,11 +1043,12 @@ End Sub
 
 Private Sub fixAfterInsertion( _
                 ByVal x As DictionaryEntry)
+Const ProcName As String = "fixAfterInsertion"
+On Error GoTo Err
+
 Dim y As DictionaryEntry
 
-Const ProcName As String = "fixAfterInsertion"
-
-On Error GoTo Err
+x.Color = Red
 
 Do While Not x Is mRoot
     If x.Parent.Color = BLACK Then Exit Do
