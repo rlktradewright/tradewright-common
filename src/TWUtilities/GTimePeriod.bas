@@ -190,10 +190,10 @@ On Error GoTo Err
 
 yearStart = DateAdd("d", 1 - DatePart("y", baseDate), baseDate)
 
-Do While dayNumber < 0
+Do While dayNumber <= 0
     yearEnd = yearStart - 1
     yearStart = DateAdd("yyyy", -1, yearStart)
-    dayNumber = dayNumber + gCalcWorkingDayNumber(yearEnd) + 1
+    dayNumber = dayNumber + gCalcWorkingDayNumber(yearEnd)
 Loop
 
 dow1 = DatePart("w", yearStart, vbMonday)
