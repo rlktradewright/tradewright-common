@@ -66,10 +66,10 @@ Option Explicit
 '@================================================================================
 
 ''
-' Returns the Name for this task.
+' Returns the name for this task.
 '
 ' @return
-'   The task's Name.
+'   The task's name.
 '@/
 Public Property Get TaskName() As String
 

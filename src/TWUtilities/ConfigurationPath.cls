@@ -112,7 +112,7 @@ End Property
 ' Returns the final element of the configuration path.
 '
 ' @remarks
-'   For an attribute- or value path, the prefixing "&" or "." Character is included.
+'   For an attribute- or value path, the prefixing "&" or "." character is included.
 ' @return
 '   The final element of the configuration path.
 '@/

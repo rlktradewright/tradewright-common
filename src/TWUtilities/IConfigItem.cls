@@ -76,30 +76,30 @@ Public Property Get ChildItems() As IConfigItems
 End Property
 
 ''
-' Sets this <code>ConfigItem</code> object's Comment.
+' Sets this <code>ConfigItem</code> object's comment.
 '
 ' @param Value
-'   The Comment to be set for this configuration Item.
+'   The comment to be set for this configuration item.
 '
 '@/
 Public Property Let Comment(ByVal Value As String)
 End Property
 
 ''
-' Returns this <code>ConfigItem</code> object's Comment.
+' Returns this <code>ConfigItem</code> object's comment.
 '
 ' @return
-'   This configuration Item's Comment.
+'   This configuration item's comment.
 '
 '@/
 Public Property Get Comment() As String
 End Property
 
 ''
-' Returns this <code>ConfigItem</code> object's Name.
+' Returns this <code>ConfigItem</code> object's name.
 '
 ' @return
-'   This configuration Item's Name.
+'   This configuration item's name.
 '
 '@/
 Public Property Get Name() As String
@@ -109,7 +109,7 @@ End Property
 ' Sets this <code>ConfigItem</code> object's value.
 '
 ' @param Value
-'   The value to be set for this configuration Item.
+'   The value to be set for this configuration item.
 '
 '@/
 Public Property Let Value(ByVal Value As String)
@@ -119,7 +119,7 @@ End Property
 ' Returns this <code>ConfigItem</code> object's value.
 '
 ' @return
-'   This configuration Item's value.
+'   This configuration item's value.
 '
 '@/
 Public Property Get Value() As String
@@ -135,7 +135,7 @@ End Property
 ' @return
 '   The value of the specified attribute.
 ' @param Name
-'   The Name of the attribute whose value is to be returned.
+'   The name of the attribute whose value is to be returned.
 '
 '@/
 Public Function GetAttribute( _
@@ -150,7 +150,7 @@ End Function
 '   The value of the specified attribute, unless it is not present, in which case
 '   the specified default is returned.
 ' @param Name
-'   The Name of the attribute whose value is to be returned.
+'   The name of the attribute whose value is to be returned.
 ' @param default
 '   The value to be returned if the specified attribute is not present.
 '
@@ -164,7 +164,7 @@ End Function
 ' Removes the specified attribute.
 '
 ' @param Name
-'   The Name of the attribute to be removed.
+'   The name of the attribute to be removed.
 '
 '@/
 Public Sub RemoveAttribute( _
@@ -175,7 +175,7 @@ End Sub
 ' Sets the specified attribute's value.
 '
 ' @param Name
-'   The Name of the attribute whose value is to be set.
+'   The name of the attribute whose value is to be set.
 ' @param Value
 '   The new value for the specified attribute.
 '@/

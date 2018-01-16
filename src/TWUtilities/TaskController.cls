@@ -136,10 +136,10 @@ gSetVariant Cookie, mCookie
 End Property
 
 ''
-' Returns the task's Name.
+' Returns the task's name.
 '
 ' @return
-'   The Name of the task.
+'   The name of the task.
 '@/
 Public Property Get TaskName() As String
 TaskName = mTaskName

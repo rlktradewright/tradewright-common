@@ -93,7 +93,7 @@ Private mStrBld                             As StringBuilder
 'Private mInBuf                              As String * 8192
 'Private mInBufIndex                         As Long ' the highest position reached in mInBuf
 Private mCurrPosition                       As Long ' the position at which the Next input
-                                                    ' Character will be placed in mInBuf
+                                                    ' character will be placed in mInBuf
 
 Private mAtEof                              As Boolean
 
@@ -466,7 +466,7 @@ End Property
 '   redirected to read from a file or is piping input from another process.
 '
 '   Keys typed by the user are echoed to the console, except that if the
-'   <code>echoChar</code> argument is supplied they are replaced by this Character.
+'   <code>echoChar</code> argument is supplied they are replaced by this character.
 '
 '   If the StdIn stream is the console window, output to the console may occur
 '   while the user is typing (eg calls to <code>writeLine</code> in an event handler).
@@ -479,7 +479,7 @@ End Property
 '   This is output to the console on a new line and the cursor is positioned
 '   immediately after it.
 ' @param echoChar
-'   Specifies a single Character that is echoed to the console instead of each Character
+'   Specifies a single character that is echoed to the console instead of each character
 '   the user actually types. If this argument is omitted or is an empty string, the
 '   actual characters typed by the user are echoed. If it has the special value Chr(0),
 '   then nothing the user types is echoed.
@@ -492,7 +492,7 @@ Const ProcName As String = "ReadLine"
 
 On Error GoTo Err
 
-If Len(echoChar) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "echoChar must be a single Character"
+If Len(echoChar) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "echoChar must be a single character"
 
 If StdInType = FileTypeChar Then
     ReadLine = ReadLineFromConsole(prompt, echoChar)
@@ -517,7 +517,7 @@ End Function
 '   as usual while the user is typing.
 '
 '   Keys typed by the user are echoed to the console, except that if the
-'   <code>echoChar</code> argument is supplied they are replaced by this Character.
+'   <code>echoChar</code> argument is supplied they are replaced by this character.
 '
 '   Output to the console may occur
 '   while the user is typing (eg calls to <code>writeLine</code> in an event handler).
@@ -530,7 +530,7 @@ End Function
 '   This is output to the console on a new line and the cursor is positioned
 '   immediately after it.
 ' @param echoChar
-'   Specifies a single Character that is echoed to the console instead of each Character
+'   Specifies a single character that is echoed to the console instead of each character
 '   the user actually types. If this argument is omitted or is an empty string, the
 '   actual characters typed by the user are echoed. If it has the special value Chr(0),
 '   then nothing the user types is echoed.

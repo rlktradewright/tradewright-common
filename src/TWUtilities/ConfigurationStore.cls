@@ -248,10 +248,10 @@ If GetConfigurationSection Is Nothing Then
     
     If sectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative path not permitted"
     
-    Dim parentSection As ConfigurationSection
-    Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
-    If Not parentSection Is Nothing Then
-        Set GetConfigurationSection = parentSection.GetConfigurationSection(sectionPath.TailPath)
+    Dim ParentSection As ConfigurationSection
+    Set ParentSection = GetConfigurationSection(sectionPath.ParentPath)
+    If Not ParentSection Is Nothing Then
+        Set GetConfigurationSection = ParentSection.GetConfigurationSection(sectionPath.TailPath)
     Else
         Set GetConfigurationSection = mRootConfigSection.GetConfigurationSection(sectionPath.TailPath)
     End If
@@ -346,10 +346,10 @@ Dim sectionPath As ConfigurationPath
 Set sectionPath = gGetConfigPath(configSectionPath)
 If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration section path"
 
-Dim parentSection As ConfigurationSection
-Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
-If Not parentSection Is Nothing Then
-    parentSection.RemoveConfigurationSection sectionPath.TailPath
+Dim ParentSection As ConfigurationSection
+Set ParentSection = GetConfigurationSection(sectionPath.ParentPath)
+If Not ParentSection Is Nothing Then
+    ParentSection.RemoveConfigurationSection sectionPath.TailPath
 Else
     mRootConfigSection.RemoveConfigurationSection sectionPath.TailPath
 End If
@@ -496,14 +496,14 @@ If AddConfigSection Is Nothing Then
             Set AddConfigSection = mRootConfigSection.AddConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
         End If
     Else
-        Dim parentSection As ConfigurationSection
-        Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
-        If parentSection Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid path - config section does not exist"
+        Dim ParentSection As ConfigurationSection
+        Set ParentSection = GetConfigurationSection(sectionPath.ParentPath)
+        If ParentSection Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid path - config section does not exist"
         
         If isPrivate Then
-            Set AddConfigSection = parentSection.AddPrivateConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
+            Set AddConfigSection = ParentSection.AddPrivateConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
         Else
-            Set AddConfigSection = parentSection.AddConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
+            Set AddConfigSection = ParentSection.AddConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
         End If
         
     End If

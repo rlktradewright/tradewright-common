@@ -14,7 +14,7 @@ Attribute VB_Exposed = True
 Option Explicit
 
 ''
-' This class parses a parameter string into its Name/value pairs.
+' This class parses a parameter string into its name/value pairs.
 '
 ' Note the <code>New</code> operator cannot be used to create an instance of this
 ' class. Instead, use the <code>CreateParameterStringParser</code> global method.
@@ -26,7 +26,7 @@ Option Explicit
 '   <tt>
 '   <p>paramString: param [sep param]...</p>
 '
-'   <p>param: Name delim value</p>
+'   <p>param: name delim value</p>
 '
 '   <p>name: string</p>
 '
@@ -35,24 +35,24 @@ Option Explicit
 '   </pre>
 '   where
 '   <pre>
-'   <p><tt>sep</tt> is a single Character used as a separator between parameters.
+'   <p><tt>sep</tt> is a single character used as a separator between parameters.
 '   The default separator is a semi-colon, but an alternative can be specified
 '   in the <code>parameterSeparator</code> argument to <code>CreateParameterStringParser</code>.</p>
 '
-'   <p><tt>delim</tt> is a single Character used to delimit the Name
+'   <p><tt>delim</tt> is a single character used to delimit the name
 '   The default delimiter is =, but an alternative can be specified
 '   in the <code>nameDelimiter</code> argument to <code>CreateParameterStringParser</code>.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or value needs to contain a separator or delimiter
-'   Character, this can be achieved by preceding it with an escape Character.
-'   The default escape Character is \, but an alternative can be specified
+'   <p>If the parameter name or value needs to contain a separator or delimiter
+'   character, this can be achieved by preceding it with an escape character.
+'   The default escape character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument to <code>CreateParameterStringParser</code>.
-'   Note that to include the escape Character itself in the value or Name,
-'   it must be repeated. The effect of the escape Character is to include the
-'   following Character in the parameter Name or value verbatim.</p>
+'   Note that to include the escape character itself in the value or name,
+'   it must be repeated. The effect of the escape character is to include the
+'   following character in the parameter name or value verbatim.</p>
 '
-'   <p>For each specified parameter, if a parameter with this Name is
+'   <p>For each specified parameter, if a parameter with this name is
 '   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
@@ -61,11 +61,11 @@ Option Explicit
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </pre>
-'   An example incuding the escape Character in the value:
+'   An example incuding the escape character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the value in a unusual (and pointless!) way:
+'   An example using the escape character in the value in a unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
@@ -132,18 +132,18 @@ Private mArIndex As Long
 
 Friend Sub Initialise( _
                 ByVal Value As String, _
-                ByVal nameDelimiter As String, _
+                ByVal NameDelimiter As String, _
                 ByVal parameterSeparator As String, _
                 ByVal escapeCharacter As String)
 Const ProcName As String = "Initialise"
 On Error GoTo Err
 
-If Len(nameDelimiter) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "nameDelimiter must be a single Character"
-If Len(parameterSeparator) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "parameterSeparator must be a single Character"
-If Len(escapeCharacter) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "escapeCharacter must be a single Character"
+If Len(NameDelimiter) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "nameDelimiter must be a single character"
+If Len(parameterSeparator) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "parameterSeparator must be a single character"
+If Len(escapeCharacter) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "escapeCharacter must be a single character"
 
 mArIn = Trim$(Value)
-mNameDelimiter = Asc(nameDelimiter)
+mNameDelimiter = Asc(NameDelimiter)
 mparameterSeparator = Asc(parameterSeparator)
 mEscapeCharacter = Asc(escapeCharacter)
 
@@ -154,14 +154,14 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Gets the Name and value for the Next parameter in the parameter string.
+' Gets the name and value for the Next parameter in the parameter string.
 '
 ' @remarks
 ' @return
-'   <code>True</code> if the parameter Name and value were available. <code>False</code>
+'   <code>True</code> if the parameter name and value were available. <code>False</code>
 '   if there are no more parameters in the parameter string.
 ' @param Name
-'   On return to the caller, this argument contains the parameter Name. The contents
+'   On return to the caller, this argument contains the parameter name. The contents
 '   prior to the call are overwritten. If the method returns <code>False</code>, the
 '   contents on return to the caller are undefined.
 ' @param Value

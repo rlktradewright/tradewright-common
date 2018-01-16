@@ -22,7 +22,7 @@ Option Explicit
 ' enumerate through the items in the set. Applications should not generally depend
 ' on the items being returned in any particular order. However, after a call
 ' to the <code>SortByName</code> method, and before any subsequent additions to or
-' removals from the list, items will be returned in ascending Name order.
+' removals from the list, items will be returned in ascending name order.
 '
 ' The <code>Parameters</code> class supports data binding. For example if a
 ' <code>Parameters</code> object is bound to a DataGrid control, any changes made
@@ -635,11 +635,11 @@ End Function
 ' Returns the value of the specified parameter.
 ' @remarks
 '   If this object does not contain a <code>Parameter</code> object with
-'   the specified Name, the specified default value is returned.
+'   the specified name, the specified default value is returned.
 ' @return
 '   The value of the specified parameter.
 ' @param Name
-'   The Name of the parameter whose value is to be returned.
+'   The name of the parameter whose value is to be returned.
 ' @param defaultValue
 '   This value is returned by the method if the specified parameter
 '   is not included in the set. If this value is not specified, it defaults to
@@ -672,7 +672,7 @@ End Function
 ' @return
 '   The <code>Parameter</code> object specified by the <code>index</code> argument.
 ' @param pIndex
-'   Either the parameter's Name or its ordinal position in the list.
+'   Either the parameter's name or its ordinal position in the list.
 ' @see
 '
 '@/
@@ -765,7 +765,7 @@ End Sub
 ' Removes the specified parameter.
 '
 ' @param pIndex
-'   Either the parameter's Name or its ordinal position in the list.
+'   Either the parameter's name or its ordinal position in the list.
 ' @see
 '
 '@/
@@ -785,12 +785,12 @@ End Sub
 ''
 ' Sets the value of the specified parameter.
 ' @remarks
-'   If a parameter with this Name is already included, its value is
+'   If a parameter with this name is already included, its value is
 '   updated; otherwise a new parameter is added to the list.
 ' @return
 '   The <code>Parameter</code> object whose value has been set.
 ' @param Name
-'   The Name of the parameter whose value is to be set.
+'   The name of the parameter whose value is to be set.
 ' @param Value
 '   The value to be given to the specified parameter.
 '@/
@@ -853,7 +853,7 @@ End Function
 '   <tt>
 '   <p>paramString: param [sep param]...</p>
 '
-'   <p>param: Name delim value</p>
+'   <p>param: name delim value</p>
 '
 '   <p>name: string</p>
 '
@@ -862,24 +862,24 @@ End Function
 '   </pre>
 '   where
 '   <pre>
-'   <p><tt>sep</tt> is a single Character used as a separator between parameters.
+'   <p><tt>sep</tt> is a single character used as a separator between parameters.
 '   The default separator is a semi-colon, but an alternative can be specified
 '   in the <code>parameterSeparator</code> argument.</p>
 '
-'   <p><tt>delim</tt> is a single Character used to delimit the Name
+'   <p><tt>delim</tt> is a single character used to delimit the name
 '   The default delimiter is =, but an alternative can be specified
 '   in the <code>nameDelimiter</code> argument.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or value needs to contain a separator or delimiter
-'   Character, this can be achieved by preceding it with an escape Character.
-'   The default escape Character is \, but an alternative can be specified
+'   <p>If the parameter name or value needs to contain a separator or delimiter
+'   character, this can be achieved by preceding it with an escape character.
+'   The default escape character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument. Note that to include the
-'   escape Character itself in the value or Name, it must be repeated. The
-'   effect of the escape Character is to include the following Character in
-'   the parameter Name or value verbatim.</p>
+'   escape character itself in the value or name, it must be repeated. The
+'   effect of the escape character is to include the following character in
+'   the parameter name or value verbatim.</p>
 '
-'   <p>For each specified parameter, if a parameter with this Name is
+'   <p>For each specified parameter, if a parameter with this name is
 '   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
@@ -888,11 +888,11 @@ End Function
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </pre>
-'   An example incuding the escape Character in the value:
+'   An example incuding the escape character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the value in an unusual (and pointless!) way:
+'   An example using the escape character in the value in an unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
@@ -902,11 +902,11 @@ End Function
 ' @param paramString
 '   The parameters to be set, using the syntex described under Remarks.
 ' @param nameDelimiter
-'   A single Character used to delimit the parameter Name.
+'   A single character used to delimit the parameter name.
 ' @param parameterSeparator
-'   A single Character used to separate parameters.
+'   A single character used to separate parameters.
 ' @param escapeCharacter
-'   A single Character that causes the following Character to be included
+'   A single character that causes the following character to be included
 '   verbatim in the parameter value in spite of any special meaning it may normally have.
 '@/
 Public Function SetParameterValues( _
@@ -955,15 +955,15 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Sorts the parameters in the list in order of Name.
+' Sorts the parameters in the list in order of name.
 ' @remarks
 '   After calling this function, iterating through the list using the
-'   For Each construct will return the parameters in ascending Name order.
+'   For Each construct will return the parameters in ascending name order.
 '   Once another parameter has been added or one has been removed, this
 '   may no longer be the case. The application must not make any assumptions
 '   about the order after adding or removing a parameter.
 ' @param descending
-'   If <code>True</code>, the parameters are sorted in descending Name order.
+'   If <code>True</code>, the parameters are sorted in descending name order.
 '@/
 Public Sub SortByName( _
                 Optional ByVal descending As Boolean)

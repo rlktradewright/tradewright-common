@@ -19,21 +19,21 @@ Option Explicit
 ' State information for use the Next time the application is Run.
 '
 ' A configuration dataset conceptually contains a set of <em>configuration items</em>,
-' organised in a tree structure. There is a single configuration Item at the root
+' organised in a tree structure. There is a single configuration item at the root
 ' of the tree, called the <em>root configuration item</em>.
 '
 ' Each configuration item has a name, an optional text value, an optional set of
 ' attributes, and an optional comment. Each attribute consists of a name and a
 ' text value.
 '
-' An example of a configuration Item might be:
+' An example of a configuration item might be:
 '   <pre>
 '   ServiceProvider=Realtime Data Source{Enabled="True" ProgId="IBTWSSP26.RealtimeDataServiceProvider" LogLevel="1"} // configure the tick Data SP
 '   </pre>'
-' Here, the configuration item name is &quot;ServiceProvider&quot;, its value
-' is &quot;Realtime Data Source&quot;, and it has three attributes: Enabled,
+' Here, the configuration item name is 'ServiceProvider', its value
+' is 'Realtime Data Source', and it has three attributes: Enabled,
 ' ProgId and LogLevel. Note that the format of this example is purely illustrative: the
-' actual form in which a configuration Item is stored, and the representation of the
+' actual form in which a configuration item is stored, and the representation of the
 ' hierarchical relationship between configuration items, depends on the nature of
 ' the storage file type.
 '
@@ -96,11 +96,11 @@ Private Const ModuleName                    As String = "IConfigStoreProvider"
 '@================================================================================
 
 ''
-' Stores the specified application Name in the configuration dataset.
+' Stores the specified application name in the configuration dataset.
 '
 ' @remarks
 ' @param Value
-'   The application Name to be stored.
+'   The application name to be stored.
 '
 '@/
 Public Property Let ApplicationName( _
@@ -108,11 +108,11 @@ Public Property Let ApplicationName( _
 End Property
 
 ''
-' Returns the application Name stored in the configuration dataset, if any.
+' Returns the application name stored in the configuration dataset, if any.
 '
 ' @remarks
 ' @return
-'   The application Name stored in the configuration dataset, if any.
+'   The application name stored in the configuration dataset, if any.
 ' @see
 '
 '@/
@@ -161,7 +161,7 @@ End Property
 '
 ' @remarks
 ' @return
-'   Returns a <code>ConfigItem</code> object containing the root configuration Item.
+'   Returns a <code>ConfigItem</code> object containing the root configuration item.
 ' @see
 '
 '@/

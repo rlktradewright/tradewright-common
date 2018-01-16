@@ -24,8 +24,8 @@ Option Explicit
 ' The trace type is simply
 ' a name consisting of components separated by a period, and it governs the log
 ' infotype used for logging trace items: the log infotype is the trace type prefixed
-' with &quot;$trace.&quot;. Note that the trace type can be an empty string (called the
-' null trace type), in which case the log infotype is &quot;$trace&quot;.
+' with '$trace.'. Note that the trace type can be an empty string (called the
+' null trace type), in which case the log infotype is '$trace'.
 '
 ' To obtain trace output in the log, tracing must be enabled for the
 ' relevant trace type using the global <code>EnableTracing</code> method. Tracing
@@ -34,7 +34,7 @@ Option Explicit
 '
 ' Note that enabling tracing for a given trace type does not also enable it for
 ' trace types that begin with the same name: for example, enabling
-' &quot;mytracetype&quot; does not also enable &quot;mytracetype.anothertracetype&quot;.
+' 'mytracetype' does not also enable 'mytracetype.anothertracetype'.
 ' The same applies to disabling tracing.
 '
 ' Use of a non-null trace type enables finer control of what is traced. For example,
@@ -93,8 +93,8 @@ Private mLogger                                     As Logger
 ' Properties
 '@================================================================================
 
-Friend Property Let Enabled(ByVal value As Boolean)
-mEnabled = value
+Friend Property Let Enabled(ByVal Value As Boolean)
+mEnabled = Value
 End Property
 
 ''

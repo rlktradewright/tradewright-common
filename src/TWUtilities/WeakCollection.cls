@@ -20,7 +20,7 @@ Option Explicit
 ' whether to terminate an object.
 '
 ' Weak references are used to avoid circular references that can prevent unused
-' objects being terminateed, leading to memory leaks. For example in a Parent-child
+' objects being terminateed, leading to memory leaks. For example in a parent-child
 ' relationship, if each object has a normal reference to the other, then neither
 ' will ever be terminateed unless at least one of them takes specific Action to set
 ' the reference to <code>Nothing</code>, which requires additional programming.

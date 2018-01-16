@@ -344,20 +344,20 @@ End Function
 
 Public Function gCreateParameterStringParser( _
                 ByVal Value As String, _
-                Optional ByVal nameDelimiter As String = "=", _
+                Optional ByVal NameDelimiter As String = "=", _
                 Optional ByVal parameterSeparator As String = ";", _
                 Optional ByVal escapeCharacter As String = "\") As ParameterStringParser
 Const ProcName As String = "gCreateParameterStringParser"
 On Error GoTo Err
 
-gAssertArgument Len(nameDelimiter) = 1 And _
+gAssertArgument Len(NameDelimiter) = 1 And _
                     Len(parameterSeparator) = 1 And _
                     Len(escapeCharacter) = 1, _
-                "Delimiters and escape characters must be a single Character"
+                "Delimiters and escape characters must be a single character"
 
 Set gCreateParameterStringParser = New ParameterStringParser
 gCreateParameterStringParser.Initialise Value, _
-                                    nameDelimiter, _
+                                    NameDelimiter, _
                                     parameterSeparator, _
                                     escapeCharacter
 
@@ -1740,14 +1740,14 @@ Private Function hexCharToBin( _
 Const ProcName As String = "hexCharToBin"
 On Error GoTo Err
 
-gAssertArgument hexChar >= vbKey0, "Invalid hex Character"
+gAssertArgument hexChar >= vbKey0, "Invalid hex character"
 If hexChar <= vbKey9 Then hexCharToBin = hexChar - vbKey0: Exit Function
 
-gAssertArgument hexChar >= vbKeyA, "Invalid hex Character"
+gAssertArgument hexChar >= vbKeyA, "Invalid hex character"
 If hexChar <= vbKeyF Then hexCharToBin = 10 + hexChar - vbKeyA: Exit Function
 
 hexChar = hexChar - 32
-gAssertArgument hexChar >= vbKeyA, "Invalid hex Character"
+gAssertArgument hexChar >= vbKeyA, "Invalid hex character"
 If hexChar <= vbKeyF Then hexCharToBin = 10 + hexChar - vbKeyA: Exit Function
 
 Exit Function

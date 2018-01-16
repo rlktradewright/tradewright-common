@@ -339,7 +339,7 @@ Do While en.MoveNext
     If currItem.ExpiryTime > currentTime Then Exit Do
     If currItem.State = TimerListItemStatePending Then
         ' we can't notify the Item at this point because we are iterating the list, and
-        ' the Item's owner might Add another Item which would corrupt the list. So Add it
+        ' the item's owner might Add another Item which would corrupt the list. So Add it
         ' to a collection and notify it when we've Finished iterating the list
         If mItemsToNotifyIndex > UBound(mItemsToNotify) Then
             ReDim Preserve mItemsToNotify(2 * (UBound(mItemsToNotify) + 1) - 1) As TimerListItem

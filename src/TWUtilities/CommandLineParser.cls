@@ -29,9 +29,9 @@ Option Explicit
 ' </pre>
 '
 ' ie, there is a sequence of arguments or switches, separated by separator characters. The
-' separator Character is specified in the call to <code>CreateCommandLineParser</code>.
+' separator character is specified in the call to <code>CreateCommandLineParser</code>.
 '
-' Arguments that contain the separator Character must be enclosed in double quotes. Double quotes
+' Arguments that contain the separator character must be enclosed in double quotes. Double quotes
 ' appearing within an argument must be repeated.
 '
 ' Switches have the following format:
@@ -42,10 +42,10 @@ Option Explicit
 '
 ' ie the switch starts with a forward slash or a hyphen followed by an identifier, and
 ' optionally followed by a colon and the switch value. Switch identifiers are not
-' case-sensitive. Switch values that contain the separator Character must be enclosed in
+' case-sensitive. Switch values that contain the separator character must be enclosed in
 ' double quotes. Double quotes appearing within a switch value must be repeated.
 '
-' Examples (these examples use a space as the separator Character):
+' Examples (these examples use a space as the separator character):
 ' <pre>
 '   anArgument -sw1 anotherArg -sw2:42
 ' </pre>
@@ -225,7 +225,7 @@ On Error GoTo Err
 
 For i = 0 To UBound(mSwitches)
     If CStr(mSwitches(i).Switch) = UCase$(s) Then
-        SwitchValue = mSwitches(i).value
+        SwitchValue = mSwitches(i).Value
         Exit For
     End If
 Next
@@ -412,7 +412,7 @@ i = InStr(val, ":")
 
 If i > 0 Then
     mSwitches(pIndex).Switch = UCase$(Left$(val, i - 1))
-    mSwitches(pIndex).value = Right$(val, Len(val) - i)
+    mSwitches(pIndex).Value = Right$(val, Len(val) - i)
 Else
     mSwitches(pIndex).Switch = UCase$(val)
 End If

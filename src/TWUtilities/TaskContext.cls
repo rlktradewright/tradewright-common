@@ -155,10 +155,10 @@ gSetVariant Data, mData
 End Property
 
 ''
-' Returns the task Name.
+' Returns the task name.
 '
 ' @return
-'   The task's Name.
+'   The task's name.
 '@/
 Public Property Get Name() As String
 Name = mName
@@ -471,7 +471,7 @@ Dim lErrorCode As Long: lErrorCode = Err.number
 Dim lErrorMessage As String: lErrorMessage = Err.Description
 Dim lErrorSource As String: lErrorSource = Err.Source
 
-gLogger.Log "Error " & lErrorCode & " in task (" & TypeName(mTarget) & "): name=" & Name, ProcName, ModuleName
+gLogger.Log "Error " & lErrorCode & " in task (" & TypeName(mTarget) & "): Name=" & Name, ProcName, ModuleName
 
 gNotifyUnhandledError ProcName, ModuleName, , lErrorCode, lErrorMessage, lErrorSource
 

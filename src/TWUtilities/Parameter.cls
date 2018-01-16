@@ -151,10 +151,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Sets the Name of this <code>Parameter</code> object.
+' Sets the name of this <code>Parameter</code> object.
 '
 ' @param val
-'   The new Name of this object.
+'   The new name of this object.
 '@/
 Friend Property Let Name(ByVal val As String)
 Const ProcName As String = "Name"
@@ -171,10 +171,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Returns the Name of this <code>Parameter</code> object.
+' Returns the name of this <code>Parameter</code> object.
 '
 ' @return
-'   The current Name of this <code>Parameter</code> object.
+'   The current name of this <code>Parameter</code> object.
 '@/
 Public Property Get Name() As String
 Name = mName
@@ -219,7 +219,7 @@ End Property
 ' are equal.
 '
 ' @remarks
-'   To be considered equal, the two objects must have the same Name and the same
+'   To be considered equal, the two objects must have the same name and the same
 '   value, using a case-insensitive comparison.
 ' @return
 '   <code>True</code> if the objects are equal, otherwise <code>False</code>.

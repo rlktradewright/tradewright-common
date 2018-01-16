@@ -18,7 +18,7 @@ Option Explicit
 ' items.
 '
 ' Note that a <code>ConfigItems</code> object can hold several configuration
-' items with the same Name.
+' items with the same name.
 '
 ' Individual <code>ConfigItem</code> objects can be retrieved from a
 ' <code>ConfigItems</code> iteratively, in the order that they were added, using
@@ -87,16 +87,16 @@ End Property
 '@================================================================================
 
 ''
-' Adds a new configuration Item to the end of the list.
+' Adds a new configuration item to the end of the list.
 '
 ' @return
-'   A <code>ConfigItem</code> object representing the added configuration Item.
+'   A <code>ConfigItem</code> object representing the added configuration item.
 ' @param Name
-'   The new configuration Item's Name.
+'   The new configuration item's name.
 ' @param Value
-'   The new configuration Item's value.
+'   The new configuration item's value.
 ' @param Comment
-'   The new configuration Item's Comment.
+'   The new configuration item's comment.
 '
 '@/
 Public Function AddItem( _
@@ -106,7 +106,7 @@ Public Function AddItem( _
 End Function
 
 ''
-' Adds a cloned configuration Item to the end of the list.
+' Adds a cloned configuration item to the end of the list.
 '
 ' @return
 '   A <code>ConfigItem</code> object representing the clone that has been added.
@@ -139,18 +139,18 @@ Public Function Count() As Long
 End Function
 
 ''
-' Inserts a new configuration Item immediately before another specified Item in the list.
+' Inserts a new configuration item immediately before another specified Item in the list.
 '
 ' @return
-'   A <code>ConfigItem</code> object representing the added configuration Item.
+'   A <code>ConfigItem</code> object representing the added configuration item.
 ' @param Name
-'   The new configuration Item's Name.
+'   The new configuration item's name.
 ' @param Value
-'   The new configuration Item's value.
+'   The new configuration item's value.
 ' @param Comment
-'   The new configuration Item's Comment.
+'   The new configuration item's comment.
 ' @param targetItem
-'   The Item before which the new configuration Item is to be inserted. If this argument
+'   The Item before which the new configuration item is to be inserted. If this argument
 '   is not supplied, or is <code>Nothing</code>, then the new Item is inserted at the end
 '   of the list.
 '
@@ -164,18 +164,18 @@ Public Function InsertItemBefore( _
 End Function
 
 ''
-' Returns the first configuration Item in the list with the specified Name.
+' Returns the first configuration item in the list with the specified name.
 '
 ' @remarks
-'   Where there is more than one configuration Item in the list with the same
-'   Name, only the first can be retrieved using this method.  To retrieve the
+'   Where there is more than one configuration item in the list with the same
+'   name, only the first can be retrieved using this method.  To retrieve the
 '   others, it is necessary to iterate through the list using either For Each
 '   or an enumerator returned by the <code>Enumerator</code> property.
 ' @return
-'   A <code>ConfigItem</code> object representing the first configuration Item
-'   in the list that has the specified Name.
+'   A <code>ConfigItem</code> object representing the first configuration item
+'   in the list that has the specified name.
 ' @param Name
-'   The Name of the required configuration Item.
+'   The name of the required configuration item.
 '
 '
 '@/
@@ -204,15 +204,15 @@ Public Sub MoveItemBefore( _
 End Sub
 
 ''
-' Removes the specified configuration Item from the list.
+' Removes the specified configuration item from the list.
 '
 ' @param itemSpecifier
-'   Specifies which configuration Item to be removed.
+'   Specifies which configuration item to be removed.
 '
 '   If the supplied value is a <code>String</code>, then the first configuration
-'   Item in the list with that Name is removed.
+'   Item in the list with that name is removed.
 '
-'   If the supplied value is a configuration Item, then that Item is removed.
+'   If the supplied value is a configuration item, then that Item is removed.
 '
 '@/
 Public Sub Remove( _

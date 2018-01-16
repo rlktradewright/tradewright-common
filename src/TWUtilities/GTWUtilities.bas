@@ -193,7 +193,7 @@ Else
     Then
         Dim lErrMsg As String
         lErrMsg = "The configuration store is not the correct format for this program" & vbCrLf & _
-                "Current app name is " & gApplicationName & "; config store app name is " & gGetDefaultConfigurationStore.ApplicationName & vbCrLf & _
+                "Current app Name is " & gApplicationName & "; config store app Name is " & gGetDefaultConfigurationStore.ApplicationName & vbCrLf & _
                 "Required file version is " & pConfigFileVersion & "; config store file version is " & gGetDefaultConfigurationStore.fileVersion
 
         Set gGetDefaultConfigurationStore = Nothing

@@ -645,7 +645,7 @@ Friend Function Initialise( _
                 ByVal pConfigFile As ConfigurationStore, _
                 ByVal relativePath As String, _
                 ByVal Config As IConfigItem, _
-                ByVal parentConfigSection As ConfigurationSection, _
+                ByVal ParentConfigSection As ConfigurationSection, _
                 ByVal cache As ConfigSectionCache, _
                 ByVal isPrivate As Boolean)
 Const ProcName As String = "Initialise"
@@ -654,7 +654,7 @@ On Error GoTo Err
 
 Set mConfigFile = pConfigFile
 Set mConfig = Config
-If Not parentConfigSection Is Nothing Then Set mParentRef = gCreateWeakReference(parentConfigSection)
+If Not ParentConfigSection Is Nothing Then Set mParentRef = gCreateWeakReference(ParentConfigSection)
 Set mConfigEnumble = mConfig.ChildItems
 mRelativePath = relativePath
 Set mCache = cache

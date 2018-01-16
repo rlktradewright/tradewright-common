@@ -718,7 +718,7 @@ End Sub
 '        sb.Append ValueSeparator
 '    End If
 '    gEncodeVariant scEntry.Key, sb
-'    sb.Append NameSeparator
+'    sb.Append nameSeparator
 '    gEncodeVariant scEntry.Data, sb
 'Loop
 '

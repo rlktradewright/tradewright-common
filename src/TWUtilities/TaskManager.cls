@@ -860,7 +860,7 @@ mTaskTable(id).TotalCPUTime = 0
 If mProcessing Then
     ' this task is being started from another running task. We Add the new task
     ' to the restartable queue rather than the pending queue to ensure that
-    ' the Parent task doesn't have to wait for all the existing pending tasks
+    ' the parent task doesn't have to wait for all the existing pending tasks
     ' to Progress before the 'subtask' gets started
     addToRestartableQueue id
 Else

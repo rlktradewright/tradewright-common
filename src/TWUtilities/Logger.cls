@@ -15,13 +15,13 @@ Option Explicit
 
 ''
 ' Objects of this class are used to log information of a particular type
-' (commonly known as an &quot;infotype&quot;).
+' (commonly known as an 'infotype').
 '
 ' Information type names form a hierarchical namespace, components of a name
-' being separated by a period Character (ie &quot;.&quot;). The root of the tree is
+' being separated by a period character (ie '.'). The root of the tree is
 ' an empty string. Information type names are not case sensitive.
 '
-' Infotype names starting with a &quot;$&quot; Character are reserved for use within
+' Infotype names starting with a '$' character are reserved for use within
 ' the system. Applications are not able to obtain direct access to the <code>Logger</code>
 ' object for such infotypes.
 '
@@ -29,13 +29,13 @@ Option Explicit
 ' may be obtained by calling the global <code>GetLogger</code> method.
 '
 ' Information logged by a <code>Logger</code> object is, by default, also logged by the
-' <code>Logger</code> object for the Parent information type, recursively up the
+' <code>Logger</code> object for the parent information type, recursively up the
 ' information type namespace tree.
 '
 ' Each <code>Logger</code> object has a <code>LogLevel</code> property which is a
 ' value within the <code>LogLevels</code> enum. If it is set to the value
 ' <code>LogLevelNull</code>, then the <code>Logger</code> object obtains its value
-' from its Parent <code>Logger</code> object. A value of <code>LogLevelNull</code>
+' from its parent <code>Logger</code> object. A value of <code>LogLevelNull</code>
 ' for the root <code>Logger</code> object has the same effect as <code>LogLevelNone</code>,
 ' ie it logs nothing.
 '
@@ -155,11 +155,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Specifies whether this <code>Logger</code> object is to log to its Parent
+' Specifies whether this <code>Logger</code> object is to log to its parent
 ' <code>Logger</code> object.
 '
 ' @param Value
-'   If <code>True</code>, this <code>Logger</code> object must log to its Parent
+'   If <code>True</code>, this <code>Logger</code> object must log to its parent
 '   <code>Logger</code> object.
 '@/
 Public Property Let LogToParent( _
@@ -169,11 +169,11 @@ mLogToParent = Value
 End Property
 
 ''
-' Indicates whether this <code>Logger</code> object logs to its Parent
+' Indicates whether this <code>Logger</code> object logs to its parent
 ' <code>Logger</code> object.
 '
 ' @return
-'   If <code>True</code>, this <code>Logger</code> object logs to its Parent
+'   If <code>True</code>, this <code>Logger</code> object logs to its parent
 '   <code>Logger</code> object.
 '@/
 Public Property Get LogToParent() As Boolean
@@ -281,7 +281,7 @@ End Function
 '   current <code>LogLevel</code> property.
 '
 '   If the data is logged and the <code>logToParent</code> property is <code>True</code>,
-'   then the data is also logged by the Parent logger.
+'   then the data is also logged by the parent logger.
 '
 '   If the data is of a type that has no string representation, then it may be ignored
 '   by some <code>LogListener</code> objects. To ensure that this does not happen:

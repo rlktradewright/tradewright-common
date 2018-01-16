@@ -875,7 +875,7 @@ Else
 End If
 
 If (Not replacement Is Nothing) Then
-    ' Link replacement to Parent
+    ' Link replacement to parent
     replacement.Parent = p.Parent
     If p.Parent Is Nothing Then
         Set mRoot = replacement
@@ -977,58 +977,58 @@ Const ProcName As String = "fixAfterDeletion"
 On Error GoTo Err
 
 Do While (Not x Is mRoot) And colorOf(x) = BLACK
-    If x Is leftOf(parentOf(x)) Then
-        Set w = rightOf(parentOf(x))
+    If x Is leftOf(ParentOf(x)) Then
+        Set w = rightOf(ParentOf(x))
         If colorOf(w) = Red Then
             setColor w, BLACK
-            setColor parentOf(x), Red
-            rotateLeft parentOf(x)
-            Set w = rightOf(parentOf(x))
+            setColor ParentOf(x), Red
+            rotateLeft ParentOf(x)
+            Set w = rightOf(ParentOf(x))
         End If
         
         If colorOf(leftOf(w)) = BLACK _
             And colorOf(rightOf(w)) = BLACK _
         Then
             setColor w, Red
-            Set x = parentOf(x)
+            Set x = ParentOf(x)
         Else
             If colorOf(rightOf(w)) = BLACK Then
                 setColor leftOf(w), BLACK
                 setColor w, Red
                 rotateRight w
-                Set w = rightOf(parentOf(x))
+                Set w = rightOf(ParentOf(x))
             End If
-            setColor w, colorOf(parentOf(x))
-            setColor parentOf(x), BLACK
+            setColor w, colorOf(ParentOf(x))
+            setColor ParentOf(x), BLACK
             setColor rightOf(w), BLACK
-            rotateLeft parentOf(x)
+            rotateLeft ParentOf(x)
             Set x = mRoot
         End If
     Else
-        Set w = leftOf(parentOf(x))
+        Set w = leftOf(ParentOf(x))
         If colorOf(w) = Red Then
             setColor w, BLACK
-            setColor parentOf(x), Red
-            rotateRight parentOf(x)
-            Set w = leftOf(parentOf(x))
+            setColor ParentOf(x), Red
+            rotateRight ParentOf(x)
+            Set w = leftOf(ParentOf(x))
         End If
         
         If colorOf(rightOf(w)) = BLACK _
             And colorOf(leftOf(w)) = BLACK _
         Then
             setColor w, Red
-            Set x = parentOf(x)
+            Set x = ParentOf(x)
         Else
             If colorOf(leftOf(w)) = BLACK Then
                 setColor leftOf(w), BLACK
                 setColor w, Red
                 rotateLeft w
-                Set w = leftOf(parentOf(x))
+                Set w = leftOf(ParentOf(x))
             End If
-            setColor w, colorOf(parentOf(x))
-            setColor parentOf(x), BLACK
+            setColor w, colorOf(ParentOf(x))
+            setColor ParentOf(x), BLACK
             setColor leftOf(w), BLACK
-            rotateRight parentOf(x)
+            rotateRight ParentOf(x)
             Set x = mRoot
         End If
     End If
@@ -1053,49 +1053,49 @@ x.Color = Red
 Do While Not x Is mRoot
     If x.Parent.Color = BLACK Then Exit Do
     
-    If parentOf(x) Is leftOf(parentOf(parentOf(x))) Then
-        Set y = rightOf(parentOf(parentOf(x)))
+    If ParentOf(x) Is leftOf(ParentOf(ParentOf(x))) Then
+        Set y = rightOf(ParentOf(ParentOf(x)))
         If colorOf(y) = Red Then
 
             ' uncle is Red
-            setColor parentOf(x), BLACK
+            setColor ParentOf(x), BLACK
             setColor y, BLACK
-            setColor parentOf(parentOf(x)), Red
-            Set x = parentOf(parentOf(x))
+            setColor ParentOf(ParentOf(x)), Red
+            Set x = ParentOf(ParentOf(x))
         Else
 
             ' uncle is Black
-            If x Is rightOf(parentOf(x)) Then
-                Set x = parentOf(x)
+            If x Is rightOf(ParentOf(x)) Then
+                Set x = ParentOf(x)
                 rotateLeft x
             End If
             
-            setColor parentOf(x), BLACK
-            setColor parentOf(parentOf(x)), Red
-            rotateRight parentOf(parentOf(x))
+            setColor ParentOf(x), BLACK
+            setColor ParentOf(ParentOf(x)), Red
+            rotateRight ParentOf(ParentOf(x))
         End If
     Else
 
         ' mirror image of above code
-        Set y = leftOf(parentOf(parentOf(x)))
+        Set y = leftOf(ParentOf(ParentOf(x)))
         If colorOf(y) = Red Then
 
             ' uncle is Red
-            setColor parentOf(x), BLACK
+            setColor ParentOf(x), BLACK
             setColor y, BLACK
-            setColor parentOf(parentOf(x)), Red
-            Set x = parentOf(parentOf(x))
+            setColor ParentOf(ParentOf(x)), Red
+            Set x = ParentOf(ParentOf(x))
         Else
 
             ' uncle is Black
-            If x Is leftOf(parentOf(x)) Then
-                Set x = parentOf(x)
+            If x Is leftOf(ParentOf(x)) Then
+                Set x = ParentOf(x)
                 rotateRight x
             End If
             
-            setColor parentOf(x), BLACK
-            setColor parentOf(parentOf(x)), Red
-            rotateLeft parentOf(parentOf(x))
+            setColor ParentOf(x), BLACK
+            setColor ParentOf(ParentOf(x)), Red
+            rotateLeft ParentOf(ParentOf(x))
         End If
     End If
 Loop
@@ -1137,13 +1137,13 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function parentOf( _
+Private Function ParentOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "parentOf"
 
 On Error GoTo Err
 
-If Not p Is Nothing Then Set parentOf = p.Parent
+If Not p Is Nothing Then Set ParentOf = p.Parent
 
 Exit Function
 

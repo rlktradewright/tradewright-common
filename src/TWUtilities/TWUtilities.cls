@@ -391,7 +391,7 @@ End Enum
 ' @param FileTypeUnknown
 '   No information is available about the type of the file.
 ' @param FileTypeChar
-'   The file is a Character file, typically an LPT device or a console.
+'   The file is a character file, typically an LPT device or a console.
 ' @param FileTypeDisk
 '   The file is a disk file.
 ' @param FileTypePipe
@@ -428,7 +428,7 @@ End Enum
 ' logged.
 '
 ' @param LogLevelNull
-'   The <code>Logger</code> object will obtain its log level from its Parent. This value
+'   The <code>Logger</code> object will obtain its log level from its parent. This value
 '   must only be used to set the <code>LogLevel</code> property of <code>Logger</code>
 '   objects. It must not be used in logging methods.
 ' @param LogLevelUseDefault
@@ -845,7 +845,7 @@ End Type
 ' @param Source
 '   The object within which the situation occurred.
 ' @param propertyName
-'   The Name of the property whose value has changed.
+'   The name of the property whose value has changed.
 '@/
 Public Type PropertyChangedEventData
     Source          As Object
@@ -914,7 +914,7 @@ End Type
 '   The pCookie value that was passed to the <code>StartTask</code> global method
 '   when the task was started.
 ' @param TaskName
-'   The completed task's Name.
+'   The completed task's name.
 ' @param ErrorNumber
 '   If the task terminated due to an Error, this contains the Error number.
 ' @param ErrorMessage
@@ -996,9 +996,9 @@ End Type
 ' Contains summary information about a task.
 '
 ' @param Name
-'   The task's Name.
+'   The task's name.
 ' @param ClassName
-'   The class Name of the task object.
+'   The class name of the task object.
 ' @param Priority
 '   The task's Priority.
 ' @param State
@@ -1064,7 +1064,7 @@ End Type
 ' Sets the application name that is used to determine the application settings
 ' folder, to create default logfiles, and in various other contexts.
 ' @remarks
-'   The default if this property is not specified is &quot;Application&quot;.
+'   The default if this property is not specified is 'Application'.
 ' @param Value
 '   The required application name. The value supplied must not contain any of the
 '   following characters: &lt; &gt; : \ \ / "
@@ -1074,10 +1074,10 @@ Public Property Let ApplicationName( _
 Const ProcName As String = "ApplicationName"
 On Error GoTo Err
 
-gAssertArgument Value <> "", "Application name cannot be blank"
+gAssertArgument Value <> "", "Application Name cannot be blank"
 
 gRegExp.Pattern = "^[^<>:\\/""|]+$"
-gAssertArgument gRegExp.Test(Value), "Application name contains invalid characters"
+gAssertArgument gRegExp.Test(Value), "Application Name contains invalid characters"
 
 gApplicationName = Value
 
@@ -1101,7 +1101,7 @@ End Property
 ' Sets the application group name that is used to determine the application settings
 ' folder.
 ' @remarks
-'   The default if this property is not specified is &quot;&quot;.
+'   The default if this property is not specified is ''.
 ' @param Value
 '   The required application group name. The value supplied must not contain any of the
 '   following characters: &lt; &gt; : \ \ / "
@@ -1112,7 +1112,7 @@ Const ProcName As String = "ApplicationGroupName"
 On Error GoTo Err
 
 gRegExp.Pattern = "^[^<>:\\/""|]*$"
-gAssertArgument gRegExp.Test(Value), "Application name contains invalid characters"
+gAssertArgument gRegExp.Test(Value), "Application Name contains invalid characters"
 
 gApplicationGroupName = Value
 
@@ -1667,7 +1667,7 @@ End Function
 '   The command line arguments to be parsed. For a Visual Basic 6 program,
 '   this value may be obtained using the <code>Command</code> function.
 ' @param separator
-'   A single Character used as the separator between command line arguments.
+'   A single character used as the separator between command line arguments.
 '@/
 Public Function CreateCommandLineParser( _
                 ByVal commandLine As String, _
@@ -1676,7 +1676,7 @@ Const ProcName As String = "CreateCommandLineParser"
 
 On Error GoTo Err
 
-gAssertArgument Len(separator) = 1, "Separator must be a single Character"
+gAssertArgument Len(separator) = 1, "Separator must be a single character"
 
 Set CreateCommandLineParser = New CommandLineParser
 CreateCommandLineParser.Initialise commandLine, separator
@@ -1912,7 +1912,7 @@ End Function
 '   <tt>
 '   <p>paramString: param [sep param]...</p>
 '
-'   <p>param: Name delim value</p>
+'   <p>param: name delim value</p>
 '
 '   <p>name: string</p>
 '
@@ -1921,24 +1921,24 @@ End Function
 '   </pre>
 '   where
 '   <pre>
-'   <p><tt>sep</tt> is a single Character used as a separator between parameters.
+'   <p><tt>sep</tt> is a single character used as a separator between parameters.
 '   The default separator is a semi-colon, but an alternative can be specified
 '   in the <code>parameterSeparator</code> argument.</p>
 '
-'   <p><tt>delim</tt> is a single Character used to delimit the Name
+'   <p><tt>delim</tt> is a single character used to delimit the name
 '   The default delimiter is =, but an alternative can be specified
 '   in the <code>nameDelimiter</code> argument.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or value needs to contain a separator or delimiter
-'   Character, this can be achieved by preceding it with an escape Character.
-'   The default escape Character is \, but an alternative can be specified
+'   <p>If the parameter name or value needs to contain a separator or delimiter
+'   character, this can be achieved by preceding it with an escape character.
+'   The default escape character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument. Note that to include the
-'   escape Character itself in the value or Name, it must be repeated. The
-'   effect of the escape Character is to include the following Character in
-'   the parameter Name or value verbatim.</p>
+'   escape character itself in the value or name, it must be repeated. The
+'   effect of the escape character is to include the following character in
+'   the parameter name or value verbatim.</p>
 '
-'   <p>For each specified parameter, if a parameter with this Name is
+'   <p>For each specified parameter, if a parameter with this name is
 '   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
@@ -1947,11 +1947,11 @@ End Function
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </blockquote>
-'   An example incuding the escape Character in the value:
+'   An example incuding the escape character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the value in a unusual (and pointless!) way:
+'   An example using the escape character in the value in a unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
@@ -1961,12 +1961,12 @@ End Function
 '   the <code>paramString</code> argument.
 ' @param paramString
 '   The parameters to be set, using the syntex described under Remarks.
-' @param nameDelimiter
-'   A single Character used to delimit the parameter Name.
+' @param NameDelimiter
+'   A single character used to delimit the parameter name.
 ' @param parameterSeparator
-'   A single Character used to separate parameters.
+'   A single character used to separate parameters.
 ' @param escapeCharacter
-'   A single Character that causes the following Character to be included
+'   A single character that causes the following character to be included
 '   verbatim in the parameter value in spite of any special meaning it may normally have.
 '@/
 Public Function CreateParametersFromString( _
@@ -2001,7 +2001,7 @@ End Function
 '   <tt>
 '   <p>paramString: param [sep param]...</p>
 '
-'   <p>param: Name delim value</p>
+'   <p>param: name delim value</p>
 '
 '   <p>name: string</p>
 '
@@ -2010,24 +2010,24 @@ End Function
 '   </pre>
 '   where
 '   <pre>
-'   <p><tt>sep</tt> is a single Character used as a separator between parameters.
+'   <p><tt>sep</tt> is a single character used as a separator between parameters.
 '   The default separator is a semi-colon, but an alternative can be specified
 '   in the <code>parameterSeparator</code> argument.</p>
 '
-'   <p><tt>delim</tt> is a single Character used to delimit the Name
+'   <p><tt>delim</tt> is a single character used to delimit the name
 '   The default delimiter is =, but an alternative can be specified
 '   in the <code>nameDelimiter</code> argument.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or value needs to contain a separator or delimiter
-'   Character, this can be achieved by preceding it with an escape Character.
-'   The default escape Character is \, but an alternative can be specified
+'   <p>If the parameter name or value needs to contain a separator or delimiter
+'   character, this can be achieved by preceding it with an escape character.
+'   The default escape character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument. Note that to include the
-'   escape Character itself in the value or Name, it must be repeated. The
-'   effect of the escape Character is to include the following Character in
-'   the parameter Name or value verbatim.</p>
+'   escape character itself in the value or name, it must be repeated. The
+'   effect of the escape character is to include the following character in
+'   the parameter name or value verbatim.</p>
 '
-'   <p>For each specified parameter, if a parameter with this Name is
+'   <p>For each specified parameter, if a parameter with this name is
 '   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
@@ -2036,11 +2036,11 @@ End Function
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </pre>
-'   An example incuding the escape Character in the value:
+'   An example incuding the escape character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the value in a unusual (and pointless!) way:
+'   An example using the escape character in the value in a unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
@@ -2050,12 +2050,12 @@ End Function
 '   the <code>paramString</code> argument.
 ' @param paramString
 '   The parameters to be parsed, using the syntex described under Remarks.
-' @param nameDelimiter
-'   A single Character used to delimit the parameter Name.
+' @param NameDelimiter
+'   A single character used to delimit the parameter name.
 ' @param parameterSeparator
-'   A single Character used to separate parameters.
+'   A single character used to separate parameters.
 ' @param escapeCharacter
-'   A single Character that causes the following Character to be included
+'   A single character that causes the following character to be included
 '   verbatim in the parameter value in spite of any special meaning it may normally have.
 '@/
 Public Function CreateParameterStringParser( _
@@ -2086,7 +2086,7 @@ End Function
 ' @param pRate
 '   The factor by which time is accelerated in this clock.
 ' @param pTimezonename
-'   The standard Name of the required timezone.
+'   The standard name of the required timezone.
 '@/
 Public Function CreateSimulatedClock( _
                 ByVal pRate As Single, _
@@ -2235,7 +2235,7 @@ End Function
 ' @return
 '   The required <code>XMLConfigProvider</code> object.
 ' @param pApplicationName
-'   The Name of the application for which this provider will manage configuration
+'   The name of the application for which this provider will manage configuration
 '   data.
 ' @param pApplicationVersion
 '   The version of the application for which this provider will manage configuration
@@ -2662,7 +2662,7 @@ End Function
 ' @return
 '   The required <code>Clock</code> object.
 ' @param pTimezonename
-'   The standard Name of the required timezone.
+'   The standard name of the required timezone.
 '@/
 Public Function GetClock( _
                 Optional ByVal pTimezonename As String) As Clock
@@ -2834,8 +2834,8 @@ End Function
 ' Returns the <code>Logger</code> object for a particular info type.
 '
 ' @remarks
-'   Information types form a hierarchical namespace, components of the Name
-'   being separated by a period Character (ie &quot;.&quot;). The root of the tree is
+'   Information types form a hierarchical namespace, components of the name
+'   being separated by a period character (ie '.'). The root of the tree is
 '   an empty string. Information type names are not case sensitive.
 '
 ' @return
@@ -2989,7 +2989,7 @@ End Function
 ' @return
 '   The requried <code>TimeZone</code> object.
 ' @param pTimezonename
-'   The standard Name for the required timezone.
+'   The standard name for the required timezone.
 '@/
 Public Function GetTimeZone( _
                 Optional ByVal pTimezonename As String) As TimeZone
@@ -3416,10 +3416,10 @@ LogLevelFromString = gLogLevelFromString(Value)
 End Function
 
 ''
-' Translates a <code>LogLevels</code> value to the corresponding single Character.
+' Translates a <code>LogLevels</code> value to the corresponding single character.
 '
 ' @return
-'   The single-Character string corresponding to the supplied <code>LogLevels</code> value.
+'   The single-character string corresponding to the supplied <code>LogLevels</code> value.
 ' @param Value
 '   The <code>LogLevels</code> value to be converted to a string.
 '
@@ -3532,12 +3532,12 @@ End Function
 ' Returns the supplied value if it is non-null, or the default value if it is null.
 '
 ' @return
-'   If the <code>value</code> argument is not null, it is returned. If it is null,
+'   If the <code>Value</code> argument is not null, it is returned. If it is null,
 '   the <code>defaultValue</code> argument is returned.
 ' @param Value
 '   The value to be tested for nullity.
 ' @param defaultValue
-'   The value to be returned if the <code>value</code> argument is null.
+'   The value to be returned if the <code>Value</code> argument is null.
 '@/
 Public Function Nz( _
                 ByVal Value As Variant, _
@@ -3550,7 +3550,7 @@ End If
 End Function
 
 ''
-' Parses a JSON string and returns as corresponding value.
+' Parses a JSON string and returns a corresponding value.
 '
 ' JSON is JavaScript Object Notation - see http://www.json.org and
 ' http://www.ietf.org/rfc/rfc4627.txt?number=4627. JSON is a lightweight, text-based,
@@ -3638,7 +3638,7 @@ End Function
 ' @remarks
 '   The <code>config</code> argument should refer to a <code>ConfigurationSection</code>
 '   object that will only be used to store the font properties. Using it to store other
-'   configuration settings may lead to unpredicatable results.
+'   configuration settings may lead to unpredictable results.
 '@/
 Public Sub SaveFontToConfig( _
                 ByVal aFont As StdFont, _
@@ -3665,7 +3665,7 @@ End Sub
 '
 ' @remarks
 '   The logging level is governed by the global <code>DefaultLogLevel</code> property,
-'   but can be overridden if the application's command line specifies the &quot;/loglevel&quot;
+'   but can be overridden if the application's command line specifies the <code>/loglevel</code>
 '   switch, which can take any of the following values:
 '   <ul>
 '       <li>None    or 0</li>
@@ -3679,10 +3679,10 @@ End Sub
 '       <li>All     or A</li>
 '   </ul>
 '
-'   If the application's command line includes the &quot;/log&quot; switch, the
+'   If the application's command line includes the <code>/log</code> switch, the
 '   the switch's value specifies the log file path and filename.
 '
-'   Otherwise, the log file is called &quot;&lt;appName&gt;.log&quot; (where &lt;appName&gt;
+'   Otherwise, the log file is called <code>&lt;appName&gt;.log</code> (where &lt;appName&gt;
 '   is the value of the global <code>ApplicationName</code> property). The log file is
 '   created in the application settings folder.
 ' @return
@@ -4068,7 +4068,7 @@ Case Else
     gAssertArgument False, "Priority invalid"
 End Select
 
-Set StartTask = GTasks.gTaskManager.StartTask(Target, Priority, Name, pCookie, Data)
+Set StartTask = GTasks.gTaskManager.StartTask(Target, Priority, Name, Cookie, Data)
 
 Exit Function
 

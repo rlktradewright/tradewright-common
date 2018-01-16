@@ -149,7 +149,7 @@ Case "W", "WARNING"
 Case "U", "DEFAULT"
     gLogLevelFromString = LogLevels.LogLevelUseDefault
 Case Else
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid log level name"
+    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid log level Name"
 End Select
 
 Exit Function

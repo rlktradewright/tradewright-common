@@ -103,12 +103,12 @@ Capacity = Len(mBuffer)
 End Property
 
 ''
-' Returns the Character at the specified position (the first Character is at position 1).
+' Returns the character at the specified position (the first character is at position 1).
 '
 ' @return
-'   The Character at the specified position.
+'   The character at the specified position.
 ' @param position
-'   The position for which the Character is required.
+'   The position for which the character is required.
 '@/
 Public Property Get Character( _
                 ByVal position As Long) As String
@@ -212,7 +212,7 @@ End Sub
 ' @param destination
 '   The byte array into which the string is to be copied.
 ' @param startPosition
-'   The 1-based index of the first Character in the string under construction to be
+'   The 1-based index of the first character in the string under construction to be
 '   copied.
 ' @param destinationIndex
 '   The zero-based index of the array element where the copied string is to start.
@@ -412,7 +412,7 @@ End Sub
 ' Removes the specified substring from the string under construction.
 '
 ' @param startIndex
-'   The starting position of the string to be removed. The first Character is
+'   The starting position of the string to be removed. The first character is
 '   at position 1.
 ' @param lengthToRemove
 '   The Length of the string to be removed.
@@ -561,7 +561,7 @@ End Function
 ' Returns a substring of the string under construction.
 '
 ' @param startPosition
-'   The 1-based index of the first Character of the substring.
+'   The 1-based index of the first character of the substring.
 ' @param Length
 '   The Length of the substring to be returned. If omitted or zero, the Length from
 '   the starting point to the end of the string under construction is assumed.
@@ -612,10 +612,10 @@ End Function
 ' word to the left of the specified position.
 '
 ' @remarks
-'   If the specified position is within a word but after its first Character, the
+'   If the specified position is within a word but after its first character, the
 '   position of the start of that word is returned.
 '
-'   If the specified position is the first Character of a word, the
+'   If the specified position is the first character of a word, the
 '   position of the start of the previous word is returned. If there is no previous word,
 '   the value 1 is returned.
 ' @return
@@ -625,8 +625,8 @@ End Function
 '   zero. If it is greater than the Length of the string under construction, the start of
 '   the last word in the string is found.
 ' @param separator
-'   The Character used as a separator between words. This argument must be a single
-'   Character, though there may be any number of occurrences of it between words.
+'   The character used as a separator between words. This argument must be a single
+'   character, though there may be any number of occurrences of it between words.
 ' @see
 '
 '@/
@@ -639,7 +639,7 @@ Const ProcName As String = "WordPositionLeft"
 On Error GoTo Err
 
 If position < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0"
-If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single Character"
+If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single character"
 
 If position = 1 Or Me.Length = 0 Then
     WordPositionLeft = 1
@@ -676,8 +676,8 @@ End Function
 '   zero. If it is greater than the Length of the string under construction, the value
 '   returned is one greater than the Length of the string.
 ' @param separator
-'   The Character used as a separator between words. This argument must be a single
-'   Character, though there may be any number of occurrences of it between words.
+'   The character used as a separator between words. This argument must be a single
+'   character, though there may be any number of occurrences of it between words.
 ' @see
 '
 '@/
@@ -690,7 +690,7 @@ Const ProcName As String = "WordPositionRight"
 On Error GoTo Err
 
 If position < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0"
-If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single Character"
+If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single character"
 
 If position > Me.Length Then
     WordPositionRight = Me.Length + 1

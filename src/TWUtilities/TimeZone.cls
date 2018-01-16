@@ -101,10 +101,10 @@ BaseTimeZoneInfo = mBaseTimeZoneInfo
 End Property
 
 ''
-' Returns the daylight saving time Name for this timezone.
+' Returns the daylight saving time name for this timezone.
 '
 ' @return
-'   The daylight saving time Name for this timezone.
+'   The daylight saving time name for this timezone.
 '@/
 Public Property Get DstName() As String
 Const ProcName As String = "DstName"
@@ -130,10 +130,10 @@ DstOffset = -mBaseTimeZoneInfo.daylightBias
 End Property
 
 ''
-' Returns the display Name for this timezone.
+' Returns the display name for this timezone.
 '
 ' @return
-'   The display Name for this timezone.
+'   The display name for this timezone.
 '@/
 Public Property Get displayName() As String
 displayName = mDisplayName
@@ -150,10 +150,10 @@ Offset = -mBaseTimeZoneInfo.Bias
 End Property
 
 ''
-' Returns the standard Name for this timezone.
+' Returns the standard name for this timezone.
 '
 ' @return
-'   The standard Name for this timezone.
+'   The standard name for this timezone.
 '@/
 Public Property Get StandardName() As String
 Const ProcName As String = "StandardName"
