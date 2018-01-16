@@ -154,15 +154,15 @@ Const ProcName As String = "gInit"
 
 On Error GoTo Err
 
-Dim tc As TIMECAPS
+Dim TC As TIMECAPS
 Dim i As Long
 
 If mMinRes <> 0 Then Exit Sub
 
-If TimeGetDevCaps(tc, 8) <> TIMERR_NOERROR Then gHandleWin32Error
+If TimeGetDevCaps(TC, 8) <> TIMERR_NOERROR Then gHandleWin32Error
 
-mMinRes = IIf(tc.wPeriodMin < MinTimerResolution, MinTimerResolution, tc.wPeriodMin)
-If mMinRes > tc.wPeriodMax Then mMinRes = tc.wPeriodMax
+mMinRes = IIf(TC.wPeriodMin < MinTimerResolution, MinTimerResolution, TC.wPeriodMin)
+If mMinRes > TC.wPeriodMax Then mMinRes = TC.wPeriodMax
 
 TimeBeginPeriod mMinRes
 

@@ -74,7 +74,7 @@ Private Enum TaskPrimitiveStates
     Free
     Pending
     Processed
-    running
+    Running
     Suspended
     Restartable
 End Enum
@@ -87,7 +87,7 @@ Private Type TaskTableEntry
     State           As TaskPrimitiveStates
     Next            As Long
     Prev            As Long
-    tc              As TaskContext
+    TC              As TaskContext
     Priority        As TaskPriorities
     TimeRemaining   As Long ' number of microseconds remaining in the current
                             ' timeslot for this task
@@ -96,7 +96,7 @@ Private Type TaskTableEntry
     LastRunTime     As Date
     TotalCPUTime    As Long
 End Type
-
+Dim TC
 '@================================================================================
 ' External function declarations
 '@================================================================================
@@ -141,10 +141,7 @@ Private mFirstRestartableIndex                              As Long
 ' allocation but have not yet completed
 Private mFirstProcessedIndex                                As Long
 
-'' need a very accurate timer for this
-'Private WithEvents mScheduleTimer                           As IntervalTimer
-
-' timing need need not be so accurate for suspended tasks
+' timing need need not be very accurate for suspended tasks
 Private mTimerList                                          As TimerList
 Attribute mTimerList.VB_VarHelpID = -1
 
@@ -166,8 +163,6 @@ Private mNumberOfInterSchedulePeriods                       As Long
 '@================================================================================
 
 Private Sub Class_Initialize()
-Dim i As Long
-
 mTaskConcurrency = Round(DefaultTaskConcurrency * gNumberOfProcessors * gCpuSpeedMhz / 1000)
 If mTaskConcurrency < MinimumTaskConcurrency Then mTaskConcurrency = MinimumTaskConcurrency
 mQuantumMillisecs = DefaultQuantumMillisecs
@@ -187,11 +182,7 @@ mFirstRestartableIndex = LastIndex
 
 mFirstProcessedIndex = LastIndex
 
-'Set mScheduleTimer = New IntervalTimer
-'mScheduleTimer.Initialise mTaskScheduleIntervalMillisecs, 0, False, Empty
-
 Set mTimerList = GTimerList.gGetTimerList
-
 End Sub
 
 '@================================================================================
@@ -200,7 +191,6 @@ End Sub
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
-
 On Error GoTo Err
 
 Set IEnumerable_Enumerator = getEnumerator(EnumeratorTypes.Runnable)
@@ -212,19 +202,29 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Function IEnumerable_NextItem(pItem As Variant, pCookie As Variant) As Boolean
-Const NoMoreItems As Long = &H7FFFFFFF
-Dim lIndex As Long
-Dim enumType As Long
-Dim enumAll As Boolean
-
 Const ProcName As String = "IEnumerable_NextItem"
-
 On Error GoTo Err
 
-If CLng(pCookie) = NoMoreItems Then Exit Function
+#If trace Then
+    gNullTracer.EnterProcedure ProcName, ProjectName, ModuleName, ""
+#End If
 
+Const NoMoreItems As Long = &H7FFFFFFF
+
+If CLng(pCookie) = NoMoreItems Then
+    #If trace Then
+        gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+    #End If
+    Exit Function
+End If
+
+Dim enumType As Long
 enumType = CLng(pCookie) And &H70000000
+
+Dim enumAll As Boolean
 enumAll = ((CLng(pCookie) And EnumeratorTypes.All) = EnumeratorTypes.All)
+
+Dim lIndex As Long
 lIndex = CLng(pCookie) And &HFFFFFFF
 
 If enumAll And enumType = 0 Then enumType = EnumeratorTypes.Runnable
@@ -235,6 +235,9 @@ If enumType = EnumeratorTypes.Runnable And lIndex = &HFFFFFFF Then
             enumType = EnumeratorTypes.Processed
         Else
             pCookie = NoMoreItems
+            #If trace Then
+                gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+            #End If
             Exit Function
         End If
     Else
@@ -248,6 +251,9 @@ If enumType = EnumeratorTypes.Processed And lIndex = &HFFFFFFF Then
             enumType = EnumeratorTypes.Restartable
         Else
             pCookie = NoMoreItems
+            #If trace Then
+                gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+            #End If
             Exit Function
         End If
     Else
@@ -261,6 +267,9 @@ If enumType = EnumeratorTypes.Restartable And lIndex = &HFFFFFFF Then
             enumType = EnumeratorTypes.Pending
         Else
             pCookie = NoMoreItems
+            #If trace Then
+                gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+            #End If
             Exit Function
         End If
     Else
@@ -274,6 +283,9 @@ If enumType = EnumeratorTypes.Pending And lIndex = &HFFFFFFF Then
             enumType = EnumeratorTypes.Suspended
         Else
             pCookie = NoMoreItems
+            #If trace Then
+                gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+            #End If
             Exit Function
         End If
     Else
@@ -284,6 +296,9 @@ End If
 If enumType = EnumeratorTypes.Suspended And lIndex = &HFFFFFFF Then
     If mFirstSuspendedIndex = LastIndex Then
         pCookie = NoMoreItems
+        #If trace Then
+            gNullTracer.ExitProcedure "IEnumerable_NextItem", ProjectName, ModuleName, ""
+        #End If
         Exit Function
     Else
         lIndex = mFirstSuspendedIndex
@@ -320,6 +335,10 @@ End If
 
 IEnumerable_NextItem = True
 
+#If trace Then
+    gNullTracer.ExitProcedure ProcName, ProjectName, ModuleName, ""
+#End If
+
 Exit Function
 
 Err:
@@ -346,16 +365,16 @@ End Property
 '@================================================================================
 
 Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
-Dim tli As TimerListItem
-Dim lIndex As Long
-
 Const ProcName As String = "IStateChangeListener_Change"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "IStateChangeListener_Change", ProjectName, ModuleName, ""
+#End If
+
 
 If TypeOf ev.Source Is TimerListItem Then
-    Set tli = ev.Source
-    lIndex = tli.Data
+    Dim tli As TimerListItem: Set tli = ev.Source
+    Dim lIndex As Long: lIndex = tli.Data
     removeFromQueue mFirstSuspendedIndex, lIndex
     If ev.State = TimerListItemStates.TimerListItemStateExpired Then
         addToRestartableQueue lIndex
@@ -366,6 +385,10 @@ If TypeOf ev.Source Is TimerListItem Then
     End If
 End If
 startScheduler
+
+#If trace Then
+    gNullTracer.ExitProcedure "IStateChangeListener_Change", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -405,10 +428,16 @@ End Sub
 '@================================================================================
 
 Public Property Get AverageInterScheduleWait() As Double
+#If trace Then
+    gNullTracer.EnterProcedure "AverageInterScheduleWait", ProjectName, ModuleName, ""
+#End If
 If mNumberOfInterSchedulePeriods <> 0 Then _
     AverageInterScheduleWait = mTotalInterScheduleElapsedTime / mNumberOfInterSchedulePeriods
 mTotalInterScheduleElapsedTime = 0#
 mNumberOfInterSchedulePeriods = 0
+#If trace Then
+    gNullTracer.ExitProcedure "AverageInterScheduleWait", ProjectName, ModuleName, ""
+#End If
 End Property
 
 ''
@@ -420,7 +449,6 @@ End Property
 '@/
 Public Property Get Enumerator() As Enumerator
 Const ProcName As String = "Enumerator"
-
 On Error GoTo Err
 
 Set Enumerator = getEnumerator(EnumeratorTypes.All)
@@ -440,7 +468,6 @@ End Property
 '@/
 Public Property Get PendingTasksEnumerator() As Enumerator
 Const ProcName As String = "PendingTasksEnumerator"
-
 On Error GoTo Err
 
 Set PendingTasksEnumerator = getEnumerator(EnumeratorTypes.Pending)
@@ -460,7 +487,6 @@ End Property
 '@/
 Public Property Get ProcessedTasksEnumerator() As Enumerator
 Const ProcName As String = "ProcessedTasksEnumerator"
-
 On Error GoTo Err
 
 Set ProcessedTasksEnumerator = getEnumerator(EnumeratorTypes.Processed)
@@ -474,7 +500,6 @@ End Property
 Friend Property Let QuantumMillisecs( _
                 ByVal Value As Long)
 Const ProcName As String = "QuantumMillisecs"
-
 On Error GoTo Err
 
 gAssertArgument gIsInteger(Value, MinimumQuantumMillisecs), "Value cannot be less than " & MinimumQuantumMillisecs
@@ -499,7 +524,6 @@ End Property
 '@/
 Public Property Get RestartableTasksEnumerator() As Enumerator
 Const ProcName As String = "RestartableTasksEnumerator"
-
 On Error GoTo Err
 
 Set RestartableTasksEnumerator = getEnumerator(EnumeratorTypes.Restartable)
@@ -519,7 +543,6 @@ End Property
 '@/
 Public Property Get RunnableTasksEnumerator() As Enumerator
 Const ProcName As String = "RunnableTasksEnumerator"
-
 On Error GoTo Err
 
 Set RunnableTasksEnumerator = getEnumerator(EnumeratorTypes.Runnable)
@@ -548,7 +571,6 @@ End Property
 '@/
 Public Property Get SuspendedTasksEnumerator() As Enumerator
 Const ProcName As String = "SuspendedTasksEnumerator"
-
 On Error GoTo Err
 
 Set SuspendedTasksEnumerator = getEnumerator(EnumeratorTypes.Suspended)
@@ -562,7 +584,6 @@ End Property
 Friend Property Let TaskConcurrency( _
                 ByVal Value As Long)
 Const ProcName As String = "TaskConcurrency"
-
 On Error GoTo Err
 
 gAssertArgument gIsInteger(Value, MinimumTaskConcurrency), "Value must be greater than 0"
@@ -583,7 +604,6 @@ End Property
 Friend Property Let TaskSummaryLoggingIntervalSecs( _
                 ByVal Value As Long)
 Const ProcName As String = "TaskSummaryLoggingIntervalSecs"
-
 On Error GoTo Err
 
 gAssertArgument Value >= 0, "Value cannot be negative"
@@ -612,15 +632,21 @@ End Property
 '@================================================================================
 
 Friend Sub Continue( _
-                ByVal tc As TaskContext)
+                ByVal TC As TaskContext)
 Const ProcName As String = "Continue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "Continue", ProjectName, ModuleName, ""
+#End If
 
-cancelSuspendTimer tc.TaskId
-removeFromQueue mFirstSuspendedIndex, tc.TaskId
-addToRestartableQueue tc.TaskId
+cancelSuspendTimer TC.TaskId
+removeFromQueue mFirstSuspendedIndex, TC.TaskId
+addToRestartableQueue TC.TaskId
 startScheduler
+
+#If trace Then
+    gNullTracer.ExitProcedure "Continue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -629,13 +655,15 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub FinishNonRunnable( _
-                ByVal tc As TaskContext)
-Dim id As Long
+                ByVal TC As TaskContext)
 Const ProcName As String = "FinishNonRunnable"
+#If trace Then
+    gNullTracer.EnterProcedure "FinishNonRunnable", ProjectName, ModuleName, ""
+#End If
 
 On Error GoTo Err
 
-id = tc.TaskId
+Dim id As Long: id = TC.TaskId
 Select Case mTaskTable(id).State
 Case TaskPrimitiveStates.Pending
     removeFromQueue mFirstPendingIndex, id
@@ -647,6 +675,10 @@ Case TaskPrimitiveStates.Restartable
 End Select
 addToFreeList id
 
+#If trace Then
+    gNullTracer.ExitProcedure "FinishNonRunnable", ProjectName, ModuleName, ""
+#End If
+
 Exit Sub
 
 Err:
@@ -655,7 +687,6 @@ End Sub
 
 Public Function GetPendingTaskSummary() As String
 Const ProcName As String = "GetPendingTaskSummary"
-
 On Error GoTo Err
 
 GetPendingTaskSummary = getTaskSummaryInfoFromEnumerator(PendingTasksEnumerator)
@@ -668,7 +699,6 @@ End Function
 
 Public Function GetProcessedTaskSummary() As String
 Const ProcName As String = "GetProcessedTaskSummary"
-
 On Error GoTo Err
 
 GetProcessedTaskSummary = getTaskSummaryInfoFromEnumerator(ProcessedTasksEnumerator)
@@ -681,7 +711,6 @@ End Function
 
 Public Function GetRunnableTaskSummary() As String
 Const ProcName As String = "GetRunnableTaskSummary"
-
 On Error GoTo Err
 
 GetRunnableTaskSummary = getTaskSummaryInfoFromEnumerator(RunnableTasksEnumerator)
@@ -694,7 +723,6 @@ End Function
 
 Public Function GetRestartableTaskSummary() As String
 Const ProcName As String = "GetRestartableTaskSummary"
-
 On Error GoTo Err
 
 GetRestartableTaskSummary = getTaskSummaryInfoFromEnumerator(RestartableTasksEnumerator)
@@ -707,7 +735,6 @@ End Function
 
 Public Function GetSuspendedTaskSummary() As String
 Const ProcName As String = "GetSuspendedTaskSummary"
-
 On Error GoTo Err
 
 GetSuspendedTaskSummary = getTaskSummaryInfoFromEnumerator(SuspendedTasksEnumerator)
@@ -720,7 +747,6 @@ End Function
 
 Public Function GetTaskSummary() As String
 Const ProcName As String = "GetTaskSummary"
-
 On Error GoTo Err
 
 GetTaskSummary = getTaskSummaryInfoFromEnumerator(Enumerator)
@@ -740,15 +766,17 @@ End Function
 Friend Sub ScheduleTasks()
 Const ProcName As String = "ScheduleTasks"
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "ScheduleTasks", ProjectName, ModuleName, ""
+#End If
 
 Dim failPoint As String
-Dim lIndex As Long
-Dim hThread As Long
-Dim currThreadPriority As Long
-
 failPoint = "100"
 
 If Not gInitialised Then
+    #If trace Then
+        gNullTracer.ExitProcedure "ScheduleTasks", ProjectName, ModuleName, ""
+    #End If
     Exit Sub
 End If
 
@@ -756,12 +784,13 @@ mScheduleInvoked = False
 mTotalInterScheduleElapsedTime = mTotalInterScheduleElapsedTime + mInterScheduleElapsedTimer.ElapsedTimeMicroseconds
 mNumberOfInterSchedulePeriods = mNumberOfInterSchedulePeriods + 1
 
+Dim hThread As Long
+Dim currThreadPriority As Long
 If mRunTasksAtLowerThreadPriority Then
     hThread = GetCurrentThread
     currThreadPriority = GetThreadPriority(hThread)
     SetThreadPriority hThread, THREAD_PRIORITY_BELOW_NORMAL
 End If
-
 
 failPoint = "300"
 
@@ -772,6 +801,10 @@ failPoint = "400"
 If mRunTasksAtLowerThreadPriority Then
     SetThreadPriority hThread, currThreadPriority
 End If
+
+#If trace Then
+    gNullTracer.ExitProcedure "ScheduleTasks", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -787,27 +820,39 @@ Friend Function StartTask( _
                 Optional ByVal pData As Variant) As TaskController
 Const ProcName As String = "StartTask"
 On Error GoTo Err
-
-Dim lTaskContext As TaskContext
-Dim lTaskController As TaskController
-Dim i As Long
-Dim id As Long
+#If trace Then
+    gNullTracer.EnterProcedure "StartTask", ProjectName, ModuleName, ""
+#End If
 
 If pName = "" Then pName = gGenerateGUIDString
 If IsMissing(pCookie) Then pCookie = Empty
 If IsMissing(pData) Then pData = Empty
 
+If gLogger.IsLoggable(LogLevelHighDetail) Then
+    Dim s As String
+    s = "Starting task (mProcessing=" & mProcessing & "): taskType=" & _
+        TypeName(pTarget) & _
+        " pCookie=" & gVariantToString(pCookie) & _
+        " pData=" & gVariantToString(pData) & _
+        " pName=""" & pName & """"
+
+    gLogger.Log s, ProcName, ModuleName, , LogLevelHighDetail
+End If
+
+Dim lTaskContext As TaskContext
 Set lTaskContext = New TaskContext
 
+Dim lTaskController As TaskController
 Set lTaskController = New TaskController
 lTaskController.Initialise pTarget, pCookie, pName, lTaskContext
 
+Dim id As Long
 id = allocateEntry
 
 ' don't allow this task to Run until the Next quantum to
 ' ensure it doesn't Run within this call
 mTaskTable(id).Priority = pPriority
-Set mTaskTable(id).tc = lTaskContext
+Set mTaskTable(id).TC = lTaskContext
 mTaskTable(id).StartTime = gGetTimestampUtc
 mTaskTable(id).LastRunTime = 0
 mTaskTable(id).TotalCPUTime = 0
@@ -824,20 +869,13 @@ End If
 
 lTaskContext.Initialise pTarget, pData, id, pName, lTaskController
 
-If gLogger.IsLoggable(LogLevelHighDetail) Then
-    Dim s As String
-    s = "Starting task: taskType=" & _
-        TypeName(pTarget) & _
-        " pCookie=" & gVariantToString(pCookie) & _
-        " pData=" & gVariantToString(pData) & _
-        " pName=""" & pName & """"
-
-    gLogger.Log s, ProcName, ModuleName, , LogLevelHighDetail
-End If
-
 Set StartTask = lTaskController
 
 startScheduler
+
+#If trace Then
+    gNullTracer.ExitProcedure "StartTask", ProjectName, ModuleName, ""
+#End If
 
 Exit Function
 
@@ -852,17 +890,29 @@ End Function
 Private Sub addToFreeList( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToFreeList"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToFreeList", ProjectName, ModuleName, ""
+#End If
+
 
 Change
-If mTaskTable(pIndex).State = TaskPrimitiveStates.Free Then Exit Sub
+If mTaskTable(pIndex).State = TaskPrimitiveStates.Free Then
+    #If trace Then
+        gNullTracer.ExitProcedure "addToFreeList", ProjectName, ModuleName, ""
+    #End If
+    Exit Sub
+End If
 mTaskTable(pIndex).Next = mFirstFreeIndex
 mFirstFreeIndex = pIndex
-mTaskTable(pIndex).tc.State = TaskStateCompleted
-Set mTaskTable(pIndex).tc = Nothing
+mTaskTable(pIndex).TC.State = TaskStateCompleted
+Set mTaskTable(pIndex).TC = Nothing
 mTaskTable(pIndex).TimeRemaining = 0
 mTaskTable(pIndex).State = TaskPrimitiveStates.Free
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToFreeList", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -873,14 +923,21 @@ End Sub
 Private Sub addToPendingQueue( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToPendingQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToPendingQueue", ProjectName, ModuleName, ""
+#End If
+
 
 gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.Pending, "Task already in pending State"
 
 addToQueue mFirstPendingIndex, pIndex
-mTaskTable(pIndex).tc.State = TaskStatePending
+mTaskTable(pIndex).TC.State = TaskStatePending
 mTaskTable(pIndex).State = TaskPrimitiveStates.Pending
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToPendingQueue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -891,14 +948,21 @@ End Sub
 Private Sub addToProcessedQueue( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToProcessedQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToProcessedQueue", ProjectName, ModuleName, ""
+#End If
+
 
 gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.Processed, "Task already in processed State"
 
 addToQueue mFirstProcessedIndex, pIndex
-mTaskTable(pIndex).tc.State = TaskStateRunnable
+mTaskTable(pIndex).TC.State = TaskStateRunnable
 mTaskTable(pIndex).State = TaskPrimitiveStates.Processed
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToProcessedQueue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -910,8 +974,11 @@ Private Sub addToQueue( _
                 ByRef firstIndex As Long, _
                 ByVal indexToAdd As Long)
 Const ProcName As String = "addToQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToQueue", ProjectName, ModuleName, ""
+#End If
+
 
 Change
 If firstIndex = LastIndex Then
@@ -925,6 +992,10 @@ Else
     mTaskTable(firstIndex).Prev = indexToAdd
 End If
 
+#If trace Then
+    gNullTracer.ExitProcedure "addToQueue", ProjectName, ModuleName, ""
+#End If
+
 Exit Sub
 
 Err:
@@ -934,14 +1005,21 @@ End Sub
 Private Sub addToRestartableQueue( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToRestartableQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToRestartableQueue", ProjectName, ModuleName, ""
+#End If
+
 
 gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.Restartable, "Task already in restartable State"
 
 addToQueue mFirstRestartableIndex, pIndex
-mTaskTable(pIndex).tc.State = TaskStatePending
+mTaskTable(pIndex).TC.State = TaskStatePending
 mTaskTable(pIndex).State = TaskPrimitiveStates.Restartable
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToRestartableQueue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -952,14 +1030,20 @@ End Sub
 Private Sub addToRunningQueue( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToRunningQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToRunningQueue", ProjectName, ModuleName, ""
+#End If
 
-gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.running, "Task already in running State"
+gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.Running, "Task already in running State"
 
 addToQueue mFirstRunningIndex, pIndex
-mTaskTable(pIndex).tc.State = TaskStateRunnable
-mTaskTable(pIndex).State = TaskPrimitiveStates.running
+mTaskTable(pIndex).TC.State = TaskStateRunnable
+mTaskTable(pIndex).State = TaskPrimitiveStates.Running
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToRunningQueue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -970,14 +1054,20 @@ End Sub
 Private Sub addToSuspendedQueue( _
                 ByVal pIndex As Long)
 Const ProcName As String = "addToSuspendedQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "addToSuspendedQueue", ProjectName, ModuleName, ""
+#End If
 
 gAssert mTaskTable(pIndex).State <> TaskPrimitiveStates.Suspended, "Task already in suspended State"
 
 addToQueue mFirstSuspendedIndex, pIndex
-mTaskTable(pIndex).tc.State = TaskStateSuspended
+mTaskTable(pIndex).TC.State = TaskStateSuspended
 mTaskTable(pIndex).State = TaskPrimitiveStates.Suspended
+
+#If trace Then
+    gNullTracer.ExitProcedure "addToSuspendedQueue", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -986,14 +1076,21 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub adjustRunnableTasks()
-Dim lIndex As Long
-
 Const ProcName As String = "adjustRunnableTasks"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "adjustRunnableTasks", ProjectName, ModuleName, ""
+#End If
 
-If mNumRunnableTasks >= mTaskConcurrency Then Exit Sub
 
+If mNumRunnableTasks >= mTaskConcurrency Then
+    #If trace Then
+        gNullTracer.ExitProcedure "adjustRunnableTasks", ProjectName, ModuleName, ""
+    #End If
+    Exit Sub
+End If
+
+Dim lIndex As Long
 Do While mNumRunnableTasks < mTaskConcurrency
     lIndex = getRestartableQueueItem
     If lIndex = LastIndex Then Exit Do
@@ -1005,7 +1102,12 @@ Do While mNumRunnableTasks < mTaskConcurrency
     End If
 Loop
 
-If mNumRunnableTasks >= mTaskConcurrency Then Exit Sub
+If mNumRunnableTasks >= mTaskConcurrency Then
+#If trace Then
+    gNullTracer.ExitProcedure "adjustRunnableTasks", ProjectName, ModuleName, ""
+#End If
+    Exit Sub
+End If
 
 Do While mNumRunnableTasks < mTaskConcurrency
     lIndex = getPendingQueueItem
@@ -1014,6 +1116,10 @@ Do While mNumRunnableTasks < mTaskConcurrency
     addToRunningQueue lIndex
     mTaskTable(lIndex).TimeRemaining = allocateTime(mTaskTable(lIndex).Priority)
 Loop
+
+#If trace Then
+    gNullTracer.ExitProcedure "adjustRunnableTasks", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -1024,8 +1130,11 @@ End Sub
 
 Private Function allocateEntry() As Long
 Const ProcName As String = "allocateEntry"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "allocateEntry", ProjectName, ModuleName, ""
+#End If
+
 
 Change
 If mFirstFreeIndex <> LastIndex Then
@@ -1041,6 +1150,10 @@ Else
     mTaskTableNextIndex = mTaskTableNextIndex + 1
 End If
 
+#If trace Then
+    gNullTracer.ExitProcedure "allocateEntry", ProjectName, ModuleName, ""
+#End If
+
 Exit Function
 
 Err:
@@ -1049,12 +1162,13 @@ End Function
 
 Private Function allocateTime( _
                 ByVal Priority As TaskPriorities) As Long
-Dim divisor As Long
-
 Const ProcName As String = "allocateTime"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "allocateTime", ProjectName, ModuleName, ""
+#End If
 
+Dim divisor As Long
 Select Case Priority
 Case PriorityNormal
     divisor = 2
@@ -1066,6 +1180,10 @@ End Select
 
 allocateTime = 1000 * mQuantumMillisecs / divisor
 
+#If trace Then
+    gNullTracer.ExitProcedure "allocateTime", ProjectName, ModuleName, ""
+#End If
+
 Exit Function
 
 Err:
@@ -1075,13 +1193,19 @@ End Function
 Private Sub cancelSuspendTimer( _
                 ByVal id As Long)
 Const ProcName As String = "cancelSuspendTimer"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "cancelSuspendTimer", ProjectName, ModuleName, ""
+#End If
 
 If Not mTaskTable(id).SuspendTLI Is Nothing Then
     mTimerList.Remove mTaskTable(id).SuspendTLI
     Set mTaskTable(id).SuspendTLI = Nothing
 End If
+
+#If trace Then
+    gNullTracer.ExitProcedure "cancelSuspendTimer", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -1094,12 +1218,10 @@ mUpdateSequence = mUpdateSequence + 1
 End Sub
 
 Private Function getEnumerator(ByVal enumType As EnumeratorTypes) As Enumerator
-Dim lEnum As Enumerator
 Const ProcName As String = "getEnumerator"
-
 On Error GoTo Err
 
-Set lEnum = New Enumerator
+Dim lEnum As Enumerator: Set lEnum = New Enumerator
 lEnum.Initialise Me, enumType Or &HFFFFFFF
 Set getEnumerator = lEnum
 
@@ -1111,10 +1233,16 @@ End Function
 
 Private Function getPendingQueueItem() As Long
 Const ProcName As String = "getPendingQueueItem"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "getPendingQueueItem", ProjectName, ModuleName, ""
+#End If
 
 getPendingQueueItem = getQueueItem(mFirstPendingIndex)
+
+#If trace Then
+    gNullTracer.ExitProcedure "getPendingQueueItem", ProjectName, ModuleName, ""
+#End If
 
 Exit Function
 
@@ -1124,10 +1252,16 @@ End Function
 
 Private Function getProcessedQueueItem() As Long
 Const ProcName As String = "getProcessedQueueItem"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "getProcessedQueueItem", ProjectName, ModuleName, ""
+#End If
 
 getProcessedQueueItem = getQueueItem(mFirstProcessedIndex)
+
+#If trace Then
+    gNullTracer.ExitProcedure "getProcessedQueueItem", ProjectName, ModuleName, ""
+#End If
 
 Exit Function
 
@@ -1138,11 +1272,19 @@ End Function
 Private Function getQueueItem( _
                 ByRef firstIndex) As Long
 Const ProcName As String = "getQueueItem"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "getQueueItem", ProjectName, ModuleName, ""
+#End If
 
 getQueueItem = firstIndex
-If firstIndex = LastIndex Then Exit Function
+If firstIndex = LastIndex Then
+    #If trace Then
+        gNullTracer.ExitProcedure "getQueueItem", ProjectName, ModuleName, ""
+    #End If
+    Exit Function
+End If
+
 Change
 If mTaskTable(firstIndex).Next = firstIndex Then
     ' there was only one entry in the queue
@@ -1153,6 +1295,10 @@ Else
     firstIndex = mTaskTable(firstIndex).Next
 End If
 
+#If trace Then
+    gNullTracer.ExitProcedure "getQueueItem", ProjectName, ModuleName, ""
+#End If
+
 Exit Function
 
 Err:
@@ -1161,10 +1307,16 @@ End Function
 
 Private Function getRestartableQueueItem() As Long
 Const ProcName As String = "getRestartableQueueItem"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "getRestartableQueueItem", ProjectName, ModuleName, ""
+#End If
 
 getRestartableQueueItem = getQueueItem(mFirstRestartableIndex)
+
+#If trace Then
+    gNullTracer.ExitProcedure "getRestartableQueueItem", ProjectName, ModuleName, ""
+#End If
 
 Exit Function
 
@@ -1175,11 +1327,10 @@ End Function
 Private Function generateTaskSummary( _
                 ByVal pIndex As Long) As TaskSummary
 Const ProcName As String = "generateTaskSummary"
-
 On Error GoTo Err
 
-generateTaskSummary.Name = mTaskTable(pIndex).tc.Name
-generateTaskSummary.ClassName = TypeName(mTaskTable(pIndex).tc.target)
+generateTaskSummary.Name = mTaskTable(pIndex).TC.Name
+generateTaskSummary.ClassName = TypeName(mTaskTable(pIndex).TC.Target)
 generateTaskSummary.Priority = gTaskPrioritiesToString(mTaskTable(pIndex).Priority)
 generateTaskSummary.State = TaskPrimitiveStatesToString(mTaskTable(pIndex).State)
 generateTaskSummary.StartTime = mTaskTable(pIndex).StartTime
@@ -1194,13 +1345,12 @@ End Function
 
 Private Function getTaskSummaryInfoFromEnumerator( _
                 ByVal en As Enumerator) As String
-Dim ts As TaskSummary
-Dim s As String
 Const ProcName As String = "getTaskSummaryInfoFromEnumerator"
-
 On Error GoTo Err
 
+Dim s As String
 Do While en.MoveNext
+    Dim ts As TaskSummary
     ts = en.Current
     s = s & "Name: " & ts.Name & _
         "; Class: " & ts.ClassName & _
@@ -1222,10 +1372,17 @@ End Function
 Private Sub postScheduleTasksMessage()
 Const ProcName As String = "postScheduleTasksMessage"
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "postScheduleTasksMessage", ProjectName, ModuleName, ""
+#End If
 
 gPostUserMessage UserMessageScheduleTasks, 0, 0
 mScheduleInvoked = True
 mInterScheduleElapsedTimer.StartTiming
+
+#If trace Then
+    gNullTracer.ExitProcedure "postScheduleTasksMessage", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -1237,8 +1394,10 @@ Private Sub removeFromQueue( _
                 ByRef firstIndex As Long, _
                 ByVal indexToRemove As Long)
 Const ProcName As String = "removeFromQueue"
-
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "removeFromQueue", ProjectName, ModuleName, ""
+#End If
 
 Change
 
@@ -1253,6 +1412,10 @@ Else
     mTaskTable(mTaskTable(indexToRemove).Next).Prev = mTaskTable(indexToRemove).Prev
 End If
 
+#If trace Then
+    gNullTracer.ExitProcedure "removeFromQueue", ProjectName, ModuleName, ""
+#End If
+
 Exit Sub
 
 Err:
@@ -1264,15 +1427,16 @@ Private Sub runTask( _
                 ByVal Timestamp As Date)
 Const ProcName As String = "runTask"
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "runTask", ProjectName, ModuleName, ""
+#End If
 
 Dim failPoint As String
-Dim trxs As TaskRunExitStatus
-Dim timeSlotMicroseconds As Long
-
 failPoint = 100
 
-gAssert mTaskTable(pIndex).State = TaskPrimitiveStates.running, "Task already in running State"
+gAssert mTaskTable(pIndex).State = TaskPrimitiveStates.Running, "Task already in running State"
 
+Dim timeSlotMicroseconds As Long
 timeSlotMicroseconds = DefaultTimeslotMillisecs * 1000
 timeSlotMicroseconds = IIf(mTaskTable(pIndex).TimeRemaining < timeSlotMicroseconds, _
                                     mTaskTable(pIndex).TimeRemaining, _
@@ -1286,7 +1450,8 @@ mTaskTable(pIndex).LastRunTime = Timestamp
 
 failPoint = 200
 
-trxs = mTaskTable(pIndex).tc.Run(timeSlotMicroseconds)
+Dim trxs As TaskRunExitStatus
+trxs = mTaskTable(pIndex).TC.Run(timeSlotMicroseconds)
 
 
 failPoint = 300
@@ -1325,6 +1490,10 @@ Else
     mFirstRunningIndex = mTaskTable(pIndex).Next
 End If
 
+#If trace Then
+    gNullTracer.ExitProcedure "runTask", ProjectName, ModuleName, ""
+#End If
+
 Exit Sub
 
 Err:
@@ -1334,10 +1503,11 @@ End Sub
 Private Sub schedule()
 Const ProcName As String = "schedule"
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "schedule", ProjectName, ModuleName, ""
+#End If
 
 Dim failPoint As String
-Dim lIndex As Long
-Dim Timestamp As Date
 
 mProcessing = True
 
@@ -1345,8 +1515,9 @@ mQuantumRemainingMicrosecs = mQuantumMillisecs * 1000
 
 adjustRunnableTasks
 
-Timestamp = gGetTimestampUtc
+Dim Timestamp As Date: Timestamp = gGetTimestampUtc
 
+Dim lIndex As Long
 Do While mQuantumRemainingMicrosecs > 0 And _
     (mFirstRunningIndex <> LastIndex Or mFirstProcessedIndex <> LastIndex)
     
@@ -1366,7 +1537,7 @@ Do While mQuantumRemainingMicrosecs > 0 And _
     
     lIndex = mFirstRunningIndex
     
-    If mTaskTable(lIndex).State <> TaskPrimitiveStates.running Then Stop
+    If mTaskTable(lIndex).State <> TaskPrimitiveStates.Running Then Stop
         
     If mTaskTable(lIndex).TimeRemaining <= 0 Then
         removeFromQueue mFirstRunningIndex, lIndex
@@ -1382,11 +1553,14 @@ If mFirstRunningIndex <> LastIndex Or _
     mFirstPendingIndex <> LastIndex Or _
     mFirstProcessedIndex <> LastIndex _
 Then
-    'mScheduleTimer.StartTimer
     postScheduleTasksMessage
 End If
 
 mProcessing = False
+
+#If trace Then
+    gNullTracer.ExitProcedure "schedule", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -1397,19 +1571,35 @@ End Sub
 Private Sub startScheduler()
 Const ProcName As String = "startScheduler"
 On Error GoTo Err
+#If trace Then
+    gNullTracer.EnterProcedure "startScheduler", ProjectName, ModuleName, ""
+#End If
 
-If mProcessing Then Exit Sub
+If mProcessing Then
+    #If trace Then
+        gNullTracer.ExitProcedure "startScheduler", ProjectName, ModuleName, ""
+    #End If
+    Exit Sub
+End If
 
 adjustRunnableTasks
 
 If mScheduleInvoked Then
+    #If trace Then
+        gNullTracer.ExitProcedure "startScheduler", ProjectName, ModuleName, ""
+    #End If
     Exit Sub
 End If
+
 If mFirstRunningIndex <> LastIndex Or _
     mFirstProcessedIndex <> LastIndex _
 Then
     postScheduleTasksMessage
 End If
+
+#If trace Then
+    gNullTracer.ExitProcedure "startScheduler", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -1426,7 +1616,7 @@ Case TaskPrimitiveStates.Pending
     TaskPrimitiveStatesToString = "Pending"
 Case TaskPrimitiveStates.Processed
     TaskPrimitiveStatesToString = "Processed"
-Case TaskPrimitiveStates.running
+Case TaskPrimitiveStates.Running
     TaskPrimitiveStatesToString = "Running"
 Case TaskPrimitiveStates.Suspended
     TaskPrimitiveStatesToString = "Suspended"
