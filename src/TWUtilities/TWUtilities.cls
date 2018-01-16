@@ -2204,8 +2204,8 @@ End Function
 '   The object for which a weak reference is required.
 '@/
 Public Function CreateWeakReference( _
-                ByVal target As Object) As WeakReference
-Set CreateWeakReference = gCreateWeakReference(target)
+                ByVal Target As Object) As WeakReference
+Set CreateWeakReference = gCreateWeakReference(Target)
 End Function
 
 Public Function CreateWriteableTextFile( _
@@ -4024,38 +4024,38 @@ End Sub
 ' Starts a task.
 '
 ' @remarks
-'   Note that the first call to the Tas'<code>run</code> method does not occur until
+'   Note that the first call to the task's <code>Run</code> method does not occur until
 '   the event handler that called <code>StartTask</code> has exited.
 ' @return
 '   A <code>TaskController</code> object via which the caller can monitor Progress
 '   and completion of the task, or request its cancellation.
 ' @param Target
-'   The <code>Task</code> to be started. This is a reference to an object that implements
-'   the <code>Task</code> interface.
+'   The task to be started. This is a reference to an object that implements
+'   the <code>ITask</code> interface.
 ' @param Priority
 '   Specifies the amount of processor time to be allocated to the task relative
-'   to other tasks that may be running. Tasks with Priority <code>PriorityNormal</code>
-'   get twice as much processor time as tasks with Priority <code>PriorityLow</code>,
-'   and tasks with Priority <code>PriorityHigh</code> get twice as much processor time
-'   as tasks with Priority <code>PriorityNormal</code>,
+'   to other tasks that may be running. Tasks with priority <code>PriorityNormal</code>
+'   get twice as much processor time as tasks with priority <code>PriorityLow</code>,
+'   and tasks with priority <code>PriorityHigh</code> get twice as much processor time
+'   as tasks with priority <code>PriorityNormal</code>,
 ' @param Name
-'   The Name to be given to this task. If not supplied, a GUID is allocated as
-'   the task's Name.
-' @param pCookie
-'   A Value that is returned unchanged in the <code>TaskProgressEventData</code> and
+'   The name to be given to this task. If not supplied, a GUID is allocated as
+'   the task's name.
+' @param Cookie
+'   A value that is returned unchanged in the <code>TaskProgressEventData</code> and
 '   <code>TaskCompletionEventData</code>. The application may use it, for example, as
 '   an index into a table of outstanding tasks to avoiding having to search the table
 '   to locate an entry when processing these events.
 ' @param Data
-'   Any Data that may be needed by the task.
+'   Any data that may be needed by the task.
 ' @see
 '
 '@/
 Public Function StartTask( _
-                ByVal target As ITask, _
+                ByVal Target As ITask, _
                 ByVal Priority As TaskPriorities, _
                 Optional ByVal Name As String, _
-                Optional ByVal pCookie As Variant, _
+                Optional ByVal Cookie As Variant, _
                 Optional ByVal Data As Variant) As TaskController
 Const ProcName As String = "StartTask"
 On Error GoTo Err
@@ -4068,7 +4068,7 @@ Case Else
     gAssertArgument False, "Priority invalid"
 End Select
 
-Set StartTask = GTasks.gTaskManager.StartTask(target, Priority, Name, pCookie, Data)
+Set StartTask = GTasks.gTaskManager.StartTask(Target, Priority, Name, pCookie, Data)
 
 Exit Function
 
