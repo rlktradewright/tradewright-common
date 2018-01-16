@@ -32,7 +32,7 @@ Option Explicit
 '
 ' Stimuli are specified by non-negative <code>Long</code> values assigned by the application.
 '
-' Conditions are bit values assigned by the application (ie each Value must be a
+' Conditions are bit values assigned by the application (ie each value must be a
 ' power of two so that it can be represented by a single bit). There is a limit of 32
 ' conditions because they are passed using 32-bit values.
 '
@@ -40,8 +40,8 @@ Option Explicit
 ' <ul>
 ' <li><code>SpecialConditions.NoConditions</code>: this is useful when specifying State
 ' table entries for which no condition need be true or no conditions need be false. It
-' is more documentary than using the literal Value 0</li>
-' <li><code>SpecialConditions.AllConditions</code>: there are few uses for this Value but
+' is more documentary than using the literal value 0</li>
+' <li><code>SpecialConditions.AllConditions</code>: there are few uses for this value but
 ' it is defined for completeness.</li>
 ' </ul>
 '

@@ -36,7 +36,7 @@ Option Explicit
 ' sequence of configuration section names down the hierarchy from the root to the
 ' target configuration section, separated using '/' characters. The root name
 ' itself is not specified, but the '/' separating the root name from the
-' next name in the Path must be supplied.
+' next name in the path must be supplied.
 '
 '
 
@@ -175,14 +175,14 @@ End Property
 '@================================================================================
 
 ''
-' Registers an object to act as a listener for changes to the configuration Data.
+' Registers an object to act as a listener for changes to the configuration data.
 '
 ' @remarks
 '   The listener object must implement the <code>ChangeListener</code>
 '   interface.
 '
 '   When a change is notified, the <code>change</code> field in the <code>ChangeEventData</code>
-'   is a Value from the <code>ConfigChangeTypes</code> enum.
+'   is a value from the <code>ConfigChangeTypes</code> enum.
 ' @param listener
 '   The object which is to act as a listener.
 '@/
@@ -244,9 +244,9 @@ Set GetConfigurationSection = mCache.Item(configSectionPath)
 If GetConfigurationSection Is Nothing Then
     Dim sectionPath As ConfigurationPath
     Set sectionPath = gGetConfigPath(configSectionPath)
-    If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration section Path"
+    If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration section path"
     
-    If sectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative Path not permitted"
+    If sectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative path not permitted"
     
     Dim parentSection As ConfigurationSection
     Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
@@ -274,10 +274,10 @@ Set cp = gGetConfigPath(settingPath)
 If cp.IsValidAttributePath Then
 ElseIf cp.IsValidValuePath Then
 Else
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or Value Path"
+    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or value path"
 End If
 
-If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative attribute or Value Path not permitted"
+If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative attribute or value path not permitted"
 
 Dim section As ConfigurationSection
 Set section = GetConfigurationSection(cp.ParentPath)
@@ -344,7 +344,7 @@ On Error GoTo Err
 
 Dim sectionPath As ConfigurationPath
 Set sectionPath = gGetConfigPath(configSectionPath)
-If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration section Path"
+If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration section path"
 
 Dim parentSection As ConfigurationSection
 Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
@@ -370,14 +370,14 @@ Set cp = gGetConfigPath(settingPath)
 If cp.IsValidAttributePath Then
 ElseIf cp.IsValidValuePath Then
 Else
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or Value Path"
+    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or value path"
 End If
 
-If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not relative attribute or Value Path not permitted"
+If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not relative attribute or value path not permitted"
 
 Dim section As ConfigurationSection
 Set section = GetConfigurationSection(cp.ParentPath)
-If section Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid Path - config section does not exist"
+If section Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid path - config section does not exist"
 
 section.RemoveSetting cp.TailPath
 
@@ -482,9 +482,9 @@ On Error GoTo Err
 Dim sectionPath As ConfigurationPath
 Set sectionPath = gGetConfigPath(configSectionPath)
 
-If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section Path"
+If Not sectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section path"
 
-If sectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative section Path not permitted"
+If sectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Relative section path not permitted"
 
 Set AddConfigSection = GetConfigurationSection(configSectionPath)
 
@@ -498,7 +498,7 @@ If AddConfigSection Is Nothing Then
     Else
         Dim parentSection As ConfigurationSection
         Set parentSection = GetConfigurationSection(sectionPath.ParentPath)
-        If parentSection Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid Path - config section does not exist"
+        If parentSection Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid path - config section does not exist"
         
         If isPrivate Then
             Set AddConfigSection = parentSection.AddPrivateConfigurationSection(sectionPath.TailPath, Comment, RendererProgId)
@@ -526,14 +526,14 @@ Set cp = gGetConfigPath(settingPath)
 If cp.IsValidAttributePath Then
 ElseIf cp.IsValidValuePath Then
 Else
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or Value Path"
+    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid attribute or value path"
 End If
 
-If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not relative attribute or Value Path not permitted"
+If cp.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not relative attribute or value path not permitted"
 
 Dim section As ConfigurationSection
 Set section = GetConfigurationSection(cp.ParentPath)
-If section Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid Path - config section does not exist"
+If section Is Nothing Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid path - config section does not exist"
 
 Set SetSettingEx = section.SetSettingEx(gGetConfigPath(cp.TailPath), Value)
 

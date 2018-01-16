@@ -119,14 +119,14 @@ Public Property Get Enumerator() As Enumerator
 End Property
 
 ''
-' Returns the current Value of a variable that must be incremented each time
+' Returns the current value of a variable that must be incremented each time
 ' the object that implements <code>Enumerable</code> is modified. This is
 ' used by the <code>Enumerator</code> object to invalidate itself if the
 ' object that implements <code>Enumerable</code> is modified after the
 ' creation of the <code>Enumerator</code> object.
 '
 ' @return
-'   A Value that is changed for each update to the object that implements <code>Enumerable</code>.
+'   A value that is changed for each update to the object that implements <code>Enumerable</code>.
 '@/
 Public Property Get UpdateSequence() As Long
 
@@ -145,10 +145,10 @@ End Property
 ' @param Item
 '   A reference to a variant into which the Next Item is placed.
 ' @param pCookie
-'   The current pCookie Value. Before exiting from the call, the implementing object
-'   should update this Value to enable it to position correctly on the Next call.
+'   The current pCookie value. Before exiting from the call, the implementing object
+'   should update this value to enable it to position correctly on the Next call.
 '
-'   If the supplied Value is <code>Empty</code>, the first Item should be located.
+'   If the supplied value is <code>Empty</code>, the first Item should be located.
 '@/
 Public Function NextItem( _
                 ByRef Item As Variant, _
@@ -161,8 +161,8 @@ End Function
 ' <code>nextItem</code>) from the collection.
 '
 ' @param pCookie
-'   The current pCookie Value. Before exiting from the call, the implementing object
-'   may need to update this Value to enable it to position correctly on the Next call.
+'   The current pCookie value. Before exiting from the call, the implementing object
+'   may need to update this value to enable it to position correctly on the Next call.
 '@/
 Public Sub Remove( _
                 ByRef pCookie As Variant)
@@ -179,10 +179,10 @@ End Sub
 ' @param numToSkip
 '   The number of items that are to be skipped.
 ' @param pCookie
-'   The current pCookie Value. Before exiting from the call, the implementing object
-'   should update this Value to enable it to position correctly on the Next call.
+'   The current pCookie value. Before exiting from the call, the implementing object
+'   should update this value to enable it to position correctly on the Next call.
 '
-'   If the supplied Value is <code>Empty</code>, skipping must start from the
+'   If the supplied value is <code>Empty</code>, skipping must start from the
 '   beginning of the list.
 '@/
 Public Function Skip( _

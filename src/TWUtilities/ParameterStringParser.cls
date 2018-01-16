@@ -14,7 +14,7 @@ Attribute VB_Exposed = True
 Option Explicit
 
 ''
-' This class parses a parameter string into its Name/Value pairs.
+' This class parses a parameter string into its Name/value pairs.
 '
 ' Note the <code>New</code> operator cannot be used to create an instance of this
 ' class. Instead, use the <code>CreateParameterStringParser</code> global method.
@@ -44,16 +44,16 @@ Option Explicit
 '   in the <code>nameDelimiter</code> argument to <code>CreateParameterStringParser</code>.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or Value needs to contain a separator or delimiter
+'   <p>If the parameter Name or value needs to contain a separator or delimiter
 '   Character, this can be achieved by preceding it with an escape Character.
 '   The default escape Character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument to <code>CreateParameterStringParser</code>.
-'   Note that to include the escape Character itself in the Value or Name,
+'   Note that to include the escape Character itself in the value or Name,
 '   it must be repeated. The effect of the escape Character is to include the
-'   following Character in the parameter Name or Value verbatim.</p>
+'   following Character in the parameter Name or value verbatim.</p>
 '
 '   <p>For each specified parameter, if a parameter with this Name is
-'   already included, its Value is updated; otherwise a new parameter
+'   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
 '   An example parameter string, using the default separator and delimiter
@@ -61,15 +61,15 @@ Option Explicit
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </pre>
-'   An example incuding the escape Character in the Value:
+'   An example incuding the escape Character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the Value in a unusual (and pointless!) way:
+'   An example using the escape Character in the value in a unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
-'   Note that in this case, the Value would be interpreted as abcdef.
+'   Note that in this case, the value would be interpreted as abcdef.
 '@/
 
 '@================================================================================
@@ -154,18 +154,18 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Gets the Name and Value for the Next parameter in the parameter string.
+' Gets the Name and value for the Next parameter in the parameter string.
 '
 ' @remarks
 ' @return
-'   <code>True</code> if the parameter Name and Value were available. <code>False</code>
+'   <code>True</code> if the parameter Name and value were available. <code>False</code>
 '   if there are no more parameters in the parameter string.
 ' @param Name
 '   On return to the caller, this argument contains the parameter Name. The contents
 '   prior to the call are overwritten. If the method returns <code>False</code>, the
 '   contents on return to the caller are undefined.
 ' @param Value
-'   On return to the caller, this argument contains the parameter Value. The contents
+'   On return to the caller, this argument contains the parameter value. The contents
 '   prior to the call are overwritten. If the method returns <code>False</code>, the
 '   contents on return to the caller are undefined.
 ' @see

@@ -36,7 +36,7 @@ Option Explicit
 ' Fired when processing of the task has completed.
 '
 ' @param ev
-'   A <code>TaskCompletionEventData</code> Value containing details of how the task
+'   A <code>TaskCompletionEventData</code> value containing details of how the task
 '   completed.
 '@/
 Event Completed( _
@@ -46,7 +46,7 @@ Event Completed( _
 ' Fired when the task reports the occurrence of a significant event.
 '
 ' @param ev
-'   A <code>TaskNotificationEventData</code> Value containing details of the event.
+'   A <code>TaskNotificationEventData</code> value containing details of the event.
 '@/
 Event Notification( _
                 ev As TaskNotificationEventData)
@@ -55,7 +55,7 @@ Event Notification( _
 ' Fired when the task reports Progress through the processing.
 '
 ' @param ev
-'   A <code>TaskProgressEventData</code> Value containing details of Progress.
+'   A <code>TaskProgressEventData</code> value containing details of Progress.
 '@/
 Event Progress( _
                 ev As TaskProgressEventData)
@@ -64,7 +64,7 @@ Event Progress( _
 ' Fired when the task's State changes.
 '
 ' @param ev
-'   A <code>StateChangeEventData</code> Value containing the new State.
+'   A <code>StateChangeEventData</code> value containing the new State.
 '@/
 Event StateChange( _
                 ev As TaskStateChangeEventData)
@@ -126,10 +126,10 @@ End Sub
 '@================================================================================
 
 ''
-' Returns the pCookie Value passed to the <code>StartTask</code> method.
+' Returns the pCookie value passed to the <code>StartTask</code> method.
 '
 ' @return
-'   The pCookie Value.
+'   The pCookie value.
 '@/
 Public Property Get Cookie() As Variant
 gSetVariant Cookie, mCookie

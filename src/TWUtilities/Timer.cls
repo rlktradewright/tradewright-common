@@ -112,10 +112,10 @@ gSetVariant Data, mData
 End Property
 
 ''
-' Returns a <code>Boolean</code> Value indicating whether the <code>TimerExpired</code>
+' Returns a <code>Boolean</code> value indicating whether the <code>TimerExpired</code>
 ' event fires repeatedly.
 '
-' @return A <code>Boolean</code> Value indicating whether the <code>TimerExpired</code>
+' @return A <code>Boolean</code> value indicating whether the <code>TimerExpired</code>
 ' event fires repeatedly.
 '
 '@/

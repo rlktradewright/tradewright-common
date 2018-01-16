@@ -235,12 +235,12 @@ gNotifyUnhandledError ProcName, ModuleName
 End Function
 
 Friend Sub Initialise( _
-                ByVal target As IEnumerable, _
+                ByVal Target As IEnumerable, _
                 Optional ByVal pCookie As Variant)
 Const ProcName As String = "Initialise"
 On Error GoTo Err
 
-Set mTarget = target
+Set mTarget = Target
 If IsMissing(pCookie) Then
     mInitialCookie = Empty
     mCookie = Empty
@@ -248,7 +248,7 @@ Else
     gSetVariant mInitialCookie, pCookie
     gSetVariant mCookie, pCookie
 End If
-mUpdateSeq = target.UpdateSequence
+mUpdateSeq = Target.UpdateSequence
 
 Exit Sub
 
@@ -258,7 +258,7 @@ End Sub
 
 ''
 ' Positions the iteration on the Next Item in the collection object. If there are no
-' further objects in the collection, the returned Value is <code>False</code>.
+' further objects in the collection, the returned value is <code>False</code>.
 '
 ' @return
 '   <code>True</code> if the Next Item exists, <code>False</code> otherwise.
@@ -295,8 +295,8 @@ End Function
 ' <code>nextItem</code>) from the collection.
 '
 ' @param pCookie
-'   The current pCookie Value. Before exiting from the call, the implementing object
-'   should update this Value to enable it to position correctly on the Next call.
+'   The current pCookie value. Before exiting from the call, the implementing object
+'   should update this value to enable it to position correctly on the Next call.
 '@/
 Public Sub Remove()
 Const ProcName As String = "Remove"

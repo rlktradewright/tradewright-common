@@ -79,7 +79,7 @@ Private Const ModuleName                    As String = "IDeferredAction"
 ' Action. The Action should Run to completion and then exit from this method.
 '
 ' @param Data
-'   The Value that was passed to the <code>DeferAction</code> global method.
+'   The value that was passed to the <code>DeferAction</code> global method.
 '@/
 Public Sub Run( _
                 ByVal Data As Variant)

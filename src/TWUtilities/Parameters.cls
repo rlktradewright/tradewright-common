@@ -24,7 +24,7 @@ Option Explicit
 ' to the <code>SortByName</code> method, and before any subsequent additions to or
 ' removals from the list, items will be returned in ascending Name order.
 '
-' The <code>Parameters</code> class supports Data binding. For example if a
+' The <code>Parameters</code> class supports data binding. For example if a
 ' <code>Parameters</code> object is bound to a DataGrid control, any changes made
 ' to the items in the grid are automatically reflected in the object.
 '
@@ -52,7 +52,7 @@ Implements IJSONable
 
 ''
 ' Raised when a <code>Parameter</code> is added to or removed from the list in this
-' <code>Parameters</code> object, and when the Value of a <code>Parameter</code>
+' <code>Parameters</code> object, and when the value of a <code>Parameter</code>
 ' object in the list changes, and when the list is sorted.
 '
 ' @remarks
@@ -632,17 +632,17 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Returns the Value of the specified parameter.
+' Returns the value of the specified parameter.
 ' @remarks
 '   If this object does not contain a <code>Parameter</code> object with
-'   the specified Name, the specified default Value is returned.
+'   the specified Name, the specified default value is returned.
 ' @return
-'   The Value of the specified parameter.
+'   The value of the specified parameter.
 ' @param Name
-'   The Name of the parameter whose Value is to be returned.
+'   The Name of the parameter whose value is to be returned.
 ' @param defaultValue
-'   This Value is returned by the method if the specified parameter
-'   is not included in the set. If this Value is not specified, it defaults to
+'   This value is returned by the method if the specified parameter
+'   is not included in the set. If this value is not specified, it defaults to
 '   an empty string.
 '@/
 Public Function GetParameterValue( _
@@ -783,16 +783,16 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Sets the Value of the specified parameter.
+' Sets the value of the specified parameter.
 ' @remarks
-'   If a parameter with this Name is already included, its Value is
+'   If a parameter with this Name is already included, its value is
 '   updated; otherwise a new parameter is added to the list.
 ' @return
-'   The <code>Parameter</code> object whose Value has been set.
+'   The <code>Parameter</code> object whose value has been set.
 ' @param Name
-'   The Name of the parameter whose Value is to be set.
+'   The Name of the parameter whose value is to be set.
 ' @param Value
-'   The Value to be given to the specified parameter.
+'   The value to be given to the specified parameter.
 '@/
 Public Function SetParameterValue( _
                 ByVal Name As String, _
@@ -845,7 +845,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Sets the Value(s) of one or more specified parameters.
+' Sets the value(s) of one or more specified parameters.
 ' @remarks
 '   The parameter names and values are supplied in a <code>String</code>
 '   with the following syntax:
@@ -871,16 +871,16 @@ End Function
 '   in the <code>nameDelimiter</code> argument.</p>
 '   </pre>
 '
-'   <p>If the parameter Name or Value needs to contain a separator or delimiter
+'   <p>If the parameter Name or value needs to contain a separator or delimiter
 '   Character, this can be achieved by preceding it with an escape Character.
 '   The default escape Character is \, but an alternative can be specified
 '   in the <code>escapeCharacter</code> argument. Note that to include the
-'   escape Character itself in the Value or Name, it must be repeated. The
+'   escape Character itself in the value or Name, it must be repeated. The
 '   effect of the escape Character is to include the following Character in
-'   the parameter Name or Value verbatim.</p>
+'   the parameter Name or value verbatim.</p>
 '
 '   <p>For each specified parameter, if a parameter with this Name is
-'   already included, its Value is updated; otherwise a new parameter
+'   already included, its value is updated; otherwise a new parameter
 '   is added to the list.</p>
 ' <h3>Examples</h3>
 '   An example parameter string, using the default separator and delimiter
@@ -888,15 +888,15 @@ End Function
 '   <pre>
 '   <tt>Server=Delphi;Port=7496;ClientId=432</tt>
 '   </pre>
-'   An example incuding the escape Character in the Value:
+'   An example incuding the escape Character in the value:
 '   <pre>
 '   <tt>SettingsFile=C:\\MyProg\\myprog.ini</tt>
 '   </pre>
-'   An example using the escape Character in the Value in an unusual (and pointless!) way:
+'   An example using the escape Character in the value in an unusual (and pointless!) way:
 '   <pre>
 '   <tt>My parameter=\a\b\c\d\e\f</tt>
 '   </pre>
-'   Note that in this case, the Value would be interpreted as abcdef.
+'   Note that in this case, the value would be interpreted as abcdef.
 ' @return
 '   The <code>Parameter</code> objects whose values have been set.
 ' @param paramString
@@ -907,7 +907,7 @@ End Function
 '   A single Character used to separate parameters.
 ' @param escapeCharacter
 '   A single Character that causes the following Character to be included
-'   verbatim in the parameter Value in spite of any special meaning it may normally have.
+'   verbatim in the parameter value in spite of any special meaning it may normally have.
 '@/
 Public Function SetParameterValues( _
                 ByVal paramString As String, _

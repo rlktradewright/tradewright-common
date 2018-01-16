@@ -259,14 +259,14 @@ End Property
 ' @param before
 '   An expression that specifies a relative position in the collection. The member
 '   to be added is placed in the collection before the member identified by the before
-'   argument. If a numeric expression, before must be a number from 1 to the Value of
+'   argument. If a numeric expression, before must be a number from 1 to the value of
 '   the collection's Count property. If a string expression, before must correspond
 '   to the key specified when the member being referred to was added to the collection.
 '   You can specify a before position or an after position, but not both.
 ' @param after
 '   An expression that specifies a relative position in the collection. The member
 '   to be added is placed in the collection after the member identified by the after argument.
-'   If numeric, after must be a number from 1 to the Value of the collection's Count
+'   If numeric, after must be a number from 1 to the value of the collection's Count
 '   roperty. If a string, after must correspond to the key specified when the member
 '   referred to was added to the collection. You can specify a before position or an
 '   after position, but not both.
@@ -388,7 +388,7 @@ End Function
 ' Returns a specific Item in the collection either by position or by key.
 '
 ' @remarks
-'   If the Value provided as index doesn’t match any existing member of the
+'   If the value provided as index doesn’t match any existing member of the
 '   collection, an error occurs.
 '
 '   The Item method is the default method for a collection. Therefore, the
@@ -402,7 +402,7 @@ End Function
 '   The required Item.
 ' @param pIndex
 '   An expression that specifies the position of a member of the collection.
-'   If a numeric expression, index must be a number from 1 to the Value of the
+'   If a numeric expression, index must be a number from 1 to the value of the
 '   collection's Count property. If a string expression, index must
 '   correspond to the key argument specified when the member referred to was
 '   added to the collection.
@@ -448,7 +448,7 @@ End Function
 '
 ' @param pIndex
 '   An expression that specifies the position of a member of the collection.
-'   If a numeric expression, index must be a number from 1 to the Value of the
+'   If a numeric expression, index must be a number from 1 to the value of the
 '   collection's Count property. If a string expression, index must
 '   correspond to the key argument specified when the member referred to was
 '   added to the collection.
@@ -473,12 +473,12 @@ End Function
 ' Removes an lItem from the collection.
 '
 ' @remarks
-'   If the Value provided as pIndex doesn’t match an existing member of the
+'   If the value provided as pIndex doesn’t match an existing member of the
 '   collection, an error occurs.
 '
 ' @param pIndexOrItem
 '   An expression that specifies the position of a member of the collection.
-'   If a numeric expression, pIndex must be a number from 1 to the Value of
+'   If a numeric expression, pIndex must be a number from 1 to the value of
 '   the collection's Count property. If a string expression, pIndex must
 '   correspond to the key argument specified when the member referred to
 '   was added to the collection. If an object, this object must have been

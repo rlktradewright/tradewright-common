@@ -41,9 +41,9 @@ Option Explicit
 ' </pre>
 '
 ' ie the switch starts with a forward slash or a hyphen followed by an identifier, and
-' optionally followed by a colon and the switch Value. Switch identifiers are not
+' optionally followed by a colon and the switch value. Switch identifiers are not
 ' case-sensitive. Switch values that contain the separator Character must be enclosed in
-' double quotes. Double quotes appearing within a switch Value must be repeated.
+' double quotes. Double quotes appearing within a switch value must be repeated.
 '
 ' Examples (these examples use a space as the separator Character):
 ' <pre>
@@ -107,12 +107,12 @@ Private mCommandLine As String
 '@================================================================================
 
 ''
-' Returns the nth argument, where n is the Value supplied to this method.
+' Returns the nth argument, where n is the value supplied to this method.
 '
 '@remarks
 '   If the requested argument has not been supplied, an empty string is returned.
 ' @return
-'   A String Value containing the nth argument, where n is the Value of the i parameter.
+'   A String value containing the nth argument, where n is the value of the i parameter.
 ' @param i
 '   The number of the argument to be returned. The first argument is number 0.
 '@/
@@ -206,15 +206,15 @@ Switches = mSwitches
 End Property
 
 ''
-' Returns the Value of the specified switch.
+' Returns the value of the specified switch.
 '
 '@remarks
-'   If the requested switch has not been supplied, or no Value
+'   If the requested switch has not been supplied, or no value
 '   was supplied for the switch, an empty string is returned.
 ' @return
-'   A String containing the Value for the specified switch.
+'   A String containing the value for the specified switch.
 ' @param s
-'   The identifier of the switch whose Value is to be returned.
+'   The identifier of the switch whose value is to be returned.
 '
 '@/
 Public Property Get SwitchValue( _
@@ -225,7 +225,7 @@ On Error GoTo Err
 
 For i = 0 To UBound(mSwitches)
     If CStr(mSwitches(i).Switch) = UCase$(s) Then
-        SwitchValue = mSwitches(i).Value
+        SwitchValue = mSwitches(i).value
         Exit For
     End If
 Next
@@ -412,7 +412,7 @@ i = InStr(val, ":")
 
 If i > 0 Then
     mSwitches(pIndex).Switch = UCase$(Left$(val, i - 1))
-    mSwitches(pIndex).Value = Right$(val, Len(val) - i)
+    mSwitches(pIndex).value = Right$(val, Len(val) - i)
 Else
     mSwitches(pIndex).Switch = UCase$(val)
 End If

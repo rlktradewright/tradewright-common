@@ -15,7 +15,7 @@ Option Explicit
 
 ''
 ' This class is an implementation of the <code>ConfigItem</code> interface that
-' stores the configuration Data in an XML file.
+' stores the configuration data in an XML file.
 '
 ' Objects of this class cannot be created using the <code>New</code> operator.
 '
@@ -342,7 +342,7 @@ For Each node In mElement.childNodes
         Set Item = mChildItems.AddItemFromNode(node, childComment)
         Set childComment = Nothing
     ElseIf TypeOf node Is IXMLDOMText Then
-        ' the first non-white-space text node is the Value
+        ' the first non-white-space text node is the value
         If mValueElement Is Nothing Then
             Set mValueElement = node
             If gIswhitespace(mValueElement.nodeValue) Then

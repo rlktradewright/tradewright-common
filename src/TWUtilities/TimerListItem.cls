@@ -16,7 +16,7 @@ Option Explicit
 
 ''
 ' A <code>TimerListItem</code> object is used to notify the application when a
-' specified time has arrived. It also holds some Data that will be relevant
+' specified time has arrived. It also holds some data that will be relevant
 ' to the application at that time.
 '
 ' A <code>TimerListItem</code> object is created by calling a <code>TimerList</code>
@@ -42,7 +42,7 @@ Option Explicit
 ' @param ev
 '   Contains details of the change of State. The <code>state</code> member of
 '   the <code>StateChangeEventData</code> is a <code>TimerListItemStates</code> enum
-'   Value.
+'   value.
 '@/
 Event StateChange(ByRef ev As StateChangeEventData)
 
@@ -100,11 +100,11 @@ End Sub
 '@================================================================================
 
 ''
-' Returns the Value specified in the <code>add</code> method call on a
+' Returns the value specified in the <code>add</code> method call on a
 ' <code>TimerList</code> object that created this object.
 '
 ' @return
-'   the Value specified in the <code>add</code> method call on a
+'   the value specified in the <code>add</code> method call on a
 '   <code>TimerList</code> object that created this object.
 '@/
 Public Property Get Data() As Variant
@@ -187,7 +187,7 @@ Const ProcName As String = "Cancel"
 On Error GoTo Err
 
 Dim lTimerList As TimerList
-Set lTimerList = mTimerListRef.target
+Set lTimerList = mTimerListRef.Target
 lTimerList.Remove Me
 
 Exit Sub

@@ -74,10 +74,10 @@ gSetVariant mData, Value
 End Property
 
 ''
-' Returns the Data for this Log Record.
+' Returns the data for this Log Record.
 '
 ' @return
-'   The Data for this Log Record.
+'   The data for this Log Record.
 '@/
 Public Property Get Data() As Variant
 gSetVariant Data, mData
@@ -142,7 +142,7 @@ End Property
 ' an object).
 '
 ' @remarks
-'   This Value may be <code>Empty</code> where there is no need to distinguish between
+'   This value may be <code>Empty</code> where there is no need to distinguish between
 '   log records from different sources.
 '
 ' @return

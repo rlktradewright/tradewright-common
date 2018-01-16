@@ -145,10 +145,10 @@ CancelPending = mCancelPending
 End Property
 
 ''
-' Returns the Data passed to <code>StartTask</code>.
+' Returns the data passed to <code>StartTask</code>.
 '
 ' @return
-'   The Data passed to <code>StartTask</code>.
+'   The data passed to <code>StartTask</code>.
 '@/
 Public Property Get Data() As Variant
 gSetVariant Data, mData
@@ -191,8 +191,8 @@ Public Property Get State() As TaskStates
 State = mState
 End Property
 
-Friend Property Get target() As ITask
-Set target = mTarget
+Friend Property Get Target() As ITask
+Set Target = mTarget
 End Property
 
 ''
@@ -516,8 +516,8 @@ End Function
 ' @param intervalMillisecs
 '   The number of milliseconds that the task is to be suspended.
 '
-'   If this Value is less than zero, the task is suspended until it calls the
-'    <code>Continue</code> method. Such a Value should only be specfied where the
+'   If this value is less than zero, the task is suspended until it calls the
+'    <code>Continue</code> method. Such a value should only be specfied where the
 '   task is expecting to be awoken by some external mechanism so that it can
 '   call <code>Continue</code>, otherwise it will remain suspended indefinitely.
 '

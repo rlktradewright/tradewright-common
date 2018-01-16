@@ -93,15 +93,15 @@ Private mLogger                                     As Logger
 ' Properties
 '@================================================================================
 
-Friend Property Let Enabled(ByVal Value As Boolean)
-mEnabled = Value
+Friend Property Let Enabled(ByVal value As Boolean)
+mEnabled = value
 End Property
 
 ''
 ' Indicates whether tracing has been enabled for the trace type of this
 ' <code>Tracer</code> object.
 ' @return
-'   A <code>Boolean</code> Value indicating whether tracing has been enabled for the
+'   A <code>Boolean</code> value indicating whether tracing has been enabled for the
 '   trace type of this <code>Tracer</code> object.
 '@/
 Public Property Get Enabled() As Boolean

@@ -106,20 +106,20 @@ Public Property Get Name() As String
 End Property
 
 ''
-' Sets this <code>ConfigItem</code> object's Value.
+' Sets this <code>ConfigItem</code> object's value.
 '
 ' @param Value
-'   The Value to be set for this configuration Item.
+'   The value to be set for this configuration Item.
 '
 '@/
 Public Property Let Value(ByVal Value As String)
 End Property
 
 ''
-' Returns this <code>ConfigItem</code> object's Value.
+' Returns this <code>ConfigItem</code> object's value.
 '
 ' @return
-'   This configuration Item's Value.
+'   This configuration Item's value.
 '
 '@/
 Public Property Get Value() As String
@@ -130,12 +130,12 @@ End Property
 '@================================================================================
 
 ''
-' Returns the specified attribute's Value.
+' Returns the specified attribute's value.
 '
 ' @return
-'   The Value of the specified attribute.
+'   The value of the specified attribute.
 ' @param Name
-'   The Name of the attribute whose Value is to be returned.
+'   The Name of the attribute whose value is to be returned.
 '
 '@/
 Public Function GetAttribute( _
@@ -143,16 +143,16 @@ Public Function GetAttribute( _
 End Function
 
 ''
-' Returns the specified attribute's Value, or the specified default Value if
+' Returns the specified attribute's value, or the specified default value if
 ' the attribute is not present.
 '
 ' @return
-'   The Value of the specified attribute, unless it is not present, in which case
+'   The value of the specified attribute, unless it is not present, in which case
 '   the specified default is returned.
 ' @param Name
-'   The Name of the attribute whose Value is to be returned.
+'   The Name of the attribute whose value is to be returned.
 ' @param default
-'   The Value to be returned if the specified attribute is not present.
+'   The value to be returned if the specified attribute is not present.
 '
 '@/
 Public Function GetDefaultableAttribute( _
@@ -172,12 +172,12 @@ Public Sub RemoveAttribute( _
 End Sub
 
 ''
-' Sets the specified attribute's Value.
+' Sets the specified attribute's value.
 '
 ' @param Name
-'   The Name of the attribute whose Value is to be set.
+'   The Name of the attribute whose value is to be set.
 ' @param Value
-'   The new Value for the specified attribute.
+'   The new value for the specified attribute.
 '@/
 Public Function SetAttribute( _
                 ByVal Name As String, _

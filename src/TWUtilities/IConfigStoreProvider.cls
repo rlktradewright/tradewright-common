@@ -22,15 +22,15 @@ Option Explicit
 ' organised in a tree structure. There is a single configuration Item at the root
 ' of the tree, called the <em>root configuration item</em>.
 '
-' Each configuration item has a name, an optional text Value, an optional set of
+' Each configuration item has a name, an optional text value, an optional set of
 ' attributes, and an optional comment. Each attribute consists of a name and a
-' text Value.
+' text value.
 '
 ' An example of a configuration Item might be:
 '   <pre>
 '   ServiceProvider=Realtime Data Source{Enabled="True" ProgId="IBTWSSP26.RealtimeDataServiceProvider" LogLevel="1"} // configure the tick Data SP
 '   </pre>'
-' Here, the configuration item name is &quot;ServiceProvider&quot;, its Value
+' Here, the configuration item name is &quot;ServiceProvider&quot;, its value
 ' is &quot;Realtime Data Source&quot;, and it has three attributes: Enabled,
 ' ProgId and LogLevel. Note that the format of this example is purely illustrative: the
 ' actual form in which a configuration Item is stored, and the representation of the
@@ -39,9 +39,9 @@ Option Explicit
 '
 ' Currently the only class that implements this interface is
 ' <code>XMLConfigProvider</code>, which is used to create and access configuration
-' Data in an XML format. To create an empty instance of <code>XMLConfigProvider</code>,
+' data in an XML format. To create an empty instance of <code>XMLConfigProvider</code>,
 ' use the <code>CreateXMLConfigurationProvider</code> global method. To create an instance
-' of <code>XMLConfigProvider</code> containing configuration Data stored in an
+' of <code>XMLConfigProvider</code> containing configuration data stored in an
 ' existing file, use the <code>LoadConfigProviderFromXMLFile</code> global method.
 '
 ' Note that the facilities provided by the <code>ConfigStoreProvider</code> class are quite
@@ -145,7 +145,7 @@ Public Property Get ApplicationVersion() As String
 End Property
 
 ''
-' Returns <code>True</code> if the configuration Data contains unsaved changes.
+' Returns <code>True</code> if the configuration data contains unsaved changes.
 '
 ' @remarks
 ' @return
@@ -173,14 +173,14 @@ End Property
 '@================================================================================
 
 ''
-' Registers an object to act as a listener for changes to the configuration Data.
+' Registers an object to act as a listener for changes to the configuration data.
 '
 ' @remarks
 '   The listener object must implement the <code>ChangeListener</code>
 '   interface.
 '
 '   When a change is notified, the <code>change</code> field in the <code>ChangeEventData</code>
-'   is a Value from the <code>ConfigChangeTypes</code> enum.
+'   is a value from the <code>ConfigChangeTypes</code> enum.
 ' @param listener
 '   The object which is to act as a listener.
 '@/
@@ -201,10 +201,10 @@ Public Sub RemoveChangeListener( _
 End Sub
 
 ''
-' Saves the configuration Data to the specified file.
+' Saves the configuration data to the specified file.
 '
 ' @param filePath
-'   The Path and filename in which the configuration Data is to be stored.
+'   The path and filename in which the configuration data is to be stored.
 ' @see
 '
 '@/

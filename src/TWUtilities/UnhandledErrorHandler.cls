@@ -164,16 +164,16 @@ End Sub
 ' @param pModuleName
 '   The name of the module which contains the calling procedure.
 ' @param pFailpoint
-'   A Value that indicates the region of the calling procedure where the error occurred.
+'   A value that indicates the region of the calling procedure where the error occurred.
 ' @param pErrorNumber
 '   The error number. If this argument is not included in the call to this method, the current
-'   Value of <code>Err.Number</code> is used.
+'   value of <code>Err.Number</code> is used.
 ' @param pErrorDesc
 '   The error description. If this argument is not included in the call to this method, the current
-'   Value of <code>Err.Description</code> is used.
+'   value of <code>Err.Description</code> is used.
 ' @param pErrorSource
 '   The error Source. If this argument is not included in the call to this method, the current
-'   Value of <code>Err.Source</code> is used.
+'   value of <code>Err.Source</code> is used.
 '@/
 Public Sub Notify( _
                 ByVal pProcedureName As String, _

@@ -97,7 +97,7 @@ End Property
 ' Clears one or more conditions.
 '
 ' @param Value
-'   A bit-signficant Value specifying the conditions to be cleared.
+'   A bit-signficant value specifying the conditions to be cleared.
 '@/
 Public Sub ClearConditions( _
                 ByVal Value As Long)
@@ -108,7 +108,7 @@ End Sub
 ' Sets one or more conditions.
 '
 ' @param Value
-'   A bit-signficant Value specifying the conditions to be set.
+'   A bit-signficant value specifying the conditions to be set.
 '@/
 Public Sub SetConditions( _
                 ByVal Value As Long)

@@ -145,33 +145,33 @@ End If
 
 Select Case formatOption
 Case TimestampFormats.TimestampTimeOnly
-    gFormatTimestamp = format(timestampAsDate, "hhnnss") & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+    gFormatTimestamp = Format(timestampAsDate, "hhnnss") & _
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampDateOnly
-    gFormatTimestamp = format(timestampAsDate, "yyyymmdd")
+    gFormatTimestamp = Format(timestampAsDate, "yyyymmdd")
 Case TimestampFormats.TimestampDateAndTime
-    gFormatTimestamp = format(timestampAsDate, "yyyymmddhhnnss") & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+    gFormatTimestamp = Format(timestampAsDate, "yyyymmddhhnnss") & _
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampTimeOnlyISO8601
-    gFormatTimestamp = format(timestampAsDate, "hh:nn:ss") & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+    gFormatTimestamp = Format(timestampAsDate, "hh:nn:ss") & _
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampDateOnlyISO8601
-    gFormatTimestamp = format(timestampAsDate, "yyyy-mm-dd")
+    gFormatTimestamp = Format(timestampAsDate, "yyyy-mm-dd")
 Case TimestampFormats.TimestampDateAndTimeISO8601
-    gFormatTimestamp = format(timestampAsDate, "yyyy-mm-dd hh:nn:ss") & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+    gFormatTimestamp = Format(timestampAsDate, "yyyy-mm-dd hh:nn:ss") & _
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampTimeOnlyLocal
     gFormatTimestamp = FormatDateTime(timestampAsDate, vbLongTime) & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampDateOnlyLocal
     gFormatTimestamp = FormatDateTime(timestampAsDate, vbShortDate)
 Case TimestampFormats.TimestampDateAndTimeLocal
     gFormatTimestamp = FormatDateTime(timestampAsDate, vbShortDate) & " " & _
                         FormatDateTime(timestampAsDate, vbLongTime) & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 Case TimestampFormats.TimestampCustom
-    gFormatTimestamp = format(timestampAsDate, formatString) & _
-                        IIf(noMillisecs, "", format(Milliseconds, "\.000"))
+    gFormatTimestamp = Format(timestampAsDate, formatString) & _
+                        IIf(noMillisecs, "", Format(Milliseconds, "\.000"))
 End Select
 
 If includeTimezone Then
@@ -360,7 +360,7 @@ End Function
 Public Function gVbDateToFileTime( _
                 pDate As Date) As Currency
 
-' we round this to an integral Value because the Windows APIs FileTimeToSystemTime
+' we round this to an integral value because the Windows APIs FileTimeToSystemTime
 ' and SystemTimeToFileTime work at the millisecond level. Not doing so causes some
 ' times to be incorrectly converted between timezones - eg 16:31 ends up as 16:30:59.999.
 Const ProcName As String = "gVbDateToFileTime"

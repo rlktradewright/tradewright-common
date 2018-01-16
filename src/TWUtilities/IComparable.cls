@@ -68,7 +68,7 @@ Private Const ModuleName                    As String = "IComparable"
 '@================================================================================
 
 ''
-' Compares this object with another object and returns a Value indicating whether
+' Compares this object with another object and returns a value indicating whether
 ' this object is less than, equal to, or greater than the specified object.
 '
 ' @remarks
@@ -85,7 +85,7 @@ Private Const ModuleName                    As String = "IComparable"
 '   If the specified object is <code>Nothing</code>, then an
 '   <code>RrrorCodes.ErrNullPointerException</code> Error is raised.
 ' @return
-'   A <code>Long</code> Value that is negative if this object is less than the
+'   A <code>Long</code> value that is negative if this object is less than the
 '   specified object, 0 if it is equal to it, and positive otherwise.
 ' @param obj
 '   The object to which this object is to be compared.

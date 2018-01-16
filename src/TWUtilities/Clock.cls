@@ -164,15 +164,15 @@ End Property
 '   Attempting to set it for a realtime <code>Clock</code> results in Error
 '   <code>ErrUnsupportedOperationException</code>.
 '
-'   The Value may be changed at any time.
+'   The value may be changed at any time.
 '
 ' @param Value
 '   Indicates the factor by which simulated-time is to be accelerated for
 '   this <code>Clock</code> object. Values greater than 1 speed up time.
-'   Values less than 1 slow down time. A zero Value is used to indicate that the
+'   Values less than 1 slow down time. A zero value is used to indicate that the
 '   passage of real time is not to be taken into account when calculating timestamps:
 '   in this case, the <code>timestamp</code> property always returns the most recent
-'   Value passed in the <code>setTime</code> method.
+'   value passed in the <code>setTime</code> method.
 '
 '   Negative values are not permitted and cause an <code>ErrIllegalArgumentException</code>
 '   Error.
@@ -205,7 +205,7 @@ End Property
 '
 ' @remarks
 '   This property is only valid for simulated-time <code>Clock</code> objects.
-'   For realtime <code>Clock</code> objects the Value is undefined.
+'   For realtime <code>Clock</code> objects the value is undefined.
 '
 ' @return
 '   Returns the factor by which simulated-time is accelerated for
@@ -220,7 +220,7 @@ End Property
 ' Returns an accurate Timestamp for this <code>Clock</code>, in the relevant time zone.
 '
 ' @remarks
-'   If this is a simulated-time <code>Clock</code>, the Value is calculated by multiplying the
+'   If this is a simulated-time <code>Clock</code>, the value is calculated by multiplying the
 '   elapsed time since the most recent call to the <code>setTime</code> method by the acceleration
 '   factor specified in the <code>rate</code> property and adding the Result to the
 '   time specified in the most recent call to <code>setTime</code>.
@@ -336,7 +336,7 @@ End Sub
 '
 ' @remarks
 '   After calling <code>pauseTime</code>, the <code>timestamp</code> property
-'   will return the same Value until <code>resumeTime</code> is called.
+'   will return the same value until <code>resumeTime</code> is called.
 '
 '   A call to this method for a realtime <code>Clock</code> results in Error
 '   <code>ErrUnsupportedOperationException</code>.

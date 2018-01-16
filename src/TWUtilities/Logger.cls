@@ -33,9 +33,9 @@ Option Explicit
 ' information type namespace tree.
 '
 ' Each <code>Logger</code> object has a <code>LogLevel</code> property which is a
-' Value within the <code>LogLevels</code> enum. If it is set to the Value
-' <code>LogLevelNull</code>, then the <code>Logger</code> object obtains its Value
-' from its Parent <code>Logger</code> object. A Value of <code>LogLevelNull</code>
+' value within the <code>LogLevels</code> enum. If it is set to the value
+' <code>LogLevelNull</code>, then the <code>Logger</code> object obtains its value
+' from its Parent <code>Logger</code> object. A value of <code>LogLevelNull</code>
 ' for the root <code>Logger</code> object has the same effect as <code>LogLevelNone</code>,
 ' ie it logs nothing.
 '
@@ -196,7 +196,7 @@ End Property
 ' @remarks
 '   The listener object must implement the <code>LogListener</code>
 '   interface.
-' @param listener
+' @param pListener
 '   The object which is to act as a listener.
 '@/
 Public Sub AddLogListener( _
@@ -251,21 +251,21 @@ End Sub
 ' @return
 '   Returns <code>True</code> if the message would be logged, and <code>False</code>
 '   otherwise.
-' @param level
+' @param pLevel
 '   The relevant log level.
 ' @see
 '
 '@/
 Public Function IsLoggable( _
-                ByVal level As LogLevels) As Boolean
+                ByVal pLevel As LogLevels) As Boolean
 Const ProcName As String = "IsLoggable"
 On Error GoTo Err
 
 If mFinished Then Exit Function
 
-If Not gIsLogLevelPermittedForApplication(level) Then Exit Function
+If Not gIsLogLevelPermittedForApplication(pLevel) Then Exit Function
 
-IsLoggable = (level >= LogLevel)
+IsLoggable = (pLevel >= LogLevel)
 
 Exit Function
 
@@ -274,29 +274,29 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Logs Data of a specified log level.
+' Logs data of a specified log level.
 '
 ' @remarks
-'   The Data is logged only if the specified log level is not less than the
+'   The data is logged only if the specified log level is not less than the
 '   current <code>LogLevel</code> property.
 '
-'   If the Data is logged and the <code>logToParent</code> property is <code>True</code>,
-'   then the Data is also logged by the Parent logger.
+'   If the data is logged and the <code>logToParent</code> property is <code>True</code>,
+'   then the data is also logged by the Parent logger.
 '
-'   If the Data is of a type that has no string representation, then it may be ignored
+'   If the data is of a type that has no string representation, then it may be ignored
 '   by some <code>LogListener</code> objects. To ensure that this does not happen:
 '   <ul>
 '   <li>Avoid logging User Defined Types, unless you can be sure that listeners are
 '   prepared to handle them.</li>
 '   <li>Only log objects that implement the <code>Stringable</code> interface.</li>
 '   </ul>
-' @param level
-'   The log level of the specified Data.
-' @param Data
-'   The Data to be logged. Note that this is a variant, so any Data type
+' @param pLevel
+'   The log level of the specified data.
+' @param pData
+'   The data to be logged. Note that this is a variant, so any Data type
 '   that can be held in a variant can be logged (but see the Remarks concerning UDTs and
 '   objects).
-' @param Source
+' @param pSource
 '   Information that identifies the Source of this Log Record (this information
 '   could for example be a reference to an object, or something that uniquely identifies
 '   an object). It need not be supplied where there is no need to distinguish between

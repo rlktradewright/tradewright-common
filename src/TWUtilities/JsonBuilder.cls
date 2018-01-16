@@ -157,7 +157,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Encodes the name part of a name/Value pair.
+' Encodes the name part of a name/value pair.
 '
 ' @param pName
 '   The name to be encoded.
@@ -181,12 +181,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Encodes a name/Value pair.
+' Encodes a name/value pair.
 '
 ' @param pName
 '   The name to be encoded.
 ' @param pValue
-'   The Value to be encoded.
+'   The value to be encoded.
 '@/
 Public Sub EncodeNameAndValue( _
                 ByVal pName As String, _
@@ -213,10 +213,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Encodes the Value part of a name/Value pair, or an element of an array.
+' Encodes the value part of a name/value pair, or an element of an array.
 '
 ' @param pValue
-'   The Value to be encoded.
+'   The value to be encoded.
 '@/
 Public Sub EncodeValue( _
                 ByRef pValue As Variant)

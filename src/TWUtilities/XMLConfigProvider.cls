@@ -15,13 +15,13 @@ Option Explicit
 
 ''
 ' This class is an implementation of the <code>ConfigStoreProvider</code> interface that
-' stores the configuration Data in an XML file.
+' stores the configuration data in an XML file.
 '
 ' Objects of this class cannot be created using the <code>New</code> operator. Use
 ' the <code>CreateXMLConfigurationProvider</code> or <code>LoadConfigProviderFromXMLFile</code>
 ' global methods.
 '
-' To access the configuration Data, set an object variable of type <code>ConfigStoreProvider</code>
+' To access the configuration data, set an object variable of type <code>ConfigStoreProvider</code>
 ' to this object, for example:
 '
 ' <pre>

@@ -306,7 +306,7 @@ Const ProcName As String = "Parent"
 
 On Error GoTo Err
 
-If Not mParentRef Is Nothing Then Set Parent = mParentRef.target
+If Not mParentRef Is Nothing Then Set Parent = mParentRef.Target
 
 Exit Property
 
@@ -520,8 +520,8 @@ On Error GoTo Err
 
 Set relativeSectionPath = gGetConfigPath(configSectionPath)
 
-If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section Path"
-If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section Path is required"
+If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section path"
+If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section path is required"
 
 absPath = Path & ConfigSectionPathSeparator & configSectionPath
 Set GetConfigurationSection = mCache.Item(absPath)
@@ -612,9 +612,9 @@ On Error GoTo Err
 
 Set relSettingPath = gGetConfigPath(relativeSettingPath)
 
-If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting Path"
+If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting path"
 
-If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting Path is required"
+If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting path is required"
 
 If relSettingPath.IsValidAttributePath Then
     If relSettingPath.ParentPath = "" Then
@@ -781,8 +781,8 @@ On Error GoTo Err
 
 Set relativeSectionPath = gGetConfigPath(configSectionPath)
 
-If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section Path"
-If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section Path is required"
+If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section path"
+If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section path is required"
 
 If relativeSectionPath.ParentPath = "" Then
     Set section = GetConfigurationSection(relativeSectionPath.Path)
@@ -812,8 +812,8 @@ On Error GoTo Err
 
 Set relSettingPath = gGetConfigPath(relativeSettingPath)
 
-If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting Path"
-If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting Path is required"
+If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting path"
+If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting path is required"
 
 If relSettingPath.IsValidAttributePath Then
     If relSettingPath.ParentPath = "" Then
@@ -938,8 +938,8 @@ Const ProcName As String = "SetSettingEx"
 
 On Error GoTo Err
 
-If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting Path"
-If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting Path is required"
+If Not relSettingPath.IsValidAttributePath And Not relSettingPath.IsValidValuePath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid setting path"
+If Not relSettingPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative setting path is required"
 
 If relSettingPath.IsValidAttributePath Then
     If relSettingPath.ParentPath = "" Then
@@ -982,8 +982,8 @@ On Error GoTo Err
 
 Set relativeSectionPath = gGetConfigPath(pNewConfigSectionPath)
 
-If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section Path"
-If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section Path is required"
+If Not relativeSectionPath.IsValidSectionPath Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid section path"
+If Not relativeSectionPath.IsRelative Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "A relative config section path is required"
 
 Set AddConfigSection = mConfigFile.GetConfigurationSection(Path & ConfigSectionPathSeparator & pNewConfigSectionPath)
 

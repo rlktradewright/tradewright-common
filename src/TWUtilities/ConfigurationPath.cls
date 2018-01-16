@@ -109,12 +109,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Returns the final element of the configuration Path.
+' Returns the final element of the configuration path.
 '
 ' @remarks
-'   For a an attribute- or Value Path, the prefixing "&" or "." Character is included.
+'   For an attribute- or value path, the prefixing "&" or "." Character is included.
 ' @return
-'   The final element of the configuration Path.
+'   The final element of the configuration path.
 '@/
 Friend Property Get TailPath() As String
 Const ProcName As String = "TailPath"
@@ -145,7 +145,7 @@ If IsValidValuePath Then
 ElseIf IsValidAttributePath Then
 ElseIf IsValidSectionPath Then
 Else
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration Path"
+    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Not a valid configuration path"
 End If
 
 Exit Sub

@@ -24,7 +24,7 @@ Option Explicit
 ' @remarks
 '   Classes that implement <code>JSONAble</code> should normally also implement
 '   <code>Stringable</code>. However there is no requirement that <code>JSONable.ToJSON</code>
-'   and <code>Stringable.ToString</code> should return the same Value.
+'   and <code>Stringable.ToString</code> should return the same value.
 '
 '@/
 
@@ -83,11 +83,11 @@ Private Const ModuleName                            As String = "IJSONable"
 '   class that implements <code>JSONable</code> if the following conditions are
 '   true:
 '   <ul>
-'       <li>The first name/Value pair in the JSON string has name '$ProgId'</li>
+'       <li>The first name/value pair in the JSON string has name '$ProgId'</li>
 '       <li>The class has its <code>Instancing</code> property set to
 '       <code>Public</code>;</li>
-'       <li>For each name/Value pair after the first in the JSON encoding, the class
-'       has a writable property of the same name that accepts the encoded Value.</li>
+'       <li>For each name/value pair after the first in the JSON encoding, the class
+'       has a writable property of the same name that accepts the encoded value.</li>
 '   </ul>
 '
 ' @return

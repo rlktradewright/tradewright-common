@@ -148,9 +148,9 @@ Private Property Get IFuture_Value() As Object
 Const ProcName As String = "IFuture_Value"
 On Error GoTo Err
 
-gAssert Not mIsCancelled, "Future value creation was cancelled"
-gAssert Not mIsFaulted, "Future value creation failed: error=" & mErrorNumber & "; description=" & mErrorMessage & "; source=" & mErrorSource
-gAssert mIsAvailable, "Future value creation has not yet completed"
+gAssert Not mIsCancelled, "Future Value creation was cancelled"
+gAssert Not mIsFaulted, "Future Value creation failed: error=" & mErrorNumber & "; description=" & mErrorMessage & "; source=" & mErrorSource
+gAssert mIsAvailable, "Future Value creation has not yet completed"
 
 Set IFuture_Value = mValue
 

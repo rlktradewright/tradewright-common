@@ -167,16 +167,16 @@ End Property
 '   This can be any pData that can be held in a Variant.
 ' @param pExpiryTime
 '   The time at which the new<code>TimerListItem</code> is to expire. The values
-'   allowed depend on the Value of the<code>units</code> argument.
+'   allowed depend on the value of the<code>units</code> argument.
 '
 '   If <code>units</code> is <code>ExpiryTimeUnits.ExpiryTimeUnitDateTime</code>, then
-'   the Value can be any expression that yields a valid date. For a realtime timerlist,
+'   the value can be any expression that yields a valid date. For a realtime timerlist,
 '   this date must be in the future (interpreted as local time). For a simulated-time
 '   timer list, this date must be later than the most recent time supplied via the
 '   <code>setTime</code> method.
 '
-'   If <code>units</code> has any other Value, this argument must be a positive numeric
-'   Value representing the amount of time (in the relevant units) to expiry.
+'   If <code>units</code> has any other value, this argument must be a positive numeric
+'   value representing the amount of time (in the relevant units) to expiry.
 ' @param pUnits
 '   Specifies the pUnits in which the<code>expiryTime</code> argument is expressed.
 '@/

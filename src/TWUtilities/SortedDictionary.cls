@@ -14,7 +14,7 @@ Attribute VB_Exposed = True
 Option Explicit
 
 ''
-' Represents a collection of key/Value pairs, sorted on the key.
+' Represents a collection of key/value pairs, sorted on the key.
 '
 ' Items in the collection are sorted in the order of the key supplied when they
 ' are added. Iterating through the collection returns the items in sorted order.
@@ -318,7 +318,7 @@ End Property
 ' @param key
 '   An expression that specifies the key of a member of the collection.
 ' @param Value
-'   The new Value to be assigned to the specified Item.
+'   The new value to be assigned to the specified Item.
 '@/
 Public Property Let Item( _
                 ByVal Key As Variant, _

@@ -14,7 +14,7 @@ Attribute VB_Exposed = True
 Option Explicit
 
 ''
-' This class represents a text key/Value pair.
+' This class represents a text key/value pair.
 '
 ' Instances of this class cannot be created directly using the <code>New</code> operator.
 ' Instead you must use the <code>getParameterValue</code>, <code>setParameterValue</code>
@@ -181,10 +181,10 @@ Name = mName
 End Property
 
 ''
-' Sets the Value of this <code>Parameter</code> object.
+' Sets the value of this <code>Parameter</code> object.
 '
 ' @param val
-'   The new Value of this object.
+'   The new value of this object.
 '@/
 Friend Property Let Value(ByVal val As String)
 Const ProcName As String = "Value"
@@ -201,10 +201,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Returns the Value of this <code>Parameter</code> object.
+' Returns the value of this <code>Parameter</code> object.
 '
 ' @return
-'   The current Value of this <code>Parameter</code> object.
+'   The current value of this <code>Parameter</code> object.
 '@/
 Public Property Get Value() As String
 Value = mValue
@@ -220,7 +220,7 @@ End Property
 '
 ' @remarks
 '   To be considered equal, the two objects must have the same Name and the same
-'   Value, using a case-insensitive comparison.
+'   value, using a case-insensitive comparison.
 ' @return
 '   <code>True</code> if the objects are equal, otherwise <code>False</code>.
 ' @param param

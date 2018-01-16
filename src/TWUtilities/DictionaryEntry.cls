@@ -110,7 +110,7 @@ Const ProcName As String = "Parent"
 
 On Error GoTo Err
 
-Set Parent = mParent.target
+Set Parent = mParent.Target
 
 Exit Property
 

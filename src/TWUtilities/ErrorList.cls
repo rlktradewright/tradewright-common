@@ -143,7 +143,7 @@ End Sub
 ''
 ' Declares whether a validation rule is violated or satisfied.
 '
-' <p>The validation rule is identified by a unique <code>String</code> Value.
+' <p>The validation rule is identified by a unique <code>String</code> value.
 ' The calling application is responsible for assigning identifier values to rules.</p>
 '
 ' <p>If the rule is violated, an <code>ErrorItem</code> is added to the list and the
@@ -159,7 +159,7 @@ End Sub
 '   If <code>True</code>, indicates that the validation rule is satisfied.
 '   If <code>False</code>, indicates that the validation rule is violated.
 ' @param ruleId
-'   A <code>String</code> Value that identifies the relevant validation rule.
+'   A <code>String</code> value that identifies the relevant validation rule.
 ' @param params
 '   An array of <code>Variant</code>s that may be useful to consumers of the
 '   <code>ErrorItem</code>s. For example they could be values for substitution
@@ -241,7 +241,7 @@ End Sub
 ' @param pIndex
 '   Specifies which <code>ErrorItem</code> is to be returned.
 '
-'   This can be either the validation rule identifier, or a <code>Long</code> Value
+'   This can be either the validation rule identifier, or a <code>Long</code> value
 '   specifying the ordinal number, of the required <code>ErrorItem</code>.
 '@/
 Public Function Item( _

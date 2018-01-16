@@ -94,7 +94,7 @@ End Property
 ' @param Name
 '   The new configuration Item's Name.
 ' @param Value
-'   The new configuration Item's Value.
+'   The new configuration Item's value.
 ' @param Comment
 '   The new configuration Item's Comment.
 '
@@ -146,7 +146,7 @@ End Function
 ' @param Name
 '   The new configuration Item's Name.
 ' @param Value
-'   The new configuration Item's Value.
+'   The new configuration Item's value.
 ' @param Comment
 '   The new configuration Item's Comment.
 ' @param targetItem
@@ -189,10 +189,10 @@ End Function
 ' @param itemSpecifier
 '   Specifies which configuration item to be moved.
 '
-'   If the supplied Value is a <code>String</code>, then the first configuration
+'   If the supplied value is a <code>String</code>, then the first configuration
 '   item in the list with that name is moved.
 '
-'   If the supplied Value is a configuration item, then that item is moved.
+'   If the supplied value is a configuration item, then that item is moved.
 ' @param targetItem
 '   The item before which the configuration item is to be moved. If this argument
 '   is not supplied, or is <code>Nothing</code>, then the new item is moved to the end
@@ -209,10 +209,10 @@ End Sub
 ' @param itemSpecifier
 '   Specifies which configuration Item to be removed.
 '
-'   If the supplied Value is a <code>String</code>, then the first configuration
+'   If the supplied value is a <code>String</code>, then the first configuration
 '   Item in the list with that Name is removed.
 '
-'   If the supplied Value is a configuration Item, then that Item is removed.
+'   If the supplied value is a configuration Item, then that Item is removed.
 '
 '@/
 Public Sub Remove( _

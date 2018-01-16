@@ -169,7 +169,7 @@ End Function
 ' @param pModName
 '   The name of the module containing the procedure from which this method is called.
 ' @param pLogLevel
-'   The log level of the specified Data.
+'   The log level of the specified data.
 ' @param pMsgQualifier
 '   The second part of the data to be logged.
 '@/

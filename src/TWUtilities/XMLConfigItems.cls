@@ -15,7 +15,7 @@ Option Explicit
 
 ''
 ' This class is an implementation of the <code>ConfigItems</code> interface that
-' stores the configuration Data in an XML file.
+' stores the configuration data in an XML file.
 '
 ' Objects of this class cannot be created using the <code>New</code> operator.
 '

@@ -34,7 +34,7 @@ Option Explicit
 '   link /EDIT /SUBSYSTEM:CONSOLE myprog.exe
 ' </code>
 ' </pre>
-' where myprog.exe is the Path and filename of your program. The link tool is
+' where myprog.exe is the path and filename of your program. The link tool is
 ' to be found in C:\Program Files\Microsoft Visual Studio\VB98, so you
 ' can either Run it from there or Add that folder to your PATH environment
 ' variable, and then you can Run the command in the folder that contains your
@@ -212,8 +212,8 @@ End Sub
 ' Sets the background console colour.
 '
 ' @remarks
-'   The Value supplied must be a member of the <code>ConsoleColors</code> enum, not
-'   an RGB Value.
+'   The value supplied must be a member of the <code>ConsoleColors</code> enum, not
+'   an RGB value.
 ' @param Value
 '   The new background console colour.
 '@/
@@ -249,8 +249,8 @@ End Property
 ' Returns the current background console colour.
 '
 ' @remarks
-'   The Value returned is a member of the <code>ConsoleColors</code> enum, not
-'   an RGB Value.
+'   The value returned is a member of the <code>ConsoleColors</code> enum, not
+'   an RGB value.
 ' @return
 '   The current background console colour.
 '@/
@@ -268,7 +268,7 @@ End Property
 '   If this is set to an empty string, then an Error <code>ErrorCodes.ErrEndOfFile</code>
 '   is raised when end of file is reached.
 '
-'   Note that if this string is received in the console input Data stream, it is passed
+'   Note that if this string is received in the console input data stream, it is passed
 '   through to the application, but it does not prevent the application from reading
 '   further input if there is any.
 '
@@ -295,8 +295,8 @@ End Property
 ' Sets the foreground console colour.
 '
 ' @remarks
-'   The Value supplied must be a member of the <code>ConsoleColors</code> enum, not
-'   an RGB Value.
+'   The value supplied must be a member of the <code>ConsoleColors</code> enum, not
+'   an RGB value.
 ' @param Value
 '   The new foreground console colour.
 '@/
@@ -330,8 +330,8 @@ End Property
 ' Returns the current foreground console colour.
 '
 ' @remarks
-'   The Value returned is a member of the <code>ConsoleColors</code> enum, not
-'   an RGB Value.
+'   The value returned is a member of the <code>ConsoleColors</code> enum, not
+'   an RGB value.
 ' @return
 '   The current foreground console colour.
 '@/
@@ -345,8 +345,8 @@ End Property
 ' @return
 '   The handle to the console window.
 '@/
-Public Property Get HWnd() As Long
-HWnd = mHwnd
+Public Property Get hwnd() As Long
+hwnd = mHwnd
 End Property
 
 ''
@@ -481,7 +481,7 @@ End Property
 ' @param echoChar
 '   Specifies a single Character that is echoed to the console instead of each Character
 '   the user actually types. If this argument is omitted or is an empty string, the
-'   actual characters typed by the user are echoed. If it has the special Value Chr(0),
+'   actual characters typed by the user are echoed. If it has the special value Chr(0),
 '   then nothing the user types is echoed.
 '@/
 Public Function ReadLine( _
@@ -532,7 +532,7 @@ End Function
 ' @param echoChar
 '   Specifies a single Character that is echoed to the console instead of each Character
 '   the user actually types. If this argument is omitted or is an empty string, the
-'   actual characters typed by the user are echoed. If it has the special Value Chr(0),
+'   actual characters typed by the user are echoed. If it has the special value Chr(0),
 '   then nothing the user types is echoed.
 '@/
 Public Function ReadLineFromConsole( _

@@ -104,7 +104,7 @@ If pCookie > mCollection.Count Then
 End If
 
 ref = mCollection.Item(pCookie)
-Set Item = ref.target
+Set Item = ref.Target
 
 IEnumerable_NextItem = True
 End Function
@@ -159,7 +159,7 @@ End Property
 ' @param Item
 '   The object to be added.
 ' @param key
-'   A Value uniquely identifying the object in the collection.
+'   A value uniquely identifying the object in the collection.
 ' @param before
 '   Specifies an existing Item in the collection before which
 '   this object should be added.
@@ -206,7 +206,7 @@ Attribute Item.VB_UserMemId = 0
 Dim weakRef As WeakReference
 
 Set weakRef = mCollection.Item(pIndex)
-Set Item = weakRef.target
+Set Item = weakRef.Target
 End Function
 
 Public Function NewEnum() As IUnknown

@@ -342,7 +342,7 @@ End Sub
 '   The string to be inserted.
 ' @param position
 '   The position at which the string is to be inserted. The first position is 1.
-'   If the Value is greater than the Length of the string under construction, the
+'   If the value is greater than the Length of the string under construction, the
 '   string is appended.
 '
 '@/
@@ -588,10 +588,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Returns the current Value of the string under construction.
+' Returns the current value of the string under construction.
 '
 ' @return
-'   The current Value of the string under construction.
+'   The current value of the string under construction.
 '
 '@/
 Public Function ToString() As String
@@ -617,11 +617,11 @@ End Function
 '
 '   If the specified position is the first Character of a word, the
 '   position of the start of the previous word is returned. If there is no previous word,
-'   the Value 1 is returned.
+'   the value 1 is returned.
 ' @return
 '   The starting position of the required word.
 ' @param position
-'   The position from which to start looking for a word. The Value must be greater than
+'   The position from which to start looking for a word. The value must be greater than
 '   zero. If it is greater than the Length of the string under construction, the start of
 '   the last word in the string is found.
 ' @param separator
@@ -672,8 +672,8 @@ End Function
 ' @return
 '   The starting position of the required word.
 ' @param position
-'   The position from which to start looking for a word. The Value must be greater than
-'   zero. If it is greater than the Length of the string under construction, the Value
+'   The position from which to start looking for a word. The value must be greater than
+'   zero. If it is greater than the Length of the string under construction, the value
 '   returned is one greater than the Length of the string.
 ' @param separator
 '   The Character used as a separator between words. This argument must be a single

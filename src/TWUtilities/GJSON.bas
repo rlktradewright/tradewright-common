@@ -630,8 +630,8 @@ baseType = VarType(Value) And (Not VbVarType.vbArray)
 
 ' object has no natural JSON string representation
 If baseType <> VbVarType.vbObject Then
-    ' this means the Value has a default property - we'll use
-    ' that Value instead
+    ' this means the value has a default property - we'll use
+    ' that value instead
     sb.Append BeginObject
     sb.Append "DefaultProp"
     sb.Append NameSeparator
@@ -677,8 +677,8 @@ ElseIf TypeOf Value Is IJSONable Then
     encodeJSONableObject Value, sb
 ElseIf TypeOf Value Is Dictionary Then
     encodeDictionary Value, sb
-'ElseIf TypeOf Value Is SortedDictionary Then
-'    encodeSortedDictionary Value, sb
+'ElseIf TypeOf value Is SortedDictionary Then
+'    encodeSortedDictionary value, sb
 ElseIf TypeOf Value Is Collection Or _
     TypeOf Value Is IEnumerable _
 Then
@@ -694,7 +694,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 'Private Sub encodeSortedDictionary( _
-'                ByVal Value As Variant, _
+'                ByVal value As Variant, _
 '                ByVal sb As StringBuilder)
 'Dim doneFirst As Boolean
 'Dim sc As SortedDictionary
@@ -703,7 +703,7 @@ End Sub
 '
 'On Error GoTo Err
 '
-'Set sc = Value
+'Set sc = value
 '
 'Dim keysEnum As Enumerator
 'Set keysEnum = sc.KeyEnumerator

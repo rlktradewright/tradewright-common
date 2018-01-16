@@ -368,12 +368,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Function gCreateWeakReference( _
-                ByVal target As Object) As WeakReference
+                ByVal Target As Object) As WeakReference
 Const ProcName As String = "gCreateWeakReference"
 On Error GoTo Err
 
 Set gCreateWeakReference = New WeakReference
-gCreateWeakReference.Initialise target
+gCreateWeakReference.Initialise Target
 
 Exit Function
 
@@ -1104,7 +1104,7 @@ Dim obj As IComparable
 
 ' holds the address pointer for one object when switching object references. It
 ' is necessary to do this by copying memory rather than setting references to
-' unsure that the correct interface pointer is set back in the Data array after
+' ensure that the correct interface pointer is set back in the data array after
 ' the switch
 Dim tempHold As Long
 
@@ -1169,7 +1169,7 @@ Dim obj As IComparable
 
 ' holds the address pointer for one object when switching object references. It
 ' is necessary to do this by copying memory rather than setting references to
-' unsure that the correct interface pointer is set back in the Data array after
+' ensure that the correct interface pointer is set back in the data array after
 ' the switch
 Dim tempHold As Long
 
@@ -1634,8 +1634,8 @@ ElseIf IsObject(Value) Then
         Set objJ = Value
         s = objJ.ToJSON
     ElseIf baseType <> VbVarType.vbObject Then
-        ' this means the Value has a default property - we'll use
-        ' that Value instead
+        ' this means the value has a default property - we'll use
+        ' that value instead
         s = "DefaultProp(" & varToString(Value) & ")"
     Else
         ' nothing we can find out about this object
