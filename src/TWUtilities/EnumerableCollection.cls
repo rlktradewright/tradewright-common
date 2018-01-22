@@ -530,6 +530,42 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
+''
+' Returns a specific item if it is present in the collection (identified either
+' by position or by key), together with an indication of whether the item is
+' present.
+'
+' @remarks
+'   If the value provided as index doesn�t match any existing member of the
+'   collection, <code>False</code> is returned, and the <code>pItem</code>
+'   parameter is unchanged.
+'
+' @return
+'   Indicates whether the specified item is in the collection.
+' @param pIndex
+'   An expression that specifies the position of a member of the collection.
+'   If a numeric expression, index must be a number from 1 to the value of the
+'   collection's Count property. If a string expression, index must
+'   correspond to the key argument specified when the member referred to was
+'   added to the collection.
+' @param pItem
+'
+'@/
+Public Function TryItem( _
+                ByRef pIndex As Variant, ByRef pItem As Variant) As Boolean
+Const ProcName As String = "TryItem"
+On Error GoTo Err
+
+gSetVariant pItem, mColl.Item(pIndex)
+TryItem = True
+
+Exit Function
+
+Err:
+If Err.number = VBErrorCodes.VbErrInvalidProcedureCall Then Exit Function
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 '@================================================================================
 ' Helper Functions
 '@================================================================================
