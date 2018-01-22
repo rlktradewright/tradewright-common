@@ -90,7 +90,7 @@ If ev.Cancelled Then
 ElseIf ev.ErrorNumber <> 0 Then
     mFutureBuilder.Fail ev.ErrorNumber, ev.ErrorMessage, ev.ErrorSource
 Else
-    gAssert IsObject(ev.Result) Or IsEmpty(ev.Result), "Task result must be an object or Empty"
+    gAssert IsObject(ev.Result) Or IsEmpty(ev.Result), "Task Result must be an object or Empty"
     If Not IsEmpty(ev.Result) Then mFutureBuilder.Value = ev.Result
     mFutureBuilder.Complete
 End If

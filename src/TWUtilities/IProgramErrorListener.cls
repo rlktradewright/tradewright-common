@@ -87,7 +87,7 @@ End Sub
 '
 ' @remarks
 '   An unhandled program error is a program error in an event handler that, if not
-'   otherwise handled, will Result in VB's default error handling Action, which is to
+'   otherwise handled, will result in VB's default error handling Action, which is to
 '   display a message box with minimal information about the error: closing the message
 '   box causes the program to be terminated.
 '

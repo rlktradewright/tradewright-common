@@ -16,7 +16,7 @@ Option Explicit
 ''
 ' This interface is implemented by classes that give access to files of configuration
 ' data (called <em>configuration datasets</em>), typically used by applications to record
-' State information for use the Next time the application is Run.
+' State information for use the next time the application is Run.
 '
 ' A configuration dataset conceptually contains a set of <em>configuration items</em>,
 ' organised in a tree structure. There is a single configuration item at the root

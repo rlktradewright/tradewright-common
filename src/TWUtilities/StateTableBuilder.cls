@@ -14,16 +14,16 @@ Attribute VB_Exposed = True
 Option Explicit
 
 ''
-' This class is used to create State tables for use with the <code>StateEngine</code>
+' This class is used to create state tables for use with the <code>StateEngine</code>
 ' class.
 '
-' A State table consists of a set of <em>state table entries</em>. Each State table
+' A state table consists of a set of <em>state table entries</em>. Each state table
 ' entry specifies an initial State, a stimulus that may occur in that State,
 ' the conditions under which it may occur, the new State that is entered when
 ' that stimulus occurs under those particular conditions, and a list of actions that must
 ' be performed when this happens.
 '
-' There may be several State table entries that have the same initial State and stimulus,
+' There may be several state table entries that have the same initial State and stimulus,
 ' but that have different conditions.
 '
 ' States are specified by non-negative <code>Long</code> values assigned by the application. There
@@ -38,7 +38,7 @@ Option Explicit
 '
 ' Note that there are two predefined condition masks:
 ' <ul>
-' <li><code>SpecialConditions.NoConditions</code>: this is useful when specifying State
+' <li><code>SpecialConditions.NoConditions</code>: this is useful when specifying state
 ' table entries for which no condition need be true or no conditions need be false. It
 ' is more documentary than using the literal value 0</li>
 ' <li><code>SpecialConditions.AllConditions</code>: there are few uses for this value but
@@ -47,8 +47,8 @@ Option Explicit
 '
 ' Actions are specified by non-negative <code>Long</code> values assigned by the application.
 '
-' A State table, once created, is read-only. Therefore a single <code>StateTableBuilder</code>
-' object can be used for all <code>StateEngine</code> objects that have the same State table
+' A state table, once created, is read-only. Therefore a single <code>StateTableBuilder</code>
+' object can be used for all <code>StateEngine</code> objects that have the same state table
 ' definition.
 '@/
 
@@ -101,7 +101,7 @@ Private mInitialisationComplete As Boolean
 '@================================================================================
 
 Friend Property Get StateTable() As StateTableEntry()
-gAssert mInitialisationComplete, "State table not yet fully initialised"
+gAssert mInitialisationComplete, "state table not yet fully initialised"
 
 StateTable = mStateTable
 End Property
@@ -111,7 +111,7 @@ End Property
 '@================================================================================
 
 ''
-' Adds a State table entry to the State table under construction by this
+' Adds a state table entry to the state table under construction by this
 ' <code>StateTableBuilder</code> object.
 '
 ' @remarks
@@ -120,22 +120,22 @@ End Property
 '   and <code>conditionsFalse</code>.
 '
 '   Once the <code>stateTableComplete</code> method has been called, attempting
-'  to Add further State table entries causes Error
+'  to add further state table entries causes error
 '   <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
 ' @return
 '   An array of Action identifiers that are to be performed when this
 '   entry is triggered.
-' @param State
+' @param pState
 '   The entry State.
-' @param stimulus
+' @param pstimulus
 '   The stimulus.
-' @param conditionsTrue
+' @param pconditionsTrue
 '   A bit-mask of conditions that must be true for this entry to be relevant.
-' @param conditionsFalse
+' @param pconditionsFalse
 '   A bit-mask of conditions that must be false for this entry to be relevant.
-' @param newState
+' @param pnewState
 '   The State to be entered when this entry is triggered.
-' @param actions
+' @param Actions
 '   An array of actions to be carried out when this entry is triggered.
 '@/
 Public Function AddStateTableEntry( _
@@ -157,7 +157,7 @@ On Error GoTo Err
 
 gAssertArgument pState >= 0, "State may not be negative"
 gAssertArgument pNewState >= 0 Or pNewState = SpecialStates.StateError, "pNewState must be non-negative or SpecialStates.StateError"
-gAssert Not mInitialisationComplete, "Can't Add more State table entries"
+gAssert Not mInitialisationComplete, "Can't Add more state table entries"
 
 StateTableEntry.State = pState
 StateTableEntry.Stimulus = pStimulus
@@ -197,11 +197,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Indicates that all required State table entries have been added.
+' Indicates that all required state table entries have been added.
 '
 ' @remarks
-'   Once this method has been called, adding further State table entries
-'   causes Error <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
+'   Once this method has been called, adding further state table entries
+'   causes error <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
 ' @return
 '   description
 ' @param Name

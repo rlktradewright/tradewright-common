@@ -32,7 +32,7 @@ Option Explicit
 ' <br />
 ' Set cf = LoadConfigProviderFromXMLFile("C:\MyConfig.xml")<br />
 ' Set root = cf.rootItem    ' this is actually an XMLConfigItem object<br />
-' outputFilename = root.childItems.Item("outputFilename").value<br />
+' outputFilename = root.ChildItems.Item("outputFilename").value<br />
 ' </tt>
 ' </pre>
 '

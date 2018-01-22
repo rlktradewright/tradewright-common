@@ -156,15 +156,15 @@ End Property
 ''
 ' Adds a weak reference to an object to the collection.
 '
-' @param Item
+' @param item
 '   The object to be added.
 ' @param key
 '   A value uniquely identifying the object in the collection.
 ' @param before
-'   Specifies an existing Item in the collection before which
+'   Specifies an existing item in the collection before which
 '   this object should be added.
 ' @param after
-'   Specifies an existing Item in the collection after which
+'   Specifies an existing item in the collection after which
 '   this object should be added.
 '@/
 Public Sub Add( _
@@ -197,7 +197,7 @@ End Function
 ' @return
 '   A normal reference to the specified object.
 ' @param pIndex
-'   Either the ordinal number of the Item in the collection,
+'   Either the ordinal number of the item in the collection,
 '   or the key that was specified when it was added.
 '@/
 Public Function Item( _
@@ -219,7 +219,7 @@ End Function
 ' Removes the specified object from the collection.
 '
 ' @param pIndex
-'   Either the ordinal number of the Item in the collection,
+'   Either the ordinal number of the item in the collection,
 '   or the key that was specified when it was added.
 '@/
 Public Sub Remove( _

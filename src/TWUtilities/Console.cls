@@ -36,7 +36,7 @@ Option Explicit
 ' </pre>
 ' where myprog.exe is the path and filename of your program. The link tool is
 ' to be found in C:\Program Files\Microsoft Visual Studio\VB98, so you
-' can either Run it from there or Add that folder to your PATH environment
+' can either Run it from there or add that folder to your PATH environment
 ' variable, and then you can Run the command in the folder that contains your
 ' program.
 '
@@ -92,7 +92,7 @@ Private mBuf(8191)                          As Byte
 Private mStrBld                             As StringBuilder
 'Private mInBuf                              As String * 8192
 'Private mInBufIndex                         As Long ' the highest position reached in mInBuf
-Private mCurrPosition                       As Long ' the position at which the Next input
+Private mCurrPosition                       As Long ' the position at which the next input
                                                     ' character will be placed in mInBuf
 
 Private mAtEof                              As Boolean
@@ -265,7 +265,7 @@ End Property
 '   The default setting of this property is Chr(26), which is Ctrl-Z.
 '
 ' @remarks
-'   If this is set to an empty string, then an Error <code>ErrorCodes.ErrEndOfFile</code>
+'   If this is set to an empty string, then an error <code>ErrorCodes.ErrEndOfFile</code>
 '   is raised when end of file is reached.
 '
 '   Note that if this string is received in the console input data stream, it is passed
@@ -456,7 +456,7 @@ End Property
 '@================================================================================
 
 ''
-' Reads the Next line of input from the StdIn stream, excluding the carriage return
+' Reads the next line of input from the StdIn stream, excluding the carriage return
 ' and line feed at the end.
 '
 ' @remarks
@@ -474,7 +474,7 @@ End Property
 '   is typing on (the previous content is scrolled up as required to make room for
 '   the output).
 ' @return
-'   The Next line of input.
+'   The next line of input.
 ' @param prompt
 '   This is output to the console on a new line and the cursor is positioned
 '   immediately after it.
@@ -525,7 +525,7 @@ End Function
 '   is typing on (the previous content is scrolled up as required to make room for
 '   the output).
 ' @return
-'   The Next line of input.
+'   The next line of input.
 ' @param prompt
 '   This is output to the console on a new line and the cursor is positioned
 '   immediately after it.
@@ -1085,7 +1085,7 @@ Case KEY_EVENT
         Case vbKeyReturn, vbKeySeparator
             If keyEventRec.bKeyDown Then
                 readInputFromConsole = vbCrLf
-                ' we'll ignore the repeat Count because it's difficult to handle
+                ' we'll ignore the repeat count because it's difficult to handle
                 'For i = 2 To gMin(keyEventRec.wRepeatCount, 10)
                 '    readInputFromConsole = readInputFromConsole & vbCrLf
                 'Next
@@ -1484,7 +1484,7 @@ On Error GoTo Err
 mPrevCursorPosition = getCursorPosition
 
 If mPrevCursorPosition.x <> 0 Then
-    writeToConsole vbCrLf    ' move to start of Next line
+    writeToConsole vbCrLf    ' move to start of next line
 End If
 
 cursorPosn = getCursorPosition

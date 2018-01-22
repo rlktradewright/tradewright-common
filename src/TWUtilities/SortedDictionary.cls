@@ -275,16 +275,16 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Returns a specific Item in the collection, identified by key.
+' Returns a specific item in the collection, identified by key.
 '
 ' @remarks
-'   If the key provided doesn’t match any existing member of the
+'   If the key provided doesn't match any existing member of the
 '   collection, an error occurs.
 '
-'   If the collection contains more than one Item with the specified key, the
-'   first such Item is returned.
+'   If the collection contains more than one item with the specified key, the
+'   first such item is returned.
 ' @return
-'   The required Item.
+'   The required item.
 ' @param key
 '   An expression that specifies the key of a member of the collection.
 '@/
@@ -307,18 +307,18 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ''
-' Updates a specific Item in the collection, identified by key.
+' Updates a specific item in the collection, identified by key.
 '
 ' @remarks
-'   If the key provided doesn’t match any existing member of the
+'   If the key provided doesn't match any existing member of the
 '   collection, an error occurs.
 '
-'   If the collection contains more than one Item with the specified key, the
-'   first such Item is updated.
+'   If the collection contains more than one item with the specified key, the
+'   first such item is updated.
 ' @param key
 '   An expression that specifies the key of a member of the collection.
 ' @param Value
-'   The new value to be assigned to the specified Item.
+'   The new value to be assigned to the specified item.
 '@/
 Public Property Let Item( _
                 ByVal Key As Variant, _
@@ -372,17 +372,17 @@ End Property
 '@================================================================================
 
 ''
-' Adds an Item to the collection.
+' Adds an item to the collection.
 '
 ' @remarks
-'   An Error occurs if a specified key duplicates the key for an existing member
+'   An error occurs if a specified key duplicates the key for an existing member
 '   of the collection, and the collection was not specified to allow duplicates
 '   when it was created.
 '
-' @param Item
-'   The Item to be added to the collection.
+' @param item
+'   The item to be added to the collection.
 ' @param key
-'   A key that determines the position of the Item in the collection.
+'   A key that determines the position of the item in the collection.
 '@/
 Public Sub Add( _
                 ByVal Item As Variant, _
@@ -477,10 +477,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Indicates whether an Item with the specified key already exists in the collection.
+' Indicates whether an item with the specified key already exists in the collection.
 '
 ' @return
-'   <code>True</code> if an Item with the specified key already exists, otherwise
+'   <code>True</code> if an item with the specified key already exists, otherwise
 '   <code>False</code>.
 ' @param key
 '   The relevant key.
@@ -667,18 +667,18 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Removes an Item from the collection.
+' Removes an item from the collection.
 '
 ' @remarks
-'   If the key provided doesn’t match an existing member of the
+'   If the key provided doesn't match an existing member of the
 '   collection, an error occurs.
 '
-'   If the collection contains more than one Item with the specified key, the
-'   first such Item to be added is removed.
+'   If the collection contains more than one item with the specified key, the
+'   first such item to be added is removed.
 ' @return
-'   Returns the Item being removed.
+'   Returns the item being removed.
 ' @param key
-'   Identifies the Item to be removed from the collection.
+'   Identifies the item to be removed from the collection.
 '@/
 Public Function Remove(ByVal Key As Variant) As Variant
 Const ProcName As String = "Remove"
@@ -689,7 +689,7 @@ Dim Result As Long
 Result = findEntry(Key, entry)
 
 If Result <> 0 Then
-    ' raise the same Error as the VB6 Collection object
+    ' raise the same error as the VB6 Collection object
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, _
                 , _
                 "Invalid procedure call or argument"
@@ -732,7 +732,7 @@ End Sub
 ' Gets a specific item in the collection, identified by key.
 '
 ' @remarks
-'   If the key provided doesn’t match any existing member of the
+'   If the key provided doesn't match any existing member of the
 '   collection, <code>False</code> is returned.
 '
 '   If the collection contains more than one item with the specified key, the
@@ -741,7 +741,7 @@ End Sub
 '   <code>True</code> if the required item is found. Otherwise <code>False</code>.
 ' @param Key
 '   An expression that specifies the key of a member of the collection.
-' @param Item
+' @param item
 '   The required item, if it has been found. If not found, the parameter is not changed.
 '@/
 Public Function TryItem( _

@@ -15,7 +15,7 @@ Option Explicit
 
 ''
 '
-' This interface is implemented by classes that listen for Error
+' This interface is implemented by classes that listen for error
 ' notifications from objects that issue them.
 '@/
 

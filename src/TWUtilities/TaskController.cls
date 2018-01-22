@@ -471,7 +471,7 @@ End Sub
 ' Unregisters a <code>TaskStateChangeListener</code> object.
 '
 ' @remarks
-'   No Error occurs if the object to be unregistered is not
+'   No error occurs if the object to be unregistered is not
 '    actually registered.
 ' @param listener
 '   The listener object to be unregistered.
@@ -495,7 +495,7 @@ End Sub
 ' Unregisters a <code>TaskCompletionListener</code> object.
 '
 ' @remarks
-'   No Error occurs if the object to be unregistered is not
+'   No error occurs if the object to be unregistered is not
 '    actually registered.
 ' @param listener
 '   The listener object to be unregistered.
@@ -519,7 +519,7 @@ End Sub
 ' Unregisters a <code>TaskNotificationListener</code> object.
 '
 ' @remarks
-'   No Error occurs if the object to be unregistered is not
+'   No error occurs if the object to be unregistered is not
 '    actually registered.
 ' @param listener
 '   The listener object to be unregistered.
@@ -543,7 +543,7 @@ End Sub
 ' Unregisters a <code>TaskProgressListener</code> object.
 '
 ' @remarks
-'   No Error occurs if the object to be unregistered is not
+'   No error occurs if the object to be unregistered is not
 '   actually registered.
 ' @param listener
 '   The listener object to be unregistered.

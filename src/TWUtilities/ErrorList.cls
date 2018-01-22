@@ -17,7 +17,7 @@ Option Explicit
 ' This class provides a mechanism for maintaining a list of <code>ErrorItem</code>s,
 ' together with provision for being notified via events when an <code>ErrorItem</code>
 ' is added to or removed from the list.
-' <p>It is useful in situations where validation of an object&rsquo;s State may Result in
+' <p>It is useful in situations where validation of an object's state may result in
 ' several simultaneous invalid conditions.</p>
 '
 '
@@ -163,7 +163,7 @@ End Sub
 ' @param params
 '   An array of <code>Variant</code>s that may be useful to consumers of the
 '   <code>ErrorItem</code>s. For example they could be values for substitution
-'   in an Error message.
+'   in an error message.
 '@/
 Public Function AssertRule( _
                 ByVal isValid As Boolean, _

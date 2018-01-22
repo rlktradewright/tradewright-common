@@ -78,7 +78,7 @@ On Error GoTo Err
 Set lEnumerator = this
 For i = 1 To numElementsRequested
     If lEnumerator.GetNext(anItem) Then
-        ' move the Item into place in the caller's buffer
+        ' move the item into place in the caller's buffer
         CopyMemory VarPtr(items) + (i - 1) * VariantLength, VarPtr(anItem), VariantLength
         numElementsFetched = numElementsFetched + 1
         
@@ -111,7 +111,7 @@ If lpNumElementsFetched <> 0 Then
     CopyMemory lpNumElementsFetched, VarPtr(0&), 4
 End If
 
-GetNext = Err.number Or &H80000000 ' convert Error code to an HRESULT
+GetNext = Err.number Or &H80000000 ' convert error code to an HRESULT
 
 End Function
 
@@ -132,7 +132,7 @@ End If
 Exit Function
 
 Err:
-Skip = Err.number Or &H80000000 ' convert Error code to an HRESULT
+Skip = Err.number Or &H80000000 ' convert error code to an HRESULT
 End Function
 
 '@================================================================================

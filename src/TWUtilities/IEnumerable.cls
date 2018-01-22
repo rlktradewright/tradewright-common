@@ -51,7 +51,7 @@ Option Explicit
 ' enumerated. Information about this is stored in a variant called a <em>cookie</em>,
 ' which is passed back to the caller by the implementing object from the methods
 ' in this interface, and is presented unchanged to the implementing object on the
-' Next such call. Note that a pCookie must not contain an object.
+' next such call. Note that a pCookie must not contain an object.
 '
 ' <h3>Acknowledgement</h3>
 ' I am indebted to Bryan Stafford for his article on implementing
@@ -137,18 +137,18 @@ End Property
 '@================================================================================
 
 ''
-' Supplies the Next Item in the collection to the caller.
+' Supplies the next item in the collection to the caller.
 '
 ' @return
-'   Returns <code>True</code> if the Next Item has been successfully supplied, and
+'   Returns <code>True</code> if the next item has been successfully supplied, and
 '   <code>False</code> otherwise (ie there are no more items).
-' @param Item
-'   A reference to a variant into which the Next Item is placed.
+' @param item
+'   A reference to a variant into which the next item is placed.
 ' @param pCookie
 '   The current pCookie value. Before exiting from the call, the implementing object
-'   should update this value to enable it to position correctly on the Next call.
+'   should update this value to enable it to position correctly on the next call.
 '
-'   If the supplied value is <code>Empty</code>, the first Item should be located.
+'   If the supplied value is <code>Empty</code>, the first item should be located.
 '@/
 Public Function NextItem( _
                 ByRef Item As Variant, _
@@ -157,12 +157,12 @@ Public Function NextItem( _
 End Function
 
 ''
-' Removes the current Item (ie the Item returned in the previous call to
+' Removes the current item (ie the item returned in the previous call to
 ' <code>nextItem</code>) from the collection.
 '
 ' @param pCookie
 '   The current pCookie value. Before exiting from the call, the implementing object
-'   may need to update this value to enable it to position correctly on the Next call.
+'   may need to update this value to enable it to position correctly on the next call.
 '@/
 Public Sub Remove( _
                 ByRef pCookie As Variant)
@@ -180,7 +180,7 @@ End Sub
 '   The number of items that are to be skipped.
 ' @param pCookie
 '   The current pCookie value. Before exiting from the call, the implementing object
-'   should update this value to enable it to position correctly on the Next call.
+'   should update this value to enable it to position correctly on the next call.
 '
 '   If the supplied value is <code>Empty</code>, skipping must start from the
 '   beginning of the list.

@@ -137,12 +137,12 @@ End Sub
 '
 ' @remarks
 '   Attempting to notify a stimulus that is not expected (as specified in the State
-'   table) causes Error <code>ErrorCodes.ErrIllegalArgumentException</code> to be raised, and
-'   the Error State is entered.
+'   table) causes error <code>ErrorCodes.ErrIllegalArgumentException</code> to be raised, and
+'   the error State is entered.
 '
-'   Attempting to notify any stimulus when the State engine is in the Error State
-'   causes Error <code>ErrorCodes.ErrIllegalStateException</code> to be raised, and the
-'   State engine remains in the Error State.
+'   Attempting to notify any stimulus when the State engine is in the error State
+'   causes error <code>ErrorCodes.ErrIllegalStateException</code> to be raised, and the
+'   State engine remains in the error State.
 ' @return
 '   An array of Action identifiers.
 ' @param Value

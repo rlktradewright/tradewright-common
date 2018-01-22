@@ -161,7 +161,7 @@ End Property
 '
 ' @remarks
 '   This property is only valid for simulated-time <code>Clock</code> objects.
-'   Attempting to set it for a realtime <code>Clock</code> results in Error
+'   Attempting to set it for a realtime <code>Clock</code> results in error
 '   <code>ErrUnsupportedOperationException</code>.
 '
 '   The value may be changed at any time.
@@ -175,7 +175,7 @@ End Property
 '   value passed in the <code>setTime</code> method.
 '
 '   Negative values are not permitted and cause an <code>ErrIllegalArgumentException</code>
-'   Error.
+'   error.
 '
 '@/
 Public Property Let Rate( _
@@ -222,7 +222,7 @@ End Property
 ' @remarks
 '   If this is a simulated-time <code>Clock</code>, the value is calculated by multiplying the
 '   elapsed time since the most recent call to the <code>setTime</code> method by the acceleration
-'   factor specified in the <code>rate</code> property and adding the Result to the
+'   factor specified in the <code>rate</code> property and adding the result to the
 '   time specified in the most recent call to <code>setTime</code>.
 '
 ' @return
@@ -338,7 +338,7 @@ End Sub
 '   After calling <code>pauseTime</code>, the <code>timestamp</code> property
 '   will return the same value until <code>resumeTime</code> is called.
 '
-'   A call to this method for a realtime <code>Clock</code> results in Error
+'   A call to this method for a realtime <code>Clock</code> results in error
 '   <code>ErrUnsupportedOperationException</code>.
 '@/
 Public Sub PauseTime()
@@ -362,7 +362,7 @@ End Sub
 ' Resumes the passage of time (simulated-time clocks only).
 '
 ' @remarks
-'   A call to this method for a realtime <code>Clock</code> results in Error
+'   A call to this method for a realtime <code>Clock</code> results in error
 '   <code>ErrUnsupportedOperationException</code>.
 '@/
 Public Sub ResumeTime()
@@ -386,7 +386,7 @@ End Sub
 ' Sets the current time (simulated-time clocks only), and raises a <code>Tick</code> event.
 '
 ' @remarks
-'   A call to this method for a realtime <code>Clock</code> results in Error
+'   A call to this method for a realtime <code>Clock</code> results in error
 '   <code>ErrUnsupportedOperationException</code>.
 ' @param pTimestamp
 '   The current time for this <code>Clock</code>. The time supplied must be in
@@ -422,7 +422,7 @@ End Sub
 ' Sets the current UTC time (simulated-time clocks only), and raises a <code>Tick</code> event.
 '
 ' @remarks
-'   A call to this method for a realtime <code>Clock</code> results in Error
+'   A call to this method for a realtime <code>Clock</code> results in error
 '   <code>ErrUnsupportedOperationException</code>.
 ' @param pTimestampUTC
 '   The current time for this <code>Clock</code>. The time supplied must be in UTC

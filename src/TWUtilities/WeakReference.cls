@@ -15,7 +15,7 @@ Option Explicit
 
 ''
 ' An object of this class holds a reference to another object that does not
-' Result in that object's reference Count being increased. This means that the
+' result in that object's reference count being increased. This means that the
 ' reference is not taken into account by Visual Basic when deciding whether to
 ' terminate the object.
 '

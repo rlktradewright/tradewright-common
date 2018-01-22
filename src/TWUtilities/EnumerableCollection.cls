@@ -39,7 +39,7 @@ Implements IEnumerable
 '@================================================================================
 
 ''
-' Raised when an Item is added to or removed from this
+' Raised when an item is added to or removed from this
 ' <code>EnumerableCollection</code> object, and when the collection is cleared.
 '
 ' @remarks
@@ -156,7 +156,7 @@ Dim lCookie As EnumerationCookie
 lCookie = pCookie
 
 If lCookie.Current <= 0 Then
-    Err.Raise ErrorCodes.ErrIllegalStateException, , "Current item already removed"
+    Err.Raise ErrorCodes.ErrIllegalStateException, , "Current Item already removed"
 End If
 
 Remove CLng(lCookie.Current)
@@ -239,17 +239,17 @@ End Property
 '@================================================================================
 
 ''
-' Adds an Item to the collection.
+' Adds an item to the collection.
 '
 ' @remarks
 '   Whether the before or after argument is a string expression or numeric expression,
 '   it must refer to an existing member of the collection, or an error occurs.
 '
-'   An Error also occurs if a specified key duplicates the key for an existing member
+'   An error also occurs if a specified key duplicates the key for an existing member
 '   of the collection.
 '
-' @param Item
-'   An expression of any type that specifies the member to Add to the collection.
+' @param item
+'   An expression of any type that specifies the member to add to the collection.
 ' @param key
 '   A unique string expression that specifies a key string that can be used, instead
 '   of a positional index, to access a member of the collection. If <code>Item</code> is
@@ -385,10 +385,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Returns a specific Item in the collection either by position or by key.
+' Returns a specific item in the collection either by position or by key.
 '
 ' @remarks
-'   If the value provided as index doesn’t match any existing member of the
+'   If the value provided as index doesn't match any existing member of the
 '   collection, an error occurs.
 '
 '   The Item method is the default method for a collection. Therefore, the
@@ -399,7 +399,7 @@ End Function
 '   Print MyCollection.Item(1)
 ' </pre>
 ' @return
-'   The required Item.
+'   The required item.
 ' @param pIndex
 '   An expression that specifies the position of a member of the collection.
 '   If a numeric expression, index must be a number from 1 to the value of the
@@ -441,7 +441,7 @@ End Function
 ' Notifies listeners that an item in the collection has changed.
 '
 ' @remarks
-'   If the value provided as pIndex doesn’t match any existing member of the
+'   If the value provided as pIndex doesn't match any existing member of the
 '   collection, an error occurs.
 '
 '   If the member specified by pIndex is not an object, an error occurs.
@@ -470,10 +470,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Removes an lItem from the collection.
+' Removes an item from the collection.
 '
 ' @remarks
-'   If the value provided as pIndex doesn’t match an existing member of the
+'   If the value provided as pIndex doesn't match an existing member of the
 '   collection, an error occurs.
 '
 ' @param pIndexOrItem
@@ -536,7 +536,7 @@ End Sub
 ' present.
 '
 ' @remarks
-'   If the value provided as index doesnï¿½t match any existing member of the
+'   If the value provided as index doesn't match any existing member of the
 '   collection, <code>False</code> is returned, and the <code>pItem</code>
 '   parameter is unchanged.
 '

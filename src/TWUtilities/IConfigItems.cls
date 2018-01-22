@@ -139,7 +139,7 @@ Public Function Count() As Long
 End Function
 
 ''
-' Inserts a new configuration item immediately before another specified Item in the list.
+' Inserts a new configuration item immediately before another specified item in the list.
 '
 ' @return
 '   A <code>ConfigItem</code> object representing the added configuration item.
@@ -150,8 +150,8 @@ End Function
 ' @param Comment
 '   The new configuration item's comment.
 ' @param targetItem
-'   The Item before which the new configuration item is to be inserted. If this argument
-'   is not supplied, or is <code>Nothing</code>, then the new Item is inserted at the end
+'   The item before which the new configuration item is to be inserted. If this argument
+'   is not supplied, or is <code>Nothing</code>, then the new item is inserted at the end
 '   of the list.
 '
 '
@@ -184,7 +184,7 @@ Public Function Item( _
 End Function
 
 ''
-' Moves an existing configuration item immediately before another specified Item in the list.
+' Moves an existing configuration item immediately before another specified item in the list.
 '
 ' @param itemSpecifier
 '   Specifies which configuration item to be moved.
@@ -210,9 +210,9 @@ End Sub
 '   Specifies which configuration item to be removed.
 '
 '   If the supplied value is a <code>String</code>, then the first configuration
-'   Item in the list with that name is removed.
+'   item in the list with that name is removed.
 '
-'   If the supplied value is a configuration item, then that Item is removed.
+'   If the supplied value is a configuration item, then that item is removed.
 '
 '@/
 Public Sub Remove( _

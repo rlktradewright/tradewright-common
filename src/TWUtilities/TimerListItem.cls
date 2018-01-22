@@ -207,7 +207,7 @@ Const ProcName As String = "Notify"
 On Error GoTo Err
 
 If mState <> TimerListItemStatePending Then
-    ' this can occur because notifying an earlier Item could Result in the
+    ' this can occur because notifying an earlier item could result in the
     ' application removing this one after it has been identified for notification
     ' but before it has actually been notified
     Exit Sub
@@ -224,7 +224,7 @@ End Sub
 ' Unregisters a <code>StateChangeListener</code> object.
 '
 ' @remarks
-'   No Error occurs if the object to be unregistered is not
+'   No error occurs if the object to be unregistered is not
 '    actually registered.
 ' @param listener
 '   The listener object to be unregistered.

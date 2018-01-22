@@ -746,7 +746,7 @@ End Sub
 ' been stored from the configuration dataset.
 '
 ' @remarks
-'   No Error occurs if this method is called when no <code>ConfigurationSection</code>
+'   No error occurs if this method is called when no <code>ConfigurationSection</code>
 '   object has been assigned to this <code>Parameters</code> object.
 '@/
 Public Sub RemoveFromConfig()

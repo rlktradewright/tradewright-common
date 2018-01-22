@@ -235,7 +235,7 @@ End If
 
 lEntry.Initialise lExpiryDate, pData, Me
 
-'Debug.Print "Add lEntry: " & gFormatTimestamp(lExpiryDate, TimestampTimeOnly)
+'Debug.Print "add lEntry: " & gFormatTimestamp(lExpiryDate, TimestampTimeOnly)
 mList.Add lEntry, lExpiryDate
 reschedule
 
@@ -293,7 +293,7 @@ End Sub
 ' Removes the specified <code>TimerListItem</code> object from the list.
 '
 ' @remarks
-'   Removing an Item from the list causes its status to be set to
+'   Removing an item from the list causes its status to be set to
 '   <code>TimerListItemStateCancelled</code>, and prevents it from expiring.
 ' @param tli
 '   The <code>TimerListItem</code> object to be removed.
@@ -338,8 +338,8 @@ Do While en.MoveNext
     Set currItem = en.Current
     If currItem.ExpiryTime > currentTime Then Exit Do
     If currItem.State = TimerListItemStatePending Then
-        ' we can't notify the Item at this point because we are iterating the list, and
-        ' the item's owner might Add another Item which would corrupt the list. So Add it
+        ' we can't notify the item at this point because we are iterating the list, and
+        ' the item's owner might add another item which would corrupt the list. So add it
         ' to a collection and notify it when we've Finished iterating the list
         If mItemsToNotifyIndex > UBound(mItemsToNotify) Then
             ReDim Preserve mItemsToNotify(2 * (UBound(mItemsToNotify) + 1) - 1) As TimerListItem
@@ -418,7 +418,7 @@ Else
     interval = Int((mNextExpiry - gGetTimestampUtc) * 86400 * 1000 + 0.9999)
     If interval <= 0 Then interval = 1
         ' this could happen if we've just gone past the
-        ' expiry time for the first Item in the list
+        ' expiry time for the first item in the list
     
     mTimer.Initialise interval, 0, False, Empty
     mTimer.StartTimer
@@ -438,7 +438,7 @@ End Sub
 '
 ' @remarks
 '   Calling this method on a realtime <code>TimerList</code> object causes
-'   Error <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
+'   error <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
 ' @param theTime
 '   The time to be set.
 '@/

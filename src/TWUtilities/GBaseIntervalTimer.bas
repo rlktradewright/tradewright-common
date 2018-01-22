@@ -200,7 +200,7 @@ End If
 
 ' don't use With mTimers(pIndex) here, because if another timer is started
 ' in the event handler and that required the table to be ReDim'ed, that
-' causes an Error (table is locked by the With)
+' causes an error (table is locked by the With)
 mTimers(pIndex).Fired = True
 If mTimers(pIndex).Handle <> 0 Then
     'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log  "Fire timer: handle", ProcName, ModuleName, CStr(mTimers(pIndex).Handle), LogLevelHighDetail

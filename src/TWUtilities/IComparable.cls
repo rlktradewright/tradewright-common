@@ -83,7 +83,7 @@ Private Const ModuleName                    As String = "IComparable"
 '   = sgn(obj2.compareTo(obj3))</code> for all obj3.</p>
 '</pre>
 '   If the specified object is <code>Nothing</code>, then an
-'   <code>RrrorCodes.ErrNullPointerException</code> Error is raised.
+'   <code>RrrorCodes.ErrNullPointerException</code> error is raised.
 ' @return
 '   A <code>Long</code> value that is negative if this object is less than the
 '   specified object, 0 if it is equal to it, and positive otherwise.

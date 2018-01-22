@@ -70,7 +70,7 @@ Private Const ModuleName                    As String = "StringBuilder"
 
 
 Private mBuffer                             As String
-Private mBufferIndex                        As Long     ' the index of the Next
+Private mBufferIndex                        As Long     ' the index of the next
                                                         ' free position in mBuffer
 
 Private mMaxCapacity                        As Long

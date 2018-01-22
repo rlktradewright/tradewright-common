@@ -677,8 +677,6 @@ ElseIf TypeOf Value Is IJSONable Then
     encodeJSONableObject Value, sb
 ElseIf TypeOf Value Is Dictionary Then
     encodeDictionary Value, sb
-'ElseIf TypeOf value Is SortedDictionary Then
-'    encodeSortedDictionary value, sb
 ElseIf TypeOf Value Is Collection Or _
     TypeOf Value Is IEnumerable _
 Then
@@ -692,43 +690,6 @@ Exit Sub
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
-
-'Private Sub encodeSortedDictionary( _
-'                ByVal value As Variant, _
-'                ByVal sb As StringBuilder)
-'Dim doneFirst As Boolean
-'Dim sc As SortedDictionary
-'Dim scEntry As DictionaryEntry
-'Const ProcName As String = "encodeSortedDictionary"
-'
-'On Error GoTo Err
-'
-'Set sc = value
-'
-'Dim keysEnum As Enumerator
-'Set keysEnum = sc.KeyEnumerator
-'
-'sb.Append BeginObject
-'
-'Do While keysEnum.MoveNext
-'    Set scEntry = keysEnum.current
-'    If Not doneFirst Then
-'        doneFirst = True
-'    Else
-'        sb.Append ValueSeparator
-'    End If
-'    gEncodeVariant scEntry.Key, sb
-'    sb.Append nameSeparator
-'    gEncodeVariant scEntry.Data, sb
-'Loop
-'
-'sb.Append EndObject
-'
-'Exit Sub
-'
-'Err:
-'gHandleUnexpectedError ProcName, ModuleName
-'End Sub
 
 Private Sub encodeString( _
                 ByVal str As String, _

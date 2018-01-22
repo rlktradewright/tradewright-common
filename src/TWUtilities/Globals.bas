@@ -485,7 +485,7 @@ If pReRaise Then
     If errNum = 0 Then
         Err.Raise ErrorCodes.ErrIllegalStateException, _
                 errSource, _
-                "gHandleUnexpectedError called in non-error context"
+                "gHandleUnexpectedError called in non-Error context"
     Else
         Err.Raise errNum, errSource, errDesc
     End If
@@ -511,7 +511,7 @@ mUnhandledErrorHandler.Notify pProcedureName, pModuleName, ProjectName, pFailpoi
 End Sub
 
 Public Sub gHandleWin32Error()
-Err.Raise ErrorCodes.ErrRuntimeException, , "Windows error " & GetLastError
+Err.Raise ErrorCodes.ErrRuntimeException, , "Windows Error " & GetLastError
 End Sub
 
 Public Function gHexStringToBytes(inString As String) As Byte()

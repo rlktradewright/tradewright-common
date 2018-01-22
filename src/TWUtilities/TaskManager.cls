@@ -404,6 +404,10 @@ Private Sub mTaskInfoTimer_TimerExpired(ev As TimerExpiredEventData)
 Const ProcName As String = "mTaskInfoTimer_TimerExpired"
 On Error GoTo Err
 
+#If trace Then
+    gNullTracer.EnterProcedure "mTaskInfoTimer_TimerExpired", ProjectName, ModuleName, ""
+#End If
+
 If Not mSummaryLogger.IsLoggable(LogLevelDetail) Then Exit Sub
 
 mSummaryLogger.Log LogLevelDetail, "Running Tasks ----------------------------------------------" & vbCrLf & _
@@ -416,6 +420,10 @@ mSummaryLogger.Log LogLevelDetail, "Pending Tasks ------------------------------
                             GetPendingTaskSummary
 mSummaryLogger.Log LogLevelDetail, "Suspended Tasks --------------------------------------------" & vbCrLf & _
                             GetSuspendedTaskSummary
+
+#If trace Then
+    gNullTracer.ExitProcedure "mTaskInfoTimer_TimerExpired", ProjectName, ModuleName, ""
+#End If
 
 Exit Sub
 
@@ -849,7 +857,7 @@ lTaskController.Initialise pTarget, pCookie, pName, lTaskContext
 Dim id As Long
 id = allocateEntry
 
-' don't allow this task to Run until the Next quantum to
+' don't allow this task to Run until the next quantum to
 ' ensure it doesn't Run within this call
 mTaskTable(id).Priority = pPriority
 Set mTaskTable(id).TC = lTaskContext
@@ -858,7 +866,7 @@ mTaskTable(id).LastRunTime = 0
 mTaskTable(id).TotalCPUTime = 0
 
 If mProcessing Then
-    ' this task is being started from another running task. We Add the new task
+    ' this task is being started from another running task. We add the new task
     ' to the restartable queue rather than the pending queue to ensure that
     ' the parent task doesn't have to wait for all the existing pending tasks
     ' to Progress before the 'subtask' gets started
@@ -1402,7 +1410,7 @@ On Error GoTo Err
 Change
 
 If mTaskTable(indexToRemove).Next = indexToRemove Then
-    ' this was the only Item in the queue
+    ' this was the only item in the queue
     firstIndex = LastIndex
 Else
     If firstIndex = indexToRemove Then

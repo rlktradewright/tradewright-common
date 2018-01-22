@@ -15,7 +15,7 @@ Option Explicit
 
 ''
 ' An object of this class is passed to a <code>Task</code> object when the task is
-' started. It provides means for the task to notify its Progress and completion,
+' started. It provides means for the task to notify its progress and completion,
 ' and to Suspend its execution for a specified period.
 '
 '@/
@@ -83,7 +83,7 @@ Private mCancelled                          As Boolean
 ' it is still on the call stack. That could happen if the application sets its
 ' task context reference in the same procedure as calling Finish, because the
 ' Finish processing causes the task manager's reference to be nothinged. If that
-' happens, when control returns from the application to the Run method, an Error
+' happens, when control returns from the application to the Run method, an error
 ' occurs because this object has already been terminated.
 '
 '@/
@@ -269,11 +269,11 @@ End Sub
 '   The task should exit from the <code>run</code> method or the calling event handler
 '   immediately after calling this method.
 ' @param pCode
-'   Identifies the Error that has occurred.
+'   Identifies the error that has occurred.
 ' @param pMessage
-'   Describes the Error.
+'   Describes the error.
 ' @param pSource
-'   Indicates where the Error occurred.
+'   Indicates where the error occurred.
 '@/
 Public Sub Error( _
                 ByVal pCode As Long, _
@@ -310,11 +310,11 @@ End Sub
 '
 '   The task should exit from the <code>run</code> method or the calling event handler
 '   immediately after calling this method.
-' @param Result
-'   The Result of processing the task (if any). It is passed in the
+' @param pResult
+'   The result of processing the task (if any). It is passed in the
 '   <code>TaskCompletionEventData</code> to <code>TaskCompletionListener</code>s
 '   (if any are registered).
-' @param cancelled
+' @param pCancelled
 '   Indicates whether the task was cancelled. It is passed in the
 '   <code>TaskCompletionEventData</code> to <code>TaskCompletionListener</code>s
 '   (if any are registered).
@@ -404,18 +404,20 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' The task may call this method to notify its Progress.
+' The task may call this method to notify its progress.
 '
 ' @remarks
-'   The relevant <code>TaskController</code> object notifies the Progress to any
+'   The relevant <code>TaskController</code> object notifies the progress to any
 '   registered <code>TaskProgressListener</code>s.
 '
 '   Progress notifications are typically used to update user interface controls
-'   such as Progress bars. Since UI updates are relatively expensive operations,
-'   it is prudent not to notify Progress very frequently. Notifications at 1 percent
+'   such as progress bars. Since UI updates are relatively expensive operations,
+'   it is prudent not to notify progress very frequently. Notifications at 1 percent
 '   increments are more than adequate.
-' @param Progress
-'   The percentage of the task'sprocessing that has been completed.
+' @param pProgress
+'   The percentage of the task's processing that has been completed.
+' @param pInterimResult
+'   An intermediate or partial result of the processing.
 '@/
 Public Sub Progress( _
                 ByVal pProgress As Single, _

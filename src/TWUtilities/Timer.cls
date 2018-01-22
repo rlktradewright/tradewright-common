@@ -172,6 +172,10 @@ Friend Sub Notify()
 Const ProcName As String = "Notify"
 On Error GoTo Err
 
+#If trace Then
+    gNullTracer.EnterProcedure "Notify", ProjectName, ModuleName, ""
+#End If
+
 Dim interval As Long
 
 If Not mRepeat Then
@@ -189,6 +193,10 @@ End If
 fireTimerExpired
 
 If mState = TimerStopped Then Set mSelfRef = Nothing
+#If trace Then
+    gNullTracer.ExitProcedure "Notify", ProjectName, ModuleName, ""
+#End If
+
 Exit Sub
 
 Err:

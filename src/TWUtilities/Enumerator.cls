@@ -46,7 +46,7 @@ Option Explicit
 '        IEnumerable_UpdateSequence = mUpdateSeq
 '    End Property
 '
-'    Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
+'    Private Function IEnumerable_NextItem(pItem As Variant, pCookie As Variant) As Boolean
 '        .
 '        . <em>Code to implement this method</em>
 '        .
@@ -58,7 +58,7 @@ Option Explicit
 '        .
 '    End Sub
 '
-'    Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
+'    Private Function IEnumerable_Skip(ByVal pNumToSkip As Long, pCookie As Variant) As Boolean
 '        .
 '        . <em>Code to implement this method</em>
 '        .
@@ -181,14 +181,14 @@ End Sub
 '@================================================================================
 
 ''
-' Returns the current Item in the collection object.
+' Returns the current item in the collection object.
 '
 ' @remarks
 '   This property is only valid after a call to the <code>MoveNext</code> method
 '   that returned <code>True</code>. Calling it at any other time causes
 '   error <code>ErrorCodes.ErrIllegalStateException</code> to be raised.
 ' @return
-'   A <code>Variant</code> containing the current Item in the collection.
+'   A <code>Variant</code> containing the current item in the collection.
 '@/
 Public Property Get Current() As Variant
 Const ProcName As String = "Current"
@@ -257,11 +257,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Positions the iteration on the Next Item in the collection object. If there are no
+' Positions the iteration on the next item in the collection object. If there are no
 ' further objects in the collection, the returned value is <code>False</code>.
 '
 ' @return
-'   <code>True</code> if the Next Item exists, <code>False</code> otherwise.
+'   <code>True</code> if the next item exists, <code>False</code> otherwise.
 '@/
 Public Function MoveNext() As Boolean
 Const ProcName As String = "MoveNext"
@@ -291,12 +291,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 ''
-' Removes the current Item (ie the Item returned in the previous call to
+' Removes the current item (ie the item returned in the previous call to
 ' <code>nextItem</code>) from the collection.
 '
 ' @param pCookie
 '   The current pCookie value. Before exiting from the call, the implementing object
-'   should update this value to enable it to position correctly on the Next call.
+'   should update this value to enable it to position correctly on the next call.
 '@/
 Public Sub Remove()
 Const ProcName As String = "Remove"
@@ -315,11 +315,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Resets the position in the iteration to just before the first Item.
+' Resets the position in the iteration to just before the first item.
 '
 ' @remarks
-'   Note that there is no current Item after calling this method. You must call
-'   the <code>moveNext</code> method to make the first Item in the collection current.
+'   Note that there is no current item after calling this method. You must call
+'   the <code>moveNext</code> method to make the first item in the collection current.
 '@/
 Public Sub Reset()
 Const ProcName As String = "Reset"

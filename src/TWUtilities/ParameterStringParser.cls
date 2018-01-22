@@ -154,7 +154,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
-' Gets the name and value for the Next parameter in the parameter string.
+' Gets the name and value for the next parameter in the parameter string.
 '
 ' @remarks
 ' @return

@@ -30,7 +30,7 @@ Option Explicit
 ' <br />
 ' Set cf = LoadConfigProviderFromXMLFile("C:\MyConfig.xml")<br />
 ' Set root = cf.rootItem    ' this is actually an XMLConfigItem object<br />
-' outputFilename = root.childItems.Item("outputFilename").value<br />
+' outputFilename = root.ChildItems.Item("outputFilename").value<br />
 ' </tt>
 ' </pre>
 '
@@ -351,7 +351,7 @@ For Each node In mElement.childNodes
             End If
         End If
     ElseIf TypeOf node Is IXMLDOMComment Then
-        ' remember this for the Next Element
+        ' remember this for the next Element
         Set childComment = node
     Else
         Debug.Assert False
