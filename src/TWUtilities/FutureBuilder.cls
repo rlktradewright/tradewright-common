@@ -22,6 +22,8 @@ Option Explicit
 ' Interfaces
 '@================================================================================
 
+Implements IDeferredAction
+
 '@================================================================================
 ' Events
 '@================================================================================
@@ -42,12 +44,20 @@ Event Cancelled(ev As CancelledEventData)
 
 Private Const ModuleName                            As String = "FutureBuilder"
 
+Private Const ActionCancel                          As String = "Cancel"
+Private Const ActionComplete                        As String = "Complete"
+Private Const ActionFail                            As String = "Fail"
+
 '@================================================================================
 ' Member variables
 '@================================================================================
 
 Private mFuture                                     As GenericFuture
 Private mFutureAsIFuture                            As IFuture
+
+Private mErrorNumber                                As Long
+Private mErrorMessage                               As String
+Private mErrorSource                                As String
 
 '@================================================================================
 ' Class Event Handlers
@@ -60,8 +70,26 @@ Set mFutureAsIFuture = mFuture
 End Sub
 
 '@================================================================================
-' XXXX Interface Members
+' IDeferredAction Interface Members
 '@================================================================================
+
+Private Sub IDeferredAction_Run(ByVal Data As Variant)
+Const ProcName As String = "IDeferredAction_Run"
+On Error GoTo Err
+
+If Data = ActionComplete Then
+    mFuture.Complete
+ElseIf Data = ActionCancel Then
+    mFuture.Cancel
+ElseIf Data = ActionFail Then
+    mFuture.Fail mErrorNumber, mErrorMessage, mErrorSource
+End If
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
 
 '@================================================================================
 ' XXXX Event Handlers
@@ -123,7 +151,7 @@ On Error GoTo Err
 
 If Not mFutureAsIFuture.IsPending Then Exit Sub
 
-mFuture.Cancel
+DeferredActionManager.DeferAction Me, ActionCancel
 
 Exit Sub
 
@@ -137,7 +165,7 @@ On Error GoTo Err
 
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 
-mFuture.Complete
+DeferredActionManager.DeferAction Me, ActionComplete
 
 Exit Sub
 
@@ -151,7 +179,10 @@ On Error GoTo Err
 
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 
-mFuture.Fail pErrorNumber, pErrorMessage, pErrorSource
+mErrorNumber = pErrorNumber
+mErrorMessage = pErrorMessage
+mErrorSource = pErrorSource
+DeferredActionManager.DeferAction Me, ActionFail
 
 Exit Sub
 
