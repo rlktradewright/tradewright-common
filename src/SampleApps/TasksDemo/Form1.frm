@@ -722,6 +722,12 @@ Attribute mSchedulingIntervalTimer.VB_VarHelpID = -1
 Private Sub Form_Initialize()
 InitialiseCommonControls
 InitialiseTWUtilities
+ApplicationGroupName = "TradeWright"
+ApplicationName = "TasksDemo"
+SetupDefaultLogging Command
+#If trace = 1 Then
+    EnableTracing ""
+#End If
 End Sub
 
 Private Sub Form_Load()
@@ -740,7 +746,7 @@ End Sub
 ' iTaskCompletionListener Interface Members
 '================================================================================
 
-Private Sub iTaskCompletionListener_taskCompleted( _
+Private Sub iTaskCompletionListener_TaskCompleted( _
                 ByRef ev As TaskCompletionEventData)
 Dim Index As Long
 Index = ev.Cookie
@@ -760,11 +766,13 @@ End Sub
 ' ITaskProgressListener Interface Members
 '================================================================================
 
-Private Sub ITaskProgressListener_progress( _
+Private Sub ITaskProgressListener_Progress( _
                 ByRef ev As TaskProgressEventData)
 Dim Index As Long
 Index = ev.Cookie
 ProgressText(Index) = ev.Progress & "%"
+CountText(Index).Refresh
+ProgressText(Index).Refresh
 End Sub
 
 '================================================================================
@@ -772,6 +780,7 @@ End Sub
 '================================================================================
 
 Private Sub CancelButton_Click(Index As Integer)
+LogMessage "CancelButton_Click: " & Index
 mTaskControllers(Index).CancelTask
 End Sub
 
@@ -780,6 +789,7 @@ validateParams
 End Sub
 
 Private Sub PauseButton_Click(Index As Integer)
+LogMessage "PauseButton_Click: " & Index
 mTasks(Index).pause
 End Sub
 
@@ -798,6 +808,7 @@ Private Sub StartButton_Click( _
 Dim lTask As New CounterTask
 Dim priority As TaskPriorities
 
+LogMessage "StartButton_Click: " & Index
 lTask.Index = Index
 Set mTasks(Index) = lTask
 
@@ -845,6 +856,7 @@ End Sub
 
 Private Sub mSchedulingIntervalTimer_TimerExpired(ev As TimerExpiredEventData)
 SchedulingIntervalLabel.Caption = Format(TaskManager.AverageInterScheduleWait, "0.00")
+SchedulingIntervalLabel.Refresh
 End Sub
 
 '================================================================================

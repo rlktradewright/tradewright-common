@@ -88,9 +88,8 @@ If mRunCounter = 100 Then
     mRunCounter = 0
 End If
 
-Form1.CountText(mIndex) = mCount
-
 If mCount Mod 10 = 0 Then
+    Form1.CountText(mIndex) = mCount
     mTaskContext.Progress mCount / 10, Empty
 End If
 
@@ -103,6 +102,7 @@ End Sub
 Private Property Get ITask_TaskName() As String
 ITask_TaskName = mTaskContext.Name
 End Property
+
 Private Property Let ITask_TaskContext(ByVal RHS As TaskContext)
 Set mTaskContext = RHS
 End Property

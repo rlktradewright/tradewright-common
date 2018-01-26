@@ -838,7 +838,7 @@ If IsMissing(pData) Then pData = Empty
 
 If gLogger.IsLoggable(LogLevelHighDetail) Then
     Dim s As String
-    s = "Starting task (mProcessing=" & mProcessing & "): taskType=" & _
+    s = "Starting task: taskType=" & _
         TypeName(pTarget) & _
         " pCookie=" & gVariantToString(pCookie) & _
         " pData=" & gVariantToString(pData) & _
