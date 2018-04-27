@@ -28,6 +28,13 @@ Private Const MinTimerResolution            As Long = 1
 
 Private Const TimerTableInitialSize         As Long = 16
 
+' defines the intervbal between ending a timer and allowing its table entry
+' to be reused, to allow for the situation where a call to end the timer is made
+' after the TimerProc was called but before the UserMessageTimer message arrives
+' at the WindowProc - if the table entry has been reused, the new client would
+' be wrongly notified
+Private Const ReleaseInterval               As Double = 100# / (86400# * 1000#)
+
 '@================================================================================
 ' Enums
 '@================================================================================
@@ -41,8 +48,8 @@ Private Type TimerTableEntry
     TimerObj    As IntervalTimer
     Periodic    As Boolean
     Fired       As Boolean
-    NextFree    As Long
-    Ending      As Boolean
+    ReleaseTime As Date
+    Next        As Long
 End Type
 
 '@================================================================================
@@ -58,7 +65,14 @@ Private mMinRes As Long
 Private mTimers() As TimerTableEntry
 Private mTimersIndex As Long
 
+'index of first entry in free list
 Private mFirstFree As Long
+
+' index of first entry in ending queue
+Private mFirstEnding As Long
+
+' index of last entry in ending queue
+Private mLastEnding As Long
 
 Private mNumRunningTimers As Long
 
@@ -90,28 +104,10 @@ Public Function BeginTimer( _
                 ByVal pPeriodic As Boolean, _
                 ByVal pTimerObj As IntervalTimer) As Long
 Const ProcName As String = "BeginTimer"
-
 On Error GoTo Err
 
 Dim lTimerNumber As Long
-Dim i As Long
-
-If mFirstFree <> NullIndex Then
-    lTimerNumber = mFirstFree
-    mFirstFree = mTimers(mFirstFree).NextFree
-    'Debug.Print "Reuse timer entry: " & lTimerNumber
-Else
-    
-    If mTimersIndex > UBound(mTimers) Then
-        ReDim Preserve mTimers(1 To 2 * UBound(mTimers)) As TimerTableEntry
-        Debug.Print "Timer table extended: size = " & UBound(mTimers)
-        If gLogger.IsLoggable(LogLevelHighDetail) Then _
-            gLogger.Log "Increased mTimers size", ProcName, ModuleName, LogLevelHighDetail, CStr(UBound(mTimers) + 1)
-    End If
-    lTimerNumber = mTimersIndex
-    mTimersIndex = mTimersIndex + 1
-    'Debug.Print "Allocate timer entry: " & lTimerNumber
-End If
+lTimerNumber = allocateEntry
 
 With mTimers(lTimerNumber)
     Set .TimerObj = pTimerObj
@@ -132,14 +128,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Sub EndTimer(ByVal timerNumber As Long)
-
 Const ProcName As String = "EndTimer"
-
 On Error GoTo Err
 
 With mTimers(timerNumber)
     DeleteTimerQueueTimer mhTimerQueue, .Handle, 0
-    mNumRunningTimers = mNumRunningTimers - 1
+    If .Periodic Or Not .Fired Then mNumRunningTimers = mNumRunningTimers - 1
     releaseEntry timerNumber
 End With
 
@@ -151,14 +145,11 @@ End Sub
 
 Public Sub gInit()
 Const ProcName As String = "gInit"
-
 On Error GoTo Err
-
-Dim TC As TIMECAPS
-Dim i As Long
 
 If mMinRes <> 0 Then Exit Sub
 
+Dim TC As TIMECAPS
 If TimeGetDevCaps(TC, 8) <> TIMERR_NOERROR Then gHandleWin32Error
 
 mMinRes = IIf(TC.wPeriodMin < MinTimerResolution, MinTimerResolution, TC.wPeriodMin)
@@ -173,6 +164,8 @@ If mhTimerQueue = 0 Then gHandleWin32Error
 ReDim mTimers(1 To TimerTableInitialSize) As TimerTableEntry
 mTimersIndex = 1
 mFirstFree = NullIndex
+mFirstEnding = NullIndex
+mLastEnding = NullIndex
 
 Exit Sub
 
@@ -184,16 +177,11 @@ Public Sub gProcessUserTimerMsg(ByVal pIndex As Long)
 Const ProcName As String = "gProcessUserTimerMsg"
 On Error GoTo Err
 
-If mTimers(pIndex).Ending Then
-    ' a call to end the timer was made after the TimerProc was called but
-    ' before the APC executed
+If (mTimers(pIndex).Handle <> 0 And Not mTimers(pIndex).Periodic) Then
+    mTimers(pIndex).Fired = True
     mNumRunningTimers = mNumRunningTimers - 1
-    releaseEntry pIndex
-    Exit Sub
 End If
 
-If (Not mTimers(pIndex).Periodic) Then mNumRunningTimers = mNumRunningTimers - 1
-   
 If Not gInitialised Then
     Exit Sub
 End If
@@ -201,7 +189,6 @@ End If
 ' don't use With mTimers(pIndex) here, because if another timer is started
 ' in the event handler and that required the table to be ReDim'ed, that
 ' causes an error (table is locked by the With)
-mTimers(pIndex).Fired = True
 If mTimers(pIndex).Handle <> 0 Then
     'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log  "Fire timer: handle", ProcName, ModuleName, CStr(mTimers(pIndex).Handle), LogLevelHighDetail
     mTimers(pIndex).TimerObj.Notify
@@ -214,11 +201,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gTerm()
-Dim i As Long
 Const ProcName As String = "gTerm"
-
 On Error GoTo Err
 
+Dim i As Long
 For i = 1 To mTimersIndex - 1
     If Not mTimers(i).TimerObj Is Nothing Then
         EndTimer i
@@ -238,22 +224,105 @@ End Sub
 ' Helper Functions
 '@================================================================================
 
+Private Function allocateEntry() As Long
+Const ProcName As String = "allocateEntry"
+
+Static sMaxIndex As Long
+
+Dim lIndex As Long
+lIndex = allocateEntryIndex
+
+With mTimers(lIndex)
+    .Fired = False
+    .Handle = 0
+    .Next = NullIndex
+    .Periodic = False
+    .ReleaseTime = 0#
+    Set .TimerObj = Nothing
+End With
+
+If lIndex > sMaxIndex Then
+    If gLogger.IsLoggable(LogLevelHighDetail) Then
+        gLogger.Log "Max index: " & sMaxIndex, ProcName, ModuleName, LogLevelHighDetail
+    End If
+    sMaxIndex = lIndex
+End If
+allocateEntry = lIndex
+End Function
+
+Private Function allocateEntryIndex() As Long
+Const ProcName As String = "allocateEntryIndex"
+
+If mFirstFree <> NullIndex Then
+    allocateEntryIndex = allocateFirstFree
+    Exit Function
+End If
+
+If mTimersIndex <= UBound(mTimers) Then
+    allocateEntryIndex = mTimersIndex
+    mTimersIndex = mTimersIndex + 1
+    Exit Function
+End If
+
+If mFirstEnding <> NullIndex Then
+    Dim t As Date: t = gGetTimestampUtc
+    Dim lCount As Long
+    Do While t >= mTimers(mFirstEnding).ReleaseTime + ReleaseInterval
+        Dim lNewFirstFree As Long: lNewFirstFree = mFirstEnding
+        mFirstEnding = mTimers(mFirstEnding).Next
+        mTimers(lNewFirstFree).Next = mFirstFree
+        mFirstFree = lNewFirstFree
+        lCount = lCount + 1
+        If mFirstEnding = NullIndex Then
+            mLastEnding = NullIndex
+            Exit Do
+        End If
+    Loop
+    If gLogger.IsLoggable(LogLevelHighDetail) Then
+        gLogger.Log "Released timers: " & lCount, ProcName, ModuleName, LogLevelHighDetail
+    End If
+End If
+
+If mFirstFree <> NullIndex Then
+    allocateEntryIndex = allocateFirstFree
+    Exit Function
+End If
+
+If mTimersIndex > UBound(mTimers) Then
+    ReDim Preserve mTimers(1 To 2 * UBound(mTimers)) As TimerTableEntry
+    Debug.Print "Timer table extended: size = " & UBound(mTimers)
+    If gLogger.IsLoggable(LogLevelHighDetail) Then
+        gLogger.Log "Increased mTimers size", ProcName, ModuleName, LogLevelHighDetail, CStr(UBound(mTimers) + 1)
+    End If
+End If
+allocateEntryIndex = mTimersIndex
+mTimersIndex = mTimersIndex + 1
+End Function
+
+Private Function allocateFirstFree() As Long
+allocateFirstFree = mFirstFree
+mFirstFree = mTimers(mFirstFree).Next
+End Function
+
+
 Private Sub releaseEntry( _
                 ByVal pIndex As Long)
 Const ProcName As String = "releaseEntry"
-
 On Error GoTo Err
 
 With mTimers(pIndex)
     .Handle = 0
-    .Fired = False
-    .Periodic = False
-    Set .TimerObj = Nothing
-    .Ending = False
-    
-    .NextFree = mFirstFree
-    mFirstFree = pIndex
+    .Next = NullIndex
+    .ReleaseTime = gGetTimestampUtc
 End With
+
+If mFirstEnding = NullIndex Then
+    mFirstEnding = pIndex
+Else
+    mTimers(mLastEnding).Next = pIndex
+End If
+
+mLastEnding = pIndex
 
 Exit Sub
 
