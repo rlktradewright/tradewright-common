@@ -34,11 +34,11 @@ Private Const TraceInfotype                         As String = "$trace"
 ' Member variables
 '@================================================================================
 
-Private mTracers                                    As Collection
+Private mTracers                                    As SortedDictionary
 
 ' Don't make this Static within gBuildTraceString - my tests show that it's
 ' faster declared at module level
-Private mTokens(9)                                       As String
+Private mTokens(9)                                  As String
 
 
 '@================================================================================
@@ -58,12 +58,13 @@ Private mTokens(9)                                       As String
 '@================================================================================
 
 Public Property Get gNullTracer() As Tracer
-Static lTracer As Tracer
 Const ProcName As String = "gNullTracer"
 On Error GoTo Err
 
-If lTracer Is Nothing Then Set lTracer = gGetTracer("")
-Set gNullTracer = lTracer
+Static sTracer As Tracer
+
+If sTracer Is Nothing Then Set sTracer = gGetTracer("")
+Set gNullTracer = sTracer
 
 Exit Property
 
@@ -84,7 +85,6 @@ Public Sub gBuildTraceString( _
                 ByVal pModuleName As String, _
                 ByVal pInfo As String, _
                 ByRef pResult As String)
-
 Const ProcName As String = "gBuildTraceString"
 On Error GoTo Err
 
@@ -162,11 +162,7 @@ On Error GoTo Err
 
 pTraceType = normaliseTraceType(pTraceType)
 
-On Error Resume Next
-Set gGetTracer = mTracers.Item(pTraceType)
-On Error GoTo Err
-
-If gGetTracer Is Nothing Then
+If Not mTracers.TryItem(pTraceType, gGetTracer) Then
     Set gGetTracer = New Tracer
     gGetTracer.Initialise pTraceType
     mTracers.Add gGetTracer, pTraceType
@@ -182,7 +178,7 @@ Public Sub gInit()
 Const ProcName As String = "gInit"
 On Error GoTo Err
 
-Set mTracers = New Collection
+Set mTracers = New SortedDictionary
 
 gLogManager.GetLoggerEx(TraceInfotype).LogLevel = LogLevelNormal
 

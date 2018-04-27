@@ -90,9 +90,6 @@ End Function
 
 Public Function GetLogger( _
                 ByVal pInfoType As String) As Logger
-Dim templogger As Logger
-Dim ParentLogger As Logger
-
 Const ProcName As String = "GetLogger"
 On Error GoTo Err
 
@@ -115,11 +112,7 @@ End Function
 
 Friend Function GetLoggerEx( _
                 ByVal InfoType As String) As Logger
-Dim templogger As Logger
-Dim ParentLogger As Logger
-
 Const ProcName As String = "GetLoggerEx"
-
 On Error GoTo Err
 
 If InfoType = "" Then
@@ -127,26 +120,20 @@ If InfoType = "" Then
     Exit Function
 End If
 
-On Error Resume Next
-Set GetLoggerEx = mLoggers.Item(InfoType)
-On Error GoTo Err
-
-If Not GetLoggerEx Is Nothing Then Exit Function
+If mLoggers.TryItem(InfoType, GetLoggerEx) Then Exit Function
 
 Set GetLoggerEx = New Logger
 GetLoggerEx.InfoType = InfoType
 mLoggers.Add GetLoggerEx, InfoType
+
+Dim templogger As Logger
 Set templogger = GetLoggerEx
 
 InfoType = removeElement(InfoType)
 Do While InfoType <> ""
-    
+    Dim ParentLogger As Logger
     Set ParentLogger = Nothing
-    On Error Resume Next
-    Set ParentLogger = mLoggers.Item(InfoType)
-    On Error GoTo Err
-    
-    If Not ParentLogger Is Nothing Then
+    If mLoggers.TryItem(InfoType, ParentLogger) Then
         templogger.Parent = ParentLogger
         Exit Function
     End If
@@ -179,12 +166,10 @@ End Function
 
 Private Function removeElement( _
                 ByVal InfoType As String) As String
-Dim l As Long
-
 Const ProcName As String = "removeElement"
-
 On Error GoTo Err
 
+Dim l As Long
 l = InStrRev(InfoType, ".")
 If l <> 0 Then
     removeElement = Left$(InfoType, l - 1)
