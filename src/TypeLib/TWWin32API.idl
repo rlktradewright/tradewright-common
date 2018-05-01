@@ -1731,6 +1731,14 @@ library TWWin32API
 		[entry("GetLastError")]
 		long GetLastError();
 
+		[entry("GetProcessTimes")]
+		long GetProcessTimes(
+			[in] long hProcess,
+			[in] CURRENCY* lpCreationTime,
+			[in] CURRENCY* lpExitTime,
+			[in] CURRENCY* lpKernelTime,
+			[in] CURRENCY* lpUserTime);
+
 		[entry("GetSystemInfo")]
 		void GetSystemInfo(
 			[in, out] SYSTEM_INFO* lpSystemInfo);
