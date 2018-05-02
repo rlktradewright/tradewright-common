@@ -45,6 +45,9 @@ Option Explicit
 ' case-sensitive. Switch values that contain the separator character must be enclosed in
 ' double quotes. Double quotes appearing within a switch value must be repeated.
 '
+' If a switch consisting only of "//" or "--" is supplied, then everything else in the
+' input is interpreted as arguments.
+'
 ' Examples (these examples use a space as the separator character):
 ' <pre>
 '   anArgument -sw1 anotherArg -sw2:42
@@ -90,9 +93,19 @@ Private mSwitches() As SwitchEntry
 Private mSep As String
 Private mCommandLine As String
 
+Private mNumberOfSwitches As Long
+Private mNumberOfArgs As Long
+
+Private mTreatRemainingArgsAsArgs As Boolean
+
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
+
+Private Sub Class_Initialize()
+ReDim mArgs(15) As String
+ReDim mSwitches(15) As SwitchEntry
+End Sub
 
 '@================================================================================
 ' XXXX Interface Members
@@ -118,7 +131,9 @@ Private mCommandLine As String
 '@/
 Public Property Get Arg( _
                 ByVal i As Integer) As String
-On Error Resume Next
+If mNumberOfArgs = 0 Then Exit Property
+
+gAssertArgument gIsInteger(i, 0, mNumberOfArgs - 1), "Invalid argument index"
 Arg = mArgs(i)
 End Property
 
@@ -141,12 +156,7 @@ End Property
 '
 '@/
 Public Property Get NumberOfArgs() As Integer
-On Error GoTo Err
-NumberOfArgs = UBound(mArgs) + 1
-Exit Property
-
-Err:
-NumberOfArgs = 0
+NumberOfArgs = mNumberOfArgs
 End Property
 
 ''
@@ -157,12 +167,7 @@ End Property
 '
 '@/
 Public Property Get NumberOfSwitches() As Integer
-On Error GoTo Err
-NumberOfSwitches = UBound(mSwitches) + 1
-Exit Property
-
-Err:
-NumberOfSwitches = 0
+NumberOfSwitches = mNumberOfSwitches
 End Property
 
 ''
@@ -177,11 +182,10 @@ End Property
 '
 '@/
 Public Property Get Switch(ByVal s As String) As Boolean
+If mNumberOfSwitches = 0 Then Exit Property
+
 Dim i As Long
-
-On Error GoTo Err
-
-For i = 0 To UBound(mSwitches)
+For i = 0 To mNumberOfSwitches - 1
     If CStr(mSwitches(i).Switch) = UCase$(s) Then
         Switch = True
         Exit For
@@ -219,11 +223,10 @@ End Property
 '@/
 Public Property Get SwitchValue( _
                 ByVal s As String) As String
+If mNumberOfSwitches = 0 Then Exit Property
+
 Dim i As Long
-
-On Error GoTo Err
-
-For i = 0 To UBound(mSwitches)
+For i = 0 To mNumberOfSwitches - 1
     If CStr(mSwitches(i).Switch) = UCase$(s) Then
         SwitchValue = mSwitches(i).Value
         Exit For
@@ -242,7 +245,6 @@ Friend Sub Initialise( _
                 ByVal commandLine As String, _
                 ByVal separator As String)
 Const ProcName As String = "Initialise"
-
 On Error GoTo Err
 
 mCommandLine = Trim$(commandLine)
@@ -262,14 +264,12 @@ End Sub
 
 Private Function ContainsUnbalancedQuotes( _
                 inString As String) As Boolean
-Dim pos As Long
 Const ProcName As String = "ContainsUnbalancedQuotes"
-
 On Error GoTo Err
 
-pos = Len(inString) - 1 ' exclude the last char
+Dim pos As Long
+pos = InStrRev(inString, """")
 If pos = 0 Then Exit Function
-pos = InStrRev(inString, """", pos)
 Do While pos <> 0
     ContainsUnbalancedQuotes = Not ContainsUnbalancedQuotes
     If pos = 1 Then Exit Do
@@ -283,145 +283,85 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub getArgs()
-Dim rawArgs() As String
-Dim Arg As String
-Dim v As Variant
-Dim quotedArg As String
-Dim inQuotedArg As Boolean
-Dim iA As Integer
-Dim iSw As Integer
-Dim unbalancedQuotes As Boolean
-
 Const ProcName As String = "getArgs"
-
 On Error GoTo Err
 
 If mCommandLine = "" Then Exit Sub
 
-rawArgs = Split(mCommandLine, mSep)
-
-For Each v In rawArgs
-    Arg = CStr(v)
-    Arg = Replace(Arg, """""", """")
-    If Not inQuotedArg Then
-        If Arg = "" And mSep = "" Then
-        Else
-            If Left$(Arg, 1) = """" Or _
-                ((Left$(Arg, 1) = "/" Or Left$(Arg, 1) = "-") And InStr(1, Arg, ":""")) <> 0 _
-            Then
-                inQuotedArg = True
-                quotedArg = Replace(Arg, """", "", , 1) ' Right$(arg, Len(arg) - 1)
-                If ContainsUnbalancedQuotes(quotedArg) Then
-                    unbalancedQuotes = Not unbalancedQuotes
-                End If
-                If Right$(quotedArg, 1) = """" And Not unbalancedQuotes Then
-                    ' the ending quote is also in this arg
-                    inQuotedArg = False
-                    quotedArg = Left$(quotedArg, Len(quotedArg) - 1)
-                    If Left$(quotedArg, 1) = "/" Or _
-                        Left$(quotedArg, 1) = "-" _
-                    Then
-                        setSwitch Right$(quotedArg, Len(quotedArg) - 1), iSw
-                        iSw = iSw + 1
-                    Else
-                        setArg quotedArg, iA
-                        iA = iA + 1
-                    End If
-                Else
-                    If Right$(Arg, 1) = """" Then
-                        unbalancedQuotes = Not unbalancedQuotes
-                    End If
-                End If
-            ElseIf (Left$(Arg, 1) = "/" Or _
-                Left$(Arg, 1) = "-") And _
-                Len(Arg) >= 2 _
-            Then
-                setSwitch Right$(Arg, Len(Arg) - 1), iSw
-                iSw = iSw + 1
-            Else
-                setArg Arg, iA
-                iA = iA + 1
-            End If
-        End If
+Dim partialArg As String
+Dim Var As Variant
+For Each Var In Split(mCommandLine, mSep)
+    Dim argument As String: argument = Var
+    If partialArg = "" And argument = "" And mSep = " " Then
+        ' discard spaces when the separator is a space and we don't have unbalanced quotes
     Else
-        If ContainsUnbalancedQuotes(Arg) Then
-            unbalancedQuotes = Not unbalancedQuotes
-        End If
-        If Right$(Arg, 1) = """" And Not unbalancedQuotes Then
-            inQuotedArg = False
-            quotedArg = quotedArg & mSep & Left$(Arg, Len(Arg) - 1)
-            If Left$(quotedArg, 1) = "/" Or _
-                Left$(quotedArg, 1) = "-" _
-            Then
-                setSwitch Right$(quotedArg, Len(quotedArg) - 1), iSw
-                iSw = iSw + 1
-            Else
-                setArg quotedArg, iA
-                iA = iA + 1
-            End If
-        Else
-            If Right$(Arg, 1) = """" Then
-                unbalancedQuotes = Not unbalancedQuotes
-            End If
-            quotedArg = quotedArg & mSep & Arg
+        If partialArg <> "" Then partialArg = partialArg & mSep
+        partialArg = partialArg & argument
+        If Not ContainsUnbalancedQuotes(partialArg) Then
+            setSwitchOrArg Trim$(partialArg)
+            partialArg = ""
         End If
     End If
 Next
 
-If iA <> 0 Then ReDim Preserve mArgs(iA - 1) As String
-If iSw <> 0 Then ReDim Preserve mSwitches(iSw - 1) As SwitchEntry
+If partialArg <> "" Then
+    setSwitchOrArg Trim$(partialArg)
+End If
 
 Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
+Private Function isAlphaChar(val As String) As Boolean
+isAlphaChar = True
+If val >= "A" And val <= "Z" Then Exit Function
+If val >= "a" And val <= "z" Then Exit Function
+isAlphaChar = False
+End Function
 
-Private Sub setArg( _
-                ByVal val As String, _
-                ByVal pIndex As Long)
-On Error Resume Next
-If pIndex > UBound(mArgs) Then
-    ReDim Preserve mArgs(UBound(mArgs) + 10) As String
-    If Err.number = 9 Then
-         ReDim mArgs(10) As String
-    End If
+Private Sub setArg(ByVal val As String)
+If mNumberOfArgs > UBound(mArgs) Then
+    ReDim Preserve mArgs(2 * (UBound(mArgs) + 1) - 1) As String
 End If
-mArgs(pIndex) = val
+mArgs(mNumberOfArgs) = val
+mNumberOfArgs = mNumberOfArgs + 1
 End Sub
 
-Private Sub setSwitch( _
-                ByVal val As String, _
-                ByVal pIndex As Long)
+Private Sub setSwitch(ByVal val As String)
+If mNumberOfSwitches > UBound(mSwitches) Then
+    ReDim Preserve mSwitches(2 * (UBound(mSwitches) + 1) - 1) As SwitchEntry
+End If
+
 Dim i As Long
-Const ProcName As String = "setSwitch"
-
-On Error GoTo Err
-
-On Error Resume Next
-If pIndex > UBound(mSwitches) Then
-    ReDim Preserve mSwitches(UBound(mSwitches) + 10) As SwitchEntry
-    If Err.number = 9 Then
-         ReDim mSwitches(10) As SwitchEntry
-    End If
-End If
-
 i = InStr(val, ":")
 
 If i > 0 Then
-    mSwitches(pIndex).Switch = UCase$(Left$(val, i - 1))
-    mSwitches(pIndex).Value = Right$(val, Len(val) - i)
+    mSwitches(mNumberOfSwitches).Switch = UCase$(Left$(val, i - 1))
+    mSwitches(mNumberOfSwitches).Value = Right$(val, Len(val) - i)
 Else
-    mSwitches(pIndex).Switch = UCase$(val)
+    mSwitches(mNumberOfSwitches).Switch = UCase$(val)
 End If
-
-Exit Sub
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
+mNumberOfSwitches = mNumberOfSwitches + 1
 End Sub
 
+Private Sub setSwitchOrArg(val As String)
+If val = "--" Or val = "//" Then
+    mTreatRemainingArgsAsArgs = True
+    Exit Sub
+End If
+
+If mTreatRemainingArgsAsArgs Then
+    setArg val
+ElseIf (Left$(val, 1) = "/" Or Left$(val, 1) = "-") And _
+        Len(val) > 1 And _
+        isAlphaChar(Mid$(val, 2, 1)) _
+Then
+    setSwitch Mid$(val, 2)
+Else
+    setArg val
+End If
+End Sub
 
 
