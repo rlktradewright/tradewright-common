@@ -46,7 +46,8 @@ Private Const ModuleName                            As String = "DictionaryKeysE
 ' Member variables
 '@================================================================================
 
-Private mSc As SortedDictionary
+Private mDict                                       As SortedDictionary
+Private mRoot                                       As DictionaryEntry
 
 '@================================================================================
 ' Class Event Handlers
@@ -58,7 +59,6 @@ Private mSc As SortedDictionary
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
-
 On Error GoTo Err
 
 Set IEnumerable_Enumerator = getEnumerator
@@ -70,25 +70,23 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
-Dim lCookie As EnumerationCookie
-Dim lEntry As DictionaryEntry
-
 Const ProcName As String = "IEnumerable_NextItem"
-
 On Error GoTo Err
 
+Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
-    mSc.FindFirst lCookie
+    gFindFirst lCookie, mRoot
 Else
     lCookie = pCookie
-    mSc.FindNext lCookie
+    gFindNext lCookie
 End If
 
 If lCookie.Current Is Nothing Then
     Item = Empty
 Else
+    Dim lEntry As DictionaryEntry
     Set lEntry = lCookie.Current
     gSetVariant Item, lEntry.Key
 End If
@@ -109,7 +107,7 @@ Const ProcName As String = "IEnumerable_Remove"
 On Error GoTo Err
 
 lCookie = pCookie
-mSc.RemoveCurrent lCookie
+mDict.RemoveCurrent lCookie
 pCookie = lCookie
 
 Exit Sub
@@ -132,7 +130,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Property Get IEnumerable_UpdateSequence() As Long
-IEnumerable_UpdateSequence = mSc.UpdateSequence
+IEnumerable_UpdateSequence = mDict.UpdateSequence
 End Property
 
 '@================================================================================
@@ -148,8 +146,9 @@ End Property
 '@================================================================================
 
 Friend Sub Initialise( _
-                ByVal sc As SortedDictionary)
-Set mSc = sc
+                ByVal pDict As SortedDictionary)
+Set mDict = pDict
+Set mRoot = pDict.Root
 End Sub
 
 '@================================================================================

@@ -46,7 +46,10 @@ Private Const ModuleName                            As String = "DictionaryEntri
 ' Member variables
 '@================================================================================
 
-Private mSc As SortedDictionary
+Private mDict                                       As SortedDictionary
+Private mRoot                                       As DictionaryEntry
+Private mIgnoreUpdates                              As Boolean
+Private mUpdateSequence                             As Long
 
 '@================================================================================
 ' Class Event Handlers
@@ -58,7 +61,6 @@ Private mSc As SortedDictionary
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
-
 On Error GoTo Err
 
 Set IEnumerable_Enumerator = getEnumerator
@@ -70,19 +72,17 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
-Dim lCookie As EnumerationCookie
-
 Const ProcName As String = "IEnumerable_NextItem"
-
 On Error GoTo Err
 
+Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
-    mSc.FindFirst lCookie
+    gFindFirst lCookie, mRoot
 Else
     lCookie = pCookie
-    mSc.FindNext lCookie
+    gFindNext lCookie
 End If
 
 If lCookie.Current Is Nothing Then
@@ -101,13 +101,12 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IEnumerable_Remove(pCookie As Variant)
-Dim lCookie As EnumerationCookie
 Const ProcName As String = "IEnumerable_Remove"
-
 On Error GoTo Err
 
+Dim lCookie As EnumerationCookie
 lCookie = pCookie
-mSc.RemoveCurrent lCookie
+mDict.RemoveCurrent lCookie
 pCookie = lCookie
 
 Exit Sub
@@ -123,10 +122,9 @@ End Function
 
 Private Property Get IEnumerable_UpdateSequence() As Long
 Const ProcName As String = "IEnumerable_UpdateSequence"
-
 On Error GoTo Err
 
-IEnumerable_UpdateSequence = mSc.UpdateSequence
+IEnumerable_UpdateSequence = IIf(mIgnoreUpdates, mUpdateSequence, mDict.UpdateSequence)
 
 Exit Property
 
@@ -147,8 +145,11 @@ End Property
 '@================================================================================
 
 Friend Sub Initialise( _
-                ByVal sc As SortedDictionary)
-Set mSc = sc
+                ByVal pDict As SortedDictionary, Optional ByVal pIgnoreUpdates As Boolean)
+Set mDict = pDict
+Set mRoot = pDict.Root
+mIgnoreUpdates = pIgnoreUpdates
+mUpdateSequence = mDict.UpdateSequence
 End Sub
 
 '@================================================================================
@@ -157,7 +158,6 @@ End Sub
 
 Private Function getEnumerator() As Enumerator
 Const ProcName As String = "getEnumerator"
-
 On Error GoTo Err
 
 Set getEnumerator = New Enumerator

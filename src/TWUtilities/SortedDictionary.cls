@@ -80,13 +80,16 @@ Private mUpdateSequence                     As Long
 ' Class Event Handlers
 '@================================================================================
 
+Private Sub Class_Initialize()
+mKeyType = KeyTypeString
+End Sub
+
 '@================================================================================
 ' Enumerable Interface Members
 '@================================================================================
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
-
 On Error GoTo Err
 
 Set IEnumerable_Enumerator = getEnumerator
@@ -98,13 +101,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Boolean
-Dim lCookie As EnumerationCookie
-Dim lEntry As DictionaryEntry
-
 Const ProcName As String = "IEnumerable_NextItem"
-
 On Error GoTo Err
 
+Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
@@ -117,6 +117,7 @@ End If
 If lCookie.Current Is Nothing Then
     Item = Empty
 Else
+    Dim lEntry As DictionaryEntry
     Set lEntry = lCookie.Current
     gSetVariant Item, lEntry.Data
 End If
@@ -131,11 +132,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IEnumerable_Remove(pCookie As Variant)
-Dim lCookie As EnumerationCookie
 Const ProcName As String = "IEnumerable_Remove"
-
 On Error GoTo Err
 
+Dim lCookie As EnumerationCookie
 lCookie = pCookie
 RemoveCurrent lCookie
 pCookie = lCookie
@@ -148,7 +148,6 @@ End Sub
 
 Private Function IEnumerable_Skip(ByVal numToSkip As Long, pCookie As Variant) As Boolean
 Const ProcName As String = "IEnumerable_Skip"
-
 On Error GoTo Err
 
 Err.Raise ErrorCodes.ErrUnsupportedOperationException, , "Skip not supported"
@@ -169,7 +168,6 @@ End Property
 
 Private Function IJSONable_ToJSON() As String
 Const ProcName As String = "IJSONable_ToJSON"
-
 On Error GoTo Err
 
 IJSONable_ToJSON = ToString
@@ -187,7 +185,6 @@ End Function
 
 Private Function IStringable_ToString() As String
 Const ProcName As String = "IStringable_ToString"
-
 On Error GoTo Err
 
 IStringable_ToString = ToString
@@ -218,19 +215,44 @@ End Property
 
 ''
 ' Returns an <code>Enumerator</code> object that can be used to iterate through
+' the entries of the collection, ignoring changes to the <code>UpdateSequence</code>
+' property.
+'
+' @return
+'   An <code>Enumerator</code> object.
+'@/
+Friend Property Get DisconnectedEntryEnumerator() As Enumerator
+Const ProcName As String = "DisconnectedEntryEnumerator"
+On Error GoTo Err
+
+Dim ee As New DictionaryEntriesEnum
+ee.Initialise Me, True
+
+Dim en As IEnumerable
+Set en = ee
+Set DisconnectedEntryEnumerator = en.Enumerator
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Property
+
+''
+' Returns an <code>Enumerator</code> object that can be used to iterate through
 ' the entries of the collection.
 '
 ' @return
 '   An <code>Enumerator</code> object.
 '@/
 Public Property Get EntryEnumerator() As Enumerator
-Dim ee As New DictionaryEntriesEnum
-Dim en As IEnumerable
 Const ProcName As String = "EntryEnumerator"
-
 On Error GoTo Err
 
+Dim ee As New DictionaryEntriesEnum
 ee.Initialise Me
+
+Dim en As IEnumerable
 Set en = ee
 Set EntryEnumerator = en.Enumerator
 
@@ -249,7 +271,6 @@ End Property
 '@/
 Public Property Get Enumerator() As Enumerator
 Const ProcName As String = "Enumerator"
-
 On Error GoTo Err
 
 Set Enumerator = getEnumerator
@@ -266,7 +287,7 @@ On Error GoTo Err
 
 gAssert mCount > 0, "No items"
 
-gSetVariant FirstItem, firstEntry.Data
+gSetVariant FirstItem, gFirstEntry(mRoot).Data
 
 Exit Property
 
@@ -347,13 +368,13 @@ End Property
 '   An <code>Enumerator</code> object.
 '@/
 Public Property Get KeyEnumerator() As Enumerator
-Dim ke As New DictionaryKeysEnum
-Dim en As IEnumerable
 Const ProcName As String = "KeyEnumerator"
-
 On Error GoTo Err
 
+Dim ke As New DictionaryKeysEnum
 ke.Initialise Me
+
+Dim en As IEnumerable
 Set en = ke
 Set KeyEnumerator = en.Enumerator
 
@@ -361,6 +382,10 @@ Exit Property
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Property
+
+Friend Property Get Root() As DictionaryEntry
+Set Root = mRoot
 End Property
 
 Friend Property Get UpdateSequence() As Long
@@ -387,12 +412,7 @@ End Property
 Public Sub Add( _
                 ByVal Item As Variant, _
                 ByVal Key As Variant)
-Dim Current As DictionaryEntry
-Dim Parent As DictionaryEntry
-Dim cmp As Long
-
 Const ProcName As String = "Add"
-
 On Error GoTo Err
 
 changed
@@ -421,14 +441,17 @@ If mRoot Is Nothing Then
     Exit Sub
 End If
 
+Dim cmp As Long
 If Not mFirst Is Nothing Then
     cmp = compare(Key, mFirst.Key)
     If cmp < 0 Then Set mFirst = Nothing
 End If
 
 ' find where node belongs
+Dim Current As DictionaryEntry
 Set Current = mRoot
 
+Dim Parent As DictionaryEntry
 Do While Not Current Is Nothing
     Set Parent = Current
     cmp = compare(Key, Current.Key)
@@ -448,7 +471,7 @@ If cmp < 0 Then
 Else
     Parent.Right = newEntry
 End If
-fixAfterInsertion newEntry
+fixAfterInsertion newEntry, mRoot
 mCount = mCount + 1
 
 Exit Sub
@@ -462,10 +485,19 @@ End Sub
 '@/
 Public Sub Clear()
 Const ProcName As String = "Clear"
-
 On Error GoTo Err
 
 changed
+
+Const HeuristicNumber As Long = 50
+Const HeuristicTime As Long = 5
+Const SmoothingPeriods As Long = 21
+
+If mCount > HeuristicNumber Then
+    Dim t As New SortedDictClearanceTask
+    t.Initialise DisconnectedEntryEnumerator, HeuristicNumber, HeuristicTime, SmoothingPeriods
+    gTaskManager.StartTask t, PriorityLow
+End If
 mCount = 0
 Set mRoot = Nothing
 Set mFirst = Nothing
@@ -503,14 +535,13 @@ End Function
 Friend Sub FindFirst( _
                 ByRef pCookie As EnumerationCookie)
 Const ProcName As String = "FindFirst"
-
 On Error GoTo Err
 
 If mFirst Is Nothing Then
-    Set mFirst = firstEntry
+    Set mFirst = gFirstEntry(mRoot)
 End If
 Set pCookie.Current = mFirst
-Set pCookie.Next = successor(mFirst)
+Set pCookie.Next = gSuccessor(mFirst)
 
 Exit Sub
 
@@ -521,11 +552,10 @@ End Sub
 Friend Sub FindNext( _
                 ByRef pCookie As EnumerationCookie)
 Const ProcName As String = "FindNext"
-
 On Error GoTo Err
 
 Set pCookie.Current = pCookie.Next
-Set pCookie.Next = successor(pCookie.Current)
+Set pCookie.Next = gSuccessor(pCookie.Current)
 
 Exit Sub
 
@@ -536,10 +566,7 @@ End Sub
 Friend Sub Initialise( _
                 ByVal keyType As DictionaryKeyTypes, _
                 ByVal allowDuplicates As Boolean)
-Dim i As Long
-
 Const ProcName As String = "Initialise"
-
 On Error GoTo Err
 
 mAllowDuplicates = allowDuplicates
@@ -560,14 +587,12 @@ Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
 Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
 Const ProcName As String = "NewEnum"
-
 On Error GoTo Err
 
 Set NewEnum = getEnumerator
@@ -604,7 +629,7 @@ If Result <= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' successor that we want
-    Set entry = successor(entry)
+    Set entry = gSuccessor(entry)
     If entry Is Nothing Then
         NextKey = Empty
     Else
@@ -685,18 +710,20 @@ Const ProcName As String = "Remove"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim Result As Long
-Result = findEntry(Key, entry)
-
-If Result <> 0 Then
+If findEntry(Key, entry) <> 0 Then
     ' raise the same error as the VB6 Collection object
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, _
                 , _
                 "Invalid procedure call or argument"
 End If
 
+changed
+
+If entry Is mFirst Then Set mFirst = Nothing
+mCount = mCount - 1
+
 gSetVariant Remove, entry.Data
-deleteEntry entry
+deleteEntry entry, mRoot
 
 Exit Function
 
@@ -707,25 +734,26 @@ End Function
 Friend Sub RemoveCurrent( _
                 ByRef pCookie As EnumerationCookie)
 Const ProcName As String = "RemoveCurrent"
-
 On Error GoTo Err
-
-Dim lCurrentEntry As DictionaryEntry
 
 If IsEmpty(pCookie.Current) Then Err.Raise ErrorCodes.ErrIllegalStateException, , "Current Item already deleted"
 
+Dim lCurrentEntry As DictionaryEntry
 Set lCurrentEntry = pCookie.Current
 If (Not lCurrentEntry.Left Is Nothing And _
     Not lCurrentEntry.Right Is Nothing) _
 Then Set pCookie.Next = pCookie.Current
-deleteEntry pCookie.Current
+
+If pCookie.Current Is mFirst Then Set mFirst = Nothing
+mCount = mCount - 1
+
+deleteEntry pCookie.Current, mRoot
 Set pCookie.Current = Nothing
 
 Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
 ''
@@ -780,7 +808,6 @@ End Sub
 Private Function colorOf( _
                 ByVal p As DictionaryEntry) As NodeColors
 Const ProcName As String = "colorOf"
-
 On Error GoTo Err
 
 If p Is Nothing Then
@@ -833,7 +860,6 @@ Private Function createEntry( _
                 ByVal Data As Variant, _
                 ByVal Parent As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "createEntry"
-
 On Error GoTo Err
 
 Set createEntry = New DictionaryEntry
@@ -847,20 +873,14 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub deleteEntry(ByVal p As DictionaryEntry)
+Private Sub deleteEntry(ByVal p As DictionaryEntry, ByRef pRoot As DictionaryEntry)
 Const ProcName As String = "deleteEntry"
-
 On Error GoTo Err
-
-changed
-
-If p Is mFirst Then Set mFirst = Nothing
-mCount = mCount - 1
 
 ' If strictly internal, copy successor's element to p and then make p
 ' point to successor.
 If (Not p.Left Is Nothing And Not p.Right Is Nothing) Then
-    Dim s As DictionaryEntry: Set s = successor(p)
+    Dim s As DictionaryEntry: Set s = gSuccessor(p)
     p.Key = s.Key
     p.Data = s.Data
     Set p = s
@@ -878,7 +898,7 @@ If (Not replacement Is Nothing) Then
     ' Link replacement to parent
     replacement.Parent = p.Parent
     If p.Parent Is Nothing Then
-        Set mRoot = replacement
+        Set pRoot = replacement
     ElseIf (p Is p.Parent.Left) Then
         p.Parent.Left = replacement
     Else
@@ -891,12 +911,12 @@ If (Not replacement Is Nothing) Then
     p.Parent = Nothing
 
     ' Fix replacement
-    If (p.Color = BLACK) Then fixAfterDeletion replacement
+    If (p.Color = BLACK) Then fixAfterDeletion replacement, pRoot
     
 ElseIf (p.Parent Is Nothing) Then   ' return if we are the only node.
-    Set mRoot = Nothing
+    Set pRoot = Nothing
 Else  '  No children. Use self as phantom replacement and unlink.
-    If (p.Color = BLACK) Then fixAfterDeletion p
+    If (p.Color = BLACK) Then fixAfterDeletion p, pRoot
 
     If (Not p.Parent Is Nothing) Then
         If (p Is p.Parent.Left) Then
@@ -948,35 +968,14 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function firstEntry() As DictionaryEntry
-Dim p As DictionaryEntry
-Const ProcName As String = "firstEntry"
-
-On Error GoTo Err
-
-Set p = mRoot
-If Not p Is Nothing Then
-    Do While Not p.Left Is Nothing
-        Set p = p.Left
-    Loop
-End If
-Set firstEntry = p
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
-
 Private Sub fixAfterDeletion( _
-                ByVal x As DictionaryEntry)
-Dim w As DictionaryEntry
-
+                ByVal x As DictionaryEntry, _
+                ByVal pRoot As DictionaryEntry)
 Const ProcName As String = "fixAfterDeletion"
-
 On Error GoTo Err
 
-Do While (Not x Is mRoot) And colorOf(x) = BLACK
+Do While (Not x Is pRoot) And colorOf(x) = BLACK
+    Dim w As DictionaryEntry
     If x Is leftOf(ParentOf(x)) Then
         Set w = rightOf(ParentOf(x))
         If colorOf(w) = Red Then
@@ -1002,7 +1001,7 @@ Do While (Not x Is mRoot) And colorOf(x) = BLACK
             setColor ParentOf(x), BLACK
             setColor rightOf(w), BLACK
             rotateLeft ParentOf(x)
-            Set x = mRoot
+            Set x = pRoot
         End If
     Else
         Set w = leftOf(ParentOf(x))
@@ -1029,7 +1028,7 @@ Do While (Not x Is mRoot) And colorOf(x) = BLACK
             setColor ParentOf(x), BLACK
             setColor leftOf(w), BLACK
             rotateRight ParentOf(x)
-            Set x = mRoot
+            Set x = pRoot
         End If
     End If
 Loop
@@ -1042,15 +1041,15 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub fixAfterInsertion( _
-                ByVal x As DictionaryEntry)
+                ByVal x As DictionaryEntry, _
+                ByVal pRoot As DictionaryEntry)
 Const ProcName As String = "fixAfterInsertion"
 On Error GoTo Err
 
-Dim y As DictionaryEntry
-
 x.Color = Red
 
-Do While Not x Is mRoot
+Do While Not x Is pRoot
+    Dim y As DictionaryEntry
     If x.Parent.Color = BLACK Then Exit Do
     
     If ParentOf(x) Is leftOf(ParentOf(ParentOf(x))) Then
@@ -1099,7 +1098,7 @@ Do While Not x Is mRoot
         End If
     End If
 Loop
-mRoot.Color = BLACK
+pRoot.Color = BLACK
 
 Exit Sub
 
@@ -1108,11 +1107,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function getEnumerator() As Enumerator
-Dim lEnum As Enumerator
 Const ProcName As String = "getEnumerator"
-
 On Error GoTo Err
 
+Dim lEnum As Enumerator
 Set lEnum = New Enumerator
 lEnum.Initialise Me
 Set getEnumerator = lEnum
@@ -1126,7 +1124,6 @@ End Function
 Private Function leftOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "leftOf"
-
 On Error GoTo Err
 
 If Not p Is Nothing Then Set leftOf = p.Left
@@ -1140,7 +1137,6 @@ End Function
 Private Function ParentOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "parentOf"
-
 On Error GoTo Err
 
 If Not p Is Nothing Then Set ParentOf = p.Parent
@@ -1189,7 +1185,6 @@ End Function
 Private Function rightOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "rightOf"
-
 On Error GoTo Err
 
 If Not p Is Nothing Then Set rightOf = p.Right
@@ -1201,12 +1196,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub rotateLeft(ByVal x As DictionaryEntry)
-Dim y As DictionaryEntry
-
 Const ProcName As String = "rotateLeft"
-
 On Error GoTo Err
 
+Dim y As DictionaryEntry
 Set y = x.Right
 
 x.Right = y.Left
@@ -1233,12 +1226,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub rotateRight(ByVal x As DictionaryEntry)
-Dim y As DictionaryEntry
-
 Const ProcName As String = "rotateRight"
-
 On Error GoTo Err
 
+Dim y As DictionaryEntry
 Set y = x.Left
 
 x.Left = y.Right
@@ -1268,7 +1259,6 @@ Private Sub setColor( _
                 ByVal p As DictionaryEntry, _
                 ByVal Color As NodeColors)
 Const ProcName As String = "setColor"
-
 On Error GoTo Err
 
 If Not p Is Nothing Then p.Color = Color
@@ -1279,57 +1269,20 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function successor( _
-                ByVal t As DictionaryEntry) As DictionaryEntry
-Const ProcName As String = "successor"
-On Error GoTo Err
-
-Dim p As DictionaryEntry
-
-If t Is Nothing Then
-
-ElseIf Not t.Right Is Nothing Then
-    Set p = t.Right
-    Do While Not p.Left Is Nothing
-        Set p = p.Left
-    Loop
-    Set successor = p
-Else
-    Set p = t.Parent
-    
-    Dim ch As DictionaryEntry
-    Set ch = t
-    
-    Do While Not p Is Nothing
-        If Not ch Is p.Right Then Exit Do
-        Set ch = p
-        Set p = p.Parent
-    Loop
-    Set successor = p
-End If
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
-
 Private Function ToString() As String
-Dim jb As JSONBuilder
-Dim en As Enumerator
-Dim entry As DictionaryEntry
-
 Const ProcName As String = "ToString"
-
-
 On Error GoTo Err
 
+Dim jb As JSONBuilder
 Set jb = New JSONBuilder
+
+Dim en As Enumerator
 Set en = EntryEnumerator
 
 jb.BeginObject
 
 Do While en.MoveNext
+    Dim entry As DictionaryEntry
     Set entry = en.Current
     jb.EncodeName entry.Key
     jb.EncodeValue entry.Data
