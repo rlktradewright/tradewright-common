@@ -1971,7 +1971,7 @@ End Function
 '@/
 Public Function CreateParametersFromString( _
                 ByVal paramString As String, _
-                Optional ByVal nameDelimiter As String = "=", _
+                Optional ByVal NameDelimiter As String = "=", _
                 Optional ByVal parameterSeparator As String = ";", _
                 Optional ByVal escapeCharacter As String = "\") As Parameters
 Dim params As Parameters
@@ -1981,7 +1981,7 @@ Const ProcName As String = "CreateParametersFromString"
 On Error GoTo Err
 
 Set params = New Parameters
-params.SetParameterValues paramString, nameDelimiter, parameterSeparator, escapeCharacter
+params.SetParameterValues paramString, NameDelimiter, parameterSeparator, escapeCharacter
 
 Set CreateParametersFromString = params
 
@@ -2060,7 +2060,7 @@ End Function
 '@/
 Public Function CreateParameterStringParser( _
                 ByVal paramString As String, _
-                Optional ByVal nameDelimiter As String = "=", _
+                Optional ByVal NameDelimiter As String = "=", _
                 Optional ByVal parameterSeparator As String = ";", _
                 Optional ByVal escapeCharacter As String = "\") As ParameterStringParser
 Const ProcName As String = "CreateParameterStringParser"
@@ -2068,7 +2068,7 @@ Const ProcName As String = "CreateParameterStringParser"
 On Error GoTo Err
 
 Set CreateParameterStringParser = gCreateParameterStringParser(paramString, _
-                                                            nameDelimiter, _
+                                                            NameDelimiter, _
                                                             parameterSeparator, _
                                                             escapeCharacter)
 
@@ -2728,6 +2728,19 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+''
+' Returns the amount of CPU time in seconds consumed by the current process.
+'
+' @remarks
+'
+' @return
+'   The total CPU time in seconds consumed by the current process.
+'@/
+'
+Public Function GetCurrentProcessCpuTime() As Single
+GetCurrentProcessCpuTime = gGetCurrentProcessCpuTime
 End Function
 
 ''

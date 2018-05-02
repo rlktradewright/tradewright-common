@@ -437,6 +437,23 @@ End If
 gGetCommandLine = lCommandLine
 End Function
 
+Public Function gGetCurrentProcessCpuTime() As Single
+' NB: the following variables are of type Currency, because this type is actually
+' held internally as a 64-bit integer, which is what is expected by the
+' GetProcessTimes API function. Note that Currency variables are scaled down by 10,000
+' when used: eg the value 1 held in the internal 64-bit number is interpreted as
+' 0.0001. Since the values returned by GetProcessTimes are in 100-nanosecond units,
+' this means that we can use the value in the Currency variable directly as a
+' number of milliseconds.
+Dim creationTime As Currency
+Dim exitTime As Currency
+Dim kernelTime As Currency
+Dim userTime As Currency
+
+GetProcessTimes GetCurrentProcess, creationTime, exitTime, kernelTime, userTime
+gGetCurrentProcessCpuTime = CSng(kernelTime + userTime) / 1000#
+End Function
+
 Public Function gGetObjectKey(ByVal pObject As Object) As String
 gGetObjectKey = Hex$(ObjPtr(pObject))
 End Function
