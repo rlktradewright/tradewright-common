@@ -189,11 +189,7 @@ Const ProcName As String = "Add"
 On Error GoTo Err
 
 Dim lExpiryDate As Date
-Dim lEntry As TimerListItem
-Dim lExpiry As Double
-Dim lExpiryIntervalMillisecs As Long
-
-Set lEntry = New TimerListItem
+Dim lEntry As New TimerListItem
 
 If pUnits = ExpiryTimeUnits.ExpiryTimeUnitDateTime Then
     If Not IsDate(pExpiryTime) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "pExpiryTime is not a valid date"
@@ -208,10 +204,12 @@ If pUnits = ExpiryTimeUnits.ExpiryTimeUnitDateTime Then
 Else
     If Not IsNumeric(pExpiryTime) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "pExpiryTime is not a valid number"
     
+    Dim lExpiry As Double
     lExpiry = CDbl(pExpiryTime)
     
     If lExpiry <= 0 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "pExpiryTime must not be negative or zero"
 
+    Dim lExpiryIntervalMillisecs As Long
     If pUnits = ExpiryTimeUnits.ExpiryTimeUnitMilliseconds Then
         lExpiryIntervalMillisecs = lExpiry
     ElseIf pUnits = ExpiryTimeUnits.ExpiryTimeUnitSeconds Then
@@ -260,14 +258,13 @@ Attribute Clear.VB_Description = "Removes all TimerListItems from the TimerList.
 Const ProcName As String = "Clear"
 On Error GoTo Err
 
-Dim tli As TimerListItem
-Dim en As Enumerator
-
 If mList.Count = 0 Then Exit Sub
     
+Dim en As Enumerator
 Set en = mList.Enumerator
 
 Do While en.MoveNext
+    Dim tli As TimerListItem
     Set tli = en.Current
     tli.State = TimerListItemStateCancelled
     en.Remove
@@ -373,13 +370,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub reschedule()
-Dim firstExpiry As Date
-Dim interval As Long
-Dim timerItem As TimerListItem
-Dim en As Enumerator
-
 Const ProcName As String = "reschedule"
-
 On Error GoTo Err
 
 If mIsSimulated Then Exit Sub
@@ -389,9 +380,12 @@ If mList.Count = 0 Then
     mNextExpiry = MaxDateValue
     mTimer.StopTimer
 Else
+    Dim en As Enumerator
     Set en = mList.Enumerator
     
+    Dim firstExpiry As Date
     Do While en.MoveNext
+        Dim timerItem As TimerListItem
         Set timerItem = en.Current
         If timerItem.State = TimerListItemStatePending Then
             firstExpiry = timerItem.ExpiryTime
@@ -415,6 +409,8 @@ Else
     mTimer.StopTimer
     
     mNextExpiry = firstExpiry
+    
+    Dim interval As Long
     interval = Int((mNextExpiry - gGetTimestampUtc) * 86400 * 1000 + 0.9999)
     If interval <= 0 Then interval = 1
         ' this could happen if we've just gone past the

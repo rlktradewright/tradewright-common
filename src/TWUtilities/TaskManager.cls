@@ -844,7 +844,7 @@ If gLogger.IsLoggable(LogLevelHighDetail) Then
         " pData=" & gVariantToString(pData) & _
         " pName=""" & pName & """"
 
-    gLogger.Log s, ProcName, ModuleName, , LogLevelHighDetail
+    gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
 End If
 
 Dim lTaskContext As TaskContext

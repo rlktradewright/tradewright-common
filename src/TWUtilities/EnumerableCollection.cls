@@ -267,7 +267,7 @@ End Property
 '   An expression that specifies a relative position in the collection. The member
 '   to be added is placed in the collection after the member identified by the after argument.
 '   If numeric, after must be a number from 1 to the value of the collection's Count
-'   roperty. If a string, after must correspond to the key specified when the member
+'   property. If a string, after must correspond to the key specified when the member
 '   referred to was added to the collection. You can specify a before position or an
 '   after position, but not both.
 '@/

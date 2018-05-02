@@ -226,12 +226,11 @@ Public Sub StartTimer()
 Const ProcName As String = "StartTimer"
 On Error GoTo Err
 
-Dim interval As Long
-
 Set mSelfRef = Me
 
 If mTimerNumber <> 0 Then stopTimerEx
 
+Dim interval As Long
 If mFirstTimerIntervalMillisecs <> 0 Then
     mFirstInterval = True
     interval = mFirstTimerIntervalMillisecs
@@ -262,7 +261,6 @@ End Sub
 '@/
 Public Sub StopTimer()
 Const ProcName As String = "StopTimer"
-
 On Error GoTo Err
 
 stopTimerEx
@@ -314,7 +312,6 @@ End Sub
 
 Private Sub stopTimerEx()
 Const ProcName As String = "stopTimerEx"
-
 On Error GoTo Err
 
 mFirstInterval = False

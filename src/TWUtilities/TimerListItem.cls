@@ -84,7 +84,7 @@ Set mStateChangeListeners = New Listeners
 End Sub
 
 Private Sub Class_Terminate()
-Debug.Print "TimerListItem terminated"
+'Debug.Print "TimerListItem terminated"
 End Sub
 
 '@================================================================================
