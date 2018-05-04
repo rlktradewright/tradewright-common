@@ -342,6 +342,25 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function gCreateParametersFromString( _
+                ByVal paramString As String, _
+                Optional ByVal NameDelimiter As String = "=", _
+                Optional ByVal parameterSeparator As String = ";", _
+                Optional ByVal escapeCharacter As String = "\") As Parameters
+Const ProcName As String = "gCreateParametersFromString"
+On Error GoTo Err
+
+Dim params As New Parameters
+params.SetParameterValues paramString, NameDelimiter, parameterSeparator, escapeCharacter
+
+Set gCreateParametersFromString = params
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Public Function gCreateParameterStringParser( _
                 ByVal Value As String, _
                 Optional ByVal NameDelimiter As String = "=", _

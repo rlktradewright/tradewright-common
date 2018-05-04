@@ -97,7 +97,7 @@ Private Const InitialSize                               As Long = 10
 Private WithEvents mRS                                  As Recordset
 Attribute mRS.VB_VarHelpID = -1
 
-Private mParamsIndexCol                                 As Collection
+Private mParamsIndexCol                                 As EnumerableCollection
 Private mParams()                                       As Parameter
 Private mParamsIndex                                    As Long
 
@@ -911,7 +911,7 @@ End Function
 '@/
 Public Function SetParameterValues( _
                 ByVal paramString As String, _
-                Optional ByVal nameDelimiter As String = "=", _
+                Optional ByVal NameDelimiter As String = "=", _
                 Optional ByVal parameterSeparator As String = ";", _
                 Optional ByVal escapeCharacter As String = "\") As Parameter()
 Const ProcName As String = "SetParameterValues"
@@ -926,7 +926,7 @@ changed
 
 Dim ps As ParameterStringParser
 Set ps = gCreateParameterStringParser(paramString, _
-                            nameDelimiter, _
+                            NameDelimiter, _
                             parameterSeparator, _
                             escapeCharacter)
                             
@@ -976,7 +976,7 @@ If mParamsIndex = 0 Then Exit Sub
 
 gSortTypedObjects VarPtr(mParams(1)), mParamsIndex, descending
 
-Set mParamsIndexCol = New Collection
+Set mParamsIndexCol = New EnumerableCollection
 Dim i As Long
 For i = 1 To mParamsIndex
     mParamsIndexCol.Add CStr(i), mParams(i).Name
@@ -1129,12 +1129,11 @@ End Function
 
 Private Function findParameterIndex( _
                 ByVal Name As String) As Long
-
 Const ProcName As String = "findParameterIndex"
 On Error GoTo Err
 
-On Error Resume Next
-findParameterIndex = mParamsIndexCol(Name)
+findParameterIndex = 0
+mParamsIndexCol.TryItem Name, findParameterIndex
 
 Exit Function
 
@@ -1193,7 +1192,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub Initialise()
-Set mParamsIndexCol = New Collection
+Set mParamsIndexCol = New EnumerableCollection
 ReDim mParams(1 To InitialSize) As Parameter
 mParamsIndex = 0
 End Sub

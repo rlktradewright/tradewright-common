@@ -1974,16 +1974,10 @@ Public Function CreateParametersFromString( _
                 Optional ByVal NameDelimiter As String = "=", _
                 Optional ByVal parameterSeparator As String = ";", _
                 Optional ByVal escapeCharacter As String = "\") As Parameters
-Dim params As Parameters
-
 Const ProcName As String = "CreateParametersFromString"
-
 On Error GoTo Err
 
-Set params = New Parameters
-params.SetParameterValues paramString, NameDelimiter, parameterSeparator, escapeCharacter
-
-Set CreateParametersFromString = params
+Set CreateParametersFromString = gCreateParametersFromString(paramString, NameDelimiter, parameterSeparator, escapeCharacter)
 
 Exit Function
 
