@@ -98,10 +98,9 @@ End Sub
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
-
 On Error GoTo Err
 
-Set IEnumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator(pDontNotifyDeletions:=False)
 
 Exit Property
 
@@ -113,32 +112,9 @@ Private Function IEnumerable_NextItem( _
                 Item As Variant, _
                 pCookie As Variant) As Boolean
 Const ProcName As String = "IEnumerable_NextItem"
-
 On Error GoTo Err
 
-Dim lCookie As EnumerationCookie
-Dim en As IEnumVARIANT
-Dim numFetched As Long
-
-If IsEmpty(pCookie) Then
-    Set en = mColl.[_NewEnum]
-    Set lCookie.Next = en
-    lCookie.Current = 0
-Else
-    lCookie = pCookie
-    Set en = lCookie.Next
-End If
-
-lCookie.Current = Abs(lCookie.Current) + 1
-
-en.Next 1, Item, VarPtr(numFetched)
-
-IEnumerable_NextItem = (numFetched <> 0)
-
-pCookie = lCookie
-
-Exit Function
-
+gAssert False, "Not implemented", ErrorCodes.ErrUnsupportedOperationException
 
 Exit Function
 
@@ -148,21 +124,9 @@ End Function
 
 Private Sub IEnumerable_Remove(pCookie As Variant)
 Const ProcName As String = "IEnumerable_Remove"
-
 On Error GoTo Err
 
-Dim lCookie As EnumerationCookie
-
-lCookie = pCookie
-
-If lCookie.Current <= 0 Then
-    Err.Raise ErrorCodes.ErrIllegalStateException, , "Current Item already removed"
-End If
-
-Remove CLng(lCookie.Current)
-lCookie.Current = -(lCookie.Current - 1) ' negative indicates item has been deleted
-
-pCookie = lCookie
+gAssert False, "Not implemented", ErrorCodes.ErrUnsupportedOperationException
 
 Exit Sub
 
@@ -173,37 +137,19 @@ End Sub
 Private Function IEnumerable_Skip( _
                 ByVal numToSkip As Long, _
                 pCookie As Variant) As Boolean
-
 Const ProcName As String = "IEnumerable_Skip"
-
 On Error GoTo Err
 
-Dim lCookie As EnumerationCookie
-Dim en As IEnumVARIANT
-
-If IsEmpty(pCookie) Then
-    Set en = mColl.[_NewEnum]
-    Set lCookie.Next = en
-    lCookie.Current = 1
-Else
-    lCookie = pCookie
-    Set en = lCookie.Next
-End If
-
-en.Skip numToSkip
-lCookie.Current = Abs(lCookie.Current) + numToSkip
-
-pCookie = lCookie
+gAssert False, "Not implemented", ErrorCodes.ErrUnsupportedOperationException
 
 Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Property Get IEnumerable_UpdateSequence() As Long
-IEnumerable_UpdateSequence = mUpdateSequence
+gAssert False, "Not implemented", ErrorCodes.ErrUnsupportedOperationException
 End Property
 
 '@================================================================================
@@ -223,15 +169,18 @@ End Property
 '@/
 Public Property Get Enumerator() As Enumerator
 Const ProcName As String = "Enumerator"
-
 On Error GoTo Err
 
-Set Enumerator = getEnumerator
+Set Enumerator = getEnumerator(pDontNotifyDeletions:=False)
 
 Exit Property
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Property
+
+Friend Property Get UpdateSequence() As Long
+UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================
@@ -320,7 +269,6 @@ End Sub
 '@/
 Public Sub Clear()
 Const ProcName As String = "Clear"
-
 On Error GoTo Err
 
 Set mColl = New Collection
@@ -333,6 +281,50 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 ''
+' Removes all items from the collection asynchronously, and releases the memory
+' they used.
+'
+' @remarks
+'   Return from this method is immediate. New entries may be added to this
+'   <code>EnumerableCollection</code> object immediately.
+'
+'   The <code>Result</code> field of the <code>TaskCompletionEventData</code>
+'   for this task is a <code>Properties</code> object containing details of the
+'   number of entries released and other information.
+'
+'   Note that cancelling this operation using the returned
+'   <code>TaskController</code> does not prevent release of the memory used by the
+'   <code>EnumerableCollection</code> object prior to the call to <code>ClearAsync</>.
+'   The main thread will be busy while the remaining memory is released, so the
+'   program may become unresponsive if there is a large amount remaining to be
+'   released.
+'
+' @return
+'   A <code>TaskController</code> object.
+'@/
+Public Function ClearAsync() As TaskController
+Const ProcName As String = "Clear"
+On Error GoTo Err
+
+Const HeuristicNumber As Long = 50
+Const HeuristicTime As Long = 5
+
+Dim ee As New EnumerableCollectionEnum
+ee.Initialise Me, mColl, pDontNotifyDeletions:=True
+
+Dim t As New EnumblCollClearanceTask
+t.Initialise ee.Enumerator, HeuristicNumber, HeuristicTime
+Set ClearAsync = gTaskManager.StartTask(t, PriorityLow)
+
+Clear
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+''
 ' Returns the number of items in the collection.
 '
 ' @return
@@ -340,7 +332,6 @@ End Sub
 '@/
 Public Function Count() As Long
 Const ProcName As String = "Count"
-
 On Error GoTo Err
 
 Count = mColl.Count
@@ -411,7 +402,6 @@ Public Function Item( _
                 ByRef pIndex As Variant) As Variant
 Attribute Item.VB_UserMemId = 0
 Const ProcName As String = "Item"
-
 On Error GoTo Err
 
 gSetVariant Item, mColl.Item(pIndex)
@@ -426,10 +416,9 @@ Public Function NewEnum() As IUnknown
 Attribute NewEnum.VB_UserMemId = -4
 Attribute NewEnum.VB_MemberFlags = "40"
 Const ProcName As String = "NewEnum"
-
 On Error GoTo Err
 
-Set NewEnum = getEnumerator
+Set NewEnum = getEnumerator(pDontNotifyDeletions:=True)
 
 Exit Function
 
@@ -489,27 +478,46 @@ Public Sub Remove( _
 Const ProcName As String = "Remove"
 On Error GoTo Err
 
-Dim lItem As Variant
-
 Change
 
-If IsObject(pIndexOrItem) Then
-    Dim lKey As String
-    lKey = gGetObjectKey(pIndexOrItem)
-    gSetVariant lItem, mColl.Item(lKey)
-    gAssert lItem Is pIndexOrItem, , VBErrorCodes.VbErrInvalidProcedureCall
-    mColl.Remove gGetObjectKey(pIndexOrItem)
-Else
-    gSetVariant lItem, mColl.Item(pIndexOrItem)
-    mColl.Remove pIndexOrItem
-End If
-fireChange CollItemRemoved, lItem
+fireChange CollItemRemoved, RemoveIt(mColl, pIndexOrItem)
 
 Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
+
+''
+' Removes an item from the collection, but does not notify the change to
+' listeners.
+'
+'@/
+Friend Function RemoveIt( _
+                ByVal pColl As Collection, _
+                ByRef pIndexOrItem As Variant) As Variant
+Const ProcName As String = "RemoveIt"
+On Error GoTo Err
+
+Dim lItem As Variant
+If IsObject(pIndexOrItem) Then
+    Dim lKey As String
+    lKey = gGetObjectKey(pIndexOrItem)
+    gSetVariant lItem, pColl.Item(lKey)
+    gAssert lItem Is pIndexOrItem, , VBErrorCodes.VbErrInvalidProcedureCall
+    pColl.Remove gGetObjectKey(pIndexOrItem)
+Else
+    gSetVariant lItem, pColl.Item(pIndexOrItem)
+    pColl.Remove pIndexOrItem
+End If
+
+gSetVariant RemoveIt, lItem
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
 
 ''
 ' Unregisters a listener.
@@ -609,15 +617,18 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function getEnumerator() As Enumerator
-Dim lEnum As Enumerator
+Private Function getEnumerator(ByVal pDontNotifyDeletions As Boolean) As Enumerator
 Const ProcName As String = "getEnumerator"
-
 On Error GoTo Err
 
-Set lEnum = New Enumerator
-lEnum.Initialise Me
-Set getEnumerator = lEnum
+Dim ee As New EnumerableCollectionEnum
+ee.Initialise Me, mColl, pDontNotifyDeletions:=True
+Set getEnumerator = ee.Enumerator
+
+'Dim lEnum As Enumerator
+'Set lEnum = New Enumerator
+'lEnum.Initialise Me
+'Set getEnumerator = lEnum
 
 Exit Function
 
