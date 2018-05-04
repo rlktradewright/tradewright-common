@@ -133,11 +133,10 @@ End Sub
 
 Private Sub IEnumVARIANT_Clone( _
                 ByRef clonedEnum As TWWin32API.IEnumVARIANT)
-Dim lEnumerator As New Enumerator
 Const ProcName As String = "IEnumVARIANT_Clone"
-
 On Error GoTo Err
 
+Dim lEnumerator As New Enumerator
 lEnumerator.Initialise mTarget, mCookie
 Set clonedEnum = lEnumerator
 
@@ -156,7 +155,6 @@ End Sub
 
 Private Sub IEnumVARIANT_Reset()
 Const ProcName As String = "IEnumVARIANT_Reset"
-
 On Error GoTo Err
 
 Reset
@@ -192,7 +190,6 @@ End Sub
 '@/
 Public Property Get Current() As Variant
 Const ProcName As String = "Current"
-
 On Error GoTo Err
 
 If IsEmpty(mCurrent) Then Err.Raise ErrorCodes.ErrIllegalStateException, , "No current Item"

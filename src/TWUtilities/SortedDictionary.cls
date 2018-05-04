@@ -216,7 +216,7 @@ End Property
 ''
 ' Returns an <code>Enumerator</code> object that can be used to iterate through
 ' the entries of the collection, ignoring changes to the <code>UpdateSequence</code>
-' property.
+' property, and deleting the entries as they are processed.
 '
 ' @return
 '   An <code>Enumerator</code> object.
@@ -226,7 +226,7 @@ Const ProcName As String = "DisconnectedEntryEnumerator"
 On Error GoTo Err
 
 Dim ee As New DictionaryEntriesEnum
-ee.Initialise Me, True
+ee.Initialise Me, pDeleteAsYouGo:=True
 
 Dim en As IEnumerable
 Set en = ee
@@ -251,10 +251,7 @@ On Error GoTo Err
 
 Dim ee As New DictionaryEntriesEnum
 ee.Initialise Me
-
-Dim en As IEnumerable
-Set en = ee
-Set EntryEnumerator = en.Enumerator
+Set EntryEnumerator = ee.Enumerator
 
 Exit Property
 
@@ -489,15 +486,6 @@ On Error GoTo Err
 
 changed
 
-Const HeuristicNumber As Long = 50
-Const HeuristicTime As Long = 5
-Const SmoothingPeriods As Long = 21
-
-If mCount > HeuristicNumber Then
-    Dim t As New SortedDictClearanceTask
-    t.Initialise DisconnectedEntryEnumerator, HeuristicNumber, HeuristicTime, SmoothingPeriods
-    gTaskManager.StartTask t, PriorityLow
-End If
 mCount = 0
 Set mRoot = Nothing
 Set mFirst = Nothing
@@ -507,6 +495,51 @@ Exit Sub
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
+
+''
+' Removes all items from the collection asynchronously, and releases the memory
+' they used.
+'
+' @remarks
+'   Return from this method is immediate. New entries may be added to this
+'   <code>SortedDictionary</code> object immediately.
+'
+'   The <code>Result</code> field of the <code>TaskCompletionEventData</code>
+'   for this task is a <code>Properties</code> object containing details of the
+'   number of dictionary entries released and other information.
+'
+'   Note that cancelling this operation using the returned
+'   <code>TaskController</code> does not prevent release of the memory used by the
+'   <code>SortedDictionary</code> object prior to the call to <code>ClearAsync</>.
+'   The main thread will be busy while the remaining memory is released, so the
+'   program may become unresponsive if there is a large amount remaining to be
+'   released.
+'
+' @return
+'   A <code>TaskController</code> object.
+'@/
+Public Function ClearAsync() As TaskController
+Const ProcName As String = "Clear"
+On Error GoTo Err
+
+changed
+
+Const HeuristicNumber As Long = 50
+Const HeuristicTime As Long = 5
+
+Dim t As New SortedDictClearanceTask
+t.Initialise DisconnectedEntryEnumerator, HeuristicNumber, HeuristicTime
+Set ClearAsync = gTaskManager.StartTask(t, PriorityLow)
+
+mCount = 0
+Set mRoot = Nothing
+Set mFirst = Nothing
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
 
 ''
 ' Indicates whether an item with the specified key already exists in the collection.
@@ -541,7 +574,7 @@ If mFirst Is Nothing Then
     Set mFirst = gFirstEntry(mRoot)
 End If
 Set pCookie.Current = mFirst
-Set pCookie.Next = gSuccessor(mFirst)
+Set pCookie.Next = gSuccessor(mFirst, pDeleteAsYouGo:=False)
 
 Exit Sub
 
@@ -555,7 +588,7 @@ Const ProcName As String = "FindNext"
 On Error GoTo Err
 
 Set pCookie.Current = pCookie.Next
-Set pCookie.Next = gSuccessor(pCookie.Current)
+Set pCookie.Next = gSuccessor(pCookie.Current, pDeleteAsYouGo:=False)
 
 Exit Sub
 
@@ -629,7 +662,7 @@ If Result <= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' successor that we want
-    Set entry = gSuccessor(entry)
+    Set entry = gSuccessor(entry, pDeleteAsYouGo:=False)
     If entry Is Nothing Then
         NextKey = Empty
     Else
@@ -880,7 +913,7 @@ On Error GoTo Err
 ' If strictly internal, copy successor's element to p and then make p
 ' point to successor.
 If (Not p.Left Is Nothing And Not p.Right Is Nothing) Then
-    Dim s As DictionaryEntry: Set s = gSuccessor(p)
+    Dim s As DictionaryEntry: Set s = gSuccessor(p, pDeleteAsYouGo:=False)
     p.Key = s.Key
     p.Data = s.Data
     Set p = s
@@ -933,7 +966,6 @@ Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
 Private Function findEntry(ByVal Key As Variant, ByRef entry As DictionaryEntry) As Long

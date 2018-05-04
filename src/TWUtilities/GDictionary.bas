@@ -52,16 +52,17 @@ Private Const ModuleName                            As String = "GDictionary"
 ' Methods
 '@================================================================================
 
-Sub gFindFirst( _
+Public Sub gFindFirst( _
                 ByRef pCookie As EnumerationCookie, _
-                ByVal pRoot As DictionaryEntry)
+                ByVal pRoot As DictionaryEntry, _
+                ByVal pDeleteAsYouGo As Boolean)
 Const ProcName As String = "gFindFirst"
 On Error GoTo Err
 
 Dim first As DictionaryEntry
 Set first = gFirstEntry(pRoot)
 Set pCookie.Current = first
-Set pCookie.Next = gSuccessor(first)
+Set pCookie.Next = gSuccessor(first, pDeleteAsYouGo)
 
 Exit Sub
 
@@ -70,12 +71,13 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gFindNext( _
-                ByRef pCookie As EnumerationCookie)
+                ByRef pCookie As EnumerationCookie, _
+                ByVal pDeleteAsYouGo As Boolean)
 Const ProcName As String = "gFindNext"
 On Error GoTo Err
 
 Set pCookie.Current = pCookie.Next
-Set pCookie.Next = gSuccessor(pCookie.Current)
+Set pCookie.Next = gSuccessor(pCookie.Current, pDeleteAsYouGo)
 
 Exit Sub
 
@@ -103,7 +105,8 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Function gSuccessor( _
-                ByVal pCurrent As DictionaryEntry) As DictionaryEntry
+                ByVal pCurrent As DictionaryEntry, _
+                ByVal pDeleteAsYouGo As Boolean) As DictionaryEntry
 Const ProcName As String = "gSuccessor"
 On Error GoTo Err
 
@@ -124,7 +127,11 @@ Else
     Set ch = pCurrent
     
     Do While Not e Is Nothing
-        If Not ch Is e.Right Then Exit Do
+        If Not ch Is e.Right Then
+            If pDeleteAsYouGo Then e.Left = Nothing
+            Exit Do
+        End If
+        If pDeleteAsYouGo Then e.Right = Nothing
         Set ch = e
         Set e = e.Parent
     Loop

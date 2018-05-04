@@ -48,7 +48,7 @@ Private Const ModuleName                            As String = "DictionaryEntri
 
 Private mDict                                       As SortedDictionary
 Private mRoot                                       As DictionaryEntry
-Private mIgnoreUpdates                              As Boolean
+Private mDeleteAsYouGo                              As Boolean
 Private mUpdateSequence                             As Long
 
 '@================================================================================
@@ -63,7 +63,7 @@ Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
 On Error GoTo Err
 
-Set IEnumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = Enumerator
 
 Exit Property
 
@@ -79,10 +79,10 @@ Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
-    gFindFirst lCookie, mRoot
+    gFindFirst lCookie, mRoot, mDeleteAsYouGo
 Else
     lCookie = pCookie
-    gFindNext lCookie
+    gFindNext lCookie, mDeleteAsYouGo
 End If
 
 If lCookie.Current Is Nothing Then
@@ -124,7 +124,7 @@ Private Property Get IEnumerable_UpdateSequence() As Long
 Const ProcName As String = "IEnumerable_UpdateSequence"
 On Error GoTo Err
 
-IEnumerable_UpdateSequence = IIf(mIgnoreUpdates, mUpdateSequence, mDict.UpdateSequence)
+IEnumerable_UpdateSequence = IIf(mDeleteAsYouGo, mUpdateSequence, mDict.UpdateSequence)
 
 Exit Property
 
@@ -140,34 +140,34 @@ End Property
 ' Properties
 '@================================================================================
 
+Friend Property Get Enumerator() As Enumerator
+Const ProcName As String = "Enumerator"
+On Error GoTo Err
+
+Set Enumerator = New Enumerator
+Enumerator.Initialise Me
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Property
+
 '@================================================================================
 ' Methods
 '@================================================================================
 
 Friend Sub Initialise( _
-                ByVal pDict As SortedDictionary, Optional ByVal pIgnoreUpdates As Boolean)
+                ByVal pDict As SortedDictionary, Optional ByVal pDeleteAsYouGo As Boolean)
 Set mDict = pDict
 Set mRoot = pDict.Root
-mIgnoreUpdates = pIgnoreUpdates
+mDeleteAsYouGo = pDeleteAsYouGo
 mUpdateSequence = mDict.UpdateSequence
 End Sub
 
 '@================================================================================
 ' Helper Functions
 '@================================================================================
-
-Private Function getEnumerator() As Enumerator
-Const ProcName As String = "getEnumerator"
-On Error GoTo Err
-
-Set getEnumerator = New Enumerator
-getEnumerator.Initialise Me
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
 
 
 

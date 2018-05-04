@@ -77,10 +77,10 @@ Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
-    gFindFirst lCookie, mRoot
+    gFindFirst lCookie, mRoot, pDeleteAsYouGo:=False
 Else
     lCookie = pCookie
-    gFindNext lCookie
+    gFindNext lCookie, pDeleteAsYouGo:=False
 End If
 
 If lCookie.Current Is Nothing Then

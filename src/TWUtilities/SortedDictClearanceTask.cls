@@ -53,7 +53,7 @@ Private mEntriesEn                                  As Enumerator
 Private mHeuristicNumber                            As Long
 Private mHeuristicTime                              As Long
 
-Private mExpFactor                                  As Double
+Private mStartTime                                  As Date
 
 '@================================================================================
 ' Class Event Handlers
@@ -71,14 +71,21 @@ Private Sub ITask_Run()
 Const ProcName As String = "ITask_Run"
 On Error GoTo Err
 
+Static sTotalNumberReleased As Long
+Static sYieldCount As Long
+
+Dim results As Parameters
+
+If mStartTime = 0 Then mStartTime = gGetTimestamp
+
 If mTaskContext.CancelPending Then
-    mTaskContext.Finish Empty, True
+    gLogger.Log "Released (cancelled) " & sTotalNumberReleased & " entries in " & sYieldCount & " yields", ProcName, ModuleName, LogLevelHighDetail
+    Set results = generateResults(False, sTotalNumberReleased, sYieldCount)
+    mTaskContext.Finish results, True
     Exit Sub
 End If
 
-Static sTotalNumberReleased As Long
 Static sNumberToRelease As Long
-Static sYieldCount As Long
 
 Static sLoopCount As Long
 
@@ -90,7 +97,8 @@ End If
 
 If sNumberToRelease = 0 Then
     gLogger.Log "Released " & sTotalNumberReleased & " entries in " & sYieldCount & " yields", ProcName, ModuleName, LogLevelHighDetail
-    mTaskContext.Finish Empty, False
+    Set results = generateResults(False, sTotalNumberReleased, sYieldCount)
+    mTaskContext.Finish results, False
 End If
 
 sLoopCount = sLoopCount + 1
@@ -124,12 +132,10 @@ End Property
 Friend Sub Initialise( _
                 ByVal pEntriesEn As Enumerator, _
                 ByVal pHeuristicNumber As Long, _
-                ByVal pHeuristicTime As Long, _
-                ByVal pSmoothingPeriods As Long)
+                ByVal pHeuristicTime As Long)
 Set mEntriesEn = pEntriesEn
 mHeuristicNumber = pHeuristicNumber
 mHeuristicTime = pHeuristicTime
-mExpFactor = 2 / (pSmoothingPeriods + 1)
 End Sub
 
 '@================================================================================
@@ -168,6 +174,35 @@ Do While releaseEntries(mEntriesEn, pNumberToRelease, pTotalNumberReleased, pYie
 Loop
 
 calibrate = 0
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Private Function generateResults( _
+                ByVal pCancelled As Boolean, _
+                ByVal pNumberReleased As Long, _
+                ByVal pNumberOfYields As Long) As Parameters
+Const ProcName As String = "generateResults"
+On Error GoTo Err
+
+Dim results As New Parameters
+results.SetParameterValue "Cancelled", pCancelled
+results.SetParameterValue "Number of entries released", pNumberReleased
+results.SetParameterValue "Number of timeslots", pNumberOfYields
+
+Dim lDuration As Double: lDuration = 86400# * (gGetTimestamp - mStartTime)
+If lDuration < 0.001 Then
+    results.SetParameterValue "Duration (microsecs)", Format(lDuration * 1000000#, "0")
+ElseIf lDuration < 1# Then
+    results.SetParameterValue "Duration (millisecs)", Format(lDuration * 1000#, "0.000")
+Else
+    results.SetParameterValue "Duration (secs)", Format(lDuration, "0.000")
+End If
+
+Set generateResults = results
 
 Exit Function
 
