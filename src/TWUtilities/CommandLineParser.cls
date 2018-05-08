@@ -131,9 +131,9 @@ End Sub
 '@/
 Public Property Get Arg( _
                 ByVal i As Integer) As String
-If mNumberOfArgs = 0 Then Exit Property
+gAssert i >= 0, "Invalid index"
+If mNumberOfArgs <= i Then Exit Property
 
-gAssertArgument gIsInteger(i, 0, mNumberOfArgs - 1), "Invalid argument index"
 Arg = mArgs(i)
 End Property
 
