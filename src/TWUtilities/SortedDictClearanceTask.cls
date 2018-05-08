@@ -156,7 +156,7 @@ Dim lAligned As Boolean
 
 Dim lNumberReleased As Long
 Do While releaseEntries(mEntriesEn, pNumberToRelease, pTotalNumberReleased, pYieldCount)
-    lNumberReleased = lNumberReleased + mHeuristicNumber
+    lNumberReleased = lNumberReleased + pNumberToRelease
     Dim lCurrCpuTime As Double: lCurrCpuTime = gGetCurrentProcessCpuTime
     Dim lCpuTimeMillisecs As Double: lCpuTimeMillisecs = 1000 * (lCurrCpuTime - lPrevCpuTime)
     If lCpuTimeMillisecs > 0 Then
