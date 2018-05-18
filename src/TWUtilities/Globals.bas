@@ -45,6 +45,7 @@ End Enum
 Public Enum UserMessages
     UserMessageTimer = WM_USER + 1234
     UserMessageScheduleTasks
+    UserMessageExecuteDeferredAction
 End Enum
 
 '@================================================================================
@@ -471,6 +472,10 @@ Dim userTime As Currency
 
 GetProcessTimes GetCurrentProcess, creationTime, exitTime, kernelTime, userTime
 gGetCurrentProcessCpuTime = CSng(kernelTime + userTime) / 1000#
+End Function
+
+Public Function gGetObjectId(ByVal pObject As Object) As Long
+gGetObjectId = ObjPtr(pObject)
 End Function
 
 Public Function gGetObjectKey(ByVal pObject As Object) As String
@@ -1979,6 +1984,8 @@ ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
     gTaskManager.ScheduleTasks
 ElseIf uMsg = UserMessages.UserMessageTimer Then
     GIntervalTimer.gProcessUserTimerMsg wParam
+ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
+    GDeferredActions.RunDeferredAction wParam
 Else
     WindowProc = CallWindowProc(mPrevWndProc, hwnd, uMsg, wParam, lParam)
 End If

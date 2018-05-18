@@ -33,7 +33,9 @@ Private Const ModuleName                    As String = "GDeferredActions"
 ' Member variables
 '@================================================================================
 
-Private mDeferredActionManager As New DeferredActionManager
+Private mDeferredActionManager              As New DeferredActionManager
+
+Private mDeferredActions                    As New Collection
 
 '@================================================================================
 ' Class Event Handlers
@@ -58,6 +60,33 @@ End Property
 '@================================================================================
 ' Methods
 '@================================================================================
+
+Public Sub InitiateDeferredAction( _
+                ByRef dae As DeferredActionEntry)
+Dim index As Long: index = CLng(Rnd * &H7FFFFFFF)
+mDeferredActions.Add dae, CStr(index)
+gPostUserMessage UserMessageExecuteDeferredAction, index, 0
+End Sub
+
+Public Sub RunDeferredAction( _
+                ByVal pIndex As Long)
+Const ProcName As String = "RunDeferredAction"
+On Error GoTo Err
+
+Dim lKey As String: lKey = CStr(pIndex)
+
+Dim dae As DeferredActionEntry
+dae = mDeferredActions.Item(lKey)
+
+mDeferredActions.Remove lKey
+
+dae.Action.Run dae.Data
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
 
 '@================================================================================
 ' Helper Functions

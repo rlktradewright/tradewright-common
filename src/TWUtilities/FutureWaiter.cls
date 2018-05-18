@@ -139,7 +139,7 @@ If Not IsMissing(pContinuationData) Then mDatas.Add pContinuationData, gGetObjec
 pFuture.AddStateChangeListener Me
 
 If Not pFuture.IsPending Then
-    DeferredActionManager.DeferAction Me, pFuture, pMayYield:=True
+    DeferredActionManager.DeferAction Me, pFuture
     Exit Sub
 End If
 

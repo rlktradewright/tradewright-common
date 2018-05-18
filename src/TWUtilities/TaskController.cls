@@ -160,10 +160,11 @@ End Property
 '@================================================================================
 
 ''
-' Registers an object to act as a listener for changes in the task's State.
+' Registers an object to act as a listener for events occurring during execution
+' of the task.
 '
 ' @remarks
-'   The listener object must implement the <code>TaskNotificationListener</code>
+'   The listener object must implement the <code>ITaskNotificationListener</code>
 '   interface.
 ' @param listener
 '   The object which is to act as a listener.
@@ -184,7 +185,7 @@ End Sub
 ' Registers an object to act as a listener for changes in the task's State.
 '
 ' @remarks
-'   The listener object must implement the <code>TaskStateChangeListener</code>
+'   The listener object must implement the <code>ITaskStateChangeListener</code>
 '   interface.
 '
 '   Note that State <code>TaskStateCompleted</code> is always notified to the listener
@@ -208,7 +209,7 @@ End Sub
 ' Registers an object to act as a listener for completion of the task.
 '
 ' @remarks
-'   The listener object must implement the <code>TaskCompletionListener</code>
+'   The listener object must implement the <code>ITaskCompletionListener</code>
 '   interface.
 ' @param listener
 '   The object which is to act as a listener.
@@ -229,7 +230,7 @@ End Sub
 ' Registers an object to act as a listener for Progress of the task.
 '
 ' @remarks
-'   The listener object must implement the <code>TaskProgressListener</code>
+'   The listener object must implement the <code>ITaskProgressListener</code>
 '   interface.
 ' @param listener
 '   The object which is to act as a listener.

@@ -23,7 +23,6 @@ Option Explicit
 '@================================================================================
 
 Implements IStateChangeListener
-Implements ITimerExpiryListener
 
 '@================================================================================
 ' Events
@@ -53,25 +52,7 @@ Private Const ModuleName                    As String = "DeferredActionManager"
 '@================================================================================
 
 '@================================================================================
-' ITimerExpiryListener Interface Members
-'@================================================================================
-
-Private Sub ITimerExpiryListener_TimerExpired(ev As TimerExpiredEventData)
-Const ProcName As String = "ITimerExpiryListener_TimerExpired"
-On Error GoTo Err
-
-Dim dae As DeferredActionEntry
-dae = ev.Data
-runDeferredAction dae
-
-Exit Sub
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Sub
-
-'@================================================================================
-' StateChangeListener Interface Members
+' IStateChangeListener Interface Members
 '@================================================================================
 
 Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
@@ -86,7 +67,7 @@ Case TimerListItemStatePending
 Case TimerListItemStateExpired
     Dim dae As DeferredActionEntry
     dae = tli.Data
-    runDeferredAction dae
+    GDeferredActions.InitiateDeferredAction dae
 Case TimerListItemStateCancelled
 End Select
 
@@ -113,34 +94,24 @@ Friend Sub DeferAction( _
                 ByVal pAction As IDeferredAction, _
                 Optional ByVal pData As Variant, _
                 Optional ByVal pDeferTime As Variant, _
-                Optional ByVal pDeferTimeUnits As ExpiryTimeUnits = ExpiryTimeUnits.ExpiryTimeUnitMilliseconds, _
-                Optional ByVal pMayYield As Boolean)
+                Optional ByVal pDeferTimeUnits As ExpiryTimeUnits = ExpiryTimeUnits.ExpiryTimeUnitMilliseconds)
 Const ProcName As String = "DeferAction"
 On Error GoTo Err
 
 If IsEmpty(pDeferTime) Then pDeferTime = 0
 If IsMissing(pDeferTime) Then pDeferTime = 0
-If pDeferTime = 0 Then
-    pDeferTime = 1
-    pDeferTimeUnits = ExpiryTimeUnitMilliseconds
-End If
 
 If IsMissing(pData) Then pData = Empty
 
 Dim dae As DeferredActionEntry
-
 Set dae.Action = pAction
 gSetVariant dae.Data, pData
-If pMayYield Then
-    Dim lTimer As IntervalTimer
-    Set lTimer = gCreateIntervalTimer(pDeferTime, pDeferTimeUnits, , , dae)
-    lTimer.AddTimerExpiryListener Me
-    lTimer.StartTimer
+
+If pDeferTime = 0 Then
+    GDeferredActions.InitiateDeferredAction dae
 Else
     gGetTimerList.Add(dae, pDeferTime, pDeferTimeUnits).AddStateChangeListener Me
 End If
-
-'Debug.Print "Deferred Action added: class=" & TypeName(pAction) & ": data=" & TypeName(pData)
 
 Exit Sub
 
@@ -152,15 +123,3 @@ End Sub
 ' Helper Functions
 '@================================================================================
 
-Private Sub runDeferredAction( _
-                ByRef dae As DeferredActionEntry)
-Const ProcName As String = "runDeferredAction"
-On Error GoTo Err
-
-dae.Action.Run dae.Data
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName
-End Sub

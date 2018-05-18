@@ -173,7 +173,7 @@ On Error GoTo Err
 If Value = mState Then Exit Property
 mState = Value
 mTaskController.fireStateChange mState
-If mState = TaskStateCompleted Then DeferredActionManager.DeferAction Me, Empty, 1, ExpiryTimeUnitMilliseconds, True
+If mState = TaskStateCompleted Then DeferredActionManager.DeferAction Me, Empty, 1, ExpiryTimeUnitMilliseconds
 
 Exit Property
 

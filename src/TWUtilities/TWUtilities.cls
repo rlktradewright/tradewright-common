@@ -2266,13 +2266,7 @@ End Function
 ' @param pDeferTimeUnits
 '   The units in which the<code>deferTime</code> argument is specified.
 ' @param pMayYield
-'   If <code>True</code>, indicates that the deferred action may do something that yields the
-'   processor, such as displaying a message box or a modal form.
-'
-'   Note that if a deferred action yields the processor and <code>pMayYield</code>
-'   is not set to <code>True</code>, then no <code>TimerListItem</code>s or
-'   <code>DeferredAction</code>s can be processed during the time the processor is
-'   yielded.
+'   This parameter is no longer used, and its value is ignored.
 '@/
 Public Sub DeferAction( _
                 ByVal pAction As IDeferredAction, _
@@ -2283,7 +2277,7 @@ Public Sub DeferAction( _
 Const ProcName As String = "DeferAction"
 On Error GoTo Err
 
-DeferredActionManager.DeferAction pAction, pData, pDeferTime, pDeferTimeUnits, pMayYield
+DeferredActionManager.DeferAction pAction, pData, pDeferTime, pDeferTimeUnits
 
 Exit Sub
 
