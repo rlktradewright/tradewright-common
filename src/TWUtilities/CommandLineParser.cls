@@ -339,7 +339,7 @@ i = InStr(val, ":")
 
 If i > 0 Then
     mSwitches(mNumberOfSwitches).Switch = UCase$(Left$(val, i - 1))
-    mSwitches(mNumberOfSwitches).Value = Right$(val, Len(val) - i)
+    mSwitches(mNumberOfSwitches).Value = trimQuotes(Right$(val, Len(val) - i))
 Else
     mSwitches(mNumberOfSwitches).Switch = UCase$(val)
 End If
@@ -360,8 +360,16 @@ ElseIf (Left$(val, 1) = "/" Or Left$(val, 1) = "-") And _
 Then
     setSwitch Mid$(val, 2)
 Else
-    setArg val
+    setArg trimQuotes(val)
 End If
 End Sub
+
+Private Function trimQuotes(ByVal val As String) As String
+If Left$(val, 1) = """" Or Right$(val, 1) = """" Then
+    trimQuotes = Mid$(val, 2, Len(val) - 2)
+Else
+    trimQuotes = val
+End If
+End Function
 
 

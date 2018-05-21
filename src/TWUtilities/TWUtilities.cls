@@ -1673,7 +1673,6 @@ Public Function CreateCommandLineParser( _
                 ByVal commandLine As String, _
                 Optional ByVal separator As String = " ") As CommandLineParser
 Const ProcName As String = "CreateCommandLineParser"
-
 On Error GoTo Err
 
 gAssertArgument Len(separator) = 1, "Separator must be a single character"
