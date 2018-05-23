@@ -63,9 +63,17 @@ End Property
 
 Public Sub InitiateDeferredAction( _
                 ByRef dae As DeferredActionEntry)
+Const ProcName As String = "InitiateDeferredAction"
+On Error GoTo Err
+
 Dim index As Long: index = CLng(Rnd * &H7FFFFFFF)
 mDeferredActions.Add dae, CStr(index)
 gPostUserMessage UserMessageExecuteDeferredAction, index, 0
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Public Sub RunDeferredAction( _
@@ -85,7 +93,7 @@ dae.Action.Run dae.Data
 Exit Sub
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
