@@ -52,6 +52,12 @@ Public Const Pi                                     As Double = 3.14159265358979
 ' Properties
 '@================================================================================
 
+Public Property Get gLogger() As FormattingLogger
+Static sLogger As FormattingLogger
+If sLogger Is Nothing Then Set sLogger = CreateFormattingLogger("spritecontrollib", ProjectName)
+Set gLogger = sLogger
+End Property
+
 '@================================================================================
 ' Methods
 '@================================================================================

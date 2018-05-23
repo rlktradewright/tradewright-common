@@ -69,7 +69,7 @@ IRenderer_GetBoundingRectangle = determineBoundingRect(lBar)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IRenderer_Render(ByVal pObject As IGraphicObject)
@@ -89,7 +89,7 @@ paint lBar, chooseBrush(lBar), choosePen(lBar)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 
@@ -159,7 +159,7 @@ determineBoundingRect = mGraphics.EndBoundingRectangleDetermination
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub paint( _
@@ -186,7 +186,7 @@ resetOrientation pBar
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsBar( _
@@ -226,7 +226,7 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsCandlestick( _
@@ -248,7 +248,7 @@ paintBody pBrush, pPen, lX - lSemiWidth, pBar.OpenValue, lX + lSemiWidth, pBar.C
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsLine( _
@@ -274,7 +274,7 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintBody( _
@@ -293,7 +293,7 @@ mGraphics.PaintRectangleLogical pBrush, pPen, pX1, pY1, pX2, pY2
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintTail( _
@@ -310,7 +310,7 @@ mGraphics.DrawLine pPen, NewPoint(lX, pBar.LowValue), NewPoint(lX, pBar.HighValu
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintTheBar( _
@@ -350,7 +350,7 @@ If pBar.Orientation <> 0 Then mGraphics.Reset
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub setOrientation(ByVal pBar As OHLCBar)
@@ -364,7 +364,7 @@ mGraphics.RotateAboutPoint pBar.Orientation, TPoint(pBar.X, (pBar.LowValue + pBa
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function upBar(ByVal pBar As OHLCBar) As Boolean

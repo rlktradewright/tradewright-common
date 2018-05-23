@@ -322,7 +322,7 @@ End Select
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gValidateWidth(ByVal pThis As Object, ByVal pValue As Variant)
@@ -334,6 +334,6 @@ If pValue <= 0# Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Value 
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 

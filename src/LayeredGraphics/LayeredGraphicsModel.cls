@@ -587,6 +587,7 @@ mGraphObjLists.StartNonDuplicationCycle
 Dim i As Long
 For i = 0 To pCount - 1
     If areasToRedraw(i).isValid Then
+        If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Repaint area: ", ProcName, ModuleName, LogLevelHighDetail, TRectangleToString(areasToRedraw(i))
         Dim lGraphObjListEn As Enumerator
         Set lGraphObjListEn = mGraphObjLists.Enumerator(areasToRedraw(i).Left, areasToRedraw(i).Right)
         Do While lGraphObjListEn.MoveNext

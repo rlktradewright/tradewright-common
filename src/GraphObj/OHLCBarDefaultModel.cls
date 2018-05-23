@@ -47,6 +47,22 @@ Private mLowValue                                   As Double
 Private mOpenValue                                  As Double
 Private mX                                          As Double
 
+'@================================================================================
+' Member variables
+'@================================================================================
+
+'@================================================================================
+' Class Event Handlers
+'@================================================================================
+
+Private Sub Class_Terminate()
+gRemoveAllChangeListeners Me
+End Sub
+
+'@================================================================================
+' IOHLCBarModel Interface Members
+'@================================================================================
+
 Public Property Let IOHLCBarModel_CloseValue(ByVal Value As Double)
 mCloseValue = Value
 gFireChange Me, OHLCBarCloseValueChanged
@@ -91,18 +107,6 @@ End Property
 Public Property Get IOHLCBarModel_X() As Double
 IOHLCBarModel_X = mX
 End Property
-
-'@================================================================================
-' Member variables
-'@================================================================================
-
-'@================================================================================
-' Class Event Handlers
-'@================================================================================
-
-'@================================================================================
-' IOHLCBarModel Interface Members
-'@================================================================================
 
 Private Sub IOHLCBarModel_AddChangeListener(ByVal pListener As IChangeListener)
 gAddChangeListener Me, pListener

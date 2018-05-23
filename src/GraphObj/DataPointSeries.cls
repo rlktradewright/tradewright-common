@@ -98,7 +98,7 @@ Set mGraphicObjects = New Collection
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -184,7 +184,7 @@ Set IGraphicObjectSeries_Item = mGraphicObjects.Item(pIndex)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Property Get IGraphicObjectSeries_LastGraphicsChange() As GraphicsChangeTypes
@@ -236,7 +236,7 @@ RepaintRegion pRecalcBoundaries
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -261,7 +261,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Brush() As IBrush
@@ -273,7 +273,7 @@ Set Brush = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Count() As Long
@@ -286,7 +286,7 @@ Count = mGraphicObjects.Count
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DisplayMode(ByRef Value As DataPointDisplayModes)
@@ -298,7 +298,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gDisplayModeProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DisplayMode() As DataPointDisplayModes
@@ -310,7 +310,7 @@ DisplayMode = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gDisplayModePropert
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DownBrush(ByVal Value As IBrush)
@@ -322,7 +322,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gDownBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DownBrush() As IBrush
@@ -334,7 +334,7 @@ Set DownBrush = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gDownBrushPropert
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DownLinePen(ByVal Value As Pen)
@@ -346,7 +346,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gDownLinePenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DownLinePen() As Pen
@@ -358,7 +358,7 @@ Set DownLinePen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gDownLinePenPro
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DownPen(ByVal Value As Pen)
@@ -370,7 +370,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gDownPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DownPen() As Pen
@@ -382,7 +382,7 @@ Set DownPen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gDownPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let HistogramBarWidth(ByVal Value As Double)
@@ -394,7 +394,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gHistogramBarWidthProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get HistogramBarWidth() As Double
@@ -406,7 +406,7 @@ HistogramBarWidth = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gHistogramBar
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let HistogramBaselinePen(ByVal Value As Pen)
@@ -418,7 +418,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gHistogramBaselinePenProperty, Va
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get HistogramBaselinePen() As Pen
@@ -430,7 +430,7 @@ Set HistogramBaselinePen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gHisto
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let HistogramBaseValue(ByVal Value As Double)
@@ -442,7 +442,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gHistogramBaseValueProperty, Valu
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get HistogramBaseValue() As Double
@@ -454,7 +454,7 @@ HistogramBaseValue = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gHistogramBa
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Friend Property Get Id() As Long
@@ -470,7 +470,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gIncludeInAutoscaleProperty, Valu
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IncludeInAutoscale() As Boolean
@@ -482,7 +482,7 @@ IncludeInAutoscale = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gIncludeInAu
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let IsSelectable(ByVal Value As Boolean)
@@ -494,7 +494,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gIsSelectableProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IsSelectable() As Boolean
@@ -506,7 +506,7 @@ IsSelectable = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gIsSelectablePrope
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IsSelected() As Boolean
@@ -518,7 +518,7 @@ IsSelected = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gIsSelectedProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Layer(ByVal Value As LayerNumbers)
@@ -530,7 +530,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gLayerProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Layer() As LayerNumbers
@@ -542,7 +542,7 @@ Layer = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gLayerProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let LineMode(ByVal Value As DataPointLineModes)
@@ -554,7 +554,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gLineModeProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get LineMode() As DataPointLineModes
@@ -566,7 +566,7 @@ LineMode = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gLineModeProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let LinePen(ByVal Value As Pen)
@@ -578,7 +578,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gLinePenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get LinePen() As Pen
@@ -590,7 +590,7 @@ Set LinePen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gLinePenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get MouseEnterEvent() As ExtendedEvent
@@ -610,7 +610,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gNumberOfSidesProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get NumberOfSides() As Long
@@ -622,7 +622,7 @@ NumberOfSides = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gNumberOfSidesPro
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Orientation(ByVal Value As Double)
@@ -634,7 +634,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gOrientationProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Orientation() As Double
@@ -646,7 +646,7 @@ Orientation = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gOrientationPropert
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Pen(ByVal Value As Pen)
@@ -658,7 +658,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Pen() As Pen
@@ -670,7 +670,7 @@ Set Pen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Renderer() As IRenderer
@@ -696,7 +696,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gSizeProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Size() As Size
@@ -708,7 +708,7 @@ Set Size = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gSizeProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ' TODO: correct the style class name
@@ -722,7 +722,7 @@ mBase.ExtendedPropertyHost.Style = mStyle.ExtendedPropertyHost
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ' TODO: correct the style class name
@@ -739,7 +739,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gUpBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get UpBrush() As IBrush
@@ -751,7 +751,7 @@ Set UpBrush = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gUpBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let UpLinePen(ByVal Value As Pen)
@@ -763,7 +763,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gUpLinePenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get UpLinePen() As Pen
@@ -775,7 +775,7 @@ Set UpLinePen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gUpLinePenPropert
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let UpPen(ByVal Value As Pen)
@@ -787,7 +787,7 @@ mBase.ExtendedPropertyHost.SetValue GDataPoint.gUpPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get UpPen() As Pen
@@ -799,7 +799,7 @@ Set UpPen = mBase.ExtendedPropertyHost.GetValue(GDataPoint.gUpPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 '@================================================================================
@@ -826,7 +826,7 @@ mModel.AddGraphicObject Add
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
@@ -843,7 +843,7 @@ Set Clear = mModel.ClearGraphicObjectSeries(Me)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
@@ -856,7 +856,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDisplayMode()
@@ -868,7 +868,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gDisplayModeProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDownBrush()
@@ -880,7 +880,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gDownBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDownLinePen()
@@ -892,7 +892,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gDownLinePenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDownPen()
@@ -904,7 +904,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gDownPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearHistogramBarWidth()
@@ -916,7 +916,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gHistogramBarWidthProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearHistogramBaselinePen()
@@ -928,7 +928,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gHistogramBaselinePenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearHistogramBaseValue()
@@ -940,7 +940,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gHistogramBaseValueProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearIncludeInAutoscale()
@@ -952,7 +952,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gIncludeInAutoscaleProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearIsSelectable()
@@ -964,7 +964,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gIsSelectableProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearLayer()
@@ -976,7 +976,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gLayerProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearLineMode()
@@ -988,7 +988,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gLineModeProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearLinePen()
@@ -1000,7 +1000,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gLinePenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearNumberOfSides()
@@ -1012,7 +1012,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gNumberOfSidesProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearOrientation()
@@ -1024,7 +1024,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gOrientationProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearPen()
@@ -1036,7 +1036,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearSize()
@@ -1048,7 +1048,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gSizeProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearUpBrush()
@@ -1060,7 +1060,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gUpBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearUpLinePen()
@@ -1072,7 +1072,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gUpLinePenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearUpPen()
@@ -1084,7 +1084,7 @@ mBase.ExtendedPropertyHost.ClearValue GDataPoint.gUpPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Edit()
@@ -1103,7 +1103,7 @@ Set NewEnum = mGraphicObjects.[_NewEnum]
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 '@================================================================================
@@ -1120,7 +1120,7 @@ Set prevDataPointObj = mPrevDataPointRef.Target
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub RepaintRegion( _
@@ -1142,7 +1142,7 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 

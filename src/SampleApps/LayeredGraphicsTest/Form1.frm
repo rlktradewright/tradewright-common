@@ -270,6 +270,7 @@ Attribute mSpriteControllerTC.VB_VarHelpID = -1
 Private WithEvents mSun                             As Sun
 Attribute mSun.VB_VarHelpID = -1
 Private mSky                                        As Rectangle
+Private mSkyBrush                                   As RadialGradientBrush
 
 '@================================================================================
 ' Class Event Handlers
@@ -278,8 +279,10 @@ Private mSky                                        As Rectangle
 Private Sub Form_Initialize()
 Debug.Print "Running in development environment: " & CStr(inDev)
 InitialiseTWUtilities
+EnableTracing ""
 TaskQuantumMillisecs = 16
 RunTasksAtLowerThreadPriority = True
+TaskSummaryLoggingIntervalSecs = 10
 
 Set mUnhandledErrorHandler = UnhandledErrorHandler
 ApplicationGroupName = "TradeWright"
@@ -338,7 +341,7 @@ If Not mGraphics Is Nothing Then mGraphics.Refresh
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub BigButton_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -350,7 +353,7 @@ If Not mGraphics Is Nothing Then mGraphics.Refresh
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub ChangeSizeButton_Click()
@@ -409,7 +412,7 @@ End If
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub LeftButton_Click()
@@ -421,7 +424,7 @@ mEllipse1.Position = NewPoint(mEllipse1.Position.X - 2, mEllipse1.Position.Y)
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub RightButton_Click()
@@ -433,7 +436,7 @@ mEllipse1.Position = NewPoint(mEllipse1.Position.X + 2, mEllipse1.Position.Y)
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub RotateLeftButton_Click()
@@ -445,7 +448,7 @@ mEllipse1.Orientation = mEllipse1.Orientation + Pi / 8
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub RotateRightButton_Click()
@@ -457,7 +460,7 @@ mEllipse1.Orientation = mEllipse1.Orientation - Pi / 8
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -478,7 +481,7 @@ IterationTimeLabel.Caption = "Avg iteration time (microsecs): " & metrics.Averag
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -489,13 +492,13 @@ Private Sub mSun_PositionChanged()
 Const ProcName As String = "mSun_PositionChanged"
 On Error GoTo Err
 
-'setSkyBrush mSun.Position, mSun.OrbitSize
-If Not mSky Is Nothing Then mSky.Position = mSun.Position
+setSkyBrush mSun.Position, mSun.OrbitSize
+'If Not mSky Is Nothing Then mSky.Position = mSun.Position
 
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -608,15 +611,29 @@ On Error GoTo Err
 
 If ShowSunCheck.Value = vbUnchecked Then Exit Sub
 
-Set mSun = New Sun
-mSun.Initialise mEllipseSeries1.Add, NewPoint(80, -30), NewSize(130, 220), 5# * Pi / 4#, mGraphics
-
 Set mSky = mRectangleSeries1.Add
 mSky.Layer = LayerBackground + 1
-mSky.Size = NewSize(300, 300)
-mSky.Position = mSun.Position
+mSky.Size = NewSize(100, 100)
+mSky.Position = NewPoint(50, 50)
 
-setSkyBrush mSun.Position, mSun.OrbitSize
+Dim lSun As New Sun
+lSun.Initialise mEllipseSeries1.Add, NewPoint(80, -30), NewSize(130, 220), 5# * Pi / 4#, mGraphics
+Set mSun = lSun
+
+
+ReDim lcolors(1) As Long
+lcolors(0) = &HFFFCFC
+lcolors(1) = &H400000
+
+Set mSkyBrush = CreateRadialGradientBrush( _
+                TPoint(mSun.Position.XLogical(mGraphics) / 100#, mSun.Position.YLogical(mGraphics) / 100#), _
+                TPoint(mSun.Position.XLogical(mGraphics) / 100#, mSun.Position.YLogical(mGraphics) / 100#), _
+                mSun.OrbitSize.WidthLogical(mGraphics) / 100#, _
+                mSun.OrbitSize.HeightLogical(mGraphics) / 100#, _
+                True, _
+                lcolors)
+
+mSky.Brush = mSkyBrush
 
 Exit Sub
 
@@ -708,26 +725,28 @@ Private Sub setSkyBrush( _
 Const ProcName As String = "setSkyBrush"
 On Error GoTo Err
 
-ReDim lcolors(1) As Long
-lcolors(0) = &HFFFCFC
-lcolors(1) = &H400000
+Dim lCentre As TPoint
+lCentre = TPoint(pSunPosition.XLogical(mGraphics) / 100#, pSunPosition.YLogical(mGraphics) / 100#)
+mSkyBrush.GradientOrigin = lCentre
+mSkyBrush.Centre = lCentre
+mSky.Brush = mSkyBrush
 
-Dim et As New ElapsedTimer
-et.StartTiming
+'mSky.Position = NewPoint(mSky.Position.X + 0.01, mSky.Position.Y + 0.01)
 
-Dim lBrush As IBrush
-Set lBrush = CreateRadialGradientBrush( _
-                TPoint(pSunPosition.XLogical(mGraphics) / 100#, pSunPosition.YLogical(mGraphics) / 100#), _
-                TPoint(pSunPosition.XLogical(mGraphics) / 100#, pSunPosition.YLogical(mGraphics) / 100#), _
-                pOrbitSize.WidthLogical(mGraphics) / 100#, _
-                pOrbitSize.HeightLogical(mGraphics) / 100#, _
-                True, _
-                lcolors)
-Debug.Print "CreateBrush: " & et.ElapsedTimeMicroseconds
-
-et.StartTiming
-mSky.Brush = lBrush
-Debug.Print "SetBrush: " & et.ElapsedTimeMicroseconds
+'ReDim lcolors(1) As Long
+'lcolors(0) = &HFFFCFC
+'lcolors(1) = &H400000
+'
+'Dim lBrush As IBrush
+'Set lBrush = CreateRadialGradientBrush( _
+'                TPoint(pSunPosition.XLogical(mGraphics) / 100#, pSunPosition.YLogical(mGraphics) / 100#), _
+'                TPoint(pSunPosition.XLogical(mGraphics) / 100#, pSunPosition.YLogical(mGraphics) / 100#), _
+'                pOrbitSize.WidthLogical(mGraphics) / 100#, _
+'                pOrbitSize.HeightLogical(mGraphics) / 100#, _
+'                True, _
+'                lcolors)
+'
+'mSky.Brush = lBrush
 
 Exit Sub
 
@@ -746,14 +765,14 @@ If Rnd < 0.5 Then
             CLng(Rnd * &HFFFFFF), _
             CLng(Rnd * 5) + 1, _
             NewPoint(Rnd * 50 + 25, Rnd * 50 + 25), _
-            LayerNumbers.LayerMin + Int(Rnd * LayerNumbers.LayerMax - LayerNumbers.LayerMin))
+            LayerNumbers.LayerLowestUser + Int(Rnd * LayerNumbers.LayerHighestUser - LayerNumbers.LayerLowestUser))
 Else
     Set lGraphObj = addEllipse(mEllipseSeries1, _
             CLng(Rnd * &HFFFFFF), _
             CLng(Rnd * &HFFFFFF), _
             CLng(Rnd * 5) + 1, _
             NewPoint(Rnd * 50 + 25, Rnd * 50 + 25), _
-            LayerNumbers.LayerMin + Int(Rnd * LayerNumbers.LayerMax - LayerNumbers.LayerMin))
+            LayerNumbers.LayerLowestUser + Int(Rnd * LayerNumbers.LayerHighestUser - LayerNumbers.LayerLowestUser))
 End If
 
 Dim lSprite As Sprite
@@ -766,7 +785,7 @@ lSprite.Initialise lGraphObj, _
                     IIf(Rnd < 0.2, 0, -100 + Rnd * 200), _
                     (GradientFillSpritesCheck.Value = vbChecked), _
                     mGraphics.Boundary
-mSprites.Add lSprite, CStr(ObjPtr(lSprite))
+mSprites.Add lSprite
 lSprite.Go
 
 Exit Sub
@@ -777,10 +796,11 @@ End Sub
 
 Private Sub startSprites(ByVal pNumber As Long)
 Const ProcName As String = "startSprites"
-Dim failpoint As String
 On Error GoTo Err
 
+Dim failpoint As String
 failpoint = "Create sprites"
+
 Dim i As Long
 For i = 1 To pNumber
     startSprite
@@ -809,13 +829,14 @@ If Not mSpriteControllerTC Is Nothing Then mSpriteControllerTC.CancelTask
 
 'mRectangleSeries2.Clear
 
-Dim i As Long
-For i = mSprites.Count To 1 Step -1
+Dim en As Enumerator
+Set en = mSprites.Enumerator
+Do While en.MoveNext
     Dim lSprite As Sprite
-    Set lSprite = mSprites(i)
+    Set lSprite = en.Current
     lSprite.Finish
-    mSprites.Remove i
-Next
+Loop
+mSprites.Clear
 
 Exit Sub
 

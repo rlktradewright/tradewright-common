@@ -2355,7 +2355,7 @@ Case WM_RBUTTONUP
     End If
 Case WM_PAINT
     If GetUpdateRect(hwnd, lUpdateRect, 1) = 0 Then
-        'Debug.Print "Repaint all"
+        If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Repaint all", ProcName, ModuleName, LogLevelHighDetail
         Refresh
     Else
         If mIsInDev Then countPaints
@@ -2364,7 +2364,7 @@ Case WM_PAINT
         lhDC = BeginPaint(hwnd, lPaintStruct)
         If lhDC = mTargethDC Then
             ' the window has a private device context - no need to set it up
-            'Debug.Print "Repaint: " & gdiLogicalToAppLogicalX(lUpdateRect.Left) & ", " & gdiLogicalToAppLogicalY(lUpdateRect.Top) & ", " & gdiLogicalToAppLogicalX(lUpdateRect.Right) & ", " & gdiLogicalToAppLogicalY(lUpdateRect.Bottom)
+            If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Repaint (private): " & gdiLogicalToAppLogicalX(lUpdateRect.Left) & ", " & gdiLogicalToAppLogicalY(lUpdateRect.Top) & ", " & gdiLogicalToAppLogicalX(lUpdateRect.Right) & ", " & gdiLogicalToAppLogicalY(lUpdateRect.Bottom), ProcName, ModuleName, LogLevelHighDetail
             BitBlt lhDC, lUpdateRect.Left, lUpdateRect.Top, lUpdateRect.Right - lUpdateRect.Left, lUpdateRect.Bottom - lUpdateRect.Top, mhDC, lUpdateRect.Left, lUpdateRect.Top, SRCCOPY
         Else
             ' not a private device context so we have to set up the device context each time
@@ -2376,7 +2376,7 @@ Case WM_PAINT
             points(1).X = lUpdateRect.Right
             points(1).Y = lUpdateRect.Bottom
             DPtoLP lhDC, points(0), 2
-            'Debug.Print "Repaint: " & lUpdateRect.Left & ", " & lUpdateRect.Top & ", " & (lUpdateRect.Right - lUpdateRect.Left) & ", " & (lUpdateRect.Top - lUpdateRect.Bottom)
+            If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Repaint (non-private): " & lUpdateRect.Left & ", " & lUpdateRect.Top & ", " & (lUpdateRect.Right - lUpdateRect.Left) & ", " & (lUpdateRect.Top - lUpdateRect.Bottom), ProcName, ModuleName, LogLevelHighDetail
             BitBlt lhDC, points(0).X, points(0).Y, points(1).X - points(0).X, points(1).Y - points(0).Y, mhDC, points(0).X, points(0).Y, SRCCOPY
         End If
         EndPaint hwnd, lPaintStruct
@@ -2821,6 +2821,7 @@ lY = mBoundary.Top + ConvertGdiToLogicalY(LogicalUnitsPerPixel * (((plParam And 
 End Sub
 
 Private Sub invalidate()
+Const ProcName As String = "invalidate"
 Static sClipRegionHandle As Long
 Dim lClipRect As GDI_RECT
 Dim lRect As GDI_RECT
@@ -2838,11 +2839,12 @@ lResult = GetClipRgn(mhDC, sClipRegionHandle)
 If lResult = -1 Then gHandleWin32Error GetLastError
 If lResult <> 0 Then
     GetRgnBox sClipRegionHandle, lClipRect
+    If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Invalidate clip: " & lClipRect.Left & ", " & lClipRect.Top & ", " & lClipRect.Right & ", " & lClipRect.Bottom, ProcName, ModuleName, LogLevelHighDetail
     InvalidateRect mhWnd, lClipRect, 0
 Else
+    If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Invalidate client: " & gdiLogicalToAppLogicalX(mClientRect.Left) & ", " & gdiLogicalToAppLogicalY(mClientRect.Top) & ", " & gdiLogicalToAppLogicalX(mClientRect.Right) & ", " & gdiLogicalToAppLogicalY(mClientRect.Bottom), ProcName, ModuleName, LogLevelHighDetail
     InvalidateRect mhWnd, mClientRect, 0
 End If
-
 End Sub
 
 Private Function isKeyPressed(ByVal pVKeyCode As Long) As Boolean

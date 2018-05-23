@@ -72,7 +72,7 @@ TRectangleInitialise mBoundingRect
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -90,7 +90,7 @@ If lChangeType = ParentChanged Or lChangeType = StylesChanged Then initiateRedra
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub mEPHost_ExtendedPropertyChanged(pEv As ExtendedPropertyChangedEventData)
@@ -121,7 +121,7 @@ End If
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -138,7 +138,7 @@ BoundingRectangle = mBoundingRect
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Series() As IGraphicObjectSeries
@@ -159,7 +159,7 @@ mEditController.EndEdit
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Draw(pArea As TRectangle)
@@ -171,7 +171,7 @@ mSeries.Renderer.Render graphObj
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Edit()
@@ -197,7 +197,7 @@ mSeriesUpdateNumber = mSeries.SeriesUpdateNumber
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -231,7 +231,7 @@ mSeries.LayeredGraphicsModel.UpdateGraphicObject graphObj
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function needToRecalculateBoundingRect() As Boolean
@@ -281,7 +281,7 @@ mGraphicsUpdateNumber = lGraphicsUpdateNumber
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 

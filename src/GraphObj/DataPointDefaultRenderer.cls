@@ -70,7 +70,7 @@ IRenderer_GetBoundingRectangle = determineBoundingRect(lObj)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IRenderer_Render(ByVal pObject As IGraphicObject)
@@ -90,7 +90,7 @@ paint lObj, chooseBrush(lObj), choosePen(lObj)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -151,7 +151,7 @@ determineBoundingRect = mGraphics.EndBoundingRectangleDetermination
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub paint( _
@@ -169,7 +169,7 @@ paintBody pObj, pBrush, pPen
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsCross( _
@@ -195,7 +195,7 @@ mGraphics.DrawLine pPen, NewPoint(lX - lHorizOffset, lY + lVertOffset), NewPoint
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsDash( _
@@ -216,7 +216,7 @@ mGraphics.DrawLine pPen, NewPoint(lX - lSemiWidth, lY), NewPoint(lX + lSemiWidth
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsEllipse( _
@@ -231,7 +231,7 @@ mGraphics.PaintEllipseFromPositionAndSize pBrush, pPen, NewPoint(pObj.X, pObj.Va
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsHistogram( _
@@ -263,7 +263,7 @@ mGraphics.DrawLine pObj.HistogramBaselinePen, NewPoint(lBaselineX, lHistBase), N
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsPoint( _
@@ -278,7 +278,7 @@ mGraphics.DrawPoint pPen, NewPoint(pObj.X, pObj.Value)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintAsPolygon( _
@@ -293,7 +293,7 @@ mGraphics.PaintPolygonFromPositionAndSize pBrush, pPen, pObj.NumberOfSides, NewP
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintBody( _
@@ -326,7 +326,7 @@ resetOrientation pObj
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintLine( _
@@ -364,7 +364,7 @@ End Select
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub paintPrevBody( _
@@ -383,7 +383,7 @@ paintBody lPrevObj, chooseBrush(lPrevObj), choosePen(lPrevObj)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub resetOrientation(ByVal pObj As DataPoint)
@@ -395,7 +395,7 @@ If pObj.Orientation <> 0 Then mGraphics.Reset
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub setOrientation(ByVal pObj As DataPoint)
@@ -418,7 +418,7 @@ mGraphics.RotateAboutPoint pObj.Orientation, TPoint(pObj.X, pObj.Value)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function upPoint(ByVal pObj As DataPoint) As Boolean

@@ -73,7 +73,7 @@ mStyleType = RelatedClassName & " Styles"
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -134,7 +134,7 @@ End If
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Brush() As IBrush
@@ -146,7 +146,7 @@ Set Brush = mEPhost.GetLocalValue(GRectangle.gBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let ConfigurationSection( _
@@ -180,7 +180,7 @@ If isLocalValueSet(GRectangle.gSizeProperty) Then mEPhost.GetLocalValue(GRectang
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Friend Property Get ExtendedPropertyHost() As ExtendedPropertyHost
@@ -198,7 +198,7 @@ If Not mConfig Is Nothing Then mConfig.SetSetting gGetConfigName(GRectangle.gIsS
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IsSelectable() As Boolean
@@ -210,7 +210,7 @@ IsSelectable = mEPhost.GetLocalValue(GRectangle.gIsSelectableProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Layer(ByVal Value As LayerNumbers)
@@ -224,7 +224,7 @@ If Not mConfig Is Nothing Then mConfig.SetSetting gGetConfigName(GRectangle.gLay
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Layer() As LayerNumbers
@@ -236,7 +236,7 @@ Layer = mEPhost.GetLocalValue(GRectangle.gLayerProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Name() As String
@@ -254,7 +254,7 @@ If Not mConfig Is Nothing Then mConfig.SetSetting gGetConfigName(GRectangle.gOri
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Orientation() As Double
@@ -266,7 +266,7 @@ Orientation = mEPhost.GetLocalValue(GRectangle.gOrientationProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Pen(ByVal Value As Pen)
@@ -285,7 +285,7 @@ End If
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Pen() As Pen
@@ -297,7 +297,7 @@ Set Pen = mEPhost.GetLocalValue(GRectangle.gPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Position(ByVal Value As Point)
@@ -316,7 +316,7 @@ End If
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Position() As Point
@@ -328,7 +328,7 @@ Set Position = mEPhost.GetLocalValue(GRectangle.gPositionProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Size(ByVal Value As Size)
@@ -347,7 +347,7 @@ End If
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Size() As Size
@@ -359,7 +359,7 @@ Set Size = mEPhost.GetLocalValue(GRectangle.gSizeProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 '@================================================================================
@@ -376,7 +376,7 @@ clearProperty GRectangle.gBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearLayer()
@@ -389,7 +389,7 @@ clearProperty GRectangle.gLayerProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearOrientation()
@@ -401,7 +401,7 @@ clearProperty GRectangle.gOrientationProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearPen()
@@ -414,7 +414,7 @@ clearProperty GRectangle.gPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearPosition()
@@ -427,7 +427,7 @@ clearProperty GRectangle.gPositionProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearSize()
@@ -440,7 +440,7 @@ clearProperty GRectangle.gSizeProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Function Clone() As RectangleStyle
@@ -461,7 +461,7 @@ If isLocalValueSet(GRectangle.gSizeProperty) Then Clone.Size = mEPhost.GetLocalV
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Sub LoadFromConfig( _
@@ -485,7 +485,7 @@ If Not mConfig.GetConfigurationSection(gGetConfigName(GRectangle.gSizeProperty))
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
                 
 End Sub
 
@@ -499,7 +499,7 @@ If Not mConfig Is Nothing Then mConfig.Remove
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -516,7 +516,7 @@ If Not mConfig Is Nothing Then mConfig.RemoveSetting gGetConfigName(pExtProp)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function isLocalValueSet(ByVal pExtProp As ExtendedProperty) As Boolean
@@ -528,7 +528,7 @@ isLocalValueSet = mEPhost.IsPropertySet(pExtProp)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 
@@ -544,7 +544,7 @@ setProperty = gSetProperty(mEPhost, pExtProp, pNewValue, pPrevValue)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 

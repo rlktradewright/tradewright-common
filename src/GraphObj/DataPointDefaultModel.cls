@@ -57,6 +57,10 @@ Private mValue                                      As Double
 ' Class Event Handlers
 '@================================================================================
 
+Private Sub Class_Terminate()
+gRemoveAllChangeListeners Me
+End Sub
+
 '@================================================================================
 ' IDataPointModel Interface Members
 '@================================================================================
@@ -111,7 +115,7 @@ gFireChange Me, DataPointPositionChanged
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Property Get IDataPointModel_Position() As Point

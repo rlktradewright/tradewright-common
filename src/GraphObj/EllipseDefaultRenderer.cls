@@ -52,10 +52,6 @@ Private mGraphics                                   As Graphics
 ' Class Event Handlers
 '@================================================================================
 
-Private Sub Class_Terminate()
-Debug.Print ModuleName & " terminated"
-End Sub
-
 '@================================================================================
 ' IRenderer Interface Members
 '@================================================================================
@@ -73,7 +69,7 @@ IRenderer_GetBoundingRectangle = determineBoundingRect(lEllipse)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IRenderer_Render(ByVal pObject As IGraphicObject)
@@ -93,7 +89,7 @@ paintEllipse lEllipse
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -127,7 +123,7 @@ determineBoundingRect = mGraphics.EndBoundingRectangleDetermination
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub paintEllipse(ByVal pEllipse As Ellipse)
@@ -141,7 +137,7 @@ resetOrientation pEllipse
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub resetOrientation(ByVal pEllipse As Ellipse)
@@ -153,7 +149,7 @@ If pEllipse.Orientation <> 0 Then mGraphics.Reset
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub setOrientation(ByVal pEllipse As Ellipse)
@@ -170,7 +166,7 @@ mGraphics.RotateAboutPoint pEllipse.Orientation, TPoint(lPosition.XLogical(mGrap
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 

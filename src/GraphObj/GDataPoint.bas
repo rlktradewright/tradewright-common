@@ -138,7 +138,7 @@ RegisterGraphicObjectExtProperty gLinePenProperty, _
                 pAffectsPosition:=False, _
                 pAffectsSize:=True, _
                 pAffectsRender:=True, _
-                pDefaultValue:=createpixelpen(vbBlack, , LineInsideSolid), _
+                pDefaultValue:=CreatePixelPen(vbBlack, , LineInsideSolid), _
                 pValidatorPointer:=AddressOf gValidatePen
 
 RegisterGraphicObjectExtProperty gHistogramBaselinePenProperty, _
@@ -319,7 +319,7 @@ RegisterGraphicObjectExtProperty gPenProperty, _
                 pAffectsPosition:=False, _
                 pAffectsSize:=True, _
                 pAffectsRender:=True, _
-                pDefaultValue:=createpixelpen(&HC0C0C0), _
+                pDefaultValue:=CreatePixelPen(&HC0C0C0), _
                 pValidatorPointer:=AddressOf gValidatePen
 
 RegisterGraphicObjectExtProperty gIsVisibleProperty, _
@@ -392,7 +392,7 @@ End Select
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gValidateHistogramBarWidth(ByVal pThis As Object, ByVal pValue As Variant)
@@ -404,7 +404,7 @@ If pValue <= 0 Or pValue > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentExcepti
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gValidateLineMode(ByVal pThis As Object, ByVal pValue As Variant)
@@ -426,6 +426,6 @@ End Select
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 

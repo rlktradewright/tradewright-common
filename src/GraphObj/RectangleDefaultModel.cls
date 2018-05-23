@@ -49,12 +49,13 @@ Private Const ModuleName                            As String = "RectangleDefaul
 Private mPosition                                   As Point
 Private mSize                                       As Size
 Private mOrientation                                As Double
+
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
 
 Private Sub Class_Terminate()
-Debug.Print ModuleName & " terminated"
+gRemoveAllChangeListeners Me
 End Sub
 
 '@================================================================================
@@ -111,7 +112,7 @@ gFireChange Me, RectanglePositionChanged
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Property Get IRectangleModel_Position() As Point

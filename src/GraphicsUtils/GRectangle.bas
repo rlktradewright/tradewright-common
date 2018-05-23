@@ -148,6 +148,12 @@ TPointAdd.X = pPoint1.X + pPoint2.X
 TPointAdd.Y = pPoint1.Y + pPoint2.Y
 End Function
 
+Public Function TPointEquals( _
+                ByRef pPoint1 As TPoint, _
+                ByRef pPoint2 As TPoint) As Boolean
+TPointEquals = (pPoint1.X = pPoint2.X) And (pPoint1.Y = pPoint2.Y)
+End Function
+
 Public Function TPointFromShortString( _
                 ByRef pInput As String) As TPoint
 Dim ar As Variant

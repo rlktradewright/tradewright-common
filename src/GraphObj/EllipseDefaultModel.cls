@@ -55,7 +55,7 @@ Private mOrientation                                As Double
 '@================================================================================
 
 Private Sub Class_Terminate()
-Debug.Print ModuleName & " terminated"
+gRemoveAllChangeListeners Me
 End Sub
 
 '@================================================================================
@@ -112,7 +112,7 @@ gFireChange Me, EllipsePositionChanged
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Private Property Get IEllipseModel_Position() As Point

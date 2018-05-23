@@ -97,7 +97,7 @@ Set mGraphicObjects = New Collection
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -183,7 +183,7 @@ Set IGraphicObjectSeries_Item = mGraphicObjects.Item(pIndex)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Property Get IGraphicObjectSeries_LastGraphicsChange() As GraphicsChangeTypes
@@ -235,7 +235,7 @@ RepaintRegion pRecalcBoundaries
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -260,7 +260,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Brush() As IBrush
@@ -272,7 +272,7 @@ Set Brush = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Count() As Long
@@ -285,7 +285,7 @@ Count = mGraphicObjects.Count
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DisplayMode(ByVal Value As OHLCBarDisplayModes)
@@ -297,7 +297,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gDisplayModeProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DisplayMode() As OHLCBarDisplayModes
@@ -309,7 +309,7 @@ DisplayMode = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gDisplayModeProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DownBrush(ByVal Value As IBrush)
@@ -321,7 +321,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gDownBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DownBrush() As IBrush
@@ -333,7 +333,7 @@ Set DownBrush = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gDownBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let DownPen(ByVal Value As Pen)
@@ -345,7 +345,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gDownPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get DownPen() As Pen
@@ -357,7 +357,7 @@ Set DownPen = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gDownPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Friend Property Get Id() As Long
@@ -373,7 +373,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gIncludeInAutoscaleProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IncludeInAutoscale() As Boolean
@@ -385,7 +385,7 @@ IncludeInAutoscale = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gIncludeInAuto
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let IsSelectable(ByVal Value As Boolean)
@@ -397,7 +397,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gIsSelectableProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IsSelectable() As Boolean
@@ -409,7 +409,7 @@ IsSelectable = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gIsSelectablePropert
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get IsSelected() As Boolean
@@ -421,7 +421,7 @@ IsSelected = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gIsSelectedProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Layer(ByVal Value As LayerNumbers)
@@ -433,7 +433,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gLayerProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Layer() As LayerNumbers
@@ -445,7 +445,7 @@ Layer = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gLayerProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get MouseEnterEvent() As ExtendedEvent
@@ -465,7 +465,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gOrientationProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Orientation() As Double
@@ -477,7 +477,7 @@ Orientation = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gOrientationProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Pen(ByVal Value As Pen)
@@ -489,7 +489,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Pen() As Pen
@@ -501,7 +501,7 @@ Set Pen = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Renderer() As IRenderer
@@ -529,7 +529,7 @@ mBase.ExtendedPropertyHost.Style = mStyle.ExtendedPropertyHost
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ' TODO: correct the style class name
@@ -546,7 +546,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gUpBrushProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get UpBrush() As IBrush
@@ -558,7 +558,7 @@ Set UpBrush = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gUpBrushProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let UpPen(ByVal Value As Pen)
@@ -570,7 +570,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gUpPenProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get UpPen() As Pen
@@ -582,7 +582,7 @@ Set UpPen = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gUpPenProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Let Width(ByVal Value As Double)
@@ -594,7 +594,7 @@ mBase.ExtendedPropertyHost.SetValue GOHLCBar.gWidthProperty, Value
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Width() As Double
@@ -606,7 +606,7 @@ Width = mBase.ExtendedPropertyHost.GetValue(GOHLCBar.gWidthProperty)
 Exit Property
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 '@================================================================================
@@ -633,7 +633,7 @@ mModel.AddGraphicObject Add
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
@@ -650,7 +650,7 @@ Set Clear = mModel.ClearGraphicObjectSeries(Me)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
@@ -663,7 +663,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDisplayMode()
@@ -675,7 +675,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gDisplayModeProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDownBrush()
@@ -687,7 +687,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gDownBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearDownPen()
@@ -699,7 +699,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gDownPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearIncludeInAutoscale()
@@ -711,7 +711,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gIncludeInAutoscaleProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearIsSelectable()
@@ -723,7 +723,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gIsSelectableProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearLayer()
@@ -735,7 +735,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gLayerProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearOrientation()
@@ -747,7 +747,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gOrientationProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearPen()
@@ -759,7 +759,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearUpBrush()
@@ -771,7 +771,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gUpBrushProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearUpPen()
@@ -783,7 +783,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gUpPenProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub ClearWidth()
@@ -795,7 +795,7 @@ mBase.ExtendedPropertyHost.ClearValue GOHLCBar.gWidthProperty
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Edit()
@@ -814,7 +814,7 @@ Set NewEnum = mGraphicObjects.[_NewEnum]
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 '@================================================================================
@@ -831,7 +831,7 @@ Set prevBarObj = mPrevBarRef.Target
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub RepaintRegion( _
@@ -853,7 +853,7 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 

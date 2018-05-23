@@ -78,6 +78,9 @@ mTaskContext.Finish 0, True
 End Sub
 
 Private Sub ITask_Run()
+Const ProcName As String = "ITask_Run"
+On Error GoTo Err
+
 Static et As ElapsedTimer
 Static et1 As ElapsedTimer
 Static et2 As ElapsedTimer
@@ -152,8 +155,12 @@ If et1.ElapsedTimeMicroseconds >= 1000000 Then
     et1.StartTiming
 End If
 
-mTaskContext.Suspend 10
+'mTaskContext.Suspend 200
 
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Property Let ITask_TaskContext(ByVal RHS As TaskContext)
@@ -191,7 +198,7 @@ mDisableDrawingDuringUpdates = pDisableDrawingDuringUpdates
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================

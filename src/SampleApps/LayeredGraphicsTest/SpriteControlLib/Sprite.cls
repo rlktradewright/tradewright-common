@@ -135,7 +135,7 @@ End Select
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -169,7 +169,7 @@ End Select
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -192,7 +192,7 @@ mFinished = True
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Go()
@@ -208,7 +208,7 @@ mElapsedTimer.StartTiming
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Initialise( _
@@ -231,22 +231,22 @@ mGradientFill = pGradientFill
 mSpaceBoundary = pSpaceBoundary
 
 Set mElapsedTimer = New ElapsedTimer
+'mElapsedTimer.StartTiming
 
 calcVelocityComponents
 
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Move()
-Dim et As Single
-
 Const ProcName As String = "Move"
 On Error GoTo Err
 
 If Not mFinished Then
+    Dim et As Single
     et = mElapsedTimer.ElapsedTimeMicroseconds / 1000000
     mElapsedTimer.StartTiming
     mSprite.Edit
@@ -258,7 +258,7 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -276,23 +276,19 @@ mSprite.Orientation = mOrientation
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub calcNewPosition(ByVal pElapsedtime As Single)
-Dim dx As Double
-Dim dy As Double
-Dim lBoundary As TRectangle
-Dim lNewBoundary As TRectangle
-
 Const ProcName As String = "calcNewPosition"
 On Error GoTo Err
 
-dx = pElapsedtime * mVx
-dy = pElapsedtime * mVy
+Dim dx As Double: dx = pElapsedtime * mVx
+Dim dy As Double: dy = pElapsedtime * mVy
 
-lBoundary = mSprite.BoundingRectangle
-lNewBoundary = lBoundary
+Dim lBoundary As TRectangle: lBoundary = mSprite.BoundingRectangle
+
+Dim lNewBoundary As TRectangle: lNewBoundary = lBoundary
 
 Do While dx <> 0
     If dx > 0 Then
@@ -340,6 +336,7 @@ Loop
 
 Dim lPosn As Point
 Set lPosn = mSprite.Position
+If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Move (" & GetObjectKey(Me) & "): " & (lNewBoundary.Left - lBoundary.Left) & ", " & (lNewBoundary.Top - lBoundary.Top), ProcName, ModuleName
 mSprite.Position = NewPoint(lPosn.X + lNewBoundary.Left - lBoundary.Left, _
                             lPosn.Y + lNewBoundary.Top - lBoundary.Top)
 
@@ -347,7 +344,7 @@ mSprite.Position = NewPoint(lPosn.X + lNewBoundary.Left - lBoundary.Left, _
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function calcTimeToNextCalc() As Long
@@ -363,7 +360,7 @@ calcTimeToNextCalc = 50
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub calcVelocityComponents()
@@ -388,7 +385,7 @@ mSprite.Pen = CreatePixelPen(lcolors(1), Int(Rnd * 5) + 1)
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub reverseX()
@@ -401,7 +398,7 @@ calcVelocityComponents
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub reverseY()
@@ -414,6 +411,6 @@ calcVelocityComponents
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 

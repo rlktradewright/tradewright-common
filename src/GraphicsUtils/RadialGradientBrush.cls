@@ -65,7 +65,7 @@ Private mColors()                           As Long
 Private mVertices()                         As TRIVERTEX
 Private mVerticesIndex                      As Long
 Private mMeshTriangles()                    As GRADIENT_TRIANGLE
-Private mMeshTrianglesIndex                  As Long
+Private mMeshTrianglesIndex                 As Long
 
 Private mFillBoundary                       As GDI_RECT
 Private mPad                                As Boolean
@@ -156,6 +156,16 @@ End Sub
 ' Properties
 '@================================================================================
 
+Public Property Let Centre(ByRef Value As TPoint)
+If TPointEquals(Value, mCentre) Then Exit Property
+mCentre = Value
+Clear
+End Property
+
+Public Property Get Centre() As TPoint
+Centre = mCentre
+End Property
+
 Public Property Get Colors() As Long()
 Colors = mColors
 End Property
@@ -187,6 +197,12 @@ Exit Property
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 
+End Property
+
+Public Property Let GradientOrigin(ByRef Value As TPoint)
+If TPointEquals(Value, mGradientOrigin) Then Exit Property
+mGradientOrigin = Value
+Clear
 End Property
 
 Public Property Get GradientOrigin() As TPoint

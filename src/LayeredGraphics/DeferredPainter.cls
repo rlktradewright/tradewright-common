@@ -184,12 +184,12 @@ For i = 0 To mAreasToRedrawIndex
 Next
 
 If Not handled Then
-    Debug.Print "Add area to redraw: " & TRectangleToString(areaToRedraw)
+    If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Add area to redraw: ", ProcName, ModuleName, LogLevelHighDetail, TRectangleToString(areaToRedraw)
     mAreasToRedrawIndex = mAreasToRedrawIndex + 1
     If mAreasToRedrawIndex > UBound(mAreasToRedraw) Then
         ReDim Preserve mAreasToRedraw(2 * (UBound(mAreasToRedraw) + 1) - 1) As TRectangle
         If gLogger.IsLoggable(LogLevelHighDetail) Then _
-            gLogger.Log "Increased mAreasToRedraw size to", ProcName, ModuleName, LogLevelHighDetail, CStr(UBound(mAreasToRedraw) + 1)
+            gLogger.Log "Increased mAreasToRedraw size to ", ProcName, ModuleName, LogLevelHighDetail, CStr(UBound(mAreasToRedraw) + 1)
     End If
     mAreasToRedraw(mAreasToRedrawIndex) = areaToRedraw
 End If

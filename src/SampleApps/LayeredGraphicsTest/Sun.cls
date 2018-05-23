@@ -58,6 +58,8 @@ Private mStartTime                                  As Date
 
 Private mGraphics                                   As Graphics
 
+Private mPosition                                   As Point
+
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
@@ -83,7 +85,7 @@ Set OrbitSize = mOrbitSize
 End Property
 
 Public Property Get Position() As Point
-Set Position = mSun.Position
+Set Position = mPosition
 End Property
 
 '@================================================================================
@@ -107,7 +109,7 @@ Set mGraphics = pGraphics
 
 Set mSun = pSun
 mSun.Brush = CreateBrush(vbWhite)
-mSun.Layer = LayerBackground + 1
+mSun.Layer = LayerBackground + 2
 mSun.Size = NewSize(1#, 1#, ScaleUnitCm, ScaleUnitCm)
 
 Set mOrbitCentre = pOrbitCentre
@@ -117,7 +119,7 @@ mStartAnomaly = pStartingAnomaly
 mStartTime = Now
 calcPosition mStartAnomaly
 
-Set mSunTimer = CreateIntervalTimer(100, ExpiryTimeUnitMilliseconds, 100)
+Set mSunTimer = CreateIntervalTimer(10, ExpiryTimeUnitMilliseconds, 10)
 mSunTimer.StartTimer
 
 Exit Sub
@@ -134,9 +136,10 @@ Private Sub calcPosition(ByVal pAnomaly As Double)
 Const ProcName As String = "calcPosition"
 On Error GoTo Err
 
-mSun.Position = NewPoint( _
+Set mPosition = NewPoint( _
     mOrbitCentre.XLogical(mGraphics) + mOrbitSize.WidthLogical(mGraphics) / 2# * Cos(pAnomaly), _
     mOrbitCentre.YLogical(mGraphics) + mOrbitSize.HeightLogical(mGraphics) / 2# * Sin(pAnomaly))
+mSun.Position = mPosition
 
 RaiseEvent PositionChanged
 Exit Sub

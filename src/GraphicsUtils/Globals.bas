@@ -34,7 +34,7 @@ End Enum
 ' Constants
 '@================================================================================
 
-Public Const ProjectName                            As String = "GraphicsUtils30"
+Public Const ProjectName                            As String = "GraphicsUtils40"
 
 Private Const ModuleName                            As String = "Globals"
 

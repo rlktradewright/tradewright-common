@@ -65,7 +65,7 @@ Set mEditController = New EditController
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -83,7 +83,7 @@ If lChangeType = ParentChanged Or lChangeType = StylesChanged Then RaiseEvent Re
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub mEPHost_ExtendedPropertyChanged(pEv As ExtendedPropertyChangedEventData)
@@ -113,7 +113,7 @@ End If
 Exit Sub
 
 Err:
-gNotifyUnhandledError pProcedureName:=ProcName, pModuleName:=ModuleName
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================

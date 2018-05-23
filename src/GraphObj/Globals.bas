@@ -40,7 +40,7 @@ Public Const InverseSqrtOf2                         As Double = 0.70710678118654
 ' Member variables
 '@================================================================================
 
-Private mChangeListeners                            As New Collection
+Private mChangeListeners                            As New EnumerableCollection
 
 '@================================================================================
 ' Class Event Handlers
@@ -72,9 +72,7 @@ Dim lKey As String
 lKey = GetObjectKey(pSource)
 
 Dim lListeners As Listeners
-Set lListeners = mChangeListeners(lKey)
-
-If lListeners Is Nothing Then
+If Not mChangeListeners.TryItem(lKey, lListeners) Then
     Set lListeners = New Listeners
     mChangeListeners.Add lListeners, lKey
 End If
@@ -84,7 +82,6 @@ lListeners.Add pListener
 Exit Sub
 
 Err:
-If Err.Number = VBErrorCodes.VbErrInvalidProcedureCall Then Resume Next
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
@@ -100,16 +97,23 @@ ev.ChangeType = pValue
 gFireChange = ev
 
 Dim lListeners As Listeners
+If Not mChangeListeners.TryItem(GetObjectKey(pSource), lListeners) Then Exit Function
 Set lListeners = mChangeListeners(GetObjectKey(pSource))
 If lListeners Is Nothing Then Exit Function
 
 Static sInit As Boolean
+Static sListeners As Listeners
 Static sCurrentListeners() As Object
 Static sSomeListeners As Boolean
 
-If Not sInit Or Not lListeners.Valid Then
+If Not lListeners Is sListeners Then
+    sInit = False
+    Set sListeners = lListeners
+End If
+
+If Not sInit Or Not sListeners.Valid Then
     sInit = True
-    sSomeListeners = lListeners.GetCurrentListeners(sCurrentListeners)
+    sSomeListeners = sListeners.GetCurrentListeners(sCurrentListeners)
 End If
 If sSomeListeners Then
     Dim lListener As IChangeListener
@@ -123,7 +127,6 @@ End If
 Exit Function
 
 Err:
-If Err.Number = VBErrorCodes.VbErrInvalidProcedureCall Then Resume Next
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
@@ -163,6 +166,24 @@ Dim errNum As Long: errNum = IIf(pErrorNumber <> 0, pErrorNumber, Err.Number)
 UnhandledErrorHandler.Notify pProcedureName, pModuleName, ProjectName, pFailpoint, errNum, errDesc, errSource
 End Sub
 
+Public Sub gRemoveAllChangeListeners( _
+                ByVal pSource As Object)
+Const ProcName As String = "gRemoveAllChangeListeners"
+On Error GoTo Err
+
+Dim lKey As String
+lKey = GetObjectKey(pSource)
+
+If mChangeListeners.Contains(lKey) Then
+    mChangeListeners.Remove lKey
+End If
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
 Public Sub gRemoveChangeListener( _
                 ByVal pSource As Object, _
                 ByVal pListener As IChangeListener)
@@ -173,11 +194,10 @@ Dim lKey As String
 lKey = GetObjectKey(pSource)
 
 Dim lListeners As Listeners
-Set lListeners = mChangeListeners(lKey)
-If Not lListeners Is Nothing Then
-    lListeners.Remove pListener
-    If lListeners.Count = 0 Then mChangeListeners.Remove lKey
-End If
+If Not mChangeListeners.TryItem(lKey, lListeners) Then Exit Sub
+    
+lListeners.Remove pListener
+If lListeners.Count = 0 Then mChangeListeners.Remove lKey
 
 Exit Sub
 
@@ -201,7 +221,7 @@ gSetProperty = pExtHost.SetValue(pExtProp, pNewValue)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Public Sub gSetVariant(ByRef pTarget As Variant, ByRef pSource As Variant)
@@ -251,7 +271,7 @@ If CLng(pValue) <= 2 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "I
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub gValidatePosition(ByVal pThis As Object, ByVal pValue As Variant)

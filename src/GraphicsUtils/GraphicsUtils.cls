@@ -392,6 +392,31 @@ gHandleUnexpectedError ProcName, ModuleName
 
 End Function
 
+Public Function LoadBitmapFromConfig(ByVal pConfig As ConfigurationSection) As Bitmap
+Const ProcName As String = "LoadBitmapFromConfig"
+On Error GoTo Err
+
+Set LoadBitmapFromConfig = gLoadBitmapFromConfig(pConfig)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+
+End Function
+
+Public Function LoadBitmapFromResource(ByVal pResource As StdPicture) As Bitmap
+Const ProcName As String = "LoadBitmapFromResource"
+On Error GoTo Err
+
+Set LoadBitmapFromResource = gLoadBitmapFromResource(pResource)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Public Function LoadDimensionFromConfig( _
                 ByVal pConfig As ConfigurationSection) As Dimension
 Const ProcName As String = "LoadDimensionFromConfig"
@@ -539,6 +564,12 @@ Public Function TPointAdd( _
                 ByRef pPoint1 As TPoint, _
                 ByRef pPoint2 As TPoint) As TPoint
 TPointAdd = GRectangle.TPointAdd(pPoint1, pPoint2)
+End Function
+
+Public Function TPointEquals( _
+                ByRef pPoint1 As TPoint, _
+                ByRef pPoint2 As TPoint) As Boolean
+TPointEquals = GRectangle.TPointEquals(pPoint1, pPoint2)
 End Function
 
 Public Sub TPointMultiply( _

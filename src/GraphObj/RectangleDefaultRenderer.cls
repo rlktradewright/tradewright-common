@@ -52,10 +52,6 @@ Private mGraphics                                   As Graphics
 ' Class Event Handlers
 '@================================================================================
 
-Private Sub Class_Terminate()
-Debug.Print ModuleName & " terminated"
-End Sub
-
 '@================================================================================
 ' IRenderer Interface Members
 '@================================================================================
@@ -73,7 +69,7 @@ IRenderer_GetBoundingRectangle = determineBoundingRect(lRectangle)
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub IRenderer_Render(ByVal pObject As IGraphicObject)
@@ -93,7 +89,7 @@ paintRectangle lRectangle
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -127,7 +123,7 @@ determineBoundingRect = mGraphics.EndBoundingRectangleDetermination
 Exit Function
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub paintRectangle(ByVal pRectangle As Rectangle)
@@ -143,7 +139,7 @@ resetOrientation pRectangle
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub resetOrientation(ByVal pRectangle As Rectangle)
@@ -155,7 +151,7 @@ If pRectangle.Orientation <> 0 Then mGraphics.Reset
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub setOrientation(ByVal pRectangle As Rectangle)
@@ -172,7 +168,7 @@ mGraphics.RotateAboutPoint pRectangle.Orientation, TPoint(lPosition.XLogical(mGr
 Exit Sub
 
 Err:
-gHandleUnexpectedError pReRaise:=True, pLog:=False, pProcedureName:=ProcName, pModuleName:=ModuleName
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 

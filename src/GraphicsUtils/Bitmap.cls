@@ -110,11 +110,25 @@ On Error GoTo Err
 mFilename = pFilename
 mHandle = LoadImage(0, StrPtr(mFilename), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
 If mHandle = 0 Then gHandleWin32Error GetLastError
+
+If Not mConfig Is Nothing Then mConfig.SetSetting ConfigSettingFilename, mFilename
+
 Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Sub
 
+Friend Sub InitialiseFromResource(ByVal pResource As StdPicture)
+Const ProcName As String = "InitialiseFromResource"
+On Error GoTo Err
+
+mHandle = pResource.Handle
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub LoadFromConfig( _
@@ -124,6 +138,7 @@ Dim failpoint As String
 On Error GoTo Err
 
 Set mConfig = pConfig
+
 Initialise pConfig.GetSetting(ConfigSettingFilename)
 
 Exit Sub
