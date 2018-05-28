@@ -48,9 +48,8 @@ Private Const ModuleName                            As String = "GenericFuture"
 
 Private mFutureBuilder                              As FutureBuilder
 
-Private mIsCancelled                                As Boolean
-Private mIsAvailable                                As Boolean
-Private mIsFaulted                                  As Boolean
+Private mState                                      As FutureStates
+
 Private mErrorNumber                                As Long
 Private mErrorMessage                               As String
 Private mErrorSource                                As String
@@ -84,15 +83,9 @@ Private Sub IFuture_Cancel()
 Const ProcName As String = "IFuture_Cancel"
 On Error GoTo Err
 
-If Not IFuture_IsPending Then Exit Sub
+If Not mState = FutureStatePending Then Exit Sub
 
-mFutureBuilder.NotifyCancel
-
-mIsCancelled = True
-fireStateChange FutureStateCancelled
-mListeners.Clear
-
-Set mFutureBuilder = Nothing
+mState = FutureStateCancelled
 
 Exit Sub
 
@@ -117,19 +110,19 @@ IFuture_ErrorSource = mErrorSource
 End Property
 
 Private Property Get IFuture_IsAvailable() As Boolean
-IFuture_IsAvailable = mIsAvailable
+IFuture_IsAvailable = (mState = FutureStateCompleted)
 End Property
 
 Private Property Get IFuture_IsCancelled() As Boolean
-IFuture_IsCancelled = mIsCancelled
+IFuture_IsCancelled = (mState = FutureStateCancelled)
 End Property
 
 Private Property Get IFuture_IsFaulted() As Boolean
-IFuture_IsFaulted = mIsFaulted
+IFuture_IsFaulted = (mState = FutureStateErrored)
 End Property
 
 Private Property Get IFuture_IsPending() As Boolean
-IFuture_IsPending = Not (mIsAvailable Or mIsCancelled Or mIsFaulted)
+IFuture_IsPending = (mState = FutureStatePending)
 End Property
 
 Private Sub IFuture_RemoveStateChangeListener(ByVal pListener As IStateChangeListener)
@@ -148,9 +141,9 @@ Private Property Get IFuture_Value() As Object
 Const ProcName As String = "IFuture_Value"
 On Error GoTo Err
 
-gAssert Not mIsCancelled, "Future Value creation was cancelled"
-gAssert Not mIsFaulted, "Future Value creation failed: error=" & mErrorNumber & "; description=" & mErrorMessage & "; source=" & mErrorSource
-gAssert mIsAvailable, "Future Value creation has not yet completed"
+gAssert mState <> FutureStateCancelled, "Future Value creation was cancelled"
+gAssert mState <> FutureStateErrored, "Future Value creation failed: error=" & mErrorNumber & "; description=" & mErrorMessage & "; source=" & mErrorSource
+gAssert mState = FutureStateCompleted, "Future Value creation has not yet completed"
 
 Set IFuture_Value = mValue
 
@@ -194,17 +187,18 @@ End Property
 
 Friend Property Let Value(ByVal pValue As Object)
 Set mValue = pValue
+mState = FutureStateCompleted
 End Property
 
 '@================================================================================
 ' Methods
 '@================================================================================
 
-Friend Sub Cancel()
-Const ProcName As String = "Cancel"
+Friend Sub NotifyCancel()
+Const ProcName As String = "NotifyCancel"
 On Error GoTo Err
 
-mIsCancelled = True
+gAssert mState = FutureStateCancelled, "Invalid state"
 fireStateChange FutureStateCancelled
 mListeners.Clear
 
@@ -216,11 +210,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Friend Sub Complete()
-Const ProcName As String = "Complete"
+Friend Sub NotifyComplete()
+Const ProcName As String = "NotifyComplete"
 On Error GoTo Err
 
-mIsAvailable = True
+gAssert mState = FutureStateCompleted, "Invalid state"
 fireStateChange FutureStateCompleted
 mListeners.Clear
 
@@ -232,11 +226,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Friend Sub Fail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, ByVal pErrorSource As String)
-Const ProcName As String = "Fail"
+Friend Sub NotifyFail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, ByVal pErrorSource As String)
+Const ProcName As String = "NotifyFail"
 On Error GoTo Err
 
-mIsFaulted = True
+gAssert mState = FutureStateErrored, "Invalid state"
 mErrorNumber = pErrorNumber
 mErrorMessage = pErrorMessage
 mErrorSource = pErrorSource

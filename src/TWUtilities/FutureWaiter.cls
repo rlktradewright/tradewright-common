@@ -211,6 +211,8 @@ Private Sub notifyCompletion(ByVal pFuture As IFuture)
 Const ProcName As String = "notifyCompletion"
 On Error GoTo Err
 
+If Not mFutures.Contains(pFuture) Then Exit Sub
+
 Dim lEv As FutureWaitCompletedEventData
 Set lEv.Source = Me
 Set lEv.Future = pFuture
@@ -241,7 +243,7 @@ On Error GoTo Err
 
 If pStopListening Then pFuture.RemoveStateChangeListener Me
 If mDatas.Contains(gGetObjectKey(pFuture)) Then mDatas.Remove gGetObjectKey(pFuture)
-mFutures.Remove pFuture
+If mFutures.Count <> 0 Then mFutures.Remove pFuture
 
 Exit Sub
 

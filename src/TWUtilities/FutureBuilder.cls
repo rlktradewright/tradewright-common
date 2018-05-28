@@ -55,6 +55,8 @@ Private Const ActionFail                            As String = "Fail"
 Private mFuture                                     As GenericFuture
 Private mFutureAsIFuture                            As IFuture
 
+Private mValue                                      As Object
+
 Private mErrorNumber                                As Long
 Private mErrorMessage                               As String
 Private mErrorSource                                As String
@@ -78,11 +80,11 @@ Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
 If Data = ActionComplete Then
-    mFuture.Complete
+    mFuture.NotifyComplete
 ElseIf Data = ActionCancel Then
-    mFuture.Cancel
+    mFuture.NotifyCancel
 ElseIf Data = ActionFail Then
-    mFuture.Fail mErrorNumber, mErrorMessage, mErrorSource
+    mFuture.NotifyFail mErrorNumber, mErrorMessage, mErrorSource
 End If
 
 Exit Sub
@@ -133,7 +135,7 @@ On Error GoTo Err
 
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 
-mFuture.Value = pValue
+Set mValue = pValue
 
 Exit Property
 
@@ -150,6 +152,7 @@ Const ProcName As String = "Cancel"
 On Error GoTo Err
 
 If Not mFutureAsIFuture.IsPending Then Exit Sub
+mFutureAsIFuture.Cancel
 
 DeferredActionManager.DeferAction Me, ActionCancel
 
@@ -164,6 +167,7 @@ Const ProcName As String = "Complete"
 On Error GoTo Err
 
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
+mFuture.Value = mValue
 
 DeferredActionManager.DeferAction Me, ActionComplete
 
