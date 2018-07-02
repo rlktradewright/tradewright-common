@@ -83,9 +83,7 @@ Private Sub IFuture_Cancel()
 Const ProcName As String = "IFuture_Cancel"
 On Error GoTo Err
 
-If Not mState = FutureStatePending Then Exit Sub
-
-mState = FutureStateCancelled
+mFutureBuilder.Cancel
 
 Exit Sub
 
@@ -185,11 +183,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Friend Property Let Value(ByVal pValue As Object)
-Set mValue = pValue
-mState = FutureStateCompleted
-End Property
-
 '@================================================================================
 ' Methods
 '@================================================================================
@@ -226,14 +219,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Friend Sub NotifyFail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, ByVal pErrorSource As String)
+Friend Sub NotifyFail()
 Const ProcName As String = "NotifyFail"
 On Error GoTo Err
 
 gAssert mState = FutureStateErrored, "Invalid state"
-mErrorNumber = pErrorNumber
-mErrorMessage = pErrorMessage
-mErrorSource = pErrorSource
+
 fireStateChange FutureStateErrored
 mListeners.Clear
 
@@ -256,6 +247,30 @@ Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
+Friend Sub SetFail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, ByVal pErrorSource As String)
+Const ProcName As String = "SetFail"
+On Error GoTo Err
+
+mErrorNumber = pErrorNumber
+mErrorMessage = pErrorMessage
+mErrorSource = pErrorSource
+mState = FutureStateErrored
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
+Friend Sub SetState(ByVal pState As FutureStates)
+mState = pState
+End Sub
+
+Friend Sub setValue(ByVal pValue As Object)
+Set mValue = pValue
+mState = FutureStateCompleted
 End Sub
 
 '@================================================================================

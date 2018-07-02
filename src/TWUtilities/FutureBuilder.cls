@@ -57,9 +57,7 @@ Private mFutureAsIFuture                            As IFuture
 
 Private mValue                                      As Object
 
-Private mErrorNumber                                As Long
-Private mErrorMessage                               As String
-Private mErrorSource                                As String
+Private mState                                      As FutureStates
 
 '@================================================================================
 ' Class Event Handlers
@@ -84,7 +82,7 @@ If Data = ActionComplete Then
 ElseIf Data = ActionCancel Then
     mFuture.NotifyCancel
 ElseIf Data = ActionFail Then
-    mFuture.NotifyFail mErrorNumber, mErrorMessage, mErrorSource
+    mFuture.NotifyFail
 End If
 
 Exit Sub
@@ -133,7 +131,7 @@ Public Property Let Value(ByVal pValue As Object)
 Const ProcName As String = "Value"
 On Error GoTo Err
 
-gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
+gAssert mState = FutureStatePending, "Future is no longer pending"
 
 Set mValue = pValue
 
@@ -151,9 +149,14 @@ Public Sub Cancel()
 Const ProcName As String = "Cancel"
 On Error GoTo Err
 
-If Not mFutureAsIFuture.IsPending Then Exit Sub
-mFutureAsIFuture.Cancel
+If Not mState = FutureStatePending Then Exit Sub
 
+Static sCancelling As Boolean
+If sCancelling Then Exit Sub
+sCancelling = True
+
+mState = FutureStateCancelled
+mFuture.SetState FutureStateCancelled
 DeferredActionManager.DeferAction Me, ActionCancel
 
 Exit Sub
@@ -166,8 +169,9 @@ Public Sub Complete()
 Const ProcName As String = "Complete"
 On Error GoTo Err
 
-gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
-mFuture.Value = mValue
+gAssert mState = FutureStatePending, "Future is no longer pending"
+mFuture.setValue mValue
+mState = FutureStateCompleted
 
 DeferredActionManager.DeferAction Me, ActionComplete
 
@@ -183,9 +187,7 @@ On Error GoTo Err
 
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 
-mErrorNumber = pErrorNumber
-mErrorMessage = pErrorMessage
-mErrorSource = pErrorSource
+mFuture.SetFail pErrorNumber, pErrorMessage, pErrorSource
 DeferredActionManager.DeferAction Me, ActionFail
 
 Exit Sub
