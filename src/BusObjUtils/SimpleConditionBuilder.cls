@@ -80,7 +80,7 @@ End Property
 Public Sub addTerm( _
                 ByVal columnName As String, _
                 ByVal operator As ConditionalOperators, _
-                ByVal value As String, _
+                ByVal Value As String, _
                 Optional ByVal logicalOperator As LogicalOperators = LogicalOpNone, _
                 Optional ByVal negate As Boolean)
 Const ProcName As String = "addTerm"
@@ -95,7 +95,7 @@ Assert Not (mExpectingLogicalOperator And logicalOperator = LogicalOpNone), "Log
 mExpectingLogicalOperator = True
 
 Dim arg As String
-arg = gCleanQueryArg(value)
+arg = gCleanQueryArg(Value)
 
 If mConditionString <> "" Then
     mConditionString = mConditionString & logicalOperatorToString(logicalOperator)

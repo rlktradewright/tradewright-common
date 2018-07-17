@@ -200,11 +200,11 @@ Public Property Get cancelled() As Boolean
 cancelled = mCancelled
 End Property
 
-Public Property Let Path(ByVal newvalue As String)
+Public Property Let Path(ByVal newValue As String)
 Const ProcName As String = "Path"
 On Error GoTo Err
 
-PathChooser1.Path = newvalue
+PathChooser1.Path = newValue
 
 Exit Property
 

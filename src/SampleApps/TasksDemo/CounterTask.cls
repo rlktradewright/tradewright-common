@@ -115,8 +115,8 @@ End Property
 ' Properties
 '================================================================================
 
-Public Property Let Index(ByVal value As Long)
-mIndex = value
+Public Property Let Index(ByVal Value As Long)
+mIndex = Value
 End Property
 
 '================================================================================

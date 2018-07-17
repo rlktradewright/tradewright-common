@@ -249,8 +249,8 @@ On Error GoTo Err
 Dim fld As ADODB.Field
 Set fld = rs.Fields(columnName)
 
-Dim value As Variant
-value = Nz(fld.value, defaultValue)
+Dim Value As Variant
+Value = Nz(fld.Value, defaultValue)
 Select Case fld.Type
 Case adBSTR, _
         adChar, _
@@ -261,14 +261,14 @@ Case adBSTR, _
         adLongVarWChar, _
         adVarBinary, _
         adLongVarBinary
-    gGetColumnValue = Trim(value)
+    gGetColumnValue = Trim(Value)
 Case adDBTime
     ' ensure any date part is removed
-    If IsDate(value) Then
-        gGetColumnValue = CDate(value - Int(value))
+    If IsDate(Value) Then
+        gGetColumnValue = CDate(Value - Int(Value))
     End If
 Case Else
-    gGetColumnValue = value
+    gGetColumnValue = Value
 End Select
 
 Exit Function
@@ -309,13 +309,13 @@ UnhandledErrorHandler.Notify pProcedureName, pModuleName, ProjectName, pFailpoin
 End Sub
 
 Public Function gIsStateSet( _
-                ByVal value As Long, _
+                ByVal Value As Long, _
                 ByVal stateToTest As ADODB.ObjectStateEnum) As Boolean
 Const ProcName As String = "gIsStateSet"
 Dim failpoint As String
 On Error GoTo Err
 
-gIsStateSet = ((value And stateToTest) = stateToTest)
+gIsStateSet = ((Value And stateToTest) = stateToTest)
 
 Exit Function
 
@@ -349,25 +349,25 @@ spec = specifiers(fieldName)
 Dim valtype As Long
 valtype = rs(spec.dbColumnName).Type
 
-Dim value As Variant
-value = gGetColumnValue(rs, spec.dbColumnName, Empty)
+Dim Value As Variant
+Value = gGetColumnValue(rs, spec.dbColumnName, Empty)
 If valtype = adDBTime Or _
     valtype = adDate Or _
     valtype = adDBDate Or _
     valtype = adDBTimeStamp Then
-    If IsDate(value) Then
-        If Int(value) = value Then
-            getFormattedColumnValue = FormatTimestamp(CDate(value), TimestampDateOnlyISO8601)
-        ElseIf Int(value) = 0 Then
-            getFormattedColumnValue = FormatTimestamp(CDate(value), TimestampTimeOnlyISO8601)
+    If IsDate(Value) Then
+        If Int(Value) = Value Then
+            getFormattedColumnValue = FormatTimestamp(CDate(Value), TimestampDateOnlyISO8601)
+        ElseIf Int(Value) = 0 Then
+            getFormattedColumnValue = FormatTimestamp(CDate(Value), TimestampTimeOnlyISO8601)
         Else
-            getFormattedColumnValue = FormatTimestamp(CDate(value), TimestampDateAndTimeISO8601)
+            getFormattedColumnValue = FormatTimestamp(CDate(Value), TimestampDateAndTimeISO8601)
         End If
     Else
-        getFormattedColumnValue = Trim$(CStr(value))
+        getFormattedColumnValue = Trim$(CStr(Value))
     End If
 Else
-    getFormattedColumnValue = Trim$(CStr(value))
+    getFormattedColumnValue = Trim$(CStr(Value))
 End If
 
 Exit Function

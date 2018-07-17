@@ -2173,20 +2173,20 @@ Const ProcName As String = "Clip"
 On Error GoTo Err
 
 Dim sel As SelectionSpecifier
-Dim lines() As String
-Dim values() As String
-Dim i As Long
-Dim j As Long
-
 sel = getSelection
 
+Dim lines() As String
 lines = Split(Value, vbCr)
 
+Dim i As Long
 Do While i <= UBound(lines) And i <= sel.RowMax
-    values = Split(lines(i), vbTab)
+    Dim ar() As String
+    ar = Split(lines(i), vbTab)
+    
+    Dim j As Long
     j = 0
-    Do While j <= UBound(values) And i <= sel.ColMax
-        TextMatrix(sel.RowMin + i, sel.ColMin + j) = values(j)
+    Do While j <= UBound(ar) And i <= sel.ColMax
+        TextMatrix(sel.RowMin + i, sel.ColMin + j) = ar(j)
     Loop
 Loop
 
@@ -4201,12 +4201,12 @@ insertARow pIndex
 
 If pIndex = -1 Then pIndex = mRows - 1
 
-Dim values() As String
-values = Split(Item, vbTab)
+Dim lValues() As String
+lValues = Split(Item, vbTab)
 
 Dim i As Long
-Do While i <= UBound(values) And i < mCols
-    getCell(pIndex, i).Value = values(i)
+Do While i <= UBound(lValues) And i < mCols
+    getCell(pIndex, i).Value = lValues(i)
     i = i + 1
 Loop
 

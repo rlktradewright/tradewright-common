@@ -153,10 +153,10 @@ End Property
 ''
 ' Sets the unique Name for this <code>BusinessDataObject</code> object.
 '
-' @param value the new unique Name for this <code>BusinessDataObject</code> object.
+' @param Value the new unique Name for this <code>BusinessDataObject</code> object.
 '
 '@/
-Public Property Let Name(ByVal value As String)
+Public Property Let Name(ByVal Value As String)
 End Property
 
 '@================================================================================

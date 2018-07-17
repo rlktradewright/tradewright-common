@@ -733,7 +733,7 @@ End Sub
 Private Sub Form_Load()
 QuantumText = TaskQuantumMillisecs
 ConcurrencyText = TaskConcurrency
-LowerPriorityCheck.value = IIf(RunTasksAtLowerThreadPriority, vbChecked, vbUnchecked)
+LowerPriorityCheck.Value = IIf(RunTasksAtLowerThreadPriority, vbChecked, vbUnchecked)
 Set mSchedulingIntervalTimer = CreateIntervalTimer(10, ExpiryTimeUnitSeconds, 10000)
 mSchedulingIntervalTimer.StartTimer
 End Sub

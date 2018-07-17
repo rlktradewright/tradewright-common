@@ -75,12 +75,12 @@ End Property
 
 Public Property Let FieldValue( _
                 ByVal fieldName As String, _
-                ByVal value As String)
+                ByVal Value As String)
 Const ProcName As String = "FieldValue"
 Dim failpoint As String
 On Error GoTo Err
 
-mDataObjectSummary.FieldValue(fieldName) = value
+mDataObjectSummary.FieldValue(fieldName) = Value
 
 Exit Property
 
@@ -88,12 +88,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Public Property Let Id(ByVal value As Long)
+Public Property Let Id(ByVal Value As Long)
 Const ProcName As String = "Id"
 Dim failpoint As String
 On Error GoTo Err
 
-mDataObjectSummary.Id = value
+mDataObjectSummary.Id = Value
 
 Exit Property
 

@@ -74,11 +74,11 @@ End Sub
 ' Properties
 '@================================================================================
 
-Friend Property Get hwnd() As Long
+Friend Property Get hWnd() As Long
 Const ProcName As String = "hWnd"
 On Error GoTo Err
 
-hwnd = mHwnd
+hWnd = mHwnd
 
 Exit Property
 
@@ -87,11 +87,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Friend Property Let PreviousWindProc( _
-                ByVal value As Long)
+                ByVal Value As Long)
 Const ProcName As String = "PreviousWindProc"
 On Error GoTo Err
 
-mPreviousWindProc = value
+mPreviousWindProc = Value
 
 Exit Property
 
@@ -140,11 +140,11 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub Initialise( _
-                ByVal hwnd As Long)
+                ByVal hWnd As Long)
 Const ProcName As String = "Initialise"
 On Error GoTo Err
 
-mHwnd = hwnd
+mHwnd = hWnd
 gRegisterTracker Me
 
 Exit Sub

@@ -73,12 +73,12 @@ End Sub
 
 Friend Property Let FieldValue( _
                 ByVal fieldName As String, _
-                ByVal value As String)
+                ByVal Value As String)
 Const ProcName As String = "FieldValue"
 Dim failpoint As String
 On Error GoTo Err
 
-mFields.Add value, fieldName
+mFields.Add Value, fieldName
 
 Exit Property
 
@@ -100,8 +100,8 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Friend Property Let Id(ByVal value As Long)
-mIdent = value
+Friend Property Let Id(ByVal Value As Long)
+mIdent = Value
 End Property
 
 Public Property Get Id() As Long

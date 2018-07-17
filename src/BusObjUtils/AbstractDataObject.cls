@@ -135,7 +135,7 @@ End Property
 
 Public Property Let ColumnValue( _
                 ByVal columnName As String, _
-                ByVal value As Variant)
+                ByVal Value As Variant)
 Dim fld As ADODB.Field
 
 Const ProcName As String = "ColumnValue"
@@ -155,13 +155,13 @@ Case adBSTR, _
         adLongVarWChar, _
         adVarBinary, _
         adLongVarBinary
-    If Len(value) > fld.DefinedSize Then AssertArgument False, "Value too long: Column=" & fld.Name & _
+    If Len(Value) > fld.DefinedSize Then AssertArgument False, "Value too long: Column=" & fld.Name & _
                 "; max length=" & fld.DefinedSize & _
-                "; value=" & IIf(IsNull(value), "NULL", VariantToString(value))
+                "; value=" & IIf(IsNull(Value), "NULL", VariantToString(Value))
 End Select
 
-If IsNull(fld.value) Or value <> fld.value Then
-    fld.value = value
+If IsNull(fld.Value) Or Value <> fld.Value Then
+    fld.Value = Value
     Dirty
 End If
 
@@ -276,18 +276,18 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-Public Property Let Name(ByVal value As String)
+Public Property Let Name(ByVal Value As String)
 Const ProcName As String = "Name"
 Dim failpoint As String
 On Error GoTo Err
 
-value = Trim$(value)
-If value = Name Then Exit Property
+Value = Trim$(Value)
+If Value = Name Then Exit Property
 RuleBroken mBusRuleNameValidId, _
-            Len(value) = 0 Or _
-            Len(value) > ColumnMaxLength(GenericColumnName) Or _
-            Not mFactory.LoadByName(value) Is Nothing
-ColumnValue(GenericColumnName) = Left$(value, ColumnMaxLength(GenericColumnName))
+            Len(Value) = 0 Or _
+            Len(Value) > ColumnMaxLength(GenericColumnName) Or _
+            Not mFactory.LoadByName(Value) Is Nothing
+ColumnValue(GenericColumnName) = Left$(Value, ColumnMaxLength(GenericColumnName))
 
 Exit Property
 

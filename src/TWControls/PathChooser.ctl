@@ -128,18 +128,18 @@ End Sub
 ' Properties
 '@================================================================================
 
-Public Property Let Path(ByVal newvalue As String)
+Public Property Let Path(ByVal newValue As String)
 Const ProcName As String = "Path"
 On Error GoTo Err
 
 On Error Resume Next ' in case Path doesn't exist
-If Mid$(newvalue, 2, 1) = ":" Then
-    DriveList.Drive = Left$(newvalue, 2)
-    DirList.Path = newvalue
-ElseIf Left$(newvalue, 2) = "\\" Then
-    DirList.Path = newvalue
+If Mid$(newValue, 2, 1) = ":" Then
+    DriveList.Drive = Left$(newValue, 2)
+    DirList.Path = newValue
+ElseIf Left$(newValue, 2) = "\\" Then
+    DirList.Path = newValue
 Else
-    DirList.Path = newvalue
+    DirList.Path = newValue
 End If
 
 Exit Property
