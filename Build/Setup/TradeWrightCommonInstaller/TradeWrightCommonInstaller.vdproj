@@ -579,7 +579,7 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.115"
-        "ProductCode" = "8:{AF5D3D5E-726F-4E55-877B-1A1782EB9112}"
+        "ProductCode" = "8:{C2878C75-EE2F-4475-AB1E-3D1F94BE1F54}"
         "PackageCode" = "8:{E80D07CE-7A94-4822-85AC-13B607D5A51A}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
         "AspNetVersion" = "8:4.0.30319.0"
