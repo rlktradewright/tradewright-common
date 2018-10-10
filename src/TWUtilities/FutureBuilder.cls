@@ -156,7 +156,7 @@ If sCancelling Then Exit Sub
 sCancelling = True
 
 mState = FutureStateCancelled
-mFuture.SetState FutureStateCancelled
+mFuture.SetCancel
 DeferredActionManager.DeferAction Me, ActionCancel
 
 Exit Sub
@@ -170,7 +170,7 @@ Const ProcName As String = "Complete"
 On Error GoTo Err
 
 gAssert mState = FutureStatePending, "Future is no longer pending"
-mFuture.setValue mValue
+mFuture.SetValue mValue
 mState = FutureStateCompleted
 
 DeferredActionManager.DeferAction Me, ActionComplete
@@ -188,6 +188,8 @@ On Error GoTo Err
 gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 
 mFuture.SetFail pErrorNumber, pErrorMessage, pErrorSource
+mState = FutureStateErrored
+
 DeferredActionManager.DeferAction Me, ActionFail
 
 Exit Sub

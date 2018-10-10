@@ -249,6 +249,10 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
+Friend Sub SetCancel()
+mState = FutureStateCancelled
+End Sub
+
 Friend Sub SetFail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, ByVal pErrorSource As String)
 Const ProcName As String = "SetFail"
 On Error GoTo Err
@@ -264,11 +268,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Friend Sub SetState(ByVal pState As FutureStates)
-mState = pState
-End Sub
-
-Friend Sub setValue(ByVal pValue As Object)
+Friend Sub SetValue(ByVal pValue As Object)
 Set mValue = pValue
 mState = FutureStateCompleted
 End Sub
