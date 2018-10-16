@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <assembly manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1">
-    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.115" />
+    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.116" />
     <description>TradeWright Common</description>
     <file name="TWUtilities40.dll">
         <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.4" flags="hasDiskImage" helpdir="" />
