@@ -90,10 +90,8 @@ Private mEoFString                          As String
 Private mBuf(8191)                          As Byte
 
 Private mStrBld                             As StringBuilder
-'Private mInBuf                              As String * 8192
-'Private mInBufIndex                         As Long ' the highest position reached in mInBuf
-Private mCurrPosition                       As Long ' the position at which the next input
-                                                    ' character will be placed in mInBuf
+' the position at which the next input character will be placed in mStrBld
+Private mCurrPosition                       As Long
 
 Private mAtEof                              As Boolean
 
@@ -122,15 +120,15 @@ Private mScreenBufferSize                   As COORD
 
 Private mInputHistory()                     As String
 Private mInputHistoryIndex                  As Long
-Private mCurrHistoryIndex                As Long
-
+Private mCurrHistoryIndex                   As Long
 
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
 
 Private Sub Class_Initialize()
-Dim screenBufferInfo As CONSOLE_SCREEN_BUFFER_INFO
+Const ProcName As String = "Class_Initialize"
+On Error GoTo Err
 
 ' if we don't already have a console, get one
 AllocConsole
@@ -173,6 +171,7 @@ SetConsoleMode mConInHandle, _
 
 mOrigTitle = Title
 
+Dim screenBufferInfo As CONSOLE_SCREEN_BUFFER_INFO
 GetConsoleScreenBufferInfo mConOutHandle, screenBufferInfo
 If Err.LastDllError = 0 Then
     mForegroundColor = screenBufferInfo.wAttributes And &HF
@@ -183,9 +182,16 @@ End If
 
 ReDim mInputHistory(19) As String
 
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub Class_Terminate()
+Const ProcName As String = "Class_Terminate"
+On Error GoTo Err
+
 Title = mOrigTitle
 
 If StdInType = FileTypeChar Then
@@ -193,6 +199,11 @@ If StdInType = FileTypeChar Then
 End If
     
 SetConsoleCursorInfo mConOutHandle, mOrigConsoleCursorInfo
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 
 End Sub
 
@@ -219,10 +230,7 @@ End Sub
 '@/
 Public Property Let BackgroundColor( _
                 ByVal Value As ConsoleColors)
-Dim attrsWritten As Long
-
 Const ProcName As String = "BackgroundColor"
-
 On Error GoTo Err
 
 If Not isValidConsoleColor(Value) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Value is not a valid ConsoleColor"
@@ -230,6 +238,7 @@ If Not isValidConsoleColor(Value) Then Err.Raise ErrorCodes.ErrIllegalArgumentEx
 mBackgroundColor = Value
 
 If Err.LastDllError = 0 Then
+    Dim attrsWritten As Long
     FillConsoleOutputAttribute mConOutHandle, _
                                 mForegroundColor Or (&H10 * mBackgroundColor), _
                                 &H7FFFFFFF, _
@@ -242,7 +251,6 @@ Exit Property
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-                            
 End Property
 
 ''
@@ -302,16 +310,14 @@ End Property
 '@/
 Public Property Let ForegroundColor( _
                 ByVal Value As ConsoleColors)
-Dim attrsWritten As Long
-
 Const ProcName As String = "ForegroundColor"
-
 On Error GoTo Err
 
 If Not isValidConsoleColor(Value) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Value is not a valid ConsoleColor"
 
 mForegroundColor = Value
 
+Dim attrsWritten As Long
 FillConsoleOutputAttribute mConOutHandle, _
                             mForegroundColor Or (&H10 * mBackgroundColor), _
                             &H7FFFFFFF, _
@@ -323,7 +329,6 @@ Exit Property
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-                            
 End Property
 
 ''
@@ -357,7 +362,6 @@ End Property
 '@/
 Public Property Get StdErrType() As FileTypes
 Const ProcName As String = "StdErrType"
-
 On Error GoTo Err
 
 StdErrType = GetFileType(mStdErrHandle)
@@ -376,7 +380,6 @@ End Property
 '@/
 Public Property Get StdInType() As FileTypes
 Const ProcName As String = "StdInType"
-
 On Error GoTo Err
 
 StdInType = GetFileType(mStdInHandle)
@@ -395,7 +398,6 @@ End Property
 '@/
 Public Property Get StdOutType() As FileTypes
 Const ProcName As String = "StdOutType"
-
 On Error GoTo Err
 
 StdOutType = GetFileType(mStdOutHandle)
@@ -415,7 +417,6 @@ End Property
 Public Property Let Title( _
                 ByVal Value As String)
 Const ProcName As String = "Title"
-
 On Error GoTo Err
 
 SetConsoleTitle StrPtr(Value)
@@ -433,14 +434,13 @@ End Property
 '   The console window's Title.
 '@/
 Public Property Get Title() As String
-Dim titleLen As Long
-Dim ar(2 * MAX_PATH - 1) As Byte
-
 Const ProcName As String = "Title"
-
 On Error GoTo Err
 
+Dim titleLen As Long
+Dim ar(2 * MAX_PATH - 1) As Byte
 titleLen = GetConsoleTitle(VarPtr(ar(0)), MAX_PATH)
+
 ReDim ar1(2 * titleLen - 1) As Byte
 CopyMemory VarPtr(ar1(0)), VarPtr(ar(0)), 2 * titleLen
 Title = ar1
@@ -460,10 +460,11 @@ End Property
 ' and line feed at the end.
 '
 ' @remarks
-'   If the StdIn stream is the console window (ie no file redirection or piping is
-'   in Progress), events generated by ActiveX components can be fired and processed
-'   as usual while the user is typing. This is not the case when StdIn has been
-'   redirected to read from a file or is piping input from another process.
+'   If the StdIn stream is the console window or has been redirected to a file
+'   (ie input is not being piped from another program's StdOut), events generated
+'   by ActiveX components can be fired and processed as usual while the user is
+'   typing. This is not the case when StdIn is piping input from another process,
+'   unless that process continually sends input at brief intervals.
 '
 '   Keys typed by the user are echoed to the console, except that if the
 '   <code>echoChar</code> argument is supplied they are replaced by this character.
@@ -487,9 +488,7 @@ End Property
 Public Function ReadLine( _
                 Optional ByVal prompt As String, _
                 Optional ByVal echoChar As String) As String
-
 Const ProcName As String = "ReadLine"
-
 On Error GoTo Err
 
 If Len(echoChar) > 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "echoChar must be a single character"
@@ -504,7 +503,6 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 ''
@@ -538,10 +536,7 @@ End Function
 Public Function ReadLineFromConsole( _
                 ByVal prompt As String, _
                 ByVal echoChar As String) As String
-Dim s As String
-
 Const ProcName As String = "ReadLineFromConsole"
-
 On Error GoTo Err
 
 clearUserInput
@@ -552,6 +547,7 @@ mPrompt = prompt
 writePromptAndUserInput
 
 Do
+    Dim s As String
     Do
         s = readInputFromConsole(echoChar)
     Loop Until s <> ""
@@ -587,7 +583,6 @@ End Function
 '@/
 Public Sub WriteErrorLine(msg As String)
 Const ProcName As String = "WriteErrorLine"
-
 On Error GoTo Err
 
 WriteErrorString msg
@@ -607,9 +602,7 @@ End Sub
 '@/
 Public Sub WriteErrorString( _
                 msg As String)
-Dim bytesWritten As Long
 Const ProcName As String = "WriteErrorString"
-
 On Error GoTo Err
 
 If StdErrType = FileTypeChar Then
@@ -628,6 +621,7 @@ If StdErrType = FileTypeChar Then
         writeErrorStringToConsole msg
     End If
 Else
+    Dim bytesWritten As Long
     WriteFile mStdErrHandle, StrPtr(StrConv(msg, vbFromUnicode)), Len(msg), bytesWritten, 0&
 End If
 
@@ -647,7 +641,6 @@ End Sub
 Public Sub WriteLine( _
                 msg As String)
 Const ProcName As String = "WriteLine"
-
 On Error GoTo Err
 
 WriteString msg & vbCrLf
@@ -668,7 +661,6 @@ End Sub
 Public Sub WriteLineToConsole( _
                 msg As String)
 Const ProcName As String = "WriteLineToConsole"
-
 On Error GoTo Err
 
 WriteStringToConsole msg & vbCrLf
@@ -687,14 +679,13 @@ End Sub
 '@/
 Public Sub WriteString( _
                 msg As String)
-Dim bytesWritten As Long
 Const ProcName As String = "WriteString"
-
 On Error GoTo Err
 
 If StdOutType = FileTypeChar Then
     WriteStringToConsole msg
 Else
+    Dim bytesWritten As Long
     WriteFile mStdOutHandle, StrPtr(StrConv(msg, vbFromUnicode)), Len(msg), bytesWritten, 0&
 End If
 
@@ -713,7 +704,6 @@ End Sub
 Public Sub WriteStringToConsole( _
                 msg As String)
 Const ProcName As String = "WriteStringToConsole"
-
 On Error GoTo Err
 
 If mReadingFromConsole Then
@@ -738,20 +728,18 @@ End Sub
 '@================================================================================
 
 Private Sub clearPromptAndUserInput()
-Dim currCursorPos As COORD
-Dim newCursorPos As COORD
-Dim numCharsWritten As Long
-
 Const ProcName As String = "clearPromptAndUserInput"
-
 On Error GoTo Err
 
+Dim currCursorPos As COORD
 currCursorPos = getCursorPosition
 
+Dim newCursorPos As COORD
 newCursorPos.y = currCursorPos.y - Int((Len(mPrompt) + mCurrPosition) / mScreenBufferSize.x)
 'don't need to calculate x because a prompt always starts at the beginning of a line
 newCursorPos.x = 0
 
+Dim numCharsWritten As Long
 FillConsoleOutputCharacter mConOutHandle, _
                 AscW(" "), _
                 Len(mPrompt) + mStrBld.Length, _
@@ -770,12 +758,10 @@ Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
 Private Sub clearUserInput()
 Const ProcName As String = "clearUserInput"
-
 On Error GoTo Err
 
 Set mStrBld = New StringBuilder
@@ -789,13 +775,13 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub deleteCharAtCursor()
-Dim cursorPosn As COORD
 Const ProcName As String = "deleteCharAtCursor"
-
 On Error GoTo Err
 
 If mCurrPosition <> mStrBld.Length + 1 Then
     mStrBld.Remove mCurrPosition, 1
+    
+    Dim cursorPosn As COORD
     cursorPosn = getCursorPosition
     writeToConsole mStrBld.SubString(mCurrPosition)
     writeToConsole " "
@@ -812,15 +798,12 @@ Private Sub echoToConsole( _
                 ByVal Value As String, _
                 ByVal echoChar As String, _
                 Optional ByVal pOverwrite As Boolean)
-Dim str As String
-Dim bytesWritten As Long
-
 Const ProcName As String = "echoToConsole"
-
 On Error GoTo Err
 
 If Not mReadingFromConsole Then Err.Raise ErrorCodes.ErrIllegalStateException, , "Not reading from console - can't echo"
 
+Dim str As String
 If echoChar = "" Then
     writeToConsole Value
 ElseIf echoChar <> Chr$(0) Then
@@ -849,12 +832,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Function getCursorPosition() As COORD
-Dim csbi As CONSOLE_SCREEN_BUFFER_INFO
-
 Const ProcName As String = "getCursorPosition"
-
 On Error GoTo Err
 
+Dim csbi As CONSOLE_SCREEN_BUFFER_INFO
 GetConsoleScreenBufferInfo mConOutHandle, csbi
 getCursorPosition = csbi.dwCursorPosition
 
@@ -867,7 +848,6 @@ End Function
 Private Function isValidConsoleColor( _
                 ByVal Value As ConsoleColors) As Boolean
 Const ProcName As String = "isValidConsoleColor"
-
 On Error GoTo Err
 
 Select Case Value
@@ -897,12 +877,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Sub moveCursorEnd()
-Dim cursorPosn As COORD
-
 Const ProcName As String = "moveCursorEnd"
-
 On Error GoTo Err
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 
 cursorPosn.x = (Len(mPrompt) + mStrBld.Length) Mod mScreenBufferSize.x
@@ -920,12 +898,10 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub moveCursorHome()
-Dim cursorPosn As COORD
-
 Const ProcName As String = "moveCursorHome"
-
 On Error GoTo Err
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 
 cursorPosn.x = Len(mPrompt) Mod mScreenBufferSize.x
@@ -943,16 +919,14 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub moveCursorLeft()
-Dim cursorPosn As COORD
-
 Const ProcName As String = "moveCursorLeft"
-
 On Error GoTo Err
 
 If mCurrPosition = 1 Then Exit Sub
 
 mCurrPosition = mCurrPosition - 1
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 If cursorPosn.x = 0 Then
     cursorPosn.x = mScreenBufferSize.x - 1
@@ -969,16 +943,14 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub moveCursorRight()
-Dim cursorPosn As COORD
-
 Const ProcName As String = "moveCursorRight"
-
 On Error GoTo Err
 
 If mCurrPosition = mStrBld.Length + 1 Then Exit Sub
 
 mCurrPosition = mCurrPosition + 1
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 If cursorPosn.x = mScreenBufferSize.x - 1 Then
     cursorPosn.x = 0
@@ -997,12 +969,10 @@ End Sub
 ' moves to the specified position in the user input
 Private Sub moveCursorToPosition( _
                 ByVal position As Long)
-Dim cursorPosn As COORD
-
 Const ProcName As String = "moveCursorToPosition"
-
 On Error GoTo Err
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 
 cursorPosn.x = (Len(mPrompt) + position - 1) Mod mScreenBufferSize.x
@@ -1203,27 +1173,28 @@ gHandleUnexpectedError ProcName, ModuleName, failPoint
 End Function
 
 Private Function readLineFromFile() As String
-Dim i As Long
-Dim bytesRead As Long
-Dim errNum As Long
-
 Const ProcName As String = "readLineFromFile"
-
 On Error GoTo Err
 
 If mAtEof Then
     If mEoFString <> "" Then
         readLineFromFile = mEoFString
+        DoEvents
         Exit Function
     End If
     
     Err.Raise ErrorCodes.ErrEndOfFile, , "End of file reached"
 End If
 
+Dim i As Long
 i = -1
 Do
     i = i + 1
+    
+    Dim bytesRead As Long
     ReadFile mStdInHandle, VarPtr(mBuf(i)), 1, bytesRead, 0&
+    
+    Dim errNum As Long
     errNum = Err.LastDllError
     If errNum <> 0 Then
         If errNum = ERROR_BROKEN_PIPE Then
@@ -1257,6 +1228,7 @@ Do
         mAtEof = True
         If mEoFString <> "" Then
             readLineFromFile = mEoFString
+            DoEvents
             Exit Function
         Else
             Err.Raise ErrorCodes.ErrEndOfFile, , "End of file reached"
@@ -1274,6 +1246,8 @@ If i > 1 Then
     readLineFromFile = StrConv(ar, vbUnicode)
 End If
 
+DoEvents
+
 Exit Function
 
 Err:
@@ -1284,13 +1258,10 @@ End Function
 Private Sub setCursorPosition( _
                 ByVal x As Integer, _
                 ByVal y As Integer)
-
-Dim csbi As CONSOLE_SCREEN_BUFFER_INFO
-
 Const ProcName As String = "setCursorPosition"
-
 On Error GoTo Err
 
+Dim csbi As CONSOLE_SCREEN_BUFFER_INFO
 GetConsoleScreenBufferInfo mConOutHandle, csbi
 
 If x < 0 Or y < 0 Or x > (csbi.dwSize.x - 1) Or y > (csbi.dwSize.y - 1) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid cursor position: " & x & "," & y
@@ -1305,7 +1276,6 @@ End Sub
 
 Private Sub setUserInputFromHistory()
 Const ProcName As String = "setUserInputFromHistory"
-
 On Error GoTo Err
 
 Set mStrBld = New StringBuilder
@@ -1321,14 +1291,13 @@ End Sub
 
 Private Function translateKeyEventRecord( _
                 ByRef keyEventRec As KEY_EVENT_RECORD) As String
-Dim keyboardState(255) As Byte
 Const ProcName As String = "translateKeyEventRecord"
-
 On Error GoTo Err
 
 ReDim buf(15) As Byte
 Dim l As Long
 
+Dim keyboardState(255) As Byte
 GetKeyboardState VarPtr(keyboardState(0))
 If Err.LastDllError <> 0 Then Err.Raise ErrorCodes.ErrRuntimeException, , "Error " & Err.LastDllError & " reading keyboard State"
 
@@ -1397,19 +1366,17 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Sub updateInputHistory( _
                 ByVal Value As String)
-Dim i As Long
-Dim newInput As Boolean
-
 Const ProcName As String = "updateInputHistory"
-
 On Error GoTo Err
 
+Dim newInput As Boolean
 newInput = True
+
+Dim i As Long
 For i = 0 To mInputHistoryIndex
     If mInputHistory(i) = Value Then
         newInput = False
@@ -1434,36 +1401,30 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub waitForConsoleInput()
-Dim ret As Long
-
 Const ProcName As String = "waitForConsoleInput"
-
 On Error GoTo Err
 
 Do
+    Dim ret As Long
     ret = MsgWaitForMultipleObjects(1, _
                                     mConInHandle, _
                                     False, _
-                                    INFINITE, _
-                                    QS_ALLINPUT Or QS_ALLPOSTMESSAGE)
-    If ret = WAIT_FAILED Then Err.Raise ErrorCodes.ErrRuntimeException, , "MsgWaitForMultipleObjects failed with Error code: " & Err.LastDllError
+                                    200, _
+                                    QS_ALLEVENTS)
+    If ret = WAIT_FAILED Then gHandleWin32Error
     
-    Do While GetQueueStatus(QS_ALLINPUT Or QS_ALLPOSTMESSAGE) <> 0
-        DoEvents
-    Loop
+    DoEvents
 Loop Until ret = WAIT_OBJECT_0
 
 Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Sub
 
 Private Sub writeErrorStringToConsole( _
                 msg As String)
 Const ProcName As String = "writeErrorStringToConsole"
-
 On Error GoTo Err
 
 writeToConsole msg
@@ -1475,10 +1436,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub writePromptAndUserInput()
-Dim cursorPosn As COORD
-
 Const ProcName As String = "writePromptAndUserInput"
-
 On Error GoTo Err
 
 mPrevCursorPosition = getCursorPosition
@@ -1487,6 +1445,7 @@ If mPrevCursorPosition.x <> 0 Then
     writeToConsole vbCrLf    ' move to start of next line
 End If
 
+Dim cursorPosn As COORD
 cursorPosn = getCursorPosition
 writeToConsole mPrompt
 writeToConsole mStrBld.ToString
@@ -1504,12 +1463,10 @@ End Sub
 
 Private Sub writeToConsole( _
                 msg As String)
-Dim bytesWritten As Long
-
 Const ProcName As String = "writeToConsole"
-
 On Error GoTo Err
 
+Dim bytesWritten As Long
 If WriteConsole(mConOutHandle, _
             StrPtr(msg), _
             Len(msg), _
