@@ -134,8 +134,23 @@ Public Sub Add( _
 Const ProcName As String = "Add"
 On Error GoTo Err
 
+If mFutures.Contains(pFuture) Then
+    If mDatas.Contains(gGetObjectKey(pFuture)) Then
+        Dim lData As Variant
+        lData = mDatas.Item(gGetObjectKey(pFuture))
+        If IsObject(lData) Then
+            gAssert IsObject(pContinuationData), "Continuation data is inconsistent with data already added for this future"
+            gAssert lData Is pContinuationData, "Continuation data is different from data already added for this future"
+        Else
+            gAssert lData = pContinuationData, "Continuation data is different from data already added for this future"
+        End If
+    End If
+    Exit Sub
+End If
+
 mFutures.Add pFuture
 If Not IsMissing(pContinuationData) Then mDatas.Add pContinuationData, gGetObjectKey(pFuture)
+
 pFuture.AddStateChangeListener Me
 
 If Not pFuture.IsPending Then
