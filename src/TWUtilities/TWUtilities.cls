@@ -1776,7 +1776,7 @@ End Function
 ' @param pOverwrite
 '   Indicates whether the existing contents of the log file should be overwritten.
 ' @param pCreateBackup
-'   If <code>True</code>, the if the specified file already exists and the
+'   If <code>True</code>, then if the specified file already exists and the
 '   <code>overwrite</code> argument is <code>False</code>, then the existing
 '   file is renamed by having ".bak" appended to its filename.
 ' @param pUnicode
@@ -3692,8 +3692,8 @@ End Sub
 '   this value may be obtained using the <code>Command</code> function.
 ' @param pOverwriteExisting
 '   If <code>True</code>, an existing log file of the same name is overwritten. Otherwise
-'   new log entries are appended to an existing log file of the same name (if non exists,
-'   a new log file is created.
+'   new log entries are appended to an existing log file of the same name (if none exists,
+'   a new log file is created).
 ' @param pCreateBackup
 '   If <code>True</code>, a backup copy of an existing log file of the same name is created.
 '@/
