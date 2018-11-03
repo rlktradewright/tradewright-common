@@ -112,12 +112,10 @@ End Property
 '@/
 Public Property Get Character( _
                 ByVal position As Long) As String
-
 Const ProcName As String = "Character"
-
 On Error GoTo Err
 
-If position < 1 Or position > Length Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0 and <= current Length"
+gAssertArgument position > 0 Or position <= Length, "position must be > 0 and <= current Length"
 
 Character = Mid$(mBuffer, position, 1)
 
@@ -162,7 +160,6 @@ End Property
 Public Sub Append( _
                 ByVal Value As String)
 Const ProcName As String = "Append"
-
 On Error GoTo Err
 
 EnsureCapacity Length + Len(Value)
@@ -189,7 +186,6 @@ End Sub
 Public Sub AppendLine( _
                 ByVal Value As String)
 Const ProcName As String = "AppendLine"
-
 On Error GoTo Err
 
 EnsureCapacity Length + Len(Value) + 2
@@ -203,6 +199,14 @@ Exit Sub
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
+''
+' Clears any data that has been previously added.
+'
+'@/
+Public Sub Clear()
+mBufferIndex = 0
 End Sub
 
 ''
@@ -226,18 +230,17 @@ Public Sub CopyToBytes( _
                 Optional ByVal destinationIndex As Long, _
                 Optional ByVal Length As Long)
 Const ProcName As String = "CopyToBytes"
-
 On Error GoTo Err
 
-If startPosition < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "startPosition must be >= 1"
-If destinationIndex < 0 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "destinationIndex must be >= 0"
-If Length < 0 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Length must be >= 0"
-If startPosition + Length - 1 > Me.Length Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Request exceeds Length of Source"
+gAssertArgument startPosition > 0, "startPosition must be > 0"
+gAssertArgument destinationIndex >= 0, "destinationIndex must be >= 0"
+gAssertArgument Length >= 0, "Length must be >= 0"
+gAssertArgument startPosition + Length - 1 <= Me.Length, "Request exceeds Length of Source"
 
 
 If Length = 0 Then Length = Me.Length - startPosition + 1
 
-If 2 * (destinationIndex + Length) - 1 > UBound(Destination) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Request exceeds Length of destination"
+gAssertArgument 2 * (destinationIndex + Length) - 1 <= UBound(Destination), "Request exceeds Length of destination"
 
 CopyMemory VarPtr(Destination(2 * destinationIndex)), _
             bufferElementAddress(2 * (startPosition - 1)), _
@@ -263,20 +266,18 @@ End Sub
 '@/
 Public Function EnsureCapacity( _
                 ByVal reqdCapacity As Long) As Long
-Dim newCapacity As Long
-
 Const ProcName As String = "EnsureCapacity"
-
 On Error GoTo Err
 
-If reqdCapacity < 0 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Capacity cannot be negative"
-If reqdCapacity > MaxCapacity Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Max Capacity would be exceeded"
+gAssertArgument reqdCapacity >= 0, "Capacity cannot be negative"
+gAssertArgument reqdCapacity <= MaxCapacity, "Max Capacity would be exceeded"
 
 If reqdCapacity < Capacity Then
     EnsureCapacity = Capacity
     Exit Function
 End If
 
+Dim newCapacity As Long
 newCapacity = Capacity
 Do While reqdCapacity > newCapacity
     If 2 * newCapacity <= MaxCapacity Then
@@ -301,26 +302,16 @@ End Function
 
 Friend Sub Initialise( _
                 Optional ByVal initialCapacity As Long = 128, _
-                Optional ByVal MaxCapacity As Long = &HFFFFFFF, _
+                Optional ByVal MaxCapacity As Long = &H7FFFFFFF, _
                 Optional ByVal initialvalue As String)
-
 Const ProcName As String = "Initialise"
-
 On Error GoTo Err
 
-If initialCapacity < 1 Or _
-    MaxCapacity < 1 Or _
-    initialCapacity > &HFFFFFFF Or _
-    MaxCapacity > &HFFFFFFF _
-Then
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "initialCapacity and MaxCapacity must be > 0 and <= &HFFFFFFF"
-End If
+gAssertArgument initialCapacity >= 1 And MaxCapacity >= 1, "initialCapacity and MaxCapacity must be > 0 and <= &HFFFFFFF"
 
-If initialCapacity > MaxCapacity Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "initialCapacity cannot be greater than MaxCapacity"
-If Len(initialvalue) > MaxCapacity Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Initial Value exceeds max Capacity"
+gAssertArgument initialCapacity <= MaxCapacity, "initialCapacity cannot be greater than MaxCapacity"
+gAssertArgument Len(initialvalue) <= MaxCapacity, "Initial Value exceeds max Capacity"
 
-
-'ReDim mBuffer(2 * initialCapacity - 1) As Byte
 mBuffer = Space$(initialCapacity)
 mMaxCapacity = MaxCapacity
 
@@ -350,10 +341,9 @@ Public Sub Insert( _
                 ByVal Value As String, _
                 ByVal position As Long)
 Const ProcName As String = "Insert"
-
 On Error GoTo Err
 
-If position < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0"
+gAssertArgument position > 0, "position must be > 0"
 
 If Value = "" Then Exit Sub
 
@@ -390,10 +380,9 @@ Public Sub Overwrite( _
                 ByVal Value As String, _
                 ByVal position As Long)
 Const ProcName As String = "Overwrite"
-
 On Error GoTo Err
 
-If position < 1 Or position > Length + 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position invalid"
+gAssertArgument position > 0 And position <= Length + 1, "position invalid"
 
 If Value = "" Then Exit Sub
 
@@ -422,15 +411,9 @@ Public Sub Remove( _
                 ByVal startIndex As Long, _
                 ByVal lengthToRemove As Long)
 Const ProcName As String = "Remove"
-
 On Error GoTo Err
 
-If startIndex < 1 Or _
-    lengthToRemove < 0 Or _
-    startIndex + lengthToRemove > Length + 1 _
-Then
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Specified segment outside buffer"
-End If
+gAssertArgument startIndex > 0 And lengthToRemove >= 0 And startIndex + lengthToRemove <= Length + 1, "Specified segment outside buffer"
 
 If lengthToRemove = 0 Then Exit Sub
 
@@ -483,25 +466,17 @@ Public Function Replace( _
                 Optional ByVal searchLength As Long = -1, _
                 Optional ByVal maxReplacements As Long = -1, _
                 Optional ByVal reverseSearch As Boolean) As Long
-Dim i As Long
-Dim endPosition As Long
-Dim numReplacements As Long
-Dim found As Boolean
-
 Const ProcName As String = "Replace"
-
 On Error GoTo Err
 
-If startPosition + searchLength > Length Or _
-    startPosition < 1 _
-Then
-    Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Invalid startPosition or searchLength"
-End If
+gAssertArgument startPosition + searchLength <= Length And startPosition >= 1, "Invalid startPosition or searchLength"
 
 If maxReplacements = 0 Then Exit Function
 If searchLength = 0 Then Exit Function
 
 If maxReplacements < 0 Then maxReplacements = &H7FFFFFFF
+
+Dim endPosition As Long
 If searchLength < 0 Then
     endPosition = Length + 1
 Else
@@ -511,6 +486,10 @@ End If
 If Len(targetString) > (endPosition - startPosition) Then Exit Function
 
 If ignoreCase Then targetString = UCase$(targetString)
+
+Dim i As Long
+Dim numReplacements As Long
+Dim found As Boolean
 If Not reverseSearch Then
     For i = startPosition To (endPosition - Len(targetString))
         found = containsStringAtPosition(i, targetString, ignoreCase)
@@ -554,7 +533,6 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-    
 End Function
 
 ''
@@ -570,12 +548,11 @@ Public Function SubString( _
                 Optional ByVal startPosition As Long = 1, _
                 Optional ByVal Length As Long)
 Const ProcName As String = "SubString"
-
 On Error GoTo Err
 
-If startPosition < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "startPosition must be >= 1"
-If Length < 0 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Length must be >= 0"
-If startPosition + Length - 1 > Me.Length Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Request exceeds Length of Source"
+gAssertArgument startPosition > 0, "startPosition must be > 0"
+gAssertArgument Length >= 0, "Length must be >= 0"
+gAssertArgument startPosition + Length - 1 <= Me.Length, "Request exceeds Length of Source"
 
 If Length = 0 Then Length = Me.Length - startPosition + 1
 
@@ -596,7 +573,6 @@ End Function
 '@/
 Public Function ToString() As String
 Const ProcName As String = "ToString"
-
 On Error GoTo Err
 
 ToString = Left$(mBuffer, Length)
@@ -633,13 +609,11 @@ End Function
 Public Function WordPositionLeft( _
                 ByVal position As Long, _
                 Optional ByVal separator As String = " ") As Long
-
 Const ProcName As String = "WordPositionLeft"
-
 On Error GoTo Err
 
-If position < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0"
-If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single character"
+gAssertArgument position > 0, "position must be > 0"
+gAssertArgument Len(separator) = 1, "separator must be a single character"
 
 If position = 1 Or Me.Length = 0 Then
     WordPositionLeft = 1
@@ -684,13 +658,11 @@ End Function
 Public Function WordPositionRight( _
                 ByVal position As Long, _
                 Optional ByVal separator As String = " ") As Long
-
 Const ProcName As String = "WordPositionRight"
-
 On Error GoTo Err
 
-If position < 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "position must be > 0"
-If Len(separator) <> 1 Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "separator must be a single character"
+gAssertArgument position > 0, "position must be > 0"
+gAssertArgument Len(separator) = 1, "separator must be a single character"
 
 If position > Me.Length Then
     WordPositionRight = Me.Length + 1
@@ -703,7 +675,6 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 '@================================================================================
@@ -713,7 +684,6 @@ End Function
 Private Function bufferElementAddress( _
                 ByVal elementIndex As Long) As Long
 Const ProcName As String = "bufferElementAddress"
-
 On Error GoTo Err
 
 bufferElementAddress = gUnsignedAdd(StrPtr(mBuffer), elementIndex)
@@ -728,11 +698,7 @@ Private Function containsStringAtPosition( _
                 ByVal position As Long, _
                 ByVal targetString As String, _
                 ByVal ignoreCase As Boolean) As Boolean
-Dim i As Long
-Dim s As String
-
 Const ProcName As String = "containsStringAtPosition"
-
 On Error GoTo Err
 
 If 2 * Len(targetString) > mBufferIndex - position Then Exit Function
@@ -747,14 +713,12 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Function nextWordPosition( _
                 ByVal position As Long, _
                 ByVal separator As String) As Long
 Const ProcName As String = "nextWordPosition"
-
 On Error GoTo Err
 
 position = InStr(position, mBuffer, separator)
@@ -775,14 +739,12 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Function previousWordPosition( _
                 ByVal position As Long, _
                 ByVal separator As String) As Long
 Const ProcName As String = "previousWordPosition"
-
 On Error GoTo Err
 
 Do While position > 1
