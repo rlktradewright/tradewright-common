@@ -122,6 +122,7 @@ HelpContextID="0"
 Description="TradeWright Utility Services v4.0"
 CompatibleMode="2"
 CompatibleEXE32="Compat\TWUtilities40.dll"
+VersionCompatible32="1"
 MajorVer=4
 MinorVer=0
 RevisionVer=116
