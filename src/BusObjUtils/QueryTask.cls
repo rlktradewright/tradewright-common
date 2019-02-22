@@ -46,10 +46,9 @@ Private Const ModuleName                    As String = "QueryTask"
 ' Member variables
 '@================================================================================
 
-Private WithEvents mConnector               As Connector
-Attribute mConnector.VB_VarHelpID = -1
-Private WithEvents mConnection              As ADODB.Connection
-Attribute mConnection.VB_VarHelpID = -1
+Private WithEvents mQueryExecutor           As QueryExecutor
+Attribute mQueryExecutor.VB_VarHelpID = -1
+
 Private WithEvents mRs                      As ADODB.Recordset
 Attribute mRs.VB_VarHelpID = -1
 
@@ -100,11 +99,9 @@ If mTaskContext.CancelPending Then
     Exit Sub
 End If
     
-If mConnection Is Nothing Then
-    Debug.Print "QueryTask: Connect to DB"
-    Set mConnector = New Connector
-    mConnector.Initialise mConnectionString, adUseClient, adAsyncConnect
-    mConnector.Connect
+If mRs Is Nothing Then
+    Set mQueryExecutor = New QueryExecutor
+    mQueryExecutor.Query mConnectionString, mSQL
     mTaskContext.Suspend -1
 ElseIf mRs.EOF Then
     mRs.Close
@@ -132,136 +129,34 @@ ITask_TaskName = mTaskContext.Name
 End Property
 
 '@================================================================================
-' mConnection Event Handlers
+' mQueryExecutor Event Handlers
 '@================================================================================
 
-Private Sub mConnection_ExecuteComplete( _
-                ByVal RecordsAffected As Long, _
-                ByVal pError As ADODB.Error, _
-                adStatus As ADODB.EventStatusEnum, _
-                ByVal pCommand As ADODB.Command, _
-                ByVal pRecordset As ADODB.Recordset, _
-                ByVal pConnection As ADODB.Connection)
-
-Const ProcName As String = "mConnection_ExecuteComplete"
-Dim failpoint As String
+Private Sub mQueryExecutor_Error(ev As TWUtilities40.ErrorEventData)
+Const ProcName As String = "mQueryExecutor_Error"
 On Error GoTo Err
 
-If adStatus = EventStatusEnum.adStatusErrorsOccurred Then
-    If pError.Number = 3712 Then
-        ' this error is "Operation has been cancelled by the user"
-        ' This should no longer happen but we'll make this check just in case
-        gLogger.Log "Error 3712 returned from ADO: operation cancelled by user: retrying", ProcName, ModuleName
-        mConnector.Connect
-        Exit Sub
-    End If
-    
-    Dim lErrMsg As String
-    lErrMsg = gGenerateErrorMessage(pError) & gGenerateConnectionErrorMessages(pConnection)
-
-    gLogger.Log lErrMsg, ProcName, ModuleName
-    
-    mTaskContext.Error pError.Number, lErrMsg, ProjectName & "." & ModuleName & ":" & ProcName
-    If gIsStateSet(mConnection.State, adStateOpen) Then mConnection.Close
-Else
-    ' note that for some reason the very first ADO command for some time
-    ' results in mRs_FetchComplete occurring before mConnection_ExecuteComplete,
-    ' but subsequently it is always the other way around! So it is possible that
-    ' mRs may no longer exist at this point
-    If Not mRs Is Nothing Then Set mRs.ActiveConnection = Nothing
-    Debug.Print "QueryTask: close connection"
-    If gIsStateSet(mConnection.State, adStateOpen) Then mConnection.Close
-    
-End If
+mTaskContext.Error ev.errorCode, ev.ErrorMessage, ev.ErrorSource
 
 Exit Sub
 
 Err:
-gNotifyUnhandledError ProcName, ModuleName, pFailpoint:=failpoint
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-'@================================================================================
-' mConnector Event Handlers
-'@================================================================================
-
-Private Sub mConnector_Connected(ByVal pConnection As ADODB.Connection)
-Const ProcName As String = "mConnector_Connected"
-Dim failpoint As String
+Private Sub mQueryExecutor_RecordsetRetrieved(ByVal rs As ADODB.Recordset)
+Const ProcName As String = "mQueryExecutor_RecordsetRetrieved"
 On Error GoTo Err
-
-Set mConnection = pConnection
-    Set mRs = New ADODB.Recordset
-    Set mRs.ActiveConnection = mConnection
-    mRs.Properties("Initial Fetch Size") = 0
-    mRs.Open mSQL, _
-            , _
-            adOpenStatic, _
-            adLockBatchOptimistic, _
-            ExecuteOptionEnum.adAsyncFetchNonBlocking + _
-            ExecuteOptionEnum.adAsyncExecute
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName, pFailpoint:=failpoint
-End Sub
-
-Private Sub mConnector_ConnectFailed(ByVal errorCode As Long, ByVal errorDesc As String)
-Const ProcName As String = "mConnector_ConnectFailed"
-Dim failpoint As String
-On Error GoTo Err
-
-mTaskContext.Error errorCode, errorDesc
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName, pFailpoint:=failpoint
-End Sub
-
-'@================================================================================
-' mRs Event Handlers
-'@================================================================================
-
-Private Sub mRs_FetchComplete( _
-                ByVal pError As ADODB.Error, _
-                adStatus As ADODB.EventStatusEnum, _
-                ByVal pRecordset As ADODB.Recordset)
-
-Const ProcName As String = "mRs_FetchComplete"
-Dim failpoint As String
-
-On Error GoTo Err
-
-If adStatus = EventStatusEnum.adStatusErrorsOccurred Then
-    If pError.Number = 3712 Then
-        ' this error is "Operation has been cancelled by the user"
-        ' This should no longer happen but we'll make this check just in case
-        gLogger.Log "Error 3712 returned from ADO: operation cancelled by user: retrying", ProcName, ModuleName
-        mConnector.Connect
-        Exit Sub
-    End If
-    
-    Dim lErrMsg As String
-    lErrMsg = gGenerateErrorMessage(pError)
-
-    gLogger.Log lErrMsg, ProcName, ModuleName
-    
-    mTaskContext.Error pError.Number, lErrMsg, ProjectName & "." & ModuleName & ":" & ProcName
-    If gIsStateSet(mConnection.State, adStateOpen) Then mConnection.Close
-    
-    Set mRs = Nothing
-    Exit Sub
-End If
 
 createSummsBuilder
-
+Set mRs = rs
+Set mQueryExecutor = Nothing
 mTaskContext.Continue
 
 Exit Sub
 
 Err:
-gNotifyUnhandledError ProcName, ModuleName, pFailpoint:=failpoint
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -294,13 +189,8 @@ On Error GoTo Err
 
 If Not mRs Is Nothing Then
     If Not gIsStateSet(mRs.State, adStateOpen) Then mRs.Cancel
-ElseIf Not mConnection Is Nothing Then
-    If gIsStateSet(mConnection.State, adStateOpen) Then
-        mConnection.Close
-    Else
-        mConnection.Cancel
-    End If
 End If
+If Not mQueryExecutor Is Nothing Then mQueryExecutor.Cancel
 mTaskContext.Finish Empty, True
 
 Exit Sub

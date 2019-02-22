@@ -36,6 +36,8 @@ Public Const InfoTypeBusObjUtils            As String = "tradewright.busobjutils
 Public Const GenericColumnId                As String = "ID"
 Public Const GenericColumnName              As String = "NAME"
 
+Public Const SqlQueryTimeoutError           As Long = &H80040E31    ' -2147217871
+
 '@================================================================================
 ' Member variables
 '@================================================================================
@@ -274,7 +276,7 @@ End Select
 Exit Function
 
 Err:
-If Err.Number = 3265 Then Err.Source = Err.Source & " (" & columnName & ")"
+If Err.Number = ADODB.ErrorValueEnum.adErrItemNotFound Then Err.Source = Err.Source & " (" & columnName & ")"
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
