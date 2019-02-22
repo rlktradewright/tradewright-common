@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_1EB69FB73DC74B4DA3FB538F1B51A30A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_44A589985099404385E700ED727AAACA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4B7E005FBEA54AF5B5EFB82F170A16DA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -22,18 +34,6 @@
         "Entry"
         {
         "MsmKey" = "8:_5B52335B7B7A40029003237CF640025C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78D78DACC48C44D59EA62FEDC6CDB31D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_795C3000163646418CB4ACAF5A0475F5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -148,7 +148,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-116.msi"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-117.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -487,7 +487,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\TradeWrightCommonSampleApps-v4.0.113"
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -578,16 +578,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.116"
-        "ProductCode" = "8:{F0362EA6-1D0C-45ED-8245-784B211BA8D7}"
-        "PackageCode" = "8:{854A8FD6-933E-4EF8-B01A-906E4E200E0C}"
+        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.117"
+        "ProductCode" = "8:{E764CF16-EFAE-4778-A984-4F09C7EF5608}"
+        "PackageCode" = "8:{ADEED191-DF13-4541-8EDB-507D3786DF21}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:4.0.116"
+        "ProductVersion" = "8:4.0.117"
         "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1143,11 +1143,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_78D78DACC48C44D59EA62FEDC6CDB31D"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1EB69FB73DC74B4DA3FB538F1B51A30A"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-116.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-117.msm"
                 "Properties"
                 {
                     "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
@@ -1168,11 +1168,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_795C3000163646418CB4ACAF5A0475F5"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_44A589985099404385E700ED727AAACA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-116.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-117.msm"
                 "Properties"
                 {
                     "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
