@@ -1415,7 +1415,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ' Returns or sets whether the user is allowed to resize rows and columns with the mouse.
-Public Property Get AllowUserResizing() As AllowUserResizeSettings
+Public Property Get AllowUserResizing() As TWControls40.AllowUserResizeSettings
 Const ProcName As String = "AllowUserResizing"
 On Error GoTo Err
 
@@ -1428,7 +1428,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 ' Returns or sets whether the user is allowed to resize rows and columns with the mouse.
-Public Property Let AllowUserResizing(ByVal Value As AllowUserResizeSettings)
+Public Property Let AllowUserResizing(ByVal Value As TWControls40.AllowUserResizeSettings)
 Const ProcName As String = "AllowUserResizing"
 On Error GoTo Err
 

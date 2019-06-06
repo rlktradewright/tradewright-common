@@ -159,11 +159,11 @@ Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
 Const ProcName As String = "UserControl_WriteProperties"
 On Error GoTo Err
 
-Call PropBag.WriteProperty("ScaleWidth", Picture1.ScaleWidth, UserControl.Width)
-Call PropBag.WriteProperty("ScaleTop", Picture1.ScaleTop, 0)
-Call PropBag.WriteProperty("ScaleMode", Picture1.ScaleMode, 1)
-Call PropBag.WriteProperty("ScaleLeft", Picture1.ScaleLeft, 0)
-Call PropBag.WriteProperty("ScaleHeight", Picture1.ScaleHeight, UserControl.Height)
+PropBag.WriteProperty "ScaleWidth", Picture1.ScaleWidth, UserControl.Width
+PropBag.WriteProperty "ScaleTop", Picture1.ScaleTop, 0
+PropBag.WriteProperty "ScaleMode", Picture1.ScaleMode, 1
+PropBag.WriteProperty "ScaleLeft", Picture1.ScaleLeft, 0
+PropBag.WriteProperty "ScaleHeight", Picture1.ScaleHeight, UserControl.Height
 
 Exit Sub
 

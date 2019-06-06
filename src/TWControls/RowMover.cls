@@ -120,7 +120,6 @@ On Error GoTo Err
 
 mTransposeLine.Visible = False
 mStartLabel.MousePointer = MousePointerConstants.vbDefault
-'DeleteObject mPen
 If mLastY <> &H80000000 Then
     EndMove = mRow
 Else

@@ -93,8 +93,8 @@ Const ProcName As String = "UserControl_ReadProperties"
 On Error GoTo Err
 
 mAppearance = PropBag.ReadProperty("Appearance", AppearanceConstants.cc3D)
-Combo1.BackColor = PropBag.ReadProperty("BackColor", &H80000005)
-Combo1.ForeColor = PropBag.ReadProperty("ForeColor", &H80000008)
+Combo1.BackColor = PropBag.ReadProperty("BackColor", SystemColorConstants.vbWindowBackground)
+Combo1.ForeColor = PropBag.ReadProperty("ForeColor", SystemColorConstants.vbWindowText)
 UserControl.Enabled = PropBag.ReadProperty("Enabled", True)
 Set Combo1.Font = PropBag.ReadProperty("Font", Ambient.Font)
 Combo1.CausesValidation = PropBag.ReadProperty("CausesValidation", True)
@@ -130,20 +130,20 @@ Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
 Const ProcName As String = "UserControl_WriteProperties"
 On Error GoTo Err
 
-Call PropBag.WriteProperty("Appearance", mAppearance, AppearanceConstants.cc3D)
-Call PropBag.WriteProperty("BackColor", Combo1.BackColor, &H80000005)
-Call PropBag.WriteProperty("ForeColor", Combo1.ForeColor, &H80000008)
-Call PropBag.WriteProperty("Enabled", UserControl.Enabled, True)
-Call PropBag.WriteProperty("Font", Combo1.Font, Ambient.Font)
-Call PropBag.WriteProperty("CausesValidation", Combo1.CausesValidation, True)
-Call PropBag.WriteProperty("Locked", Combo1.Locked, False)
-Call PropBag.WriteProperty("MousePointer", Combo1.MousePointer, 0)
-Call PropBag.WriteProperty("MouseIcon", MouseIcon, Nothing)
-Call PropBag.WriteProperty("OLEDropMode", Combo1.OLEDropMode, 0)
-Call PropBag.WriteProperty("OLEDragMode", Combo1.OLEDragMode, 0)
-Call PropBag.WriteProperty("Text", Combo1.Text, "Combo1")
-Call PropBag.WriteProperty("Indentation", Combo1.Indentation, 0)
-Call PropBag.WriteProperty("ListWidth", ListWidth, 0)
+PropBag.WriteProperty "Appearance", mAppearance, AppearanceConstants.cc3D
+PropBag.WriteProperty "BackColor", Combo1.BackColor, SystemColorConstants.vbWindowBackground
+PropBag.WriteProperty "ForeColor", Combo1.ForeColor, SystemColorConstants.vbWindowText
+PropBag.WriteProperty "Enabled", UserControl.Enabled, True
+PropBag.WriteProperty "Font", Combo1.Font, Ambient.Font
+PropBag.WriteProperty "CausesValidation", Combo1.CausesValidation, True
+PropBag.WriteProperty "Locked", Combo1.Locked, False
+PropBag.WriteProperty "MousePointer", Combo1.MousePointer, 0
+PropBag.WriteProperty "MouseIcon", MouseIcon, Nothing
+PropBag.WriteProperty "OLEDropMode", Combo1.OLEDropMode, 0
+PropBag.WriteProperty "OLEDragMode", Combo1.OLEDragMode, 0
+PropBag.WriteProperty "Text", Combo1.Text, "Combo1"
+PropBag.WriteProperty "Indentation", Combo1.Indentation, 0
+PropBag.WriteProperty "ListWidth", ListWidth, 0
     
 Exit Sub
 

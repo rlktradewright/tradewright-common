@@ -117,7 +117,6 @@ On Error GoTo Err
 
 If Not mTranspose Is Nothing Then mTransposeLine.Visible = False
 mStartLabel.MousePointer = MousePointerConstants.vbDefault
-'DeleteObject mPen
 If mLastX <> &H80000000 Then
     EndMove = mCol
 Else
@@ -154,10 +153,7 @@ Set mStartLabel = pCell.ValueLabel
 
 mStartX = pStartX
 
-'mStartLabel.MousePointer = MousePointerConstants.vbCustom
 mLastX = &H80000000
-
-'mPen = CreatePen(PS_SOLID, 2, 0)
 
 Exit Sub
 
@@ -175,8 +171,6 @@ On Error GoTo Err
 If X = mLastX Then Exit Sub
 
 mCol = pCol
-
-'If mLastX <> &H80000000 Then drawLine hDC, mLastX
 
 If mTranspose Is Nothing Then
     Set mTimer = CreateIntervalTimer(500, ExpiryTimeUnitMilliseconds)

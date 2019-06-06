@@ -154,16 +154,23 @@ Private mNoDraw                                     As Boolean
 '@================================================================================
 
 Private Sub UserControl_AccessKeyPress(KeyAscii As Integer)
-Debug.Print "AccessKeyPress: " & KeyAscii
 If KeyAscii = 13 Or KeyAscii = 27 Then RaiseEvent Click
 End Sub
 
 Private Sub UserControl_AmbientChanged(PropertyName As String)
+Const ProcName As String = "UserControl_AmbientChanged"
+On Error GoTo Err
+
 If PropertyName = "DisplayAsDefault" Then
     debugPrint True, "DisplayAsDefault: " & CStr(UserControl.Ambient.DisplayAsDefault)
     InvalidateRect Button.hWnd, mClientRect, 1
     debugPrint False, "DisplayAsDefault"
 End If
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub UserControl_EnterFocus()
@@ -178,12 +185,6 @@ End Sub
 Private Sub UserControl_InitProperties()
 ForeColor = vbButtonText
 BackColor = vbButtonFace
-'MouseOverBackColor = vbButtonFace
-'MouseOverForeColor = vbButtonText
-'PushedBackColor = vb3DHighlight
-'PushedForeColor = vbButtonText
-'DisabledBackColor = vbInactiveBorder
-'DisabledForeColor = vbButtonText
 DefaultBorderColor = &HF0FF00
 NonDefaultBorderColor = vbBlack
 FocusedBorderColor = &HF8FFA8
@@ -237,6 +238,9 @@ gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 Private Sub UserControl_Terminate()
+Const ProcName As String = "UserControl_Terminate"
+On Error GoTo Err
+
 DeleteObject mhBackBrush
 DeleteObject mhMouseOverBrush
 DeleteObject mhPushedBrush
@@ -244,35 +248,48 @@ DeleteObject mhDefaultBorderPen
 DeleteObject mhNonDefaultBorderPen
 trackMouse Button.hWnd, pCancel:=True
 If mPrevWindowProcAddress <> 0 Then StopSubclassing Button.hWnd
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
-Call PropBag.WriteProperty("Appearance", Button.Appearance, 1)
-Call PropBag.WriteProperty("BackColor", mBackColor, vbButtonFace)
-Call PropBag.WriteProperty("Cancel", Button.Cancel, False)
-Call PropBag.WriteProperty("Caption", Button.Caption, "")
-Call PropBag.WriteProperty("CausesValidation", Button.CausesValidation, True)
-Call PropBag.WriteProperty("DefaultBorderColor", mDefaultBorderColor, &HEEEECF)
-Call PropBag.WriteProperty("DisabledBackColor", mDisabledBackColor, vbInactiveBorder)
-Call PropBag.WriteProperty("DisabledFont", mDisabledFont, Nothing)
-Call PropBag.WriteProperty("DisabledForeColor", mDisabledForeColor, vbBlack)
-Call PropBag.WriteProperty("Enabled", UserControl.Enabled, True)
-Call PropBag.WriteProperty("FocusedBorderColor", mFocusedBorderColor, &HF8FFA8)
-Call PropBag.WriteProperty("Font", Button.Font, Ambient.Font)
-Call PropBag.WriteProperty("ForeColor", mForeColor, vbButtonText)
-Call PropBag.WriteProperty("MouseIcon", MouseIcon, Nothing)
-Call PropBag.WriteProperty("MouseOverBackColor", mMouseOverBackColor, vbButtonFace)
-Call PropBag.WriteProperty("MouseOverFont", mMouseOverFont, Nothing)
-Call PropBag.WriteProperty("MouseOverForeColor", mMouseOverForeColor, vbBlack)
-Call PropBag.WriteProperty("MousePointer", Button.MousePointer, 0)
-Call PropBag.WriteProperty("NonDefaultBorderColor", mNonDefaultBorderColor, vbBlack)
-Call PropBag.WriteProperty("OLEDropMode", Button.OLEDropMode, 0)
-Call PropBag.WriteProperty("PushedBackColor", mPushedBackColor, vb3DHighlight)
-Call PropBag.WriteProperty("PushedFont", mPushedFont, Nothing)
-Call PropBag.WriteProperty("PushedForeColor", mPushedForeColor, vbBlack)
-Call PropBag.WriteProperty("RightToLeft", Button.RightToLeft, False)
-Call PropBag.WriteProperty("ToolTipText", Button.ToolTipText, "")
-Call PropBag.WriteProperty("UseMaskColor", Button.UseMaskColor, False)
+Const ProcName As String = "UserControl_WriteProperties"
+On Error GoTo Err
+
+PropBag.WriteProperty "Appearance", Button.Appearance, 1
+PropBag.WriteProperty "BackColor", mBackColor, vbButtonFace
+PropBag.WriteProperty "Cancel", Button.Cancel, False
+PropBag.WriteProperty "Caption", Button.Caption, ""
+PropBag.WriteProperty "CausesValidation", Button.CausesValidation, True
+PropBag.WriteProperty "DefaultBorderColor", mDefaultBorderColor, &HEEEECF
+PropBag.WriteProperty "DisabledBackColor", mDisabledBackColor, vbInactiveBorder
+PropBag.WriteProperty "DisabledFont", mDisabledFont, Nothing
+PropBag.WriteProperty "DisabledForeColor", mDisabledForeColor, vbBlack
+PropBag.WriteProperty "Enabled", UserControl.Enabled, True
+PropBag.WriteProperty "FocusedBorderColor", mFocusedBorderColor, &HF8FFA8
+PropBag.WriteProperty "Font", Button.Font, Ambient.Font
+PropBag.WriteProperty "ForeColor", mForeColor, vbButtonText
+PropBag.WriteProperty "MouseIcon", MouseIcon, Nothing
+PropBag.WriteProperty "MouseOverBackColor", mMouseOverBackColor, vbButtonFace
+PropBag.WriteProperty "MouseOverFont", mMouseOverFont, Nothing
+PropBag.WriteProperty "MouseOverForeColor", mMouseOverForeColor, vbBlack
+PropBag.WriteProperty "MousePointer", Button.MousePointer, 0
+PropBag.WriteProperty "NonDefaultBorderColor", mNonDefaultBorderColor, vbBlack
+PropBag.WriteProperty "OLEDropMode", Button.OLEDropMode, 0
+PropBag.WriteProperty "PushedBackColor", mPushedBackColor, vb3DHighlight
+PropBag.WriteProperty "PushedFont", mPushedFont, Nothing
+PropBag.WriteProperty "PushedForeColor", mPushedForeColor, vbBlack
+PropBag.WriteProperty "RightToLeft", Button.RightToLeft, False
+PropBag.WriteProperty "ToolTipText", Button.ToolTipText, ""
+PropBag.WriteProperty "UseMaskColor", Button.UseMaskColor, False
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 '@================================================================================
