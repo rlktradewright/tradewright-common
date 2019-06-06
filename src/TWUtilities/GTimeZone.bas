@@ -66,10 +66,32 @@ Private mLocalTimeZone                      As TimeZone
 
 Public Function gGetAvailableTimeZoneNames() As String()
 Const ProcName As String = "gGetAvailableTimeZoneNames"
-
 On Error GoTo Err
 
-gGetAvailableTimeZoneNames = lGetAvailableTimeZoneNames
+ReDim mTimeZoneNames(200) As String
+
+Dim hKey As Long
+If RegOpenKeyEx(HKEY_LOCAL_MACHINE, _
+                RegSubKeyTimezones, _
+                0&, _
+                KEY_READ, _
+                hKey) <> ERROR_SUCCESS Then
+    Err.Raise ErrorCodes.ErrRuntimeException, , "Can't find timezones registry key"
+End If
+
+mTimeZoneNames(0) = "UTC"
+
+Dim i As Long
+Do
+    i = i + 1
+    Dim Name As String * MaxNameLen
+    If RegEnumKey(hKey, i, Name, Len(Name)) = ERROR_NO_MORE_ITEMS Then Exit Do
+    mTimeZoneNames(i) = gTrimNull(Name)
+Loop
+
+ReDim Preserve mTimeZoneNames(i - 1) As String
+
+gGetAvailableTimeZoneNames = mTimeZoneNames
 
 Exit Function
 
@@ -286,43 +308,6 @@ End Sub
 ' Helper Functions
 '@================================================================================
 
-Private Function lGetAvailableTimeZoneNames() As String()
-
-Dim hKey As Long
-Dim i As Long
-Dim Name As String * MaxNameLen
-
-Const ProcName As String = "lGetAvailableTimeZoneNames"
-
-On Error GoTo Err
-
-ReDim mTimeZoneNames(200) As String
-
-If RegOpenKeyEx(HKEY_LOCAL_MACHINE, _
-                RegSubKeyTimezones, _
-                0&, _
-                KEY_READ, _
-                hKey) <> ERROR_SUCCESS Then
-    Err.Raise ErrorCodes.ErrRuntimeException, , "Can't find timezones registry key"
-End If
-
-mTimeZoneNames(0) = "UTC"
-
-Do
-    i = i + 1
-    If RegEnumKey(hKey, i, Name, Len(Name)) = ERROR_NO_MORE_ITEMS Then Exit Do
-    mTimeZoneNames(i) = gTrimNull(Name)
-Loop
-
-ReDim Preserve mTimeZoneNames(i - 1) As String
-
-lGetAvailableTimeZoneNames = mTimeZoneNames
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
 
 
 

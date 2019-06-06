@@ -18,7 +18,7 @@ Option Explicit
 '
 ' Instances of this class cannot be created using the <code>New</code> operator. Instead,
 ' use the <code>GetTimeZone</code> global method. There is a single global
-' <code>GetTimeZone</code> object for each timezone known to the system.
+' <code>TimeZone</code> object for each timezone known to the system.
 '
 '@/
 
@@ -157,7 +157,6 @@ End Property
 '@/
 Public Property Get StandardName() As String
 Const ProcName As String = "StandardName"
-
 On Error GoTo Err
 
 StandardName = gTrimNull(StrConv(mBaseTimeZoneInfo.StandardName, vbUnicode))
@@ -184,7 +183,6 @@ End Property
 Public Function ConvertDateLocalToTz( _
                 ByVal localDate As Date) As Date
 Const ProcName As String = "ConvertDateLocalToTz"
-
 On Error GoTo Err
 
 If Me Is gGetCurrentTimeZone Then
@@ -210,7 +208,6 @@ End Function
 Public Function ConvertDateTzToLocal( _
                 ByVal tzDate As Date) As Date
 Const ProcName As String = "ConvertDateTzToLocal"
-
 On Error GoTo Err
 
 If Me Is gGetCurrentTimeZone Then
@@ -239,7 +236,6 @@ Public Function ConvertDateTzToTz( _
                 ByVal pDate As Date, _
                 ByVal tz As TimeZone) As Date
 Const ProcName As String = "ConvertDateTzToTz"
-
 On Error GoTo Err
 
 If Me Is tz Then
@@ -265,7 +261,6 @@ End Function
 Public Function ConvertDateTzToUTC( _
                 ByVal localDate As Date) As Date
 Const ProcName As String = "ConvertDateTzToUTC"
-
 On Error GoTo Err
 
 ConvertDateTzToUTC = localTimeToSystemTime(localDate)
@@ -287,18 +282,19 @@ End Function
 '@/
 Public Function ConvertDateUTCToTZ( _
                 ByVal utcDate As Date) As Date
-Dim utcFileTime As Currency
-Dim localFileTime As Currency
-Dim sysUTC As SYSTEMTIME
-Dim sysLocal As SYSTEMTIME
-
 Const ProcName As String = "ConvertDateUTCToTZ"
-
 On Error GoTo Err
 
+Dim utcFileTime As Currency
 utcFileTime = gVbDateToFileTime(utcDate)
+
+Dim sysUTC As SYSTEMTIME
 FileTimeToSystemTime utcFileTime, sysUTC
+
+Dim sysLocal As SYSTEMTIME
 SystemTimeToTzSpecificLocalTime getTimeZoneInfoForYear(sysUTC.Year), sysUTC, sysLocal
+
+Dim localFileTime As Currency
 SystemTimeToFileTime sysLocal, localFileTime
 ConvertDateUTCToTZ = gFileTimeToVbDate(localFileTime)
 
@@ -311,9 +307,7 @@ End Function
 
 Friend Function getTimeZoneInfoForYear( _
                 ByVal pYear As Long) As TIME_ZONE_INFORMATION
-
 Const ProcName As String = "getTimeZoneInfoForYear"
-
 On Error GoTo Err
 
 If mFirstYear = 0 Then
@@ -366,22 +360,18 @@ End Sub
 
 Private Function localTimeToSystemTime( _
                 ByVal localTime As Date) As Date
+Const ProcName As String = "localTimeToSystemTime"
+On Error GoTo Err
 
 Static tzConvInfo As TzConversionInfo
 Static sYear As Long
-Dim tzi As TIME_ZONE_INFORMATION
-Dim st As SYSTEMTIME
+
 Dim lYear As Long
-Dim utcTime As Date
-
-Const ProcName As String = "localTimeToSystemTime"
-
-On Error GoTo Err
-
 lYear = Year(localTime)
 
 If lYear <> sYear Then
     
+    Dim tzi As TIME_ZONE_INFORMATION
     tzi = getTimeZoneInfoForYear(lYear)
 
     If tzi.standardDate.Month = 0 Then
@@ -391,6 +381,7 @@ If lYear <> sYear Then
         If tzi.daylightDate.Month = 0 Then Err.Raise ErrorCodes.ErrRuntimeException, , "Daylightdate month should be non-zero"
         
         ' calculate the daylight saving time start date
+        Dim st As SYSTEMTIME
         st = tzi.daylightDate
         st.Year = lYear
         st.Day = 1
@@ -419,6 +410,7 @@ If lYear <> sYear Then
     
 End If
 
+Dim utcTime As Date
 utcTime = localTime + tzConvInfo.standardBias / 1440
 
 If tzConvInfo.standardDate = 0 Then
@@ -448,15 +440,13 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Function ToString() As String
-Dim jb As JSONBuilder
 Const ProcName As String = "ToString"
-
 On Error GoTo Err
 
+Dim jb As JSONBuilder
 Set jb = New JSONBuilder
 jb.BeginObject
 jb.EncodeName "DisplayName"

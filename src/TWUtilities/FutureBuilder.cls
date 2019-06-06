@@ -80,6 +80,7 @@ On Error GoTo Err
 If Data = ActionComplete Then
     mFuture.NotifyComplete
 ElseIf Data = ActionCancel Then
+    NotifyCancel
     mFuture.NotifyCancel
 ElseIf Data = ActionFail Then
     mFuture.NotifyFail
@@ -198,7 +199,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Friend Sub NotifyCancel()
+'@================================================================================
+' Helper Functions
+'@================================================================================
+
+Private Sub NotifyCancel()
 Const ProcName As String = "NotifyCancel"
 On Error GoTo Err
 
@@ -211,10 +216,6 @@ Exit Sub
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
-
-'@================================================================================
-' Helper Functions
-'@================================================================================
 
 
 
