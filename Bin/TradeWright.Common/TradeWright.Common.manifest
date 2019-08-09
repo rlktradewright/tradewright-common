@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <assembly manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1">
-    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.119" />
+    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.120" />
     <description>TradeWright Common</description>
     <file name="TWUtilities40.dll">
         <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.5" flags="hasDiskImage" helpdir="" />
@@ -96,7 +96,7 @@
     <comInterfaceExternalProxyStub name="_ILogListener" iid="{86C05A90-5D47-4EE2-85E6-1B79EA7C1F0C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_IStringable" iid="{B80F16A6-6180-4AC4-9A3D-0DF4B9354F36}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_ILogFormatter" iid="{90583084-403C-48DF-A6B8-3D425A584AB3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_StringBuilder" iid="{DDCE8B2D-636B-4F40-A526-30ADD11F448F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_StringBuilder" iid="{03D4C247-1BE2-47A0-A91B-8D0A6C56DE06}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_WeakReference" iid="{BC94519D-4854-4792-80BB-93B6992ED399}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_Console" iid="{C9E00653-7795-453C-BF51-0D3F9DCADDA5}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_CommandLineParser" iid="{3280CE17-F637-4396-AC56-2340E48B90B6}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
