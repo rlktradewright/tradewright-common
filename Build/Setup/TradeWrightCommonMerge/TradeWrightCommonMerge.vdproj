@@ -99,7 +99,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommon4-0-118.msm"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommon4-0-119.msm"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -516,7 +516,7 @@
         "Module"
         {
         "ModuleSignature" = "8:MergeModule.D788F584E95341F9BFCE168A4548C3FF"
-        "Version" = "8:4.0.0.118"
+        "Version" = "8:4.0.0.119"
         "Title" = "8:TradeWrightCommonMerge"
         "Subject" = "8:"
         "Author" = "8:TradeWright Software Systems"
