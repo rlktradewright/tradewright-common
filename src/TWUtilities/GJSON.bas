@@ -132,7 +132,6 @@ Public Sub gEncode( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
 Const ProcName As String = "gEncodeVariant"
-
 On Error GoTo Err
 
 If IsArray(Value) Then
@@ -153,7 +152,6 @@ Public Sub gEncodeVariant( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
 Const ProcName As String = "gEncodeVariant"
-
 On Error GoTo Err
 
 If IsArray(Value) Then
@@ -174,10 +172,7 @@ End Sub
 Public Sub gParse( _
                 ByVal pInputString As String, _
                 ByRef pResult As Variant)
-Dim nextChar As String
-
 Const ProcName As String = "gParse"
-
 On Error GoTo Err
 
 mCurrPosn = 1
@@ -192,6 +187,7 @@ Else
     Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected ""{"" or ""["" at position " & mCurrPosn
 End If
 
+Dim nextChar As String
 If getNextChar(pInputString, nextChar) Then
     Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Unexpected non-white-space character(s) at position " & mCurrPosn
 End If
@@ -212,7 +208,6 @@ Private Sub addItemToArray( _
                 ByRef ar() As Variant, _
                 ByRef pIndex As Long)
 Const ProcName As String = "addItemToArray"
-
 On Error GoTo Err
 
 If pIndex > UBound(ar) Then ReDim Preserve ar(2 * (UBound(ar) + 1) - 1) As Variant
@@ -443,18 +438,16 @@ End Sub
 Private Sub encodeArray( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim baseType As VbVarType
-Dim Var As Variant
-Dim doneFirst As Boolean
-
 Const ProcName As String = "encodeArray"
-
 On Error GoTo Err
 
+Dim baseType As VbVarType
 baseType = VarType(Value) And (Not VbVarType.vbArray)
 
 sb.Append BeginArray
 
+Dim doneFirst As Boolean
+Dim Var As Variant
 For Each Var In Value
     If Not doneFirst Then
         doneFirst = True
@@ -482,16 +475,14 @@ End Sub
 Private Sub encodeEnumerableObject( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim Var As Variant
-Dim doneFirst As Boolean
-
 Const ProcName As String = "encodeEnumerableObject"
-
 On Error GoTo Err
 
+Dim doneFirst As Boolean
 doneFirst = False
 sb.Append BeginArray
 
+Dim Var As Variant
 For Each Var In Value
     If Not doneFirst Then
         doneFirst = True
@@ -512,20 +503,18 @@ End Sub
 Private Sub encodeDictionary( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim Var As Variant
-Dim doneFirst As Boolean
-Dim dict As Dictionary
 Const ProcName As String = "encodeDictionary"
-
 On Error GoTo Err
 
-Set dict = Value
+Dim dict As Dictionary: Set dict = Value
 
 Dim Keys() As Variant
 Keys = dict.Keys
 
 sb.Append BeginObject
 
+Dim doneFirst As Boolean
+Dim Var As Variant
 For Each Var In Keys
     If Not doneFirst Then
         doneFirst = True
@@ -547,12 +536,10 @@ End Sub
 Private Sub encodeJSONableObject( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim obj As IJSONable
 Const ProcName As String = "encodeJSONableObject"
-
 On Error GoTo Err
 
-Set obj = Value
+Dim obj As IJSONable: Set obj = Value
 sb.Append obj.ToJSON
 
 Exit Sub
@@ -564,13 +551,7 @@ End Sub
 Private Sub encodeNonObjectVariant( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-                
-Dim s As String
-Dim fn As Variant
-Dim dataObj As DataObject
-
 Const ProcName As String = "encodeNonObjectVariant"
-
 On Error GoTo Err
 
 If IsArray(Value) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Argument must not be an array variant"
@@ -582,12 +563,16 @@ Case VbVarType.vbString
     encodeString CStr(Value), sb
 Case VbVarType.vbCurrency, _
         VbVarType.vbDecimal, _
-        VbVarType.vbDouble, _
         VbVarType.vbError, _
         VbVarType.vbInteger, _
         VbVarType.vbLong, _
         VbVarType.vbSingle
     sb.Append CStr(Value)
+Case VbVarType.vbDouble
+    ' we use gDoubleToString() rather than CStr because the latter does
+    ' not properly handle MaxDouble - it gives a string that cannot be
+    ' round-tripped
+    sb.Append gDoubleToString(Value)
 Case VbVarType.vbByte
     sb.Append CStr(Value)
 Case VbVarType.vbDataObject
@@ -620,12 +605,10 @@ End Sub
 Private Sub encodeNonJSONableObject( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim baseType As VbVarType
-
 Const ProcName As String = "encodeNonJSONableObject"
-
 On Error GoTo Err
 
+Dim baseType As VbVarType
 baseType = VarType(Value) And (Not VbVarType.vbArray)
 
 ' object has no natural JSON string representation
@@ -661,14 +644,10 @@ End Sub
 Private Sub encodeObjectVariant( _
                 ByVal Value As Variant, _
                 ByVal sb As StringBuilder)
-Dim baseType As VbVarType
-Dim Var As Variant
-Dim doneFirst As Boolean
-
 Const ProcName As String = "encodeObjectVariant"
-
 On Error GoTo Err
 
+Dim baseType As VbVarType
 baseType = VarType(Value) And (Not VbVarType.vbArray)
 
 If Value Is Nothing Then
@@ -694,17 +673,14 @@ End Sub
 Private Sub encodeString( _
                 ByVal str As String, _
                 ByVal sb As StringBuilder)
-
-Dim i As Long
-Dim ch As String
-
 Const ProcName As String = "encodeString"
-
 On Error GoTo Err
 
 sb.Append QuotationMark
 
+Dim i As Long
 For i = 1 To Len(str)
+    Dim ch As String
     ch = Mid$(str, i, 1)
     
     Select Case ch
@@ -726,17 +702,17 @@ For i = 1 To Len(str)
     Case vbTab
         sb.Append "\t"
     Case Else
-       Dim a As Integer
-       Dim ah As String
-       a = AscW(ch)
-       If a > 31 And a < 127 Then
-          sb.Append ch
-       ElseIf a >= 0 Or a < 65535 Then
-          ah = Hex(a)
-          sb.Append "\u"
-          sb.Append String(4 - Len(ah), "0")
-          sb.Append ah
-       End If
+        Dim a As Integer
+        a = AscW(ch)
+        If a > 31 And a < 127 Then
+            sb.Append ch
+        ElseIf a >= 0 Or a < 65535 Then
+            Dim ah As String
+            ah = Hex(a)
+            sb.Append "\u"
+            sb.Append String(4 - Len(ah), "0")
+            sb.Append ah
+        End If
     End Select
 Next
 
@@ -752,7 +728,6 @@ Private Function getNextChar( _
                 ByVal inputString As String, _
                 ByRef nextChar As String) As Boolean
 Const ProcName As String = "getNextChar"
-
 On Error GoTo Err
 
 If mCurrPosn > Len(inputString) Then Exit Function
@@ -775,19 +750,18 @@ End Function
 
 Private Function parseArray( _
                 ByVal inputString As String) As Variant()
-Dim lIndex As Long
-Dim Var As Variant
-
 Const ProcName As String = "parseArray"
-
 On Error GoTo Err
 
 ReDim ar(3) As Variant
 
 skipWhitespace inputString
 
+Dim lIndex As Long
+
 If tryChars(inputString, EndArray) Then
 Else
+    Dim Var As Variant
     parseValue inputString, Var
     addItemToArray Var, ar, lIndex
     
@@ -816,12 +790,10 @@ End Function
 
 Private Function parseDigit( _
                 ByVal inputString As String) As String
-Dim nextChar As String
-                
 Const ProcName As String = "parseDigit"
-
 On Error GoTo Err
 
+Dim nextChar As String
 If Not getNextChar(inputString, nextChar) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected digit at position " & mCurrPosn
 If nextChar < "0" Or nextChar > "9" Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected digit at position " & mCurrPosn
 
@@ -836,7 +808,6 @@ End Function
 Private Function parseDigits( _
                 ByVal inputString As String) As String
 Const ProcName As String = "parseDigits"
-
 On Error GoTo Err
 
 Do While peekDigit(inputString) <> ""
@@ -852,7 +823,6 @@ End Function
 Private Function parseInteger( _
                 ByVal inputString As String) As String
 Const ProcName As String = "parseinteger"
-
 On Error GoTo Err
 
 parseInteger = parseDigit(inputString)
@@ -868,11 +838,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function parseName(ByVal inputString As String) As String
-
-Dim nextChar As String
-
 Const ProcName As String = "parseName"
-
 On Error GoTo Err
 
 skipWhitespace inputString
@@ -888,6 +854,7 @@ End If
 Do
     If peekChars(inputString, NameSeparator) Then Exit Do
     
+    Dim nextChar As String
     If Not getNextChar(inputString, nextChar) Then Exit Do
     
     parseName = parseName & nextChar
@@ -906,9 +873,7 @@ Private Sub parseNameValuePair( _
                 ByVal inputString As String, _
                 ByRef Name As String, _
                 ByRef Value As Variant)
-
 Const ProcName As String = "parseNameValuePair"
-
 On Error GoTo Err
 
 Name = parseName(inputString)
@@ -926,16 +891,12 @@ End Sub
 
 Private Function parseNumber( _
                 ByVal inputString As String)
-
-Dim Value As String
-Dim isDouble As Boolean
-
 Const ProcName As String = "parseNumber"
-
 On Error GoTo Err
 
 skipWhitespace inputString
 
+Dim Value As String
 If tryChars(inputString, "-") Then Value = "-"
 
 If tryChars(inputString, "0") Then
@@ -944,6 +905,7 @@ Else
     Value = Value & parseInteger(inputString)
 End If
 
+Dim isDouble As Boolean
 If tryChars(inputString, ".") Then
     isDouble = True
     Value = Value & "."
@@ -985,16 +947,8 @@ End Function
 Private Sub parseObject( _
                 ByVal pInputString As String, _
                 ByRef pResult As Variant)
-
 Const ProcName As String = "parseObject"
-
 On Error GoTo Err
-
-Dim Name As String
-Dim Value As Variant
-Dim usingDict As Boolean
-Dim dict As Dictionary
-Dim obj As Object
 
 skipWhitespace pInputString
 
@@ -1002,8 +956,14 @@ If tryChars(pInputString, EndObject) Then
     Set pResult = Nothing
     Exit Sub
 End If
+
+Dim Name As String
+Dim Value As Variant
 parseNameValuePair pInputString, Name, Value
 
+Dim usingDict As Boolean
+Dim dict As Dictionary
+Dim obj As Object
 If UCase$(Name) = UCase$(ProgIdName) Then
     Set obj = CreateObject(Value)
     Set pResult = obj
@@ -1037,18 +997,14 @@ End Sub
 Private Function parseString( _
                 ByVal inputString As String, _
                 ByVal delimiter As String) As String
-
-Dim sb As New StringBuilder
-Dim nextChar As String
-
 Const ProcName As String = "parseString"
-
 On Error GoTo Err
 
-sb.Initialise
+Dim sb As New StringBuilder: sb.Initialise
 skipWhitespace inputString
 
 Do
+    Dim nextChar As String
     If tryChars(inputString, delimiter) Then
         parseString = sb.ToString
         skipWhitespace inputString
@@ -1088,18 +1044,15 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-
 End Function
 
 Private Function parseUnicode(ByVal inputString As String) As String
-Dim i As Long
-Dim nextChar As String
-
 Const ProcName As String = "parseUnicode"
-
 On Error GoTo Err
 
+Dim i As Long
 For i = 1 To 4
+    Dim nextChar As String
     If Not getNextChar(inputString, nextChar) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected hex character at position " & mCurrPosn
     
     If (nextChar >= "0" And nextChar <= "9") Or _
@@ -1120,9 +1073,7 @@ End Function
 Private Sub parseValue( _
                 ByVal pInputString As String, _
                 ByRef pResult As Variant)
-
 Const ProcName As String = "parseValue"
-
 On Error GoTo Err
 
 skipWhitespace pInputString
@@ -1157,7 +1108,6 @@ Private Function peekChars( _
                 ByVal inputString As String, _
                 ByVal charsToTry As String) As Boolean
 Const ProcName As String = "peekChars"
-
 On Error GoTo Err
 
 If Len(inputString) + 1 - mCurrPosn < Len(charsToTry) Then Exit Function
@@ -1172,11 +1122,10 @@ End Function
 
 Private Function peekDigit( _
                 ByVal inputString As String) As String
-Dim nextChar As String
 Const ProcName As String = "peekDigit"
-
 On Error GoTo Err
 
+Dim nextChar As String
 nextChar = peekNextChar(inputString)
 If nextChar >= "0" And nextChar <= "9" Then peekDigit = nextChar
 
@@ -1189,7 +1138,6 @@ End Function
 Private Function peekNextChar( _
                 ByVal inputString As String) As String
 Const ProcName As String = "peekNextChar"
-
 On Error GoTo Err
 
 If mCurrPosn > Len(inputString) Then Exit Function
@@ -1205,7 +1153,6 @@ End Function
 Private Sub skipLongComment( _
                 ByVal inputString As String)
 Const ProcName As String = "skipLongComment"
-
 On Error GoTo Err
 
 Do While mCurrPosn <= Len(inputString) - 1
@@ -1221,7 +1168,6 @@ End Sub
 Private Sub skipShortComment( _
                 ByVal inputString As String)
 Const ProcName As String = "skipShortComment"
-
 On Error GoTo Err
 
 Do While mCurrPosn <= Len(inputString)
@@ -1242,7 +1188,6 @@ End Sub
 Private Sub skipWhitespace( _
                 ByVal inputString As String)
 Const ProcName As String = "skipWhitespace"
-
 On Error GoTo Err
 
 Do While tryChars(inputString, " ") Or _
@@ -1261,7 +1206,6 @@ Private Function tryChars( _
                 ByVal inputString As String, _
                 ByVal charsToTry As String) As Boolean
 Const ProcName As String = "tryChars"
-
 On Error GoTo Err
 
 If peekChars(inputString, charsToTry) Then
