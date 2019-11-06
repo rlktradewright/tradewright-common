@@ -1787,12 +1787,12 @@ Private Function findMainWindowHandle() As Long
 Const ProcName As String = "findMainWindowHandle"
 On Error GoTo Err
 
-mMainWindowHandle = mPostMessageForm.hwnd
+mMainWindowHandle = mPostMessageForm.hWnd
 Do
-    Dim hwnd As Long
-    hwnd = GetWindow(mMainWindowHandle, GW_OWNER)
-    If hwnd = 0 Then Exit Do
-    mMainWindowHandle = hwnd
+    Dim hWnd As Long
+    hWnd = GetWindow(mMainWindowHandle, GW_OWNER)
+    If hWnd = 0 Then Exit Do
+    mMainWindowHandle = hWnd
 Loop
 
 findMainWindowHandle = mMainWindowHandle
@@ -2006,7 +2006,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function WindowProc( _
-                ByVal hwnd As Long, _
+                ByVal hWnd As Long, _
                 ByVal uMsg As Long, _
                 ByVal wParam As Long, _
                 ByVal lParam As Long) As Long
@@ -2014,14 +2014,14 @@ Const ProcName As String = "WindowProc"
 On Error GoTo Err
 
 If uMsg = WM_TIMECHANGE Then
-    WindowProc = CallWindowProc(mPrevWndProc, hwnd, uMsg, wParam, lParam)
+    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
     gSetBaseTimes
     gResetClocks
     Debug.Print "Time changed"
     gLogger.Log "Time changed", ProcName, ModuleName
 ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
     Globals.gTerminate
-    WindowProc = CallWindowProc(mPrevWndProc, hwnd, uMsg, wParam, lParam)
+    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
 ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
     DoEvents
     gTaskManager.ScheduleTasks
@@ -2030,7 +2030,7 @@ ElseIf uMsg = UserMessages.UserMessageTimer Then
 ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
     GDeferredActions.RunDeferredAction wParam
 Else
-    WindowProc = CallWindowProc(mPrevWndProc, hwnd, uMsg, wParam, lParam)
+    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
 End If
 
 Exit Function
@@ -2038,5 +2038,6 @@ Exit Function
 Err:
 gNotifyUnhandledError ProcName, ModuleName
 End Function
+
 
 

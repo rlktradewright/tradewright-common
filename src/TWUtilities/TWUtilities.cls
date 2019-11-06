@@ -3931,11 +3931,11 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Public Sub StopSubclassing(ByVal hwnd As Long)
+Public Sub StopSubclassing(ByVal hWnd As Long)
 Const ProcName As String = "StopSubclassing"
 On Error GoTo Err
 
-gStopSubclassing hwnd
+gStopSubclassing hWnd
 
 Exit Sub
 

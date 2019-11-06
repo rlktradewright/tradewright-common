@@ -57,32 +57,39 @@ Private mControls                                   As New Collection
 Public Sub gStartSubclassing(ByVal pControl As ISubclassable)
 If pControl.PrevWindowProcAddress <> 0 Then Exit Sub
 
-mControls.Add ObjPtr(pControl), CStr(pControl.hwnd)
-pControl.PrevWindowProcAddress = SetWindowLong(pControl.hwnd, GWL_WNDPROC, AddressOf WindowProc)
+mControls.Add ObjPtr(pControl), CStr(pControl.hWnd)
+pControl.PrevWindowProcAddress = SetWindowLong(pControl.hWnd, GWL_WNDPROC, AddressOf WindowProc)
 End Sub
 
-Public Sub gStopSubclassing(ByVal hwnd As Long)
+Public Sub gStopSubclassing(ByVal hWnd As Long)
 Dim lControl As ISubclassable
-Set lControl = getControlFromHwnd(hwnd)
+Const ProcName As String = "gStopSubclassing"
+On Error GoTo Err
 
-mControls.Remove CStr(hwnd)
+Set lControl = getControlFromHwnd(hWnd)
+
+mControls.Remove CStr(hWnd)
 
 If lControl.PrevWindowProcAddress = 0 Then Exit Sub
-SetWindowLong hwnd, GWL_WNDPROC, lControl.PrevWindowProcAddress
+SetWindowLong hWnd, GWL_WNDPROC, lControl.PrevWindowProcAddress
 lControl.PrevWindowProcAddress = 0
 
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName
 End Sub
 
 '@================================================================================
 ' Helper Functions
 '@================================================================================
 
-Private Function getControlFromHwnd(hwnd) As ISubclassable
+Private Function getControlFromHwnd(hWnd) As ISubclassable
 Const ProcName As String = "getControlFromHwnd"
 On Error GoTo Err
 
 Dim lControlAddress As Long
-lControlAddress = mControls.Item(CStr(hwnd))
+lControlAddress = mControls.Item(CStr(hWnd))
 
 Dim lControl As ISubclassable
 CopyMemory VarPtr(lControl), VarPtr(lControlAddress), 4
@@ -98,14 +105,14 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function WindowProc( _
-                ByVal hwnd As Long, _
+                ByVal hWnd As Long, _
                 ByVal uMsg As Long, _
                 ByVal wParam As Long, _
                 ByVal lParam As Long) As Long
 Const ProcName As String = "WindowProc"
 On Error GoTo Err
 
-WindowProc = getControlFromHwnd(hwnd).HandleWindowMessage(hwnd, uMsg, wParam, lParam)
+WindowProc = getControlFromHwnd(hWnd).HandleWindowMessage(hWnd, uMsg, wParam, lParam)
 
 Exit Function
 Err:
@@ -113,7 +120,7 @@ Dim lErrNumber As Long: lErrNumber = Err.number
 Dim lErrDesc As String: lErrDesc = Err.Description
 Dim lErrSource As String: lErrSource = Err.Source
 
-gStopSubclassing hwnd
+gStopSubclassing hWnd
 gNotifyUnhandledError ProcName, ModuleName, , lErrNumber, lErrDesc, lErrSource
 End Function
 
