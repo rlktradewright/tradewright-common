@@ -401,6 +401,49 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function gDoubleFromString(ByVal v As String) As Double
+Const ProcName As String = "gDoubleFromString"
+On Error GoTo Err
+
+Static sDecimalSep As String
+If sDecimalSep = "" Then sDecimalSep = Mid$(CStr(0.5), 2, 1)
+
+gDoubleFromString = CDbl(Replace$(v, ".", sDecimalSep))
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function gDoubleToString(ByVal d As Double) As String
+Const ProcName As String = "gDoubleToString"
+On Error GoTo Err
+
+If d = 0 Then gDoubleToString = "0.0": Exit Function
+If d = MaxDoubleValue Then gDoubleToString = IIf(d < 0, "-", "") & "1.7976931348623157E308": Exit Function
+If d = MinPositiveDoubleValue Then gDoubleToString = IIf(d < 0, "-", "") & "4.9406564584124654E-324": Exit Function
+
+Dim s As String: s = str(d)
+If d >= 1 Then
+    s = Right$(s, Len(s) - 1)
+ElseIf d > 0 Then
+    s = "0" & Right$(s, Len(s) - 1)
+ElseIf d = 0 Then
+    s = Right$(s, Len(s) - 1)
+ElseIf d <= -1 Then
+    s = "-" & Right$(s, Len(s) - 1)
+Else
+    s = "-0" & Right$(s, Len(s) - 1)
+End If
+gDoubleToString = s
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Public Sub gEndProcess(ByVal pExitCode As Long)
 TWWin32API.TerminateProcess GetCurrentProcess, pExitCode
 End Sub

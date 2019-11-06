@@ -2314,54 +2314,15 @@ End Sub
 ' @return
 '   The <code>Double</code> value parsed.
 '
-' @param inString
+' @param v
 '   The string to be parsed
 '
 '@/
-Public Function DoubleFromString(ByVal inString As String) As Double
+Public Function DoubleFromString(ByVal v As String) As Double
 Const ProcName As String = "DoubleFromString"
 On Error GoTo Err
 
-Dim aInt As Double
-Dim aFract As Double
-Dim aNeg As Boolean
-Dim aExp As Long
-Dim aNegExp As Boolean
-Dim periodFound As Boolean
-Dim periodindex As Long
-Dim expFound As Boolean
-Dim expIndex As Long
-Dim s As String
-Dim i As Long
-
-For i = 1 To Len(inString)
-    s = Mid$(inString, i, 1)
-    If s = "-" Then
-        If expFound Then
-            aNegExp = True
-        Else
-            aNeg = True
-        End If
-    ElseIf s = "." Then
-        periodFound = True
-        periodindex = i
-    ElseIf s = "E" Or s = "e" Then
-        expFound = True
-        expIndex = i
-    ElseIf expFound Then
-        aExp = aExp * 10 + s
-    ElseIf Not periodFound Then
-        aInt = aInt * 10 + s
-    Else
-        aFract = aFract + s * 10 ^ -(i - periodindex)
-    End If
-Next
-
-If aExp < 324 And Not aNegExp Then
-    DoubleFromString = IIf(aNeg, -1, 1) * (aInt + aFract) * 10 ^ (IIf(aNegExp, -1, 1) * aExp)
-Else
-    DoubleFromString = IIf(aNeg, -1, 1) * (aInt + aFract) * 10 ^ ((IIf(aNegExp, -1, 1) * aExp) + 1) / 10
-End If
+DoubleFromString = gDoubleFromString(v)
 
 Exit Function
 
@@ -2387,45 +2348,7 @@ Public Function DoubleToString(ByVal d As Double) As String
 Const ProcName As String = "DoubleToString"
 On Error GoTo Err
 
-Dim aInt As Long
-Dim aFract As Double
-Dim aExp As Long
-Dim s As String
-Dim cFract As Currency
-Dim i As Long
-
-If d = 0 Then DoubleToString = "0.0": Exit Function
-If d = MaxDouble Then DoubleToString = "1.7976931348623157E308": Exit Function
-If d = MinPositiveDoubleValue Then DoubleToString = "4.9406564584124654E-324": Exit Function
-
-' the CDbl in the following expression seems to be necessary to get the right value, otherwise the
-' Int sometimes rounds down
-aExp = Int(CDbl(Log(d) / Log(10)))
-If aExp >= -3 And aExp < 7 Then
-    aInt = Int(d)
-    aFract = d - aInt
-    aExp = 0
-Else
-    If aExp < -300 Then
-        d = d * 10 ^ (-300 - aExp) / 10 ^ -300
-    Else
-        d = d / 10 ^ aExp
-    End If
-    aInt = Int(d)
-    aFract = d - aInt
-End If
-
-s = aInt
-cFract = aFract * 10 ^ 14
-s = s & "." & Format(cFract, "00000000000000")
-i = Len(s)
-Do While Mid$(s, i, 1) = "0" And Mid$(s, i - 1, 1) <> "."
-    i = i - 1
-Loop
-
-s = Left$(s, i)
-If aExp <> 0 Then s = s & "E" & aExp
-DoubleToString = s
+DoubleToString = gDoubleToString(d)
 
 Exit Function
 
