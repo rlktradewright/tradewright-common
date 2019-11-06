@@ -97,8 +97,16 @@ End Property
 '@================================================================================
 
 Private Sub TWModelessMsgBox1_Result(ByVal Value As MsgBoxResults)
+Const ProcName As String = "TWModelessMsgBox1_Result"
+On Error GoTo Err
+
 RaiseEvent Result(Value)
 Unload Me
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================

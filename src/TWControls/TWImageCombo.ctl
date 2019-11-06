@@ -69,7 +69,7 @@ Event OLEStartDrag(Data As DataObject, AllowedEffects As Long)
 '@================================================================================
 
 
-Private Const ModuleName                    As String = "TWCombo"
+Private Const ModuleName                    As String = "TWImageCombo"
 
 '@================================================================================
 ' Member variables
@@ -79,6 +79,10 @@ Private mListWidth                          As Long
 Private mAppearance                         As AppearanceSettings
 
 Private mTheme                                      As ITheme
+
+Private Sub UserControl_Click()
+'
+End Sub
 
 '@================================================================================
 ' Class Event Handlers
@@ -103,7 +107,7 @@ Combo1.MousePointer = PropBag.ReadProperty("MousePointer", 0)
 Set MouseIcon = PropBag.ReadProperty("MouseIcon", Nothing)
 Combo1.OLEDropMode = PropBag.ReadProperty("OLEDropMode", 0)
 Combo1.OLEDragMode = PropBag.ReadProperty("OLEDragMode", 0)
-Combo1.Text = PropBag.ReadProperty("Text", "Combo1")
+Combo1.Text = PropBag.ReadProperty("Text", "")
 Combo1.Indentation = PropBag.ReadProperty("Indentation", 0)
 ListWidth = PropBag.ReadProperty("ListWidth", 0)
 
@@ -222,55 +226,6 @@ Private Sub Combo1_DropDown()
     RaiseEvent DropDown
 End Sub
 
-'Private Sub Combo1_KeyDown(KeyCode As Integer, Shift As Integer)
-'Const ProcName As String = "Combo1_KeyDown"
-'On Error GoTo Err
-'
-'Dim i As Long
-'Dim posn As Long
-'If KeyCode = vbKeyUp Then
-'    posn = 0
-'    If Combo1.SelectedItem Is Nothing Then
-'        For i = 1 To Combo1.ComboItems.Count
-'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
-'                Combo1.ComboItems(i).Selected = True
-'                Exit Sub
-'            End If
-'            If StrComp(Combo1.ComboItems(i).Text, Combo1.Text, vbTextCompare) < 0 Then posn = i
-'        Next
-'        If posn = Combo1.ComboItems.Count Then
-'            KeyCode = 0
-'        Else
-'            posn = posn + 1
-'        End If
-'        Combo1.ComboItems(posn).Selected = True
-'    End If
-'ElseIf KeyCode = vbKeyDown Then
-'    posn = Combo1.ComboItems.Count
-'    If Combo1.SelectedItem Is Nothing Then
-'        For i = Combo1.ComboItems.Count To 1 Step -1
-'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) = 0 Then
-'                Combo1.ComboItems(i).Selected = True
-'                Exit Sub
-'            End If
-'            If StrComp(Combo1.Text, Combo1.ComboItems(i).Text, vbTextCompare) < 0 Then posn = i
-'        Next
-'        If posn = 1 Then
-'            KeyCode = 0
-'        Else
-'            posn = posn - 1
-'        End If
-'        Combo1.ComboItems(posn).Selected = True
-'    End If
-'End If
-'RaiseEvent KeyDown(KeyCode, Shift)
-'
-'Exit Sub
-'
-'Err:
-'gNotifyUnhandledError ProcName, ModuleName, ProjectName
-'End Sub
-
 Private Sub Combo1_KeyPress(KeyAscii As Integer)
 Const ProcName As String = "Combo1_KeyPress"
 On Error GoTo Err
@@ -360,6 +315,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Property
 
 Public Property Get Appearance() As AppearanceSettings
+Attribute Appearance.VB_UserMemId = -520
 Appearance = mAppearance
 End Property
 
@@ -868,8 +824,6 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
-
-
 Public Property Get Text() As String
 Attribute Text.VB_UserMemId = 0
 Attribute Text.VB_MemberFlags = "34"
@@ -877,7 +831,6 @@ Const ProcName As String = "Text"
 On Error GoTo Err
 
     Text = Combo1.Text
-    PropertyChanged "Text"
 
 Exit Property
 
@@ -890,7 +843,6 @@ Const ProcName As String = "Text"
 On Error GoTo Err
 
     Combo1.Text() = Value
-    'PropertyChanged "Text"
 
 Exit Property
 

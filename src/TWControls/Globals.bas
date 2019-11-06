@@ -33,8 +33,6 @@ Private Const ModuleName                    As String = "Globals"
 ' Member variables
 '@================================================================================
 
-Private mLogger                             As Logger
-
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
@@ -52,8 +50,9 @@ Private mLogger                             As Logger
 '@================================================================================
 
 Public Property Get gLogger() As FormattingLogger
-If mLogger Is Nothing Then Set mLogger = CreateFormattingLogger("twcontrols", ProjectName)
-Set gLogger = mLogger
+Static sLogger As FormattingLogger
+If sLogger Is Nothing Then Set sLogger = CreateFormattingLogger("twcontrols", ProjectName)
+Set gLogger = sLogger
 End Property
 
 '@================================================================================

@@ -498,8 +498,16 @@ gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_Initialize()
+Const ProcName As String = "UserControl_Initialize"
+On Error GoTo Err
+
 Initialise
 mRedraw = True
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_InitProperties()
@@ -585,18 +593,6 @@ Err:
 gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
-'Private Sub UserControl_Paint()
-'Const ProcName As String = "UserControl_Paint"
-'On Error GoTo Err
-'
-'TransPanel.Refresh
-'
-'Exit Sub
-'
-'Err:
-'gNotifyUnhandledError ProcName, ModuleName, ProjectName
-'End Sub
-
 Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
 Const ProcName As String = "UserControl_ReadProperties"
 On Error GoTo Err
@@ -641,10 +637,6 @@ Exit Sub
 
 Err:
 gNotifyUnhandledError ProcName, ModuleName, ProjectName
-End Sub
-
-Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
-'
 End Sub
 
 '@================================================================================
@@ -694,6 +686,7 @@ releaseMouse
 Exit Sub
 
 Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub BottomBorder_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)

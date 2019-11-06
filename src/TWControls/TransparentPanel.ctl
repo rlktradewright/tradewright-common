@@ -155,7 +155,6 @@ End Sub
 
 'Write property values to storage
 Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
-
 Const ProcName As String = "UserControl_WriteProperties"
 On Error GoTo Err
 

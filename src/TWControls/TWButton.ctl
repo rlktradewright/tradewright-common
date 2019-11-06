@@ -170,19 +170,38 @@ End If
 Exit Sub
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_EnterFocus()
+Const ProcName As String = "UserControl_EnterFocus"
+On Error GoTo Err
+
 If Enabled Then Button.SetFocus
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_Initialize()
+Const ProcName As String = "UserControl_Initialize"
+On Error GoTo Err
+
 Set mFont = New StdFont
 Set UserControl.Font = mFont
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_InitProperties()
+Const ProcName As String = "UserControl_InitProperties"
+On Error GoTo Err
+
 ForeColor = vbButtonText
 BackColor = vbButtonFace
 DefaultBorderColor = &HF0FF00
@@ -190,10 +209,16 @@ NonDefaultBorderColor = vbBlack
 FocusedBorderColor = &HF8FFA8
 Set Font = UserControl.Ambient.Font
 Set UserControl.Font = mFont
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
 On Error Resume Next
+
 BackColor = PropBag.ReadProperty("BackColor", vbButtonFace)
 DefaultBorderColor = PropBag.ReadProperty("DefaultBorderColor", &HEEEECF)
 DisabledBackColor = PropBag.ReadProperty("DisabledBackColor", vbInactiveBorder)
@@ -247,12 +272,14 @@ DeleteObject mhPushedBrush
 DeleteObject mhDefaultBorderPen
 DeleteObject mhNonDefaultBorderPen
 trackMouse Button.hWnd, pCancel:=True
+
+On Error Resume Next
 If mPrevWindowProcAddress <> 0 Then StopSubclassing Button.hWnd
 
 Exit Sub
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
@@ -289,7 +316,7 @@ PropBag.WriteProperty "UseMaskColor", Button.UseMaskColor, False
 Exit Sub
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================
@@ -528,7 +555,15 @@ End Sub
 '@================================================================================
 
 Private Sub mDisabledFont_FontChanged(ByVal PropertyName As String)
+Const ProcName As String = "mDisabledFont_FontChanged"
+On Error GoTo Err
+
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 1
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================
@@ -536,8 +571,16 @@ End Sub
 '@================================================================================
 
 Private Sub mFont_FontChanged(ByVal PropertyName As String)
+Const ProcName As String = "mFont_FontChanged"
+On Error GoTo Err
+
 Set UserControl.Font = mFont
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 1
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================
@@ -545,7 +588,15 @@ End Sub
 '@================================================================================
 
 Private Sub mMouseOverFont_FontChanged(ByVal PropertyName As String)
+Const ProcName As String = "mMouseOverFont_FontChanged"
+On Error GoTo Err
+
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 1
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================
@@ -553,7 +604,15 @@ End Sub
 '@================================================================================
 
 Private Sub mPushedFont_FontChanged(ByVal PropertyName As String)
+Const ProcName As String = "mPushedFont_FontChanged"
+On Error GoTo Err
+
 If Not mNoDraw Then InvalidateRect Button.hWnd, mClientRect, 1
+
+Exit Sub
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName, ProjectName
 End Sub
 
 '@================================================================================
