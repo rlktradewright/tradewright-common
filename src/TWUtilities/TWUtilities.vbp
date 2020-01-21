@@ -111,6 +111,7 @@ Class=SortedDictClearanceTask; SortedDictClearanceTask.cls
 Module=GDictionary; GDictionary.bas
 Class=EnumblCollClearanceTask; EnumblCollClearanceTask.cls
 Class=EnumerableCollectionEnum; EnumerableCollectionEnum.cls
+Class=BoxedValue; BoxedValue.cls
 Startup="Sub Main"
 HelpFile=""
 Title="TWUtilities"

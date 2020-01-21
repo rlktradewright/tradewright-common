@@ -1658,6 +1658,19 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function CreateBoxedValue(ByVal pValue As Variant) As BoxedValue
+Const ProcName As String = "CreateBoxedValue"
+On Error GoTo Err
+
+Set CreateBoxedValue = New BoxedValue
+CreateBoxedValue.Initialise pValue
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 ''
 ' Creates a <code>CommandLineParser</code> object.
 '
