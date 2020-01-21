@@ -99,7 +99,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommon4-0-119.msm"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommon4-0-120.msm"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -448,17 +448,6 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_26AAEEF2F93C4DE58BD310E5C0065CDB"
-            {
-            "Name" = "8:#1910"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:CommonFilesFolder"
-                "Folders"
-                {
-                }
-            }
             "{F4FE1E22-A4D2-4EE8-9259-29A1CE8BB2FF}:_B6805193FBF747E796CBE61421A29A58"
             {
             "DefaultLocation" = "8:[TARGETDIR]"
@@ -491,17 +480,6 @@
                                 {
                                 }
                             }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_B85C9DC694AB49EA84A3DDDD86A9CA75"
-                            {
-                            "Name" = "8:TradeWright.Common.ExtermalComponents"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_975577B31DFF42D59F2CCF30068FE567"
-                                "Folders"
-                                {
-                                }
-                            }
                         }
                     }
                 }
@@ -516,7 +494,7 @@
         "Module"
         {
         "ModuleSignature" = "8:MergeModule.D788F584E95341F9BFCE168A4548C3FF"
-        "Version" = "8:4.0.0.119"
+        "Version" = "8:4.0.0.120"
         "Title" = "8:TradeWrightCommonMerge"
         "Subject" = "8:"
         "Author" = "8:TradeWright Software Systems"

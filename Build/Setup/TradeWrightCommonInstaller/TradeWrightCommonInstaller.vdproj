@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1F2F01D24B984272871C167B5B11A897"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4B7E005FBEA54AF5B5EFB82F170A16DA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -51,7 +45,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A132CF1221EC4B02AFA29A7EEA92F561"
+        "MsmKey" = "8:_9FB836F1684E4D6BBF03A4353E3AB454"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -103,6 +97,12 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_E2853D7733204179B9A4835F8BBC7982"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -148,7 +148,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-119.msi"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-120.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -474,17 +474,6 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_1A50436B364F485A83D257A76F575876"
-            {
-            "Name" = "8:#1912"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:ProgramFilesFolder"
-                "Folders"
-                {
-                }
-            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
@@ -530,39 +519,6 @@
                     }
                 }
             }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_9454589239754250BDD07C05BA9D4775"
-            {
-            "Name" = "8:#1910"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:CommonFilesFolder"
-                "Folders"
-                {
-                }
-            }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_B97C5BE807594484A8DD7B3CD9D66A2C"
-            {
-            "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:ProgramMenuFolder"
-                "Folders"
-                {
-                }
-            }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_F6D60F4E9932423B9DF11820178C3E04"
-            {
-            "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:DesktopFolder"
-                "Folders"
-                {
-                }
-            }
         }
         "LaunchCondition"
         {
@@ -578,16 +534,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.118"
-        "ProductCode" = "8:{E3148014-292F-4514-BCD9-54E517716CBE}"
-        "PackageCode" = "8:{C943AC8A-440C-49B9-859A-2681B541D249}"
+        "ProductName" = "8:TradeWright Utilities Sample Apps v4.0.120"
+        "ProductCode" = "8:{9AEF70B4-EEF8-4232-871F-5C87ADDC9876}"
+        "PackageCode" = "8:{54E75840-AEE9-4147-90B4-F395F897D1BC}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:4.0.119"
+        "ProductVersion" = "8:4.0.120"
         "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1143,16 +1099,16 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1F2F01D24B984272871C167B5B11A897"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_9FB836F1684E4D6BBF03A4353E3AB454"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-119.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-120.msm"
                 "Properties"
                 {
-                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     {
-                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
@@ -1168,16 +1124,16 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_A132CF1221EC4B02AFA29A7EEA92F561"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E2853D7733204179B9A4835F8BBC7982"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-119.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-120.msm"
                 "Properties"
                 {
-                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     {
-                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
