@@ -33,7 +33,7 @@ Begin VB.Form Form2
       NoFolders       =   0   'False
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   "http:///"
+      Location        =   ""
    End
 End
 Attribute VB_Name = "Form2"
@@ -44,7 +44,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-WebBrowser1.Navigate "E:\projects\tradewright-common\Tools\RegExpTest\RegExpHelp.htm"
+WebBrowser1.Navigate "E:\projects\tradewright-common\src\Tools\RegExpTest\RegExpHelp.htm"
 End Sub
 
 Private Sub Form_Resize()
