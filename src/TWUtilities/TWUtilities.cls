@@ -730,6 +730,7 @@ Public Enum VBErrorCodes
     VbErrInvalidObjectReference = 91
     VbErrInvalidPropertyValue = 380
     VbErrInvalidPropertyArrayIndex = 381
+    VbErrActiveXComponentCantCreateObject = 429
     VbErrElementAlreadyExists = 457
 End Enum
 

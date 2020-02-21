@@ -22,8 +22,6 @@ Option Explicit
 
 Private Const ModuleName                    As String = "GIntervalTimer"
 
-Private Const NullIndex                     As Long = -1
-
 Private Const MinTimerResolution            As Long = 1
 
 Private Const TimerTableInitialSize         As Long = 16

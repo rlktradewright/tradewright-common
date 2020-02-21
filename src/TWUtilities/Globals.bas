@@ -32,6 +32,10 @@ Public Const MinPositiveDoubleValue         As Double = 2 ^ -1074
 Public Const MaxLongValue                   As Long = &H7FFFFFFF
 Public Const MinLongValue                   As Long = &H80000000
 
+Public Const NullIndex                      As Long = -1
+
+
+
 '@================================================================================
 ' Enums
 '@================================================================================
