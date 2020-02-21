@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <assembly manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1">
-    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.120" />
+    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.121" />
     <description>TradeWright Common</description>
     <file name="TWUtilities40.dll">
-        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.5" flags="hasDiskImage" helpdir="" />
+        <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.6" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{6F7719B8-9530-4534-954C-89C8B5762A48}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.StateTableBuilder" threadingModel="Apartment" />
         <comClass clsid="{B6615105-28CE-48E7-8E8C-BFD7FDEC8695}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.WeakCollection" threadingModel="Apartment" />
         <comClass clsid="{DD635E2C-4052-4DC8-B003-C756023A3356}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.ElapsedTimer" threadingModel="Apartment" />
