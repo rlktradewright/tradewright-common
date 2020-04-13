@@ -704,6 +704,7 @@ End Enum
 ' @param VbErrSubscriptOutOfRange
 ' @param VbErrDivisionByZero
 ' @param VbErrTypeMismatch
+' @param VbErrBadFilenameOrNumber
 ' @param VbErrFileNotFound
 ' @param VbErrFileAlreadyOpen
 ' @param VbErrFileAlreadyExists
@@ -721,6 +722,7 @@ Public Enum VBErrorCodes
     VbErrSubscriptOutOfRange = 9
     VbErrDivisionByZero = 11
     VbErrTypeMismatch = 13
+    VbErrBadFilenameOrNumber = 52
     VbErrFileNotFound = 53
     VbErrFileAlreadyOpen = 55
     VbErrFileAlreadyExists = 58
