@@ -101,6 +101,8 @@ End Sub
 
 Public Sub Clear()
 GListeners.ClearListeners mListHeadIndex, mListTailIndex
+mCount = 0
+mCurrentListenersValid = False
 End Sub
 
 Public Function Count() As Long
