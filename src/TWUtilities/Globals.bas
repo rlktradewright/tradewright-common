@@ -42,7 +42,7 @@ Public Const NullIndex                      As Long = -1
 
 ' Red/Black tree node colors
 Public Enum NodeColors
-    BLACK
+    Black
     Red
 End Enum
 
