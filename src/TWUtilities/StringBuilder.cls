@@ -400,7 +400,7 @@ End Sub
 ''
 ' Removes the specified substring from the string under construction.
 '
-' @param startIndex
+' @param StartIndex
 '   The starting position of the string to be removed. The first character is
 '   at position 1.
 ' @param lengthToRemove
@@ -408,19 +408,19 @@ End Sub
 '
 '@/
 Public Sub Remove( _
-                ByVal startIndex As Long, _
+                ByVal StartIndex As Long, _
                 ByVal lengthToRemove As Long)
 Const ProcName As String = "Remove"
 On Error GoTo Err
 
-gAssertArgument startIndex > 0 And lengthToRemove >= 0 And startIndex + lengthToRemove <= Length + 1, "Specified segment outside buffer"
+gAssertArgument StartIndex > 0 And lengthToRemove >= 0 And StartIndex + lengthToRemove <= Length + 1, "Specified segment outside buffer"
 
 If lengthToRemove = 0 Then Exit Sub
 
-If startIndex <> Length Then
-    CopyMemory bufferElementAddress(2 * (startIndex - 1)), _
-                bufferElementAddress(2 * (startIndex + lengthToRemove - 1)), _
-                mBufferIndex - 2 * (startIndex + lengthToRemove - 1)
+If StartIndex <> Length Then
+    CopyMemory bufferElementAddress(2 * (StartIndex - 1)), _
+                bufferElementAddress(2 * (StartIndex + lengthToRemove - 1)), _
+                mBufferIndex - 2 * (StartIndex + lengthToRemove - 1)
 End If
 mBufferIndex = mBufferIndex - 2 * lengthToRemove
 

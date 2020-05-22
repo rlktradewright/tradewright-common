@@ -133,6 +133,55 @@ Public Sub gAssertArgument( _
 gAssert pCondition, pMessage, ErrorCodes.ErrIllegalArgumentException
 End Sub
 
+Public Function gBinarySearchStrings( _
+                ByVal pString As String, _
+                ByRef pArray() As String, _
+                Optional ByVal pStartIndex As Long = 0, _
+                Optional ByVal pLength As Long = -1, _
+                Optional ByVal pIsCaseSensitive As Boolean = False) As Long
+Const ProcName As String = "gBinarySearchStrings"
+On Error GoTo Err
+
+gAssertArgument pStartIndex >= 0, "pStartIndex must be >= 0"
+
+If pLength < 0 Then
+    pLength = UBound(pArray) - pStartIndex + 1
+Else
+    gAssertArgument pStartIndex + pLength <= UBound(pArray) + 1, "Invalid pLength"
+End If
+
+Dim lCompareMethod As VbCompareMethod
+lCompareMethod = IIf(pIsCaseSensitive, VbCompareMethod.vbBinaryCompare, VbCompareMethod.vbTextCompare)
+
+Dim Bottom As Long: Bottom = pStartIndex
+Dim Top As Long: Top = Bottom + pLength - 1
+Dim middle As Long
+Dim lItemIndex As Long
+Do
+    middle = Int((Bottom + Top) / 2)
+    Dim lComp As Long: lComp = StrComp(pString, pArray(middle), lCompareMethod)
+    If lComp = -1 Then
+        lItemIndex = &HFFFFFFFF Xor Top
+        If middle = Bottom Then Exit Do
+        Top = middle - 1
+    ElseIf lComp = 1 Then
+        lItemIndex = &HFFFFFFFF Xor Top
+        If middle = Top Then Exit Do
+        Bottom = middle + 1
+    Else
+        lItemIndex = middle
+        Exit Do
+    End If
+Loop
+
+gBinarySearchStrings = lItemIndex
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Public Function gBytesToHexString(inAr() As Byte) As String
 Const ProcName As String = "gBytesToHexString"
 On Error GoTo Err
@@ -948,34 +997,34 @@ End Sub
 
 Public Sub gSortDoublesAsc( _
                 ByRef Data() As Double, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "gSortDoublesAsc"
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
 Dim lowIndex As Long
-lowIndex = startIndex
+lowIndex = StartIndex
 
 Dim highIndex As Long
-highIndex = endIndex
+highIndex = EndIndex
   
 Dim midIndex As Long
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 Dim tempValue As Double
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) < tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) < tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue < Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue < Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -990,12 +1039,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortDoublesAsc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortDoublesAsc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortDoublesAsc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortDoublesAsc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1006,34 +1055,34 @@ End Sub
 
 Public Sub gSortDoublesDesc( _
                 ByRef Data() As Double, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "gSortDoublesDesc"
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
 Dim lowIndex As Long
-lowIndex = startIndex
+lowIndex = StartIndex
 
 Dim highIndex As Long
-highIndex = endIndex
+highIndex = EndIndex
   
 Dim midIndex As Long
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 Dim tempValue As Double
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) > tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) > tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue > Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue > Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1048,12 +1097,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortDoublesDesc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortDoublesDesc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortDoublesDesc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortDoublesDesc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1064,8 +1113,8 @@ End Sub
 
 Public Sub gSortLongsAsc( _
                 ByRef Data() As Long, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1076,24 +1125,24 @@ Const ProcName As String = "gSortLongsAsc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) < tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) < tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue < Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue < Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1107,12 +1156,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortLongsAsc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortLongsAsc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortLongsAsc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortLongsAsc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1123,8 +1172,8 @@ End Sub
 
 Public Sub gSortLongsDesc( _
                 ByRef Data() As Long, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1135,24 +1184,24 @@ Const ProcName As String = "gSortLongsDesc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) > tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) > tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue > Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue > Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1166,12 +1215,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortLongsDesc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortLongsDesc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortLongsDesc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortLongsDesc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1182,8 +1231,8 @@ End Sub
 
 Public Sub gSortObjectsAsc( _
                 ByRef Data() As Object, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
   
 Dim lowIndex As Long
 Dim highIndex As Long
@@ -1200,24 +1249,24 @@ Const ProcName As String = "gSortObjectsAsc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
       
 Set obj = Data(midIndex)
       
 Do While (lowIndex <= highIndex)
 
-    Do While (obj.CompareTo(Data(lowIndex)) > 0 And lowIndex < endIndex)
+    Do While (obj.CompareTo(Data(lowIndex)) > 0 And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (obj.CompareTo(Data(highIndex)) < 0 And highIndex > startIndex)
+    Do While (obj.CompareTo(Data(highIndex)) < 0 And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1231,12 +1280,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortObjectsAsc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortObjectsAsc Data, StartIndex, highIndex
 End If
           
-If (lowIndex < endIndex) Then
-    gSortObjectsAsc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortObjectsAsc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1247,8 +1296,8 @@ End Sub
 
 Public Sub gSortObjectsDesc( _
                 ByRef Data() As Object, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
   
 Dim lowIndex As Long
 Dim highIndex As Long
@@ -1265,24 +1314,24 @@ Const ProcName As String = "gSortObjectsDesc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
       
 Set obj = Data(midIndex)
       
 Do While (lowIndex <= highIndex)
 
-    Do While (obj.CompareTo(Data(lowIndex)) < 0 And lowIndex < endIndex)
+    Do While (obj.CompareTo(Data(lowIndex)) < 0 And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (obj.CompareTo(Data(highIndex)) > 0 And highIndex > startIndex)
+    Do While (obj.CompareTo(Data(highIndex)) > 0 And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1296,12 +1345,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortObjectsDesc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortObjectsDesc Data, StartIndex, highIndex
 End If
           
-If (lowIndex < endIndex) Then
-    gSortObjectsDesc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortObjectsDesc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1312,8 +1361,8 @@ End Sub
 
 Public Sub gSortSinglesAsc( _
                 ByRef Data() As Single, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1324,24 +1373,24 @@ Const ProcName As String = "gSortSinglesAsc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) < tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) < tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue < Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue < Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1355,12 +1404,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortSinglesAsc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortSinglesAsc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortSinglesAsc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortSinglesAsc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1371,8 +1420,8 @@ End Sub
 
 Public Sub gSortSinglesDesc( _
                 ByRef Data() As Single, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1383,24 +1432,24 @@ Const ProcName As String = "gSortSinglesDesc"
 
 On Error GoTo Err
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
   
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (Data(lowIndex) > tempValue And lowIndex < endIndex)
+    Do While (Data(lowIndex) > tempValue And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (tempValue > Data(highIndex) And highIndex > startIndex)
+    Do While (tempValue > Data(highIndex) And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1414,12 +1463,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortSinglesDesc Data, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortSinglesDesc Data, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortSinglesDesc Data, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortSinglesDesc Data, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1431,8 +1480,8 @@ End Sub
 Public Sub gSortStringsAsc( _
                 ByRef Data() As String, _
                 Optional ByVal compareMethod As VBA.VbCompareMethod = vbTextCompare, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1450,24 +1499,24 @@ Case Else
     gAssert False, "Only binary comparison and text comparison are permitted"
 End Select
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
 
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (StrComp(Data(lowIndex), tempValue, compareMethod) = -1 And lowIndex < endIndex)
+    Do While (StrComp(Data(lowIndex), tempValue, compareMethod) = -1 And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (StrComp(tempValue, Data(highIndex), compareMethod) = -1 And highIndex > startIndex)
+    Do While (StrComp(tempValue, Data(highIndex), compareMethod) = -1 And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1481,12 +1530,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortStringsAsc Data, compareMethod, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortStringsAsc Data, compareMethod, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortStringsAsc Data, compareMethod, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortStringsAsc Data, compareMethod, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1498,8 +1547,8 @@ End Sub
 Public Sub gSortStringsDesc( _
                 ByRef Data() As String, _
                 Optional ByVal compareMethod As VBA.VbCompareMethod = vbTextCompare, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Dim lowIndex As Long
 Dim highIndex As Long
 Dim midIndex As Long
@@ -1517,24 +1566,24 @@ Case Else
     gAssert False, "Only binary comparison and text comparison are permitted"
 End Select
 
-If endIndex = 0 Then endIndex = UBound(Data)
+If EndIndex = 0 Then EndIndex = UBound(Data)
 
-If endIndex <= startIndex Then Exit Sub
+If EndIndex <= StartIndex Then Exit Sub
 
-lowIndex = startIndex
-highIndex = endIndex
+lowIndex = StartIndex
+highIndex = EndIndex
 
-midIndex = (startIndex + endIndex) \ 2
+midIndex = (StartIndex + EndIndex) \ 2
     
 tempValue = Data(midIndex)
     
 Do While (lowIndex <= highIndex)
     
-    Do While (StrComp(Data(lowIndex), tempValue, compareMethod) = 1 And lowIndex < endIndex)
+    Do While (StrComp(Data(lowIndex), tempValue, compareMethod) = 1 And lowIndex < EndIndex)
         lowIndex = lowIndex + 1
     Loop
      
-    Do While (StrComp(tempValue, Data(highIndex), compareMethod) = 1 And highIndex > startIndex)
+    Do While (StrComp(tempValue, Data(highIndex), compareMethod) = 1 And highIndex > StartIndex)
         highIndex = highIndex - 1
     Loop
            
@@ -1548,12 +1597,12 @@ Do While (lowIndex <= highIndex)
     
 Loop
         
-If (startIndex < highIndex) Then
-    gSortStringsDesc Data, compareMethod, startIndex, highIndex
+If (StartIndex < highIndex) Then
+    gSortStringsDesc Data, compareMethod, StartIndex, highIndex
 End If
         
-If (lowIndex < endIndex) Then
-    gSortStringsDesc Data, compareMethod, lowIndex, endIndex
+If (lowIndex < EndIndex) Then
+    gSortStringsDesc Data, compareMethod, lowIndex, EndIndex
 End If
 
 Exit Sub
@@ -1566,8 +1615,8 @@ Public Sub gSortTypedObjects( _
                 ByVal arPtr As Long, _
                 ByVal number As Long, _
                 ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
   
 Const ProcName As String = "gSortTypedObjects"
 
@@ -1577,9 +1626,9 @@ ReDim objs(number - 1) As Object
 gCopyToObjects arPtr, objs
 
 If descending Then
-    gSortObjectsDesc objs, startIndex, endIndex
+    gSortObjectsDesc objs, StartIndex, EndIndex
 Else
-    gSortObjectsAsc objs, startIndex, endIndex
+    gSortObjectsAsc objs, StartIndex, EndIndex
 End If
 
 gCopyFromObjects objs, arPtr

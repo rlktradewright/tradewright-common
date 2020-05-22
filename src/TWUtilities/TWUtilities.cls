@@ -159,7 +159,7 @@ End Enum
 ' @param ConsoleMagenta
 '   The colour magenta.
 ' @param ConsoleRed
-'   The colour reg.
+'   The colour red.
 ' @param ConsoleWhite
 '   The colour white.
 ' @param ConsoleYellow
@@ -1436,6 +1436,54 @@ Public Sub AssertArgument( _
                 Optional ByVal pMessage As String)
 gAssert pCondition, pMessage, ErrorCodes.ErrIllegalArgumentException
 End Sub
+
+''
+' Searches a sorted array of strings and returns the zero-based index of the specified
+' value.
+'
+' @remarks
+'   On entry to the function, the elements of the array must be sorted in ascending
+'   sequence.
+' @return
+'   The zero-based index of <code>Value</code> in the array, if <code>Value</code>
+'   is found; otherwise, a negative number that is the bitwise complement of the index
+'   of the next element that is larger than <code>Value</code> or, if there is no larger
+'   element, the bitwise complement of the array's length.
+' @param Value
+'   The value to be searched for.
+' @param SortedArray
+'   A sorted array of Strings to be searched for the specified value.
+' @param StartIndex
+'   The zero-based starting index of the elements in the array to be included in the
+'   search. If not specified, 0 is assumed.
+' @param Length
+'   The number of array elements to be included in the search. If not specified, all
+'   elements are included.
+' @IsCaseSensitive
+'   Indicates whether case-sensitive comparison operations are to be used during the
+'   search.
+'@/
+Public Function BinarySearchStrings( _
+                ByVal Value As String, _
+                ByRef SortedArray() As String, _
+                Optional ByVal StartIndex As Long = 0, _
+                Optional ByVal Count As Long = -1, _
+                Optional ByVal IsCaseSensitive As Boolean = False) As Long
+Const ProcName As String = "gBinarySearchStrings"
+On Error GoTo Err
+
+BinarySearchStrings = gBinarySearchStrings( _
+                            Value, _
+                            SortedArray, _
+                            StartIndex, _
+                            Count, _
+                            IsCaseSensitive)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
 
 ''
 ' Converts a byte array to a hexadecimal string.
@@ -3679,10 +3727,10 @@ End Function
 '   The array to be sorted.
 ' @param descending
 '   If <code>True</code>, the array is sorted in descending order, otherwise
-' @param startIndex
+' @param StartIndex
 '   The index of the first element of the array to be sorted. If not specified,
 '   sorting starts at the first element of the <code>data</code> argument.
-' @param endIndex
+' @param EndIndex
 '   The index of the last element of the array to be sorted. If not specified,
 '   sorting ends at the last element of the <code>data</code> argument.
 ' @see
@@ -3691,15 +3739,15 @@ End Function
 Public Sub SortDoubles( _
                 ByRef Data() As Double, _
                 Optional ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "SortDoubles"
 On Error GoTo Err
 
 If descending Then
-    gSortDoublesDesc Data, startIndex, endIndex
+    gSortDoublesDesc Data, StartIndex, EndIndex
 Else
-    gSortDoublesAsc Data, startIndex, endIndex
+    gSortDoublesAsc Data, StartIndex, EndIndex
 End If
 
 Exit Sub
@@ -3718,10 +3766,10 @@ End Sub
 '   The array to be sorted.
 ' @param descending
 '   If <code>True</code>, the array is sorted in descending order, otherwise
-' @param startIndex
+' @param StartIndex
 '   The index of the first element of the array to be sorted. If not specified,
 '   sorting starts at the first element of the <code>data</code> argument.
-' @param endIndex
+' @param EndIndex
 '   The index of the last element of the array to be sorted. If not specified,
 '   sorting ends at the last element of the <code>data</code> argument.
 ' @see
@@ -3730,15 +3778,15 @@ End Sub
 Public Sub SortLongs( _
                 ByRef Data() As Long, _
                 Optional ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "SortLongs"
 On Error GoTo Err
 
 If descending Then
-gSortLongsDesc Data, startIndex, endIndex
+gSortLongsDesc Data, StartIndex, EndIndex
 Else
-    gSortLongsAsc Data, startIndex, endIndex
+    gSortLongsAsc Data, StartIndex, EndIndex
 End If
 
 Exit Sub
@@ -3764,10 +3812,10 @@ End Sub
 ' @param descending
 '   If <code>True</code>, the array is sorted in descending order, otherwise
 '   in ascending order.
-' @param startIndex
+' @param StartIndex
 '   The index of the first element of the array to be sorted. If not specified,
 '   sorting starts at the first element of the <code>data</code> argument.
-' @param endIndex
+' @param EndIndex
 '   The index of the last element of the array to be sorted. If not specified,
 '   sorting ends at the last element of the <code>data</code> argument.
 ' @see
@@ -3776,15 +3824,15 @@ End Sub
 Public Sub SortObjects( _
                 ByRef Data() As Object, _
                 Optional ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "SortObjects"
 On Error GoTo Err
 
 If descending Then
-    gSortObjectsDesc Data, startIndex, endIndex
+    gSortObjectsDesc Data, StartIndex, EndIndex
 Else
-    gSortObjectsAsc Data, startIndex, endIndex
+    gSortObjectsAsc Data, StartIndex, EndIndex
 End If
 
 Exit Sub
@@ -3804,10 +3852,10 @@ End Sub
 ' @param descending
 '   If <code>True</code>, the array is sorted in descending order, otherwise
 '   in ascending order.
-' @param startIndex
+' @param StartIndex
 '   The index of the first element of the array to be sorted. If not specified,
 '   sorting starts at the first element of the <code>data</code> argument.
-' @param endIndex
+' @param EndIndex
 '   The index of the last element of the array to be sorted. If not specified,
 '   sorting ends at the last element of the <code>data</code> argument.
 ' @see
@@ -3816,15 +3864,15 @@ End Sub
 Public Sub SortSingles( _
                 ByRef Data() As Single, _
                 Optional ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long)
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long)
 Const ProcName As String = "SortSingles"
 On Error GoTo Err
 
 If descending Then
-    gSortSinglesDesc Data, startIndex, endIndex
+    gSortSinglesDesc Data, StartIndex, EndIndex
 Else
-    gSortSinglesAsc Data, startIndex, endIndex
+    gSortSinglesAsc Data, StartIndex, EndIndex
 End If
 
 Exit Sub
@@ -3844,10 +3892,10 @@ End Sub
 ' @param descending
 '   If <code>True</code>, the array is sorted in descending order, otherwise
 '   in ascending order.
-' @param startIndex
+' @param StartIndex
 '   The index of the first element of the array to be sorted. If not specified,
 '   sorting starts at the first element of the <code>data</code> argument.
-' @param endIndex
+' @param EndIndex
 '   The index of the last element of the array to be sorted. If not specified,
 '   sorting ends at the last element of the <code>data</code> argument.
 ' @param caseSensitive
@@ -3858,8 +3906,8 @@ End Sub
 Public Sub SortStrings( _
                 ByRef Data() As String, _
                 Optional ByVal descending As Boolean, _
-                Optional ByVal startIndex As Long, _
-                Optional ByVal endIndex As Long, _
+                Optional ByVal StartIndex As Long, _
+                Optional ByVal EndIndex As Long, _
                 Optional ByVal caseSensitive As Boolean)
 Const ProcName As String = "SortStrings"
 On Error GoTo Err
@@ -3873,9 +3921,9 @@ Else
 End If
 
 If descending Then
-    gSortStringsDesc Data, compareMode, startIndex, endIndex
+    gSortStringsDesc Data, compareMode, StartIndex, EndIndex
 Else
-    gSortStringsAsc Data, compareMode, startIndex, endIndex
+    gSortStringsAsc Data, compareMode, StartIndex, EndIndex
 End If
 
 Exit Sub
