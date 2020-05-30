@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <assembly manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1">
-    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.121" />
-    <description>TradeWright Common</description>
+    <assemblyIdentity name="TradeWright.Common" processorArchitecture="X86" type="win32" version="4.0.0.122" />
+    <description>"TradeWright Common"</description>
     <file name="TWUtilities40.dll">
         <typelib tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" version="27.6" flags="hasDiskImage" helpdir="" />
         <comClass clsid="{6F7719B8-9530-4534-954C-89C8B5762A48}" tlbid="{C7606F22-DB8A-44E5-91A9-799A54976F5C}" progid="TWUtilities40.StateTableBuilder" threadingModel="Apartment" />
@@ -148,7 +148,7 @@
     <comInterfaceExternalProxyStub name="_FormattingLogger" iid="{AAC48B8A-C399-4331-80EC-97212BBCD480}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_ISubclassable" iid="{F2AF925E-496B-4884-BDB3-38ADD2CA7C76}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_IThemeable" iid="{7118FB26-5146-4E15-AEF7-305D028B581C}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
-    <comInterfaceExternalProxyStub name="_TWUtilities" iid="{F6507B7A-B2AA-46D9-BBAD-D7A54C9CAD18}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+    <comInterfaceExternalProxyStub name="_TWUtilities" iid="{207DCBF9-7550-453E-80D7-6B9550531BF3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_ITheme" iid="{3D3665A9-D7DA-4C14-9878-84EB424C3E2F}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_JSONBuilder" iid="{AADAA05D-F881-4B47-8A92-407FB0A652D3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
     <comInterfaceExternalProxyStub name="_EnumblCollClearanceTask" iid="{E14CB89E-739A-490A-A597-F8080788B2D3}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
