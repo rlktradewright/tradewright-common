@@ -279,7 +279,7 @@ Private mSkyBrush                                   As RadialGradientBrush
 Private Sub Form_Initialize()
 Debug.Print "Running in development environment: " & CStr(inDev)
 InitialiseTWUtilities
-EnableTracing ""
+'EnableTracing ""
 TaskQuantumMillisecs = 16
 RunTasksAtLowerThreadPriority = True
 TaskSummaryLoggingIntervalSecs = 10
