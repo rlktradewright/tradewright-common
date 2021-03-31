@@ -180,6 +180,9 @@ If Err.LastDllError = 0 Then
     mScreenBufferSize = screenBufferInfo.dwSize
 End If
 
+Set mStrBld = New StringBuilder
+mStrBld.Initialise 80
+
 ReDim mInputHistory(19) As String
 
 Exit Sub
@@ -350,8 +353,8 @@ End Property
 ' @return
 '   The handle to the console window.
 '@/
-Public Property Get hwnd() As Long
-hwnd = mHwnd
+Public Property Get hWnd() As Long
+hWnd = mHwnd
 End Property
 
 ''
@@ -764,8 +767,7 @@ Private Sub clearUserInput()
 Const ProcName As String = "clearUserInput"
 On Error GoTo Err
 
-Set mStrBld = New StringBuilder
-mStrBld.Initialise 80
+mStrBld.Clear
 mCurrPosition = 1
 
 Exit Sub
