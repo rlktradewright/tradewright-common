@@ -83,7 +83,7 @@ Private Sub IFuture_Cancel()
 Const ProcName As String = "IFuture_Cancel"
 On Error GoTo Err
 
-mFutureBuilder.Cancel
+If Not mFutureBuilder Is Nothing Then mFutureBuilder.Cancel
 
 Exit Sub
 
