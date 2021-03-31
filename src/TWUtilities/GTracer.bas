@@ -38,7 +38,7 @@ Private mTracers                                    As SortedDictionary
 
 ' Don't make this Static within gBuildTraceString - my tests show that it's
 ' faster declared at module level
-Private mTokens(9)                                  As String
+Private mTokens(10)                                 As String
 
 
 '@================================================================================
@@ -78,16 +78,17 @@ End Property
 
 ' My tests show that using this function is more than three times faster than
 ' using string concatenation
-Public Sub gBuildTraceString( _
+Public Function gBuildTraceString( _
+                ByVal pIndent As Long, _
                 ByVal pAction As String, _
                 ByVal pProcedureName As String, _
                 ByVal pProjectName As String, _
                 ByVal pModuleName As String, _
-                ByVal pInfo As String, _
-                ByRef pResult As String)
+                ByVal pInfo As String) As String
 Const ProcName As String = "gBuildTraceString"
 On Error GoTo Err
 
+mTokens(0) = Space(pIndent)
 mTokens(1) = pAction
 mTokens(2) = pProcedureName
 
@@ -119,13 +120,15 @@ Else
     mTokens(9) = ""
 End If
 
-pResult = Join(mTokens, "")
+mTokens(10) = " Thread " & GetCurrentThreadId
 
-Exit Sub
+gBuildTraceString = Join(mTokens, "")
+
+Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-End Sub
+End Function
 
 Public Sub gDisableTracing( _
                 ByVal pTraceType As String)

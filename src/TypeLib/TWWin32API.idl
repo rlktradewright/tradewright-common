@@ -1728,6 +1728,9 @@ library TWWin32API
 		[entry("GetCurrentThread")]
 		long GetCurrentThread();
 
+		[entry("GetCurrentThreadId")]
+		long GetCurrentThreadId();
+
 		[entry("GetLastError")]
 		long GetLastError();
 

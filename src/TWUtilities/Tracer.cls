@@ -77,6 +77,8 @@ Private Const ModuleName                            As String = "Tracer"
 Private mEnabled                                    As Boolean
 Private mLogger                                     As Logger
 
+Private mIndent                                     As Long
+
 '@================================================================================
 ' Class Event Handlers
 '@================================================================================
@@ -129,10 +131,11 @@ Public Sub EnterProcedure( _
                 Optional ByVal pProjectName As String, _
                 Optional ByVal pModuleName As String, _
                 Optional ByVal pInfo As String)
-Dim s As String
 If Not mEnabled Then Exit Sub
 
-gBuildTraceString "Enter: ", pProcedureName, pProjectName, pModuleName, pInfo, s
+Dim s As String
+s = gBuildTraceString(mIndent, "Enter: ", pProcedureName, pProjectName, pModuleName, pInfo)
+mIndent = mIndent + 1
 mLogger.Log LogLevelNormal, s
 End Sub
 
@@ -153,10 +156,11 @@ Public Sub ExitProcedure( _
                 Optional ByVal pProjectName As String, _
                 Optional ByVal pModuleName As String, _
                 Optional ByVal pInfo As String)
-Dim s As String
 If Not mEnabled Then Exit Sub
 
-gBuildTraceString "Exit:  ", pProcedureName, pProjectName, pModuleName, pInfo, s
+Dim s As String
+mIndent = mIndent - 1
+s = gBuildTraceString(mIndent, "Exit:  ", pProcedureName, pProjectName, pModuleName, pInfo)
 mLogger.Log LogLevelNormal, s
 End Sub
 
