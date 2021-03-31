@@ -89,7 +89,7 @@ if defined FOLDER (
 SET filename=%BIN-PATH%\%FILENAME%
 echo Signing %FILENAME%
 
-signtool sign /t http://timestamp.comodoca.com/rfc3161 %FILENAME%
+signtool sign /t http://timestamp.comodoca.com %FILENAME%
 if errorlevel 1 (
 	echo Error signing file
 	set ERROR=1
