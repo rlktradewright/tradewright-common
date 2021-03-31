@@ -13,6 +13,7 @@
 *.ocx
 *.SCC
 *.suo
+*.tlb
 *.tmp
 *.vbg
 *.vbw
