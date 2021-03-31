@@ -356,6 +356,8 @@ Public Function Contains( _
 Const ProcName As String = "Contains"
 On Error GoTo Err
 
+If mColl.Count = 0 Then Exit Function
+
 Dim lKey As String
 If IsObject(pKeyOrItem) Then
     lKey = gGetObjectKey(pKeyOrItem)
