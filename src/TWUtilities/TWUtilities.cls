@@ -4412,7 +4412,7 @@ Do
                                     hTimer, _
                                     False, _
                                     INFINITE, _
-                                    QS_ALLEVENTS)
+                                    QS_ALLINPUT)
     gAssert ret <> WAIT_FAILED, "MsgWaitForMultipleObjects failed with Error code: " & Err.LastDllError, ErrorCodes.ErrRuntimeException
 
     DoEvents

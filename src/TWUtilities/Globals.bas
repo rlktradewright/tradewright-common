@@ -75,9 +75,11 @@ Private mSysInfo As SYSTEM_INFO
 
 Private mLogTokens(9) As String
 
-Private mPrevWndProc As Long
+Private mPrevMainWndProc As Long
+Private mPrevMyWndProc As Long
 
 Private mMainWindowHandle As Long
+Private mMyWindowHandle As Long
 
 Private mUnhandledErrorHandler As New UnhandledErrorHandler
 
@@ -949,7 +951,7 @@ Public Sub gPostUserMessage( _
                 ByVal pMessageId As Long, _
                 ByVal pUserData1 As Long, _
                 ByVal pUserData2 As Long)
-PostMessage mMainWindowHandle, pMessageId, pUserData1, pUserData2
+PostMessage mMyWindowHandle, pMessageId, pUserData1, pUserData2
 End Sub
 
 Public Function gRedirectMethod( _
@@ -1836,19 +1838,20 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function findMainWindowHandle() As Long
+Private Function findMainWindowHandle(ByVal pHwnd As Long) As Long
 Const ProcName As String = "findMainWindowHandle"
 On Error GoTo Err
 
-mMainWindowHandle = mPostMessageForm.hWnd
+Dim lMainhWnd As Long: lMainhWnd = pHwnd
 Do
-    Dim hWnd As Long
-    hWnd = GetWindow(mMainWindowHandle, GW_OWNER)
-    If hWnd = 0 Then Exit Do
-    mMainWindowHandle = hWnd
+    Dim lParenthwnd As Long
+    lParenthwnd = GetWindow(lMainhWnd, GW_OWNER)
+    If lParenthwnd = 0 Then Exit Do
+    lMainhWnd = lParenthwnd
 Loop
 
-findMainWindowHandle = mMainWindowHandle
+findMainWindowHandle = lMainhWnd
+
 Exit Function
 
 Err:
@@ -1897,11 +1900,22 @@ Private Sub hook()
 Const ProcName As String = "hook"
 On Error GoTo Err
 
-If mPrevWndProc <> 0 Then Exit Sub
+If mPrevMainWndProc <> 0 Then Exit Sub
 
 Set mPostMessageForm = New PostMessageForm
+mMyWindowHandle = mPostMessageForm.hWnd
 
-mPrevWndProc = SetWindowLong(findMainWindowHandle, GWL_WNDPROC, AddressOf WindowProc)
+mMainWindowHandle = findMainWindowHandle(mPostMessageForm.hWnd)
+
+mPrevMainWndProc = SetWindowLong(mMainWindowHandle, GWL_WNDPROC, AddressOf WindowProcMain)
+gLogger.Log "Hooked main windproc: hwnd=" & mMainWindowHandle & _
+            "; prev windproc=" & mPrevMainWndProc, _
+            ModuleName, ProcName, LogLevelHighDetail
+
+mPrevMyWndProc = SetWindowLong(mMyWindowHandle, GWL_WNDPROC, AddressOf WindowProc)
+gLogger.Log "Hooked local windproc: hwnd=" & mMyWindowHandle & _
+            "; prev windproc=" & mPrevMyWndProc, _
+            ModuleName, ProcName, LogLevelHighDetail
 
 Exit Sub
 
@@ -1992,9 +2006,15 @@ Private Sub unhook()
 Const ProcName As String = "unhook"
 On Error GoTo Err
 
-If mPrevWndProc = 0 Then Exit Sub
-SetWindowLong findMainWindowHandle, GWL_WNDPROC, mPrevWndProc
-mPrevWndProc = 0
+If mPrevMyWndProc <> 0 Then
+    SetWindowLong mMyWindowHandle, GWL_WNDPROC, mPrevMyWndProc
+    mPrevMyWndProc = 0
+End If
+
+If mPrevMainWndProc <> 0 Then
+    SetWindowLong mMainWindowHandle, GWL_WNDPROC, mPrevMainWndProc
+    mPrevMainWndProc = 0
+End If
 
 Exit Sub
 
@@ -2066,16 +2086,7 @@ Private Function WindowProc( _
 Const ProcName As String = "WindowProc"
 On Error GoTo Err
 
-If uMsg = WM_TIMECHANGE Then
-    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
-    gSetBaseTimes
-    gResetClocks
-    Debug.Print "Time changed"
-    gLogger.Log "Time changed", ProcName, ModuleName
-ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
-    Globals.gTerminate
-    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
-ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
+If uMsg = UserMessages.UserMessageScheduleTasks Then
     DoEvents
     gTaskManager.ScheduleTasks
 ElseIf uMsg = UserMessages.UserMessageTimer Then
@@ -2083,7 +2094,34 @@ ElseIf uMsg = UserMessages.UserMessageTimer Then
 ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
     GDeferredActions.RunDeferredAction wParam
 Else
-    WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
+    WindowProc = CallWindowProc(mPrevMyWndProc, hWnd, uMsg, wParam, lParam)
+End If
+
+Exit Function
+
+Err:
+gNotifyUnhandledError ProcName, ModuleName
+End Function
+
+Private Function WindowProcMain( _
+                ByVal hWnd As Long, _
+                ByVal uMsg As Long, _
+                ByVal wParam As Long, _
+                ByVal lParam As Long) As Long
+Const ProcName As String = "WindowProcMain"
+On Error GoTo Err
+
+If uMsg = WM_TIMECHANGE Then
+    WindowProcMain = CallWindowProc(mPrevMainWndProc, hWnd, uMsg, wParam, lParam)
+    gSetBaseTimes
+    gResetClocks
+    Debug.Print "Time changed"
+    gLogger.Log "Time changed", ProcName, ModuleName
+ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
+    Globals.gTerminate
+    WindowProcMain = CallWindowProc(mPrevMainWndProc, hWnd, uMsg, wParam, lParam)
+Else
+    WindowProcMain = CallWindowProc(mPrevMainWndProc, hWnd, uMsg, wParam, lParam)
 End If
 
 Exit Function
