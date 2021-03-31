@@ -41,6 +41,8 @@ Implements IStateChangeListener
 ' Constants
 '@================================================================================
 
+#Const trace = 1
+
 Private Const ModuleName                                        As String = "TaskManager"
 
 Private Const DefaultQuantumMillisecs                           As Long = 32
@@ -828,11 +830,13 @@ Friend Function StartTask( _
                 Optional ByVal pData As Variant) As TaskController
 Const ProcName As String = "StartTask"
 On Error GoTo Err
-#If trace Then
-    gNullTracer.EnterProcedure "StartTask", ProjectName, ModuleName, ""
-#End If
 
 If pName = "" Then pName = gGenerateGUIDString
+
+#If trace Then
+    gNullTracer.EnterProcedure "StartTask " & pName, ProjectName, ModuleName, ""
+#End If
+
 If IsMissing(pCookie) Then pCookie = Empty
 If IsMissing(pData) Then pData = Empty
 
@@ -882,7 +886,7 @@ Set StartTask = lTaskController
 startScheduler
 
 #If trace Then
-    gNullTracer.ExitProcedure "StartTask", ProjectName, ModuleName, ""
+    gNullTracer.ExitProcedure "StartTask " & pName, ProjectName, ModuleName, ""
 #End If
 
 Exit Function
@@ -914,7 +918,11 @@ End If
 mTaskTable(pIndex).Next = mFirstFreeIndex
 mFirstFreeIndex = pIndex
 mTaskTable(pIndex).TC.State = TaskStateCompleted
-Set mTaskTable(pIndex).TC = Nothing
+
+' leave the TC in place so that the name is accessible when tracing runTask()
+' even when the task has finished
+'Set mTaskTable(pIndex).TC = Nothing
+
 mTaskTable(pIndex).TimeRemaining = 0
 mTaskTable(pIndex).State = TaskPrimitiveStates.Free
 
@@ -1436,7 +1444,7 @@ Private Sub runTask( _
 Const ProcName As String = "runTask"
 On Error GoTo Err
 #If trace Then
-    gNullTracer.EnterProcedure "runTask", ProjectName, ModuleName, ""
+    gNullTracer.EnterProcedure "runTask " & mTaskTable(pIndex).TC.Name, ProjectName, ModuleName, ""
 #End If
 
 Dim failPoint As String
@@ -1499,7 +1507,7 @@ Else
 End If
 
 #If trace Then
-    gNullTracer.ExitProcedure "runTask", ProjectName, ModuleName, ""
+    gNullTracer.ExitProcedure "runTask " & mTaskTable(pIndex).TC.Name, ProjectName, ModuleName, ""
 #End If
 
 Exit Sub
