@@ -21,11 +21,7 @@ echo.
 
 set BIN-PATH=%BIN-PATH%\TradeWright.Common
 
-:: note that we have to store the compatible version of
-:: TWUtilities in the compat folder, because using the one
-:: in Bin results in linker errors
-
-call makedll.bat TWUtilities TWUtilities /T:DLL /B:%BINARY_COMPAT% /c
+call makedll.bat TWUtilities TWUtilities /T:DLL /B:%BINARY_COMPAT%
 if errorlevel 1 pause
 call makedll.bat ExtProps ExtProps /T:DLL /B:%BINARY_COMPAT%
 if errorlevel 1 pause
