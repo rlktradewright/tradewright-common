@@ -57,7 +57,12 @@ Private mCount                                      As Long
 '@================================================================================
 
 Private Sub Class_Initialize()
-GListeners.IntialiseListenersList mListHeadIndex, mListTailIndex
+GLists.IntialiseList mListHeadIndex, mListTailIndex
+End Sub
+
+Private Sub Class_Terminate()
+Clear
+GLists.TerminateList mListHeadIndex, mListTailIndex
 End Sub
 
 '@================================================================================
@@ -86,9 +91,9 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-If GListeners.ContainsListener(pListener, mListHeadIndex, mListTailIndex) Then Exit Sub
+If GLists.Contains(pListener, mListHeadIndex, mListTailIndex) Then Exit Sub
 
-GListeners.AddListener pListener, mListHeadIndex, mListTailIndex
+GLists.Add pListener, mListHeadIndex, mListTailIndex
 
 mCount = mCount + 1
 mCurrentListenersValid = False
@@ -100,7 +105,7 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Public Sub Clear()
-GListeners.ClearListeners mListHeadIndex, mListTailIndex
+GLists.Clear mListHeadIndex, mListTailIndex
 mCount = 0
 mCurrentListenersValid = False
 End Sub
@@ -127,7 +132,7 @@ On Error GoTo Err
 
 gAssertArgument Not pListener Is Nothing, "pListener is Nothing"
 
-If GListeners.RemoveListener(pListener, mListHeadIndex, mListTailIndex) Then
+If GLists.Remove(pListener, mListHeadIndex, mListTailIndex) Then
     mCount = mCount - 1
     mCurrentListenersValid = False
 End If
@@ -152,7 +157,7 @@ End If
 
 ReDim mCurrentListeners(mCount - 1) As Object
 
-GListeners.GetCurrentListeners mCurrentListeners, mListHeadIndex, mListTailIndex
+GLists.ToArray mCurrentListeners, mListHeadIndex, mListTailIndex
 
 mCurrentListenersValid = True
 End Sub

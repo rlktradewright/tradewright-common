@@ -1,4 +1,4 @@
-Attribute VB_Name = "GListeners"
+Attribute VB_Name = "GLists"
 Option Explicit
 
 ''
@@ -22,22 +22,22 @@ Option Explicit
 ' Types
 '@================================================================================
 
-Public Type ListenerEntry
+Public Type ListEntry
     Next                As Long
-    Listener            As Object
+    Item                As Object
 End Type
 
 '@================================================================================
 ' Constants
 '@================================================================================
 
-Private Const ModuleName                            As String = "GListeners"
+Private Const ModuleName                            As String = "GLists"
 
 '@================================================================================
 ' Member variables
 '@================================================================================
 
-Private mListeners()                                As ListenerEntry
+Private mListEntries()                              As ListEntry
 Private mNextUnusedIndex                            As Long
 Private mFirstFreeIndex                             As Long
 
@@ -61,84 +61,91 @@ Private mFirstFreeIndex                             As Long
 ' Methods
 '@================================================================================
 
-Public Sub AddListener( _
-                ByVal pListener As Object, _
+Public Sub Add( _
+                ByVal pItem As Object, _
                 ByVal pListHeadIndex As Long, _
                 ByVal pListTailIndex As Long)
 Dim lIndex As Long: lIndex = AllocateIndex
-mListeners(lIndex).Next = mListeners(pListHeadIndex).Next
-Set mListeners(lIndex).Listener = pListener
-mListeners(pListHeadIndex).Next = lIndex
+mListEntries(lIndex).Next = mListEntries(pListHeadIndex).Next
+Set mListEntries(lIndex).Item = pItem
+mListEntries(pListHeadIndex).Next = lIndex
 End Sub
 
-Public Sub ClearListeners( _
+Public Sub Clear( _
                 ByVal pListHeadIndex As Long, _
                 ByVal pListTailIndex As Long)
-Dim lIndex As Long: lIndex = mListeners(pListHeadIndex).Next
+Dim lIndex As Long: lIndex = mListEntries(pListHeadIndex).Next
 Dim lNextIndex As Long
 Do While lIndex <> pListTailIndex
-    lNextIndex = mListeners(lIndex).Next
+    lNextIndex = mListEntries(lIndex).Next
     releaseIndex lIndex
     lIndex = lNextIndex
 Loop
-mListeners(pListHeadIndex).Next = pListTailIndex
+mListEntries(pListHeadIndex).Next = pListTailIndex
 End Sub
 
-Public Function ContainsListener( _
-                ByVal pListener As Object, _
+Public Function Contains( _
+                ByVal pItem As Object, _
                 ByVal pListHeadIndex As Long, _
                 ByVal pListTailIndex As Long) As Boolean
-Dim lIndex As Long: lIndex = mListeners(pListHeadIndex).Next
+Dim lIndex As Long: lIndex = mListEntries(pListHeadIndex).Next
 Do While lIndex <> pListTailIndex
-    If mListeners(lIndex).Listener Is pListener Then
-        ContainsListener = True
+    If mListEntries(lIndex).Item Is pItem Then
+        Contains = True
         Exit Function
     End If
-    lIndex = mListeners(lIndex).Next
+    lIndex = mListEntries(lIndex).Next
 Loop
 End Function
 
-Public Sub GetCurrentListeners( _
-                ByRef pListeners() As Object, _
+Public Sub ToArray( _
+                ByRef pItems() As Object, _
                 ByVal pListHeadIndex As Long, _
                 ByVal pListTailIndex As Long)
-Dim lListener As Object
-Dim lIndex As Long: lIndex = mListeners(pListHeadIndex).Next
+Dim lItem As Object
+Dim lIndex As Long: lIndex = mListEntries(pListHeadIndex).Next
 Dim i As Long
 Do While lIndex <> pListTailIndex
-    Set pListeners(i) = mListeners(lIndex).Listener
+    Set pItems(i) = mListEntries(lIndex).Item
     i = i + 1
-    lIndex = mListeners(lIndex).Next
+    lIndex = mListEntries(lIndex).Next
 Loop
 End Sub
 
-Public Sub IntialiseListenersList( _
+Public Sub IntialiseList( _
                 ByRef pListHeadIndex As Long, _
                 ByRef pListTailIndex As Long)
 pListHeadIndex = AllocateIndex
 pListTailIndex = AllocateIndex
-mListeners(pListHeadIndex).Next = pListTailIndex
-mListeners(pListTailIndex).Next = NullIndex
+mListEntries(pListHeadIndex).Next = pListTailIndex
+mListEntries(pListTailIndex).Next = NullIndex
 End Sub
 
-Public Function RemoveListener( _
-                ByVal pListener As Object, _
+Public Function Remove( _
+                ByVal pItem As Object, _
                 ByVal pListHeadIndex As Long, _
                 ByVal pListTailIndex As Long) As Boolean
 Dim lPrevIndex As Long: lPrevIndex = pListHeadIndex
-Dim lIndex As Long: lIndex = mListeners(lPrevIndex).Next
+Dim lIndex As Long: lIndex = mListEntries(lPrevIndex).Next
 Do While lIndex <> pListTailIndex
-    If mListeners(lIndex).Listener Is pListener Then
-        mListeners(lPrevIndex).Next = mListeners(lIndex).Next
+    If mListEntries(lIndex).Item Is pItem Then
+        mListEntries(lPrevIndex).Next = mListEntries(lIndex).Next
         releaseIndex lIndex
-        RemoveListener = True
+        Remove = True
         Exit Function
     End If
     lPrevIndex = lIndex
-    lIndex = mListeners(lIndex).Next
+    lIndex = mListEntries(lIndex).Next
 Loop
-RemoveListener = False
+Remove = False
 End Function
+
+Public Sub TerminateList( _
+                ByRef pListHeadIndex As Long, _
+                ByRef pListTailIndex As Long)
+releaseIndex pListHeadIndex
+releaseIndex pListTailIndex
+End Sub
 
 '@================================================================================
 ' Helper Functions
@@ -148,17 +155,18 @@ Private Function AllocateIndex() As Long
 Static sInitialised As Boolean
 If Not sInitialised Then
     sInitialised = True
-    ReDim mListeners(511) As ListenerEntry
+    ReDim mListEntries(511) As ListEntry
     mNextUnusedIndex = 0
     mFirstFreeIndex = NullIndex
 End If
 
 If mFirstFreeIndex <> NullIndex Then
     AllocateIndex = mFirstFreeIndex
-    mFirstFreeIndex = mListeners(mFirstFreeIndex).Next
+    mFirstFreeIndex = mListEntries(mFirstFreeIndex).Next
 Else
-    If mNextUnusedIndex > UBound(mListeners) Then
-        ReDim Preserve mListeners(2 * (UBound(mListeners) + 1) - 1) As ListenerEntry
+    If mNextUnusedIndex > UBound(mListEntries) Then
+        gLogger.Log "Increased mListEntries size to ", "AllocateIndex", ModuleName, LogLevelDetail, CStr(UBound(mListEntries) + 1)
+        ReDim Preserve mListEntries(2 * (UBound(mListEntries) + 1) - 1) As ListEntry
     End If
     AllocateIndex = mNextUnusedIndex
     mNextUnusedIndex = mNextUnusedIndex + 1
@@ -166,8 +174,8 @@ End If
 End Function
 
 Private Sub releaseIndex(ByVal pIndex As Long)
-Set mListeners(pIndex).Listener = Nothing
-mListeners(pIndex).Next = mFirstFreeIndex
+Set mListEntries(pIndex).Item = Nothing
+mListEntries(pIndex).Next = mFirstFreeIndex
 mFirstFreeIndex = pIndex
 End Sub
 
