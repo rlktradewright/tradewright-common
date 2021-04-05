@@ -1,7 +1,7 @@
 # How to Build Tradewright Common
 
 This document describes the steps that need to be taken to enable the TradeWright Common
-Platform to be built.
+components to be built.
 
 It is quite a detailed procedure, but it only needs to be done once.
 
