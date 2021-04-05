@@ -26,7 +26,7 @@ interleaved, and without blocking the user interface
 * a number of UI controls that provide advantages over the Microsoft equivalents
 
 For information on building this project, see
-(How to Build Tradewright Common)[HowToBuildTradewrightCommon.md].
+[How to Build Tradewright Common](HowToBuildTradewrightCommon.md).
 
 If you make changes that you want to contribute to the official version, create a pull
 request and I'll evaluate them.
