@@ -41,7 +41,7 @@ if errorlevel 1 goto :err
 
 popd
 
-pushd Bin\TradeWright.TradeBuild.ExternalComponents
+pushd Bin\TradeWright.Common.ExternalComponents
 
 call unregisterComponent.bat mscomctl OCX EXT
 if errorlevel 1 goto :err
