@@ -1,7 +1,7 @@
 # tradewright-common
 A set of utility libraries for use with COM-capable development environments
 (VB6, VBA, .Net etc). These have been developed over the years since 2003 to provide
-a number of useful features that are not possible 'out of the box' with VB6. They include:
+a number of useful features that are not possible 'out of the box' with Visual Basic 6. They include:
 
 * a powerful logging facility, based heavily on the Java Logging Framework
 * sophisticated mechanisms for using configuration files (typically based on XML, though
@@ -25,7 +25,23 @@ interleaved, and without blocking the user interface
 * a 'proper' graphics library (including gradient fills, advanced typography etc)
 * a number of UI controls that provide advantages over the Microsoft equivalents
 
-For information on building this project, see
+To install the TradeWright Common components, use the .msi installer file in the latest Release.
+As well as the components, this installer also installs some sample programs that use the
+components. After installation is complete, you can find these sample programs in the Bin
+subfolder of the installation folder. The source code for these sample programs is included in
+the repository.
+
+Note that the installation process does not register the components, as the sample programs use
+registration-free COM which uses manifest files to provide the information that registration
+includes in the registry.
+
+However if you want to use these components without modification in your own projects, you will
+need to register them so that your compiler has the information it needs to access them. To do
+this, open a command prompt as Administrator, and run the registerdlls.bat command file in the
+installation folder.
+
+If you want to build the components yourself, for example with a view to mdofying them, you'll
+find information on building this project at
 [How to Build Tradewright Common](HowToBuildTradeWrightCommon.md).
 
 If you make changes that you want to contribute to the official version, create a pull

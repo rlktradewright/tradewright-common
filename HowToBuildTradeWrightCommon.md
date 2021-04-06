@@ -90,29 +90,11 @@ consistency with these instructions this should be at `C:\Projects`.
    `TradeWright.Common` folder from the TradeWright Common installation folder tree
    to the Compat folder you just created.
 
-8. Register the TradeWright common .dll's and .ocx's. We need to do this only so
-   that other porjects that use the TradeWright Common user controls can
-   be opened in Visual Basic 6 (note that Visual Basic 6 cannot use components
-   via registration-free COM). For ease, we register the files in the
-   TradeWright Common installation folders.
-
-   * Open a Visual Studio developer command prompt as Administrator 
-     to ensure that the regsvr32exe program is on the path). The easiest way to
-	 do this on Windows 10 is to expand the Visual Studio 2017/2019 entry in the
-	 Start menu, right-click the Developer Command Prompt item, and select
-	 `More > Run as Administrator`.
-	
-   * Set the current directory to the TradeWright Common installation folder:
-	
-     `cd  "C:\Program Files\TradeWright Software Systems\TradeWright Utilities Sample Apps vnnn"`
-	
-   * Run the registerdlls.bat command file.
-
-9. Create a user environment variable called `TW-PROJECTS-DRIVE`, and
+6. Create a user environment variable called `TW-PROJECTS-DRIVE`, and
    set it to the drive letter that contains your Projects folder (in this
    example set it to `C:`).
 
-10. Create a user environment variable called `TW-PROJECTS-PATH`, and
+7. Create a user environment variable called `TW-PROJECTS-PATH`, and
    set it to the path to your clone of the TradeWright Common components repository (in this
    example set it to `\Projects\tradewright-common`).
 
