@@ -4,7 +4,7 @@ setlocal
 %TW-PROJECTS-DRIVE%
 path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
 
-call setMyVersion.bat
+call setTradeWrightCommonVersion
 
 echo =================================
 echo Signing the TradeWright Common merge module

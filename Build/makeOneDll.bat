@@ -38,7 +38,7 @@ path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
 
 set BIN-PATH=%TW-PROJECTS-PATH%\Bin\TradeWright.TradeWrightCommon
 
-call setMyVersion.bat
+call setTradeWrightCommonVersion.bat
 
 set BINARY_COMPAT=B
 

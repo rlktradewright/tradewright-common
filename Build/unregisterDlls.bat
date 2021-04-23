@@ -6,7 +6,7 @@ setlocal
 %TW-PROJECTS-DRIVE%
 path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
 
-call setMyVersion.bat
+call setTradeWrightCommonVersion.bat
 
 pushd %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Bin\TradeWright.Common
 
@@ -39,6 +39,12 @@ if errorlevel 1 goto :err
 
 call unregisterComponent.bat SpriteControlLib dll
 if errorlevel 1 goto :err
+
+popd
+
+pushd %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Bin\TradeWright.Common.ExternalComponents
+
+call unregisterComponent.bat TLBINF32 DLL EXT
 
 popd
 

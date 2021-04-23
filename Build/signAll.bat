@@ -6,7 +6,7 @@ path %TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build\Subscripts;%PATH%
 
 set BIN_PATH_ROOT=%TW-PROJECTS-PATH%\Bin
 
-call setMyVersion.bat
+call setTradeWrightCommonVersion
 
 echo =================================
 echo Signing components for TradeWright.Common

@@ -7,9 +7,12 @@
 ::   install, so you should not need to run this file in normal circumstances. +
 ::                                                                             +
 ::   Before running this file, the TradeWright Common components must be       +
-::   registered using the registerDlls.bat command file. If you need to use    +
-::   any of the TradeWright Common ActiveX controls in your .Net program, they +
-::   will need to remain registered to be used with the forms designer.        +
+::   registered. If you have compiled these components, they will already be   +
+::   registered. If not, you can use the registerDlls.bat command file.        +
+::                                                                             +
+::   If you need to use any of the TradeWright Common ActiveX controls in your +
+::   .Net program, they will need to remain registered to be used with the     +
+::   forms designer.                                                           +
 ::                                                                             +
 ::   If you don't need to use the TradeWright Common ActiveX controls in your  +
 ::   .Net programs, and if you use registration-free COM to access the         +
@@ -29,18 +32,12 @@ echo =================================
 echo Generating COM interop files
 echo.
 
-set BUILD=%CD%\Build
-set TW=%CD%\Bin
-if not exist "%TW%\TradeWright.Common" (
-	echo You are not currently in the correct folder.
-	echo.
-	echo You must run this command from the folder above the Bin folder
-	echo containing the TradeWright Common executables.
-	goto :Err
-)
+%TW-PROJECTS-DRIVE%
+set BUILD=%TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Build
+set BIN=%TW-PROJECTS-DRIVE%%TW-PROJECTS-PATH%\Bin
 
-set COMINTEROP=%TW%\TradeWright.Common.ComInterop
-set TWUTILITIES=%TW%\TradeWright.Common
+set COMINTEROP=%BIN%\TradeWright.Common.ComInterop
+set TWUTILITIES=%BIN%\TradeWright.Common
 set TWWIN32API=%TWUTILITIES%\twwin32api.tlb
 
 if exist %COMINTEROP% (
@@ -49,18 +46,16 @@ if exist %COMINTEROP% (
 	mkdir %COMINTEROP%
 )
 
-cd %COMINTEROP%
+pushd %COMINTEROP%
 
-set SOURCE=%TW%\TradeWright.Common.ExternalComponents
+set SOURCE=%BIN%\TradeWright.Common.ExternalComponents
 
-set ASM_VERSION=
-
+call :AxImp mscomctl
 call :TlbImp TlbInf32
 
 set SOURCE=%TWUTILITIES%
 
-call %BUILD%\Setup\DeploymentScripts\setTradeWrightCommonVersion.bat
-set ASM_VERSION=/asmversion:%VB6-BUILD-MAJOR%.%VB6-BUILD-MINOR%.%VB6-BUILD-REVISION%
+call :TlbTlb TWWin32API
 
 call :TlbImp TWUtilities40
 call :TlbImp ExtProps40
@@ -75,29 +70,39 @@ call :TlbImp GraphObjUtils40
 call :TlbImp GraphObj40
 call :TlbImp SpriteControlLib40
 
+popd
 exit /B 0
 
 :Err
+popd
 exit /B 1
 
 :TlbImp
 echo =================================
-tlbimp "%SOURCE%\%1.dll" /out:%1.dll /tlbreference:"%TWWIN32API%" /namespace:%1 /nologo /silence:3008 /silence:3011 /silence:3012 %ASM_VERSION% %REFERENCE%
+tlbimp "%SOURCE%\%1.dll" /out:Interop.%1.dll /tlbreference:"%TWWIN32API%" /namespace:%1 /nologo /silence:3008 /silence:3011 /silence:3012 %REFERENCE%
 if errorlevel 1 goto :Err
-set REFERENCE=%REFERENCE% /reference:%1.dll
+set REFERENCE=%REFERENCE% /reference:Interop.%1.dll
 echo.
 goto :EOF
 
 :TlbImpAx
-tlbimp "%SOURCE%\%1.ocx" /out:%1.dll /tlbreference:"%TWWIN32API%" /namespace:%1 /nologo /silence:3008 /silence:3011 /silence:3012 %ASM_VERSION% %REFERENCE%
+tlbimp "%SOURCE%\%1.ocx" /out:Interop.%1.dll /tlbreference:"%TWWIN32API%" /namespace:%1 /nologo /silence:3008 /silence:3011 /silence:3012 %REFERENCE%
 if errorlevel 1 goto :Err
-set REFERENCE=%REFERENCE% /reference:%1.dll
+set REFERENCE=%REFERENCE% /reference:Interop.%1.dll
 goto :EOF
 
 :AxImp
 echo =================================
 call :TlbImpAx %1
-aximp "%SOURCE%\%1.ocx" /out:Ax%1.dll /rcw:%1.dll /nologo 
+aximp "%SOURCE%\%1.ocx" /out:Interop.Ax%1.dll /rcw:Interop.%1.dll /nologo 
 if errorlevel 1 goto :Err
+echo.
+goto :EOF
+
+:TlbTlb
+echo =================================
+tlbimp "%SOURCE%\%1.tlb" /out:Interop.%1.dll /namespace:%1 /nologo /silence:3011 /silence:3008 %REFERENCE%
+if errorlevel 1 goto :Err
+set REFERENCE=%REFERENCE% /reference:Interop.%1.dll
 echo.
 goto :EOF
