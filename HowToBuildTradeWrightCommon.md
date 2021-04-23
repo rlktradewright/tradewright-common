@@ -9,6 +9,15 @@ It is quite a detailed procedure, but it only needs to be done once.
 
 Visual Basic 6 must be installed.
 
+You must install the Microsoft Visual Basic 6.0 Service Pack 6 Security Rollup Update,
+published on 21 March 2021. To check whether you already have this installed, examine
+the 'Apps & features' page in the Windows Settings app in Windows 10 (or use the
+'Programs and Features' applet in the Control Panel): the relevant entry is entitled
+'Cumulative Update for Microsoft Visual Basic 6.0 SP6 (KB3096896)'. If not already
+installed, you can download it from here:
+
+https://www.microsoft.com/en-us/download/details.aspx?id=50722
+
 Visual Studio 2017 or later must be installed (earlier versions will probably be
 fine, but haven't been tested). The free Community editions are fine and recommended.
 
@@ -61,7 +70,7 @@ consistency with these instructions this should be at `C:\Projects`.
 2. Install TradeWright Common using the .msi installer file from the latest Release on
    GitHub. By default, the files will be installed to:
 
-   `C:\Program Files (x86)\TradeWright Software Systems\TradeWright Utilities Sample Apps vnnn`
+   `C:\Program Files (x86)\TradeWright Software Systems\TradeWright Utilities nnn`
    
    where nnn is the version number.
 
