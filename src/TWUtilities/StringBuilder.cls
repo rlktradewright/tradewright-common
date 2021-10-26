@@ -68,10 +68,12 @@ Private Const ModuleName                    As String = "StringBuilder"
 ' Member variables
 '@================================================================================
 
-
-Private mBuffer                             As String
+' we alternate between two buffers to avoid the 'Out of String space error'
+Private mBuffer1                            As String
+Private mBuffer2                            As String
+Private mCurrentBuffer                      As Long
 Private mBufferIndex                        As Long     ' the index of the next
-                                                        ' free position in mBuffer
+                                                        ' free position in buffer
 
 Private mMaxCapacity                        As Long
 
@@ -99,7 +101,11 @@ Private mMaxCapacity                        As Long
 '   The current Capacity of this <code>StringBuilder</code> object.
 '@/
 Public Property Get Capacity() As Long
-Capacity = Len(mBuffer)
+If mCurrentBuffer = 1 Then
+    Capacity = Len(mBuffer1)
+Else
+    Capacity = Len(mBuffer2)
+End If
 End Property
 
 ''
@@ -117,7 +123,11 @@ On Error GoTo Err
 
 gAssertArgument position > 0 Or position <= Length, "position must be > 0 and <= current Length"
 
-Character = Mid$(mBuffer, position, 1)
+If mCurrentBuffer = 1 Then
+    Character = Mid$(mBuffer1, position, 1)
+Else
+    Character = Mid$(mBuffer2, position, 1)
+End If
 
 Exit Property
 
@@ -288,7 +298,17 @@ Do While reqdCapacity > newCapacity
 Loop
 
 If newCapacity <> Capacity Then
-    mBuffer = mBuffer & Space$(newCapacity - Capacity)
+    ' avoid 'Out of string space' (Error 14) by
+    ' switching between buffers
+    If mCurrentBuffer = 1 Then
+        mCurrentBuffer = 2
+        mBuffer2 = mBuffer1 & Space$(newCapacity - Capacity)
+        mBuffer1 = ""
+    Else
+        mCurrentBuffer = 1
+        mBuffer1 = mBuffer2 & Space$(newCapacity - Capacity)
+        mBuffer2 = ""
+    End If
 End If
 
 EnsureCapacity = Capacity
@@ -312,7 +332,8 @@ gAssertArgument initialCapacity >= 1 And MaxCapacity >= 1, "initialCapacity and 
 gAssertArgument initialCapacity <= MaxCapacity, "initialCapacity cannot be greater than MaxCapacity"
 gAssertArgument Len(initialvalue) <= MaxCapacity, "Initial Value exceeds max Capacity"
 
-mBuffer = Space$(initialCapacity)
+mCurrentBuffer = 1
+mBuffer1 = Space$(initialCapacity)
 mMaxCapacity = MaxCapacity
 
 If Not IsEmpty(initialvalue) Then
@@ -556,7 +577,11 @@ gAssertArgument startPosition + Length - 1 <= Me.Length, "Request exceeds Length
 
 If Length = 0 Then Length = Me.Length - startPosition + 1
 
-SubString = Mid$(mBuffer, startPosition, Length)
+If mCurrentBuffer = 1 Then
+    SubString = Mid$(mBuffer1, startPosition, Length)
+Else
+    SubString = Mid$(mBuffer2, startPosition, Length)
+End If
 
 Exit Function
 
@@ -575,7 +600,11 @@ Public Function ToString() As String
 Const ProcName As String = "ToString"
 On Error GoTo Err
 
-ToString = Left$(mBuffer, Length)
+If mCurrentBuffer = 1 Then
+    ToString = Left$(mBuffer1, Length)
+Else
+    ToString = Left$(mBuffer2, Length)
+End If
 
 Exit Function
 
@@ -625,12 +654,22 @@ If position > Me.Length Then
 End If
 
 
-If Mid$(mBuffer, position, 1) = separator Then
-    WordPositionLeft = previousWordPosition(position, separator)
-ElseIf Mid$(mBuffer, position - 1, 1) = separator Then
-    WordPositionLeft = previousWordPosition(position - 1, separator)
+If mCurrentBuffer = 1 Then
+    If Mid$(mBuffer1, position, 1) = separator Then
+        WordPositionLeft = previousWordPosition(position, separator)
+    ElseIf Mid$(mBuffer1, position - 1, 1) = separator Then
+        WordPositionLeft = previousWordPosition(position - 1, separator)
+    Else
+        WordPositionLeft = previousWordPosition(position, separator)
+    End If
 Else
-    WordPositionLeft = previousWordPosition(position, separator)
+    If Mid$(mBuffer2, position, 1) = separator Then
+        WordPositionLeft = previousWordPosition(position, separator)
+    ElseIf Mid$(mBuffer2, position - 1, 1) = separator Then
+        WordPositionLeft = previousWordPosition(position - 1, separator)
+    Else
+        WordPositionLeft = previousWordPosition(position, separator)
+    End If
 End If
 
 Exit Function
@@ -686,7 +725,11 @@ Private Function bufferElementAddress( _
 Const ProcName As String = "bufferElementAddress"
 On Error GoTo Err
 
-bufferElementAddress = gUnsignedAdd(StrPtr(mBuffer), elementIndex)
+If mCurrentBuffer = 1 Then
+    bufferElementAddress = gUnsignedAdd(StrPtr(mBuffer1), elementIndex)
+Else
+    bufferElementAddress = gUnsignedAdd(StrPtr(mBuffer2), elementIndex)
+End If
 
 Exit Function
 
@@ -703,10 +746,18 @@ On Error GoTo Err
 
 If 2 * Len(targetString) > mBufferIndex - position Then Exit Function
 
-If ignoreCase Then
-    containsStringAtPosition = (UCase$(Mid$(mBuffer, position, Len(targetString))) = targetString)
+If mCurrentBuffer = 1 Then
+    If ignoreCase Then
+        containsStringAtPosition = (UCase$(Mid$(mBuffer1, position, Len(targetString))) = targetString)
+    Else
+        containsStringAtPosition = Mid$(mBuffer1, position, Len(targetString)) = targetString
+    End If
 Else
-    containsStringAtPosition = Mid$(mBuffer, position, Len(targetString)) = targetString
+    If ignoreCase Then
+        containsStringAtPosition = (UCase$(Mid$(mBuffer2, position, Len(targetString))) = targetString)
+    Else
+        containsStringAtPosition = Mid$(mBuffer2, position, Len(targetString)) = targetString
+    End If
 End If
 
 Exit Function
@@ -721,17 +772,28 @@ Private Function nextWordPosition( _
 Const ProcName As String = "nextWordPosition"
 On Error GoTo Err
 
-position = InStr(position, mBuffer, separator)
+If mCurrentBuffer = 1 Then
+    position = InStr(position, mBuffer1, separator)
+Else
+    position = InStr(position, mBuffer2, separator)
+End If
 
 If position = 0 Or position > Me.Length Then
     nextWordPosition = Me.Length + 1
     Exit Function
 End If
 
-Do While Mid$(mBuffer, position, 1) = separator
-    position = position + 1
-    If position = Me.Length + 1 Then Exit Do
-Loop
+If mCurrentBuffer = 1 Then
+    Do While Mid$(mBuffer1, position, 1) = separator
+        position = position + 1
+        If position = Me.Length + 1 Then Exit Do
+    Loop
+Else
+    Do While Mid$(mBuffer2, position, 1) = separator
+        position = position + 1
+        If position = Me.Length + 1 Then Exit Do
+    Loop
+End If
 
 nextWordPosition = position
 
@@ -747,17 +809,29 @@ Private Function previousWordPosition( _
 Const ProcName As String = "previousWordPosition"
 On Error GoTo Err
 
-Do While position > 1
-    If Mid$(mBuffer, position, 1) <> separator Then Exit Do
-    position = position - 1
-Loop
+If mCurrentBuffer = 1 Then
+    Do While position > 1
+        If Mid$(mBuffer1, position, 1) <> separator Then Exit Do
+        position = position - 1
+    Loop
+Else
+    Do While position > 1
+        If Mid$(mBuffer2, position, 1) <> separator Then Exit Do
+        position = position - 1
+    Loop
+End If
 
 If position = 1 Then
     previousWordPosition = 1
     Exit Function
 End If
 
-position = InStrRev(mBuffer, separator, position)
+If mCurrentBuffer = 1 Then
+    position = InStrRev(mBuffer1, separator, position)
+Else
+    position = InStrRev(mBuffer2, separator, position)
+End If
+
 If position = 0 Then
     previousWordPosition = 1
 Else
