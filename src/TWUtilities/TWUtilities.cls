@@ -1904,7 +1904,11 @@ On Error GoTo Err
 
 Dim lBuilder As New FutureBuilder
 lBuilder.Value = pObject
-lBuilder.Cookie = pCookie
+If IsMissing(pCookie) Then
+    lBuilder.Cookie = Empty
+Else
+    lBuilder.Cookie = pCookie
+End If
 lBuilder.Complete
 
 Set CreateFuture = lBuilder.Future
