@@ -48,8 +48,11 @@ Private Const ModuleName                            As String = "DictionaryEntri
 
 Private mDict                                       As SortedDictionary
 Private mRoot                                       As DictionaryEntry
+Private mKeyType                                    As DictionaryKeyTypes
 Private mDeleteAsYouGo                              As Boolean
 Private mUpdateSequence                             As Long
+
+Private mInitialKey                                 As Variant
 
 '@================================================================================
 ' Class Event Handlers
@@ -75,16 +78,36 @@ Private Function IEnumerable_NextItem(Item As Variant, pCookie As Variant) As Bo
 Const ProcName As String = "IEnumerable_NextItem"
 On Error GoTo Err
 
+Dim failPoint As String
+failPoint = "50"
+
 Dim lCookie As EnumerationCookie
 If IsEmpty(pCookie) Then
+    If IsEmpty(mInitialKey) Then
+        Set lCookie.Current = Nothing
+        Set lCookie.Next = Nothing
+        failPoint = "100"
+        gFindFirst lCookie, mRoot, mDeleteAsYouGo
+    Else
+        failPoint = "200"
+        gFindFirstFromKey mInitialKey, mKeyType, lCookie, mRoot, mDeleteAsYouGo
+    End If
+ElseIf Not pCookie.Current Is Nothing Then
+    lCookie = pCookie
+    failPoint = "300"
+    gFindNext lCookie, mDeleteAsYouGo
+ElseIf Not pCookie.Next Is Nothing Then
+    ' this case occurs when the current item was removed via
+    ' the enumerator, and not at end
+    Set lCookie.Current = pCookie.Next
+    failPoint = "400"
+    Set lCookie.Next = gSuccessor(lCookie.Current, False)
+Else
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
-    gFindFirst lCookie, mRoot, mDeleteAsYouGo
-Else
-    lCookie = pCookie
-    gFindNext lCookie, mDeleteAsYouGo
 End If
 
+failPoint = "500"
 If lCookie.Current Is Nothing Then
     Item = Empty
 Else
@@ -97,7 +120,7 @@ If Not IsEmpty(Item) Then IEnumerable_NextItem = True
 Exit Function
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gHandleUnexpectedError ProcName, ModuleName, failPoint
 End Function
 
 Private Sub IEnumerable_Remove(pCookie As Variant)
@@ -158,8 +181,13 @@ End Property
 '@================================================================================
 
 Friend Sub Initialise( _
-                ByVal pDict As SortedDictionary, Optional ByVal pDeleteAsYouGo As Boolean)
+                ByVal pDict As SortedDictionary, _
+                ByVal Key As Variant, _
+                ByVal pKeyType As DictionaryKeyTypes, _
+                Optional ByVal pDeleteAsYouGo As Boolean)
 Set mDict = pDict
+gSetVariant mInitialKey, Key
+mKeyType = pKeyType
 Set mRoot = pDict.Root
 mDeleteAsYouGo = pDeleteAsYouGo
 mUpdateSequence = mDict.UpdateSequence

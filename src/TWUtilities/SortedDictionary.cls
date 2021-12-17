@@ -92,7 +92,7 @@ Private Property Get IEnumerable_Enumerator() As Enumerator
 Const ProcName As String = "IEnumerable_Enumerator"
 On Error GoTo Err
 
-Set IEnumerable_Enumerator = getEnumerator
+Set IEnumerable_Enumerator = getEnumerator(Empty)
 
 Exit Property
 
@@ -105,12 +105,12 @@ Const ProcName As String = "IEnumerable_NextItem"
 On Error GoTo Err
 
 Dim lCookie As EnumerationCookie
-If IsEmpty(pCookie) Then
-    Set lCookie.Current = Nothing
-    Set lCookie.Next = Nothing
+lCookie = pCookie
+If lCookie.Current Is Nothing And Not lCookie.Next Is Nothing Then
+    FindNext lCookie
+ElseIf lCookie.Current Is Nothing Then
     FindFirst lCookie
 Else
-    lCookie = pCookie
     FindNext lCookie
 End If
 
@@ -226,7 +226,7 @@ Const ProcName As String = "DisconnectedEntryEnumerator"
 On Error GoTo Err
 
 Dim ee As New DictionaryEntriesEnum
-ee.Initialise Me, pDeleteAsYouGo:=True
+ee.Initialise Me, Empty, mKeyType, pDeleteAsYouGo:=True
 
 Dim en As IEnumerable
 Set en = ee
@@ -250,8 +250,32 @@ Const ProcName As String = "EntryEnumerator"
 On Error GoTo Err
 
 Dim ee As New DictionaryEntriesEnum
-ee.Initialise Me
+ee.Initialise Me, Empty, mKeyType
 Set EntryEnumerator = ee.Enumerator
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Property
+
+''
+' Returns an <code>Enumerator</code> object that can be used to iterate through
+' the entries of the collection, starting from a specified key.
+'
+' @param key
+'   An expression that specifies the lowest key to be included in the iteration.
+'
+' @return
+'   An <code>Enumerator</code> object.
+'@/
+Public Property Get EntryEnumeratorFromKey(ByVal Key As Variant) As Enumerator
+Const ProcName As String = "EntryEnumeratorFromKey"
+On Error GoTo Err
+
+Dim ee As New DictionaryEntriesEnum
+ee.Initialise Me, Key, mKeyType
+Set EntryEnumeratorFromKey = ee.Enumerator
 
 Exit Property
 
@@ -270,7 +294,28 @@ Public Property Get Enumerator() As Enumerator
 Const ProcName As String = "Enumerator"
 On Error GoTo Err
 
-Set Enumerator = getEnumerator
+Set Enumerator = getEnumerator(Empty)
+
+Exit Property
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Property
+
+''
+' Returns an <code>Enumerator</code> object that can be used to iterate through
+' the data members of the collection, starting from a specified key.
+'
+' @param key
+'   An expression that specifies the lowest key to be included in the iteration.
+' @return
+'   An <code>Enumerator</code> object.
+'@/
+Public Property Get EnumeratorFromKey(ByVal Key As Variant) As Enumerator
+Const ProcName As String = "EnumeratorFromKey"
+On Error GoTo Err
+
+Set EnumeratorFromKey = getEnumerator(Key)
 
 Exit Property
 
@@ -346,7 +391,7 @@ On Error GoTo Err
 
 Dim entry As DictionaryEntry
 Dim Result As Long
-Result = findEntry(Key, entry)
+Result = gFindEntry(Key, mRoot, mKeyType, entry)
 If Result = 0 Then
     gSetVariant entry.Data, Value
 End If
@@ -440,7 +485,7 @@ End If
 
 Dim cmp As Long
 If Not mFirst Is Nothing Then
-    cmp = compare(Key, mFirst.Key)
+    cmp = gCompare(Key, mFirst.Key, mKeyType)
     If cmp < 0 Then Set mFirst = Nothing
 End If
 
@@ -451,7 +496,7 @@ Set Current = mRoot
 Dim Parent As DictionaryEntry
 Do While Not Current Is Nothing
     Set Parent = Current
-    cmp = compare(Key, Current.Key)
+    cmp = gCompare(Key, Current.Key, mKeyType)
     If cmp = 0 And Not mAllowDuplicates Then Err.Raise VBErrorCodes.VbErrElementAlreadyExists, , "Element already exists"
     
     If cmp < 0 Then
@@ -557,7 +602,7 @@ On Error GoTo Err
 If mCount = 0 Then Exit Function
 
 Dim entry As DictionaryEntry
-Contains = (findEntry(Key, entry) = 0)
+Contains = (gFindEntry(Key, mRoot, mKeyType, entry) = 0)
 
 Exit Function
 
@@ -628,7 +673,7 @@ Attribute NewEnum.VB_MemberFlags = "40"
 Const ProcName As String = "NewEnum"
 On Error GoTo Err
 
-Set NewEnum = getEnumerator
+Set NewEnum = getEnumerator(Empty)
 
 Exit Function
 
@@ -655,14 +700,16 @@ Const ProcName As String = "NextKey"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-Dim Result As Integer
-Result = findEntry(Key, entry)
 
-If Result <= 0 Then
+If gFindEntry(Key, mRoot, mKeyType, entry) <= 0 Then
     ' either we found an entry with the supplied key, or
     ' the entry found is lower than the supplied key, so it must be the
     ' successor that we want
-    Set entry = gSuccessor(entry, pDeleteAsYouGo:=False)
+    Do
+        Set entry = gSuccessor(entry, pDeleteAsYouGo:=False)
+        If entry Is Nothing Then Exit Do
+    Loop Until gCompare(Key, entry.Key, mKeyType) < 0
+    
     If entry Is Nothing Then
         NextKey = Empty
     Else
@@ -700,7 +747,7 @@ On Error GoTo Err
 
 Dim entry As DictionaryEntry
 Dim Result As Integer
-Result = findEntry(Key, entry)
+Result = gFindEntry(Key, mRoot, mKeyType, entry)
 
 If Result >= 0 Then
     ' either we found an entry with the supplied key, or
@@ -743,7 +790,7 @@ Const ProcName As String = "Remove"
 On Error GoTo Err
 
 Dim entry As DictionaryEntry
-If findEntry(Key, entry) <> 0 Then
+If gFindEntry(Key, mRoot, mKeyType, entry) <> 0 Then
     ' raise the same error as the VB6 Collection object
     Err.Raise VBErrorCodes.VbErrInvalidProcedureCall, _
                 , _
@@ -773,15 +820,17 @@ If IsEmpty(pCookie.Current) Then Err.Raise ErrorCodes.ErrIllegalStateException, 
 
 Dim lCurrentEntry As DictionaryEntry
 Set lCurrentEntry = pCookie.Current
-If (Not lCurrentEntry.Left Is Nothing And _
-    Not lCurrentEntry.Right Is Nothing) _
-Then Set pCookie.Next = pCookie.Current
 
-If pCookie.Current Is mFirst Then Set mFirst = Nothing
+'If (Not lCurrentEntry.Left Is Nothing And _
+'    Not lCurrentEntry.Right Is Nothing) _
+'Then Set pCookie.Next = pCookie.Current
+
+If lCurrentEntry Is mFirst Then Set mFirst = Nothing
 mCount = mCount - 1
 
-deleteEntry pCookie.Current, mRoot
 Set pCookie.Current = Nothing
+
+deleteEntry lCurrentEntry, mRoot
 
 Exit Sub
 
@@ -815,7 +864,7 @@ If mCount = 0 Then Exit Function
 
 Dim entry As DictionaryEntry
 Dim Result As Long
-Result = findEntry(Key, entry)
+Result = gFindEntry(Key, mRoot, mKeyType, entry)
 
 If Result = 0 Then
     gSetVariant Item, entry.Data
@@ -848,39 +897,6 @@ If p Is Nothing Then
 Else
     colorOf = p.Color
 End If
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
-
-Private Function compare( _
-                ByVal value1 As Variant, _
-                ByVal value2 As Variant) As Long
-Const ProcName As String = "compare"
-On Error GoTo Err
-
-Select Case mKeyType
-Case KeyTypeInteger, KeyTypeFloat, KeyTypeDate
-    If value1 = value2 Then
-        compare = 0
-    ElseIf value1 > value2 Then
-        compare = 1
-    Else
-        compare = -1
-    End If
-Case KeyTypeString
-    compare = StrComp(value1, value2, vbTextCompare)
-Case KeyTypeCaseSensitiveString
-    compare = StrComp(value1, value2, vbBinaryCompare)
-Case KeyTypeComparable
-    Dim obj1 As IComparable
-    Dim obj2 As IComparable
-    Set obj1 = value1
-    Set obj2 = value2
-    compare = obj1.CompareTo(obj2)
-End Select
 
 Exit Function
 
@@ -967,38 +983,6 @@ Exit Sub
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
-
-Private Function findEntry(ByVal Key As Variant, ByRef entry As DictionaryEntry) As Long
-Const ProcName As String = "findEntry"
-On Error GoTo Err
-
-Dim currentEntry As DictionaryEntry
-Set currentEntry = mRoot
-Set entry = currentEntry
-
-Do While Not currentEntry Is Nothing
-    Dim cmp As Long
-    cmp = compare(Key, currentEntry.Key)
-    If cmp = 0 Then
-        Set entry = currentEntry
-        findEntry = 0
-        Exit Function
-    ElseIf cmp < 0 Then
-        Set entry = currentEntry
-        findEntry = 1
-        Set currentEntry = currentEntry.Left
-    Else
-        Set entry = currentEntry
-        findEntry = -1
-        Set currentEntry = currentEntry.Right
-    End If
-Loop
-
-Exit Function
-
-Err:
-gHandleUnexpectedError ProcName, ModuleName
-End Function
 
 Private Sub fixAfterDeletion( _
                 ByVal x As DictionaryEntry, _
@@ -1138,13 +1122,22 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
-Private Function getEnumerator() As Enumerator
+Private Function getEnumerator(ByVal Key As Variant) As Enumerator
 Const ProcName As String = "getEnumerator"
 On Error GoTo Err
 
+Dim lInitialCookie As EnumerationCookie
+Set lInitialCookie.Next = Nothing
+Set lInitialCookie.Current = Nothing
+If Not IsEmpty(Key) Then
+    Dim lInitialEntry As DictionaryEntry
+    If gFindEntry(Key, mRoot, mKeyType, lInitialEntry) < 0 Then Set lInitialEntry = gSuccessor(lInitialEntry, False)
+    Set lInitialCookie.Next = lInitialEntry
+End If
+
 Dim lEnum As Enumerator
 Set lEnum = New Enumerator
-lEnum.Initialise Me
+lEnum.Initialise Me, lInitialCookie
 Set getEnumerator = lEnum
 
 Exit Function
