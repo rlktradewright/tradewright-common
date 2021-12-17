@@ -1,4 +1,4 @@
-Attribute VB_Name = "GDeferredActions"
+Attribute VB_Name = "GFutureWaiter"
 Option Explicit
 
 ''
@@ -26,16 +26,14 @@ Option Explicit
 ' Constants
 '@================================================================================
 
-
-Private Const ModuleName                    As String = "GDeferredActions"
+Private Const ModuleName                            As String = "GFutureWaiter"
 
 '@================================================================================
 ' Member variables
 '@================================================================================
 
-Private mDeferredActionManager              As New DeferredActionManager
-
-Private mDeferredActions                    As New Collection
+Private mFutures                                    As SortedDictionary
+Private mDatas                                      As SortedDictionary
 
 '@================================================================================
 ' Class Event Handlers
@@ -53,52 +51,30 @@ Private mDeferredActions                    As New Collection
 ' Properties
 '@================================================================================
 
-Public Property Get DeferredActionManager() As DeferredActionManager
-Set DeferredActionManager = mDeferredActionManager
+Public Property Get gFutures() As SortedDictionary
+If mFutures Is Nothing Then
+    Set mFutures = New SortedDictionary
+    mFutures.Initialise KeyTypeString, True
+End If
+Set gFutures = mFutures
+End Property
+
+Public Property Get gDatas() As SortedDictionary
+If mDatas Is Nothing Then
+    Set mDatas = New SortedDictionary
+    mDatas.Initialise KeyTypeString, True
+End If
+Set gDatas = mDatas
 End Property
 
 '@================================================================================
 ' Methods
 '@================================================================================
 
-Public Sub InitiateDeferredAction( _
-                ByRef dae As DeferredActionEntry)
-Const ProcName As String = "InitiateDeferredAction"
-On Error GoTo Err
-
-Dim index As Long: index = CLng(Rnd * &H7FFFFFFF)
-mDeferredActions.Add dae, CStr(index)
-'''Debug.Print "GDeferredActions::InitiateDeferredAction: " & index
-gPostUserMessage UserMessageExecuteDeferredAction, index, 0
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName
-End Sub
-
-Public Sub RunDeferredAction( _
-                ByVal pIndex As Long)
-Const ProcName As String = "RunDeferredAction"
-On Error GoTo Err
-
-Dim lKey As String: lKey = CStr(pIndex)
-
-Dim dae As DeferredActionEntry
-dae = mDeferredActions.Item(lKey)
-
-mDeferredActions.Remove lKey
-
-dae.Action.Run dae.Data
-
-Exit Sub
-
-Err:
-gNotifyUnhandledError ProcName, ModuleName
-End Sub
-
 '@================================================================================
 ' Helper Functions
 '@================================================================================
+
+
 
 

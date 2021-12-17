@@ -77,6 +77,7 @@ Private Sub IDeferredAction_Run(ByVal Data As Variant)
 Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
+'''Debug.Print "FutureBuilder::IDeferredAction_Run"
 If Data = ActionComplete Then
     mFuture.NotifyComplete
 ElseIf Data = ActionCancel Then
@@ -174,6 +175,7 @@ gAssert mState = FutureStatePending, "Future is no longer pending"
 mFuture.SetValue mValue
 mState = FutureStateCompleted
 
+'''Debug.Print "FutureBuilder::Complete"
 DeferredActionManager.DeferAction Me, ActionComplete
 
 Exit Sub

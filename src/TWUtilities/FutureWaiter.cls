@@ -50,8 +50,6 @@ Private Const ModuleName                            As String = "FutureWaiter"
 ' Member variables
 '@================================================================================
 
-Private mFutures                                    As New EnumerableCollection
-Private mDatas                                      As New EnumerableCollection
 Private mContinuationData                           As Variant
 
 Private mCleared                                    As Boolean
@@ -68,7 +66,23 @@ Private Sub IDeferredAction_Run(ByVal pData As Variant)
 Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
-notifyCompletion pData
+'''Debug.Print "FutureWaiter::IDeferredAction_Run"
+
+
+Dim lEv As FutureWaitCompletedEventData
+
+If TypeOf pData Is IFuture Then
+    notifyCompletion pData
+Else
+    gSetVariant lEv, pData
+    If lEv.Future Is Nothing Then
+        '''Debug.Print "Notify all complete: " & getMyKey
+        RaiseEvent WaitAllCompleted(lEv)
+    Else
+        '''Debug.Print "Notify completion: " & getFutureKey(lEv.Future) & "; data: " & gVariantToString(lEv.ContinuationData)
+        RaiseEvent WaitCompleted(lEv)
+    End If
+End If
 
 Exit Sub
 
@@ -84,6 +98,7 @@ Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
 Const ProcName As String = "IStateChangeListener_Change"
 On Error GoTo Err
 
+'''Debug.Print "FutureWaiter::IStateChangeListener_Change"
 If ev.State <> FutureStates.FutureStatePending Then notifyCompletion ev.Source
 
 Exit Sub
@@ -134,26 +149,24 @@ Public Sub Add( _
 Const ProcName As String = "Add"
 On Error GoTo Err
 
-If mFutures.Contains(pFuture) Then
-    If mDatas.Contains(gGetObjectKey(pFuture)) Then
-        Dim lData As Variant
-        lData = mDatas.Item(gGetObjectKey(pFuture))
-        If IsObject(lData) Then
-            gAssert IsObject(pContinuationData), "Continuation data is inconsistent with data already added for this future"
-            gAssert lData Is pContinuationData, "Continuation data is different from data already added for this future"
-        Else
-            gAssert lData = pContinuationData, "Continuation data is different from data already added for this future"
-        End If
-    End If
-    Exit Sub
+Dim lFutureKey As String: lFutureKey = getFutureKey(pFuture)
+Dim s As String
+If gFutures.Contains(lFutureKey) Then
+    s = "Updated future: " & lFutureKey
+Else
+    s = "Added future: " & lFutureKey
+    gFutures.Add pFuture, lFutureKey
 End If
 
-mFutures.Add pFuture
-If Not IsMissing(pContinuationData) Then mDatas.Add pContinuationData, gGetObjectKey(pFuture)
+If IsMissing(pContinuationData) Then pContinuationData = Empty
+gDatas.Add pContinuationData, lFutureKey
 
-pFuture.AddStateChangeListener Me
+If Not IsEmpty(pContinuationData) Then s = s & "; data: " & gVariantToString(pContinuationData)
+'''Debug.Print s
 
-If Not pFuture.IsPending Then
+If pFuture.IsPending Then
+    pFuture.AddStateChangeListener Me
+Else
     DeferredActionManager.DeferAction Me, pFuture
     Exit Sub
 End If
@@ -170,11 +183,19 @@ On Error GoTo Err
 
 Dim lCurrentFutures As New EnumerableCollection
 
-Dim lFuture As IFuture
-For Each lFuture In mFutures
-    lCurrentFutures.Add lFuture
-Next
+Dim en As Enumerator
+Set en = gFutures.EntryEnumeratorFromKey(getMyKey)
+Do While en.MoveNext
+    Dim lEntry As DictionaryEntry
+    Set lEntry = en.Current
+    If gStartsWith(lEntry.Key, getMyKey) Then
+        lCurrentFutures.Add lEntry.Data
+    Else
+        Exit Do
+    End If
+Loop
 
+Dim lFuture As IFuture
 For Each lFuture In lCurrentFutures
     lFuture.Cancel
 Next
@@ -191,13 +212,31 @@ On Error GoTo Err
 
 mCleared = True
 
-Dim lFuture As IFuture
-For Each lFuture In mFutures
-    lFuture.RemoveStateChangeListener Me
-Next
+Dim lEntry As DictionaryEntry
+Dim en As Enumerator
 
-mFutures.Clear
-mDatas.Clear
+Set en = gFutures.EntryEnumeratorFromKey(getMyKey)
+Do While en.MoveNext
+    Set lEntry = en.Current
+    If lEntry.Key = getMyKey Then
+        Dim lFuture As IFuture: Set lFuture = lEntry.Data
+        lFuture.RemoveStateChangeListener Me
+        en.Remove
+    Else
+        Exit Do
+    End If
+Loop
+
+Set en = gDatas.EntryEnumeratorFromKey(getMyKey)
+Do While en.MoveNext
+    Set lEntry = en.Current
+    If gStartsWith(lEntry.Key, getMyKey) Then
+        en.Remove
+    Else
+        Exit Do
+    End If
+Loop
+
 mContinuationData = Empty
 
 Exit Sub
@@ -222,28 +261,66 @@ End Sub
 ' Helper Functions
 '@================================================================================
 
+Private Function getFutureKey(ByVal pFuture As IFuture) As String
+getFutureKey = getMyKey & "|" & gGetObjectKey(pFuture)
+End Function
+
+Private Function getMyKey() As String
+Static sMyKey As String
+If sMyKey = "" Then sMyKey = gGetObjectKey(Me)
+getMyKey = sMyKey
+End Function
+
 Private Sub notifyCompletion(ByVal pFuture As IFuture)
 Const ProcName As String = "notifyCompletion"
 On Error GoTo Err
 
-If Not mFutures.Contains(pFuture) Then Exit Sub
+Dim lFutureKey As String: lFutureKey = getFutureKey(pFuture)
+'''Debug.Print "FutureWaiter::notifyCompletion: " & lFutureKey
+
+If Not gFutures.Contains(lFutureKey) Then
+    '''Debug.Print "Future not found: " & lFutureKey
+    Exit Sub
+End If
 
 Dim lEv As FutureWaitCompletedEventData
 Set lEv.Source = Me
 Set lEv.Future = pFuture
 
-If mDatas.Contains(gGetObjectKey(pFuture)) Then gSetVariant lEv.ContinuationData, mDatas.Item(gGetObjectKey(pFuture))
+'''Debug.Print "  gDatas count: " & gDatas.Count
+Dim lDataEntry As DictionaryEntry
+Dim lDatasEn As Enumerator
+Set lDatasEn = gDatas.EntryEnumerator
+Do While lDatasEn.MoveNext
+    Set lDataEntry = lDatasEn.Current
+    '''Debug.Print "     DataEntry: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data)
+Loop
+
+Set lDatasEn = gDatas.EntryEnumeratorFromKey(lFutureKey)
+Do While lDatasEn.MoveNext
+    Set lDataEntry = lDatasEn.Current
+    If lDataEntry.Key <> lFutureKey Then Exit Do
+    gSetVariant lEv.ContinuationData, lDataEntry.Data
+    '''Debug.Print "Defer action: notify completion: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data)
+    DeferredActionManager.DeferAction Me, lEv
+Loop
 
 removeFuture pFuture, False
-
-RaiseEvent WaitCompleted(lEv)
 
 If mCleared Then
     mCleared = False
 Else
     Set lEv.Future = Nothing
     lEv.ContinuationData = Empty
-    If mFutures.Count = 0 Then RaiseEvent WaitAllCompleted(lEv)
+    Dim lFuturesEn As Enumerator: Set lFuturesEn = gFutures.EntryEnumeratorFromKey(getMyKey)
+    If lFuturesEn.MoveNext Then
+        Dim lFutureEntry As DictionaryEntry: Set lFutureEntry = lFuturesEn.Current
+        If gStartsWith(lFutureEntry.Key, getMyKey) Then
+            Exit Sub
+        End If
+    End If
+    '''Debug.Print "Defer action: notify all completed: key: " & getMyKey
+    DeferredActionManager.DeferAction Me, lEv
 End If
 
 Exit Sub
@@ -257,8 +334,17 @@ Const ProcName As String = "removeFuture"
 On Error GoTo Err
 
 If pStopListening Then pFuture.RemoveStateChangeListener Me
-If mDatas.Contains(gGetObjectKey(pFuture)) Then mDatas.Remove gGetObjectKey(pFuture)
-If mFutures.Count <> 0 Then mFutures.Remove pFuture
+
+Dim lFutureKey As String: lFutureKey = getFutureKey(pFuture)
+Dim lDatasEn As Enumerator: Set lDatasEn = gDatas.EntryEnumeratorFromKey(lFutureKey)
+Do While lDatasEn.MoveNext
+    Dim lDataEntry As DictionaryEntry: Set lDataEntry = lDatasEn.Current
+    If lDataEntry.Key <> lFutureKey Then Exit Do
+    '''Debug.Print "Remove future: " & lFutureKey & "; data: " & gVariantToString(lDataEntry.Data)
+    lDatasEn.Remove
+Loop
+
+gFutures.Remove lFutureKey
 
 Exit Sub
 

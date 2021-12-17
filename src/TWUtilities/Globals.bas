@@ -1639,6 +1639,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
+Public Function gStartsWith( _
+                ByRef string1 As String, _
+                ByRef string2 As String) As Boolean
+gStartsWith = (InStr(1, string1, string2) = 1)
+End Function
+
 Public Function gStringToHexString( _
                 ByVal Value As String) As String
 Const ProcName As String = "gStringToHexString"
@@ -2081,6 +2087,7 @@ ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
 ElseIf uMsg = UserMessages.UserMessageTimer Then
     GIntervalTimer.gProcessUserTimerMsg wParam
 ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
+    Debug.Print "Globals::WindowProc: execute deferred action: " & wParam
     GDeferredActions.RunDeferredAction wParam
 Else
     WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
