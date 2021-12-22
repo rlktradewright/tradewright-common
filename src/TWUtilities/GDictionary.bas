@@ -102,6 +102,13 @@ Do While Not currentEntry Is Nothing
     Dim cmp As Long
     cmp = gCompare(pKey, currentEntry.Key, pKeyType)
     If cmp = 0 Then
+        Do While Not currentEntry.Left Is Nothing
+            If gCompare(currentEntry.Left.Key, currentEntry.Key, pKeyType) = 0 Then
+                Set currentEntry = currentEntry.Left
+            Else
+                Exit Do
+            End If
+        Loop
         Set pEntry = currentEntry
         gFindEntry = 0
         Exit Function
