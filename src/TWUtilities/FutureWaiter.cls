@@ -290,11 +290,12 @@ Set lEv.Future = pFuture
 '''Debug.Print "  gDatas count: " & gDatas.Count
 Dim lDataEntry As DictionaryEntry
 Dim lDatasEn As Enumerator
-Set lDatasEn = gDatas.EntryEnumerator
-Do While lDatasEn.MoveNext
-    Set lDataEntry = lDatasEn.Current
-    '''Debug.Print "     DataEntry: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data)
-Loop
+
+'''Set lDatasEn = gDatas.EntryEnumerator
+'''Do While lDatasEn.MoveNext
+'''    Set lDataEntry = lDatasEn.Current
+'''    Debug.Print "     DataEntry: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data)
+'''Loop
 
 Set lDatasEn = gDatas.EntryEnumeratorFromKey(lFutureKey)
 Do While lDatasEn.MoveNext
