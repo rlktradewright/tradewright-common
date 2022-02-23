@@ -71,6 +71,18 @@ End Property
 ' Methods
 '@================================================================================
 
+Public Function gGetFutureStateAsString(ByVal pFuture As IFuture) As String
+If pFuture.IsAvailable Then
+    gGetFutureStateAsString = "Available"
+ElseIf pFuture.IsCancelled Then
+    gGetFutureStateAsString = "Cancelled"
+ElseIf pFuture.IsFaulted Then
+    gGetFutureStateAsString = "Errored"
+ElseIf pFuture.IsPending Then
+    gGetFutureStateAsString = "Pending"
+End If
+End Function
+
 '@================================================================================
 ' Helper Functions
 '@================================================================================
