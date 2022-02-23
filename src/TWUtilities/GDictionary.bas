@@ -240,6 +240,22 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function gPrintEntry(ByVal pEntry As DictionaryEntry) As String
+gPrintEntry = gVariantToString(pEntry.Key) & "; " & gVariantToString(pEntry.Data)
+End Function
+
+Public Function gPrintTree( _
+                ByVal pDict As SortedDictionary) As String
+Dim lCurrEntry As DictionaryEntry
+Set lCurrEntry = pDict.Root
+
+Dim lSB As New StringBuilder: lSB.Initialise , &H7FFFFFFF
+ReDim lLineIndicators(100) As Long
+
+printTreeNode pDict.Root, 1, lLineIndicators, lSB
+gPrintTree = lSB.ToString
+End Function
+
 Public Function gSuccessor( _
                 ByVal pCurrent As DictionaryEntry, _
                 ByVal pDeleteAsYouGo As Boolean) As DictionaryEntry
@@ -283,6 +299,83 @@ End Function
 '@================================================================================
 ' Helper Functions
 '@================================================================================
+
+Private Function isLeftNode(ByVal pNode As DictionaryEntry) As Boolean
+If pNode Is Nothing Then
+    isLeftNode = True
+ElseIf pNode.Parent Is Nothing Then
+    isLeftNode = True
+ElseIf pNode Is pNode.Parent.Left Then
+    isLeftNode = True
+Else
+    isLeftNode = False
+End If
+End Function
+
+Private Function isRightNode(ByVal pNode As DictionaryEntry) As Boolean
+If pNode Is Nothing Then
+    isRightNode = True
+ElseIf pNode.Parent Is Nothing Then
+    isRightNode = True
+ElseIf pNode Is pNode.Parent.Right Then
+    isRightNode = True
+Else
+    isRightNode = False
+End If
+End Function
+
+Private Sub printTreeNode( _
+                ByVal pNode As DictionaryEntry, _
+                ByVal pLevel As Long, _
+                ByRef pLineIndicators() As Long, _
+                ByVal pSB As StringBuilder)
+pLineIndicators(pLevel) = 1
+
+Dim tempInd As Long: tempInd = pLineIndicators(pLevel - 1)
+If isLeftNode(pNode) And isLeftNode(pNode.Parent) Then pLineIndicators(pLevel - 1) = 0
+'If isLeftNode(pNode) Then pLineIndicators(pLevel) = 0
+
+If Not pNode.Left Is Nothing Then
+    printTreeNode pNode.Left, pLevel + 1, pLineIndicators, pSB
+End If
+If isLeftNode(pNode) Then pLineIndicators(pLevel - 1) = tempInd
+
+Dim i As Long
+For i = 1 To pLevel - 2
+    If pLineIndicators(i) = 1 Then
+        pSB.Append "| "
+    Else
+        pSB.Append "  "
+    End If
+Next
+
+If pLevel <> 1 Then pSB.Append "--"
+pSB.Append IIf(pNode.Color = Black, "b:", "r:")
+pSB.Append gPrintEntry(pNode)
+pSB.Append vbCrLf
+
+pLineIndicators(pLevel) = 1
+
+If isRightNode(pNode) And isRightNode(pNode.Parent) Then pLineIndicators(pLevel - 1) = 0
+'If isRightNode(pNode) Then pLineIndicators(pLevel) = 0
+
+If Not pNode.Right Is Nothing Then
+    printTreeNode pNode.Right, pLevel + 1, pLineIndicators, pSB
+
+    pLineIndicators(pLevel) = 0
+    For i = 1 To pLevel
+        If pLineIndicators(i) = 1 Then
+            pSB.Append "| "
+        Else
+            pSB.Append "  "
+        End If
+    Next
+    pSB.Append vbCrLf
+End If
+
+'If isRightNode(pNode) Then pLineIndicators(pLevel - 1) = tempInd
+pLineIndicators(pLevel) = 0
+End Sub
 
 
 

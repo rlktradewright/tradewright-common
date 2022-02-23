@@ -476,7 +476,9 @@ Case KeyTypeComparable
     If Not TypeOf Key Is IComparable Then Err.Raise ErrorCodes.ErrClassCastException
 End Select
 
-If mRoot Is Nothing Then
+Dim t As DictionaryEntry
+Set t = mRoot
+If t Is Nothing Then
     ' first entry added, so make it root
     Set mRoot = createEntry(Key, Item, Nothing)
     mCount = 1
@@ -490,19 +492,17 @@ If Not mFirst Is Nothing Then
 End If
 
 ' find where node belongs
-Dim Current As DictionaryEntry
-Set Current = mRoot
 
 Dim Parent As DictionaryEntry
-Do While Not Current Is Nothing
-    Set Parent = Current
-    cmp = gCompare(Key, Current.Key, mKeyType)
+Do While Not t Is Nothing
+    Set Parent = t
+    cmp = gCompare(Key, t.Key, mKeyType)
     If cmp = 0 And Not mAllowDuplicates Then Err.Raise VBErrorCodes.VbErrElementAlreadyExists, , "Element already exists"
     
     If cmp < 0 Then
-        Set Current = Current.Left
+        Set t = t.Left
     Else
-        Set Current = Current.Right
+        Set t = t.Right
     End If
 Loop
 
@@ -515,6 +515,8 @@ Else
 End If
 fixAfterInsertion newEntry
 mCount = mCount + 1
+
+gAssert Not mRoot Is Nothing, "mRoot Is Nothing"
 
 Exit Sub
 
@@ -771,6 +773,18 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function PrintTree() As String
+Const ProcName As String = "PrintTree"
+On Error GoTo Err
+
+PrintTree = gPrintTree(Me)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 ''
 ' Removes an item from the collection.
 '
@@ -803,7 +817,9 @@ If entry Is mFirst Then Set mFirst = Nothing
 mCount = mCount - 1
 
 gSetVariant Remove, entry.Data
-deleteEntry entry, mRoot
+deleteEntry entry
+
+gAssert mCount = 0 Or (Not mRoot Is Nothing), "mRoot Is Nothing"
 
 Exit Function
 
@@ -821,16 +837,20 @@ If IsEmpty(pCookie.Current) Then Err.Raise ErrorCodes.ErrIllegalStateException, 
 Dim lCurrentEntry As DictionaryEntry
 Set lCurrentEntry = pCookie.Current
 
-'If (Not lCurrentEntry.Left Is Nothing And _
-'    Not lCurrentEntry.Right Is Nothing) _
-'Then Set pCookie.Next = pCookie.Current
-
 If lCurrentEntry Is mFirst Then Set mFirst = Nothing
 mCount = mCount - 1
 
-Set pCookie.Current = Nothing
 
-deleteEntry lCurrentEntry, mRoot
+Debug.Print "Deleting: "; gPrintEntry(lCurrentEntry)
+If lCurrentEntry Is mRoot Then Debug.Print "Trying to delete mRoot: " & gPrintEntry(mRoot)
+
+If deleteEntry(lCurrentEntry) Then
+    ' the deleted entry was an internal one, and the current
+    ' entry now points to the successor
+    Set pCookie.Next = pCookie.Current
+End If
+
+gAssert mCount = 0 Or (Not mRoot Is Nothing), "mRoot Is Nothing"
 
 Exit Sub
 
@@ -922,7 +942,7 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Sub deleteEntry(ByVal p As DictionaryEntry, ByRef pRoot As DictionaryEntry)
+Private Function deleteEntry(ByVal p As DictionaryEntry) As Boolean
 Const ProcName As String = "deleteEntry"
 On Error GoTo Err
 
@@ -933,6 +953,7 @@ If (Not p.Left Is Nothing And Not p.Right Is Nothing) Then
     p.Key = s.Key
     p.Data = s.Data
     Set p = s
+    deleteEntry = True
 End If
 
 ' Start fixup at replacement node, if it exists.
@@ -947,7 +968,8 @@ If (Not replacement Is Nothing) Then
     ' Link replacement to parent
     replacement.Parent = p.Parent
     If p.Parent Is Nothing Then
-        Set pRoot = replacement
+        Set mRoot = replacement
+        gAssert Not mRoot Is Nothing, "mRoot Is Nothing"
     ElseIf (p Is p.Parent.Left) Then
         p.Parent.Left = replacement
     Else
@@ -960,12 +982,12 @@ If (Not replacement Is Nothing) Then
     p.Parent = Nothing
 
     ' Fix replacement
-    If (p.Color = Black) Then fixAfterDeletion replacement, pRoot
+    If (p.Color = Black) Then fixAfterDeletion replacement
     
 ElseIf (p.Parent Is Nothing) Then   ' return if we are the only node.
-    Set pRoot = Nothing
+    Set mRoot = Nothing
 Else  '  No children. Use self as phantom replacement and unlink.
-    If (p.Color = Black) Then fixAfterDeletion p, pRoot
+    If (p.Color = Black) Then fixAfterDeletion p
 
     If (Not p.Parent Is Nothing) Then
         If (p Is p.Parent.Left) Then
@@ -978,73 +1000,72 @@ Else  '  No children. Use self as phantom replacement and unlink.
 End If
 
 
-Exit Sub
+Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
-End Sub
+End Function
 
 Private Sub fixAfterDeletion( _
-                ByVal x As DictionaryEntry, _
-                ByVal pRoot As DictionaryEntry)
+                ByVal x As DictionaryEntry)
 Const ProcName As String = "fixAfterDeletion"
 On Error GoTo Err
 
-Do While (Not x Is pRoot) And colorOf(x) = Black
-    Dim w As DictionaryEntry
-    If x Is leftOf(ParentOf(x)) Then
-        Set w = rightOf(ParentOf(x))
-        If colorOf(w) = Red Then
-            setColor w, Black
-            setColor ParentOf(x), Red
-            rotateLeft ParentOf(x)
-            Set w = rightOf(ParentOf(x))
+Do While (Not x Is mRoot) And colorOf(x) = Black
+    Dim sib As DictionaryEntry
+    If x Is leftOf(parentOf(x)) Then
+        Set sib = rightOf(parentOf(x))
+        If colorOf(sib) = Red Then
+            setColor sib, Black
+            setColor parentOf(x), Red
+            rotateLeft parentOf(x)
+            Set sib = rightOf(parentOf(x))
         End If
         
-        If colorOf(leftOf(w)) = Black _
-            And colorOf(rightOf(w)) = Black _
+        If colorOf(leftOf(sib)) = Black And _
+            colorOf(rightOf(sib)) = Black _
         Then
-            setColor w, Red
-            Set x = ParentOf(x)
+            setColor sib, Red
+            Set x = parentOf(x)
         Else
-            If colorOf(rightOf(w)) = Black Then
-                setColor leftOf(w), Black
-                setColor w, Red
-                rotateRight w
-                Set w = rightOf(ParentOf(x))
+            If colorOf(rightOf(sib)) = Black Then
+                setColor leftOf(sib), Black
+                setColor sib, Red
+                rotateRight sib
+                Set sib = rightOf(parentOf(x))
             End If
-            setColor w, colorOf(ParentOf(x))
-            setColor ParentOf(x), Black
-            setColor rightOf(w), Black
-            rotateLeft ParentOf(x)
-            Set x = pRoot
+            setColor sib, colorOf(parentOf(x))
+            setColor parentOf(x), Black
+            setColor rightOf(sib), Black
+            rotateLeft parentOf(x)
+            Set x = mRoot
         End If
     Else
-        Set w = leftOf(ParentOf(x))
-        If colorOf(w) = Red Then
-            setColor w, Black
-            setColor ParentOf(x), Red
-            rotateRight ParentOf(x)
-            Set w = leftOf(ParentOf(x))
+        Set sib = leftOf(parentOf(x))
+        If colorOf(sib) = Red Then
+            setColor sib, Black
+            setColor parentOf(x), Red
+            rotateRight parentOf(x)
+            Set sib = leftOf(parentOf(x))
         End If
         
-        If colorOf(rightOf(w)) = Black _
-            And colorOf(leftOf(w)) = Black _
+        If colorOf(rightOf(sib)) = Black And _
+            colorOf(leftOf(sib)) = Black _
         Then
-            setColor w, Red
-            Set x = ParentOf(x)
+            setColor sib, Red
+            Set x = parentOf(x)
         Else
-            If colorOf(leftOf(w)) = Black Then
-                setColor leftOf(w), Black
-                setColor w, Red
-                rotateLeft w
-                Set w = leftOf(ParentOf(x))
+            If colorOf(leftOf(sib)) = Black Then
+                setColor rightOf(sib), Black
+                setColor sib, Red
+                rotateLeft sib
+                Set sib = leftOf(parentOf(x))
             End If
-            setColor w, colorOf(ParentOf(x))
-            setColor ParentOf(x), Black
-            setColor leftOf(w), Black
-            rotateRight ParentOf(x)
-            Set x = pRoot
+            setColor sib, colorOf(parentOf(x))
+            setColor parentOf(x), Black
+            setColor leftOf(sib), Black
+            rotateRight parentOf(x)
+            Set x = mRoot
         End If
     End If
 Loop
@@ -1068,49 +1089,49 @@ Do While Not x Is Nothing
     If x Is mRoot Then Exit Do
     If x.Parent.Color = Black Then Exit Do
     
-    If ParentOf(x) Is leftOf(ParentOf(ParentOf(x))) Then
-        Set y = rightOf(ParentOf(ParentOf(x)))
+    If parentOf(x) Is leftOf(parentOf(parentOf(x))) Then
+        Set y = rightOf(parentOf(parentOf(x)))
         If colorOf(y) = Red Then
 
             ' uncle is Red
-            setColor ParentOf(x), Black
+            setColor parentOf(x), Black
             setColor y, Black
-            setColor ParentOf(ParentOf(x)), Red
-            Set x = ParentOf(ParentOf(x))
+            setColor parentOf(parentOf(x)), Red
+            Set x = parentOf(parentOf(x))
         Else
 
             ' uncle is Black
-            If x Is rightOf(ParentOf(x)) Then
-                Set x = ParentOf(x)
+            If x Is rightOf(parentOf(x)) Then
+                Set x = parentOf(x)
                 rotateLeft x
             End If
             
-            setColor ParentOf(x), Black
-            setColor ParentOf(ParentOf(x)), Red
-            rotateRight ParentOf(ParentOf(x))
+            setColor parentOf(x), Black
+            setColor parentOf(parentOf(x)), Red
+            rotateRight parentOf(parentOf(x))
         End If
     Else
 
         ' mirror image of above code
-        Set y = leftOf(ParentOf(ParentOf(x)))
+        Set y = leftOf(parentOf(parentOf(x)))
         If colorOf(y) = Red Then
 
             ' uncle is Red
-            setColor ParentOf(x), Black
+            setColor parentOf(x), Black
             setColor y, Black
-            setColor ParentOf(ParentOf(x)), Red
-            Set x = ParentOf(ParentOf(x))
+            setColor parentOf(parentOf(x)), Red
+            Set x = parentOf(parentOf(x))
         Else
 
             ' uncle is Black
-            If x Is leftOf(ParentOf(x)) Then
-                Set x = ParentOf(x)
+            If x Is leftOf(parentOf(x)) Then
+                Set x = parentOf(x)
                 rotateRight x
             End If
             
-            setColor ParentOf(x), Black
-            setColor ParentOf(ParentOf(x)), Red
-            rotateLeft ParentOf(ParentOf(x))
+            setColor parentOf(x), Black
+            setColor parentOf(parentOf(x)), Red
+            rotateLeft parentOf(parentOf(x))
         End If
     End If
 Loop
@@ -1159,12 +1180,12 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Private Function ParentOf( _
+Private Function parentOf( _
                 ByVal p As DictionaryEntry) As DictionaryEntry
 Const ProcName As String = "parentOf"
 On Error GoTo Err
 
-If Not p Is Nothing Then Set ParentOf = p.Parent
+If Not p Is Nothing Then Set parentOf = p.Parent
 
 Exit Function
 
@@ -1234,6 +1255,7 @@ If Not r.Left Is Nothing Then r.Left.Parent = p
 r.Parent = p.Parent
 If p.Parent Is Nothing Then
     Set mRoot = r
+    gAssert mCount = 0 Or (Not mRoot Is Nothing), "mRoot Is Nothing"
 ElseIf p Is p.Parent.Left Then
     p.Parent.Left = r
 Else
@@ -1263,6 +1285,7 @@ If Not l.Right Is Nothing Then l.Right.Parent = p
 l.Parent = p.Parent
 If p.Parent Is Nothing Then
     Set mRoot = l
+    gAssert mCount = 0 Or (Not mRoot Is Nothing), "mRoot Is Nothing"
 ElseIf p Is p.Parent.Right Then
     p.Parent.Right = l
 Else

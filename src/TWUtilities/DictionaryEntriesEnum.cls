@@ -96,12 +96,6 @@ ElseIf Not pCookie.Current Is Nothing Then
     lCookie = pCookie
     failPoint = "300"
     gFindNext lCookie, mDeleteAsYouGo
-ElseIf Not pCookie.Next Is Nothing Then
-    ' this case occurs when the current item was removed via
-    ' the enumerator, and not at end
-    Set lCookie.Current = pCookie.Next
-    failPoint = "400"
-    Set lCookie.Next = gSuccessor(lCookie.Current, False)
 Else
     Set lCookie.Current = Nothing
     Set lCookie.Next = Nothing
