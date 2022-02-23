@@ -767,7 +767,12 @@ Else
     
     Do While Not tryChars(inputString, EndArray)
 
-        If Not tryChars(inputString, ValueSeparator) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected "","" at position " & mCurrPosn
+        If Not tryChars(inputString, ValueSeparator) Then
+            Err.Raise ErrorCodes.ErrIllegalArgumentException, , _
+                "Expected "","" at position " & mCurrPosn & vbCrLf & _
+                inputString & vbCrLf & _
+                Space(mCurrPosn - 1) & "^"
+        End If
         
         skipWhitespace inputString
         
@@ -1036,7 +1041,10 @@ Do
     ElseIf getNextChar(inputString, nextChar) Then
         sb.Append nextChar
     Else
-        Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected " & delimiter & " at position " & mCurrPosn
+        Err.Raise ErrorCodes.ErrIllegalArgumentException, , _
+            "Expected " & delimiter & " at position " & mCurrPosn & vbCrLf & _
+            inputString & vbCrLf & _
+            Space(mCurrPosn - 1) & "^"
     End If
 Loop
 
