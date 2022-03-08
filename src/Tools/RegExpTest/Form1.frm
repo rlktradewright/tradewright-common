@@ -5,11 +5,29 @@ Begin VB.Form Form1
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   11625
+   BeginProperty Font 
+      Name            =   "Lucida Console"
+      Size            =   9.75
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    LinkTopic       =   "Form1"
    ScaleHeight     =   12990
    ScaleWidth      =   11625
    StartUpPosition =   3  'Windows Default
    Begin VB.TextBox ScratchpadText 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   4095
       Left            =   1320
       TabIndex        =   6
@@ -18,6 +36,15 @@ Begin VB.Form Form1
    End
    Begin VB.CommandButton HelpButton 
       Caption         =   "Reg Exp &help"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   615
       Left            =   120
       TabIndex        =   12
@@ -38,6 +65,15 @@ Begin VB.Form Form1
    End
    Begin VB.CheckBox IgnoreCaseCheck 
       Caption         =   "Ignore case"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   2520
       TabIndex        =   2
@@ -46,6 +82,15 @@ Begin VB.Form Form1
    End
    Begin VB.CheckBox GlobalCheck 
       Caption         =   "Global"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
       Left            =   1320
       TabIndex        =   1
@@ -54,6 +99,15 @@ Begin VB.Form Form1
    End
    Begin VB.CommandButton ExecuteButton 
       Caption         =   "&Execute"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   615
       Left            =   10080
       TabIndex        =   5
@@ -63,6 +117,15 @@ Begin VB.Form Form1
    Begin VB.CommandButton TestButton 
       Caption         =   "&Test"
       Default         =   -1  'True
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   615
       Left            =   10080
       TabIndex        =   4
@@ -98,6 +161,15 @@ Begin VB.Form Form1
    End
    Begin VB.Label Label4 
       Caption         =   "Scratchpad"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   13
@@ -106,6 +178,15 @@ Begin VB.Form Form1
    End
    Begin VB.Label Label3 
       Caption         =   "Execute results"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   11
@@ -113,6 +194,15 @@ Begin VB.Form Form1
       Width           =   1095
    End
    Begin VB.Label ResultLabel 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   10080
       TabIndex        =   10
@@ -121,6 +211,15 @@ Begin VB.Form Form1
    End
    Begin VB.Label Label2 
       Caption         =   "Text"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   9
@@ -129,6 +228,15 @@ Begin VB.Form Form1
    End
    Begin VB.Label Label1 
       Caption         =   "Pattern"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   8
