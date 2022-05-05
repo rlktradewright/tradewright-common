@@ -71,6 +71,17 @@ End Property
 ' Methods
 '@================================================================================
 
+Public Sub gDiagnosticLog( _
+                ByVal pDiagnosticID As String, _
+                ByVal pMessage As String, _
+                ByVal pProcName As String, _
+                ByVal pModuleName As String)
+
+Dim s As String: s = "ID=" & pDiagnosticID & ": " & pMessage
+'''Debug.Print pModuleName & "::" & pProcName & ": " & s
+gLogger.Log s, pProcName, pModuleName, LogLevelDetail
+End Sub
+
 Public Function gGetFutureStateAsString(ByVal pFuture As IFuture) As String
 If pFuture.IsAvailable Then
     gGetFutureStateAsString = "Available"

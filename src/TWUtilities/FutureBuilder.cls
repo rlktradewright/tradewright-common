@@ -57,6 +57,8 @@ Private mFutureAsIFuture                            As IFuture
 
 Private mValue                                      As Object
 
+Private mDiagnosticID                               As String
+
 Private mState                                      As FutureStates
 
 '@================================================================================
@@ -79,11 +81,14 @@ On Error GoTo Err
 
 '''Debug.Print "FutureBuilder::IDeferredAction_Run"
 If Data = ActionComplete Then
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify complete", ProcName, ModuleName
     mFuture.NotifyComplete
 ElseIf Data = ActionCancel Then
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify cancel", ProcName, ModuleName
     NotifyCancel
     mFuture.NotifyCancel
 ElseIf Data = ActionFail Then
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify fail", ProcName, ModuleName
     mFuture.NotifyFail
 End If
 
@@ -125,6 +130,14 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Property
 
+Public Property Let DiagnosticID(ByVal Value As String)
+mDiagnosticID = Value
+End Property
+
+Public Property Get DiagnosticID() As String
+DiagnosticID = mDiagnosticID
+End Property
+
 Public Property Get Future() As IFuture
 Set Future = mFuture
 End Property
@@ -159,6 +172,9 @@ sCancelling = True
 
 mState = FutureStateCancelled
 mFuture.SetCancel
+If mDiagnosticID <> "" Then
+    gDiagnosticLog mDiagnosticID, "Defer action: Cancel", ProcName, ModuleName
+End If
 DeferredActionManager.DeferAction Me, ActionCancel
 
 Exit Sub
@@ -176,6 +192,9 @@ mFuture.SetValue mValue
 mState = FutureStateCompleted
 
 '''Debug.Print "FutureBuilder::Complete"
+If mDiagnosticID <> "" Then
+    gDiagnosticLog mDiagnosticID, "Defer action: Complete", ProcName, ModuleName
+End If
 DeferredActionManager.DeferAction Me, ActionComplete
 
 Exit Sub
@@ -193,6 +212,9 @@ gAssert mFutureAsIFuture.IsPending, "Future is no longer pending"
 mFuture.SetFail pErrorNumber, pErrorMessage, pErrorSource
 mState = FutureStateErrored
 
+If mDiagnosticID <> "" Then
+    gDiagnosticLog mDiagnosticID, "Defer action: Fail", ProcName, ModuleName
+End If
 DeferredActionManager.DeferAction Me, ActionFail
 
 Exit Sub

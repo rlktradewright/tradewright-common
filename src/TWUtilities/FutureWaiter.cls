@@ -62,7 +62,7 @@ Private mDiagnosticID                               As String
 
 Private Sub Class_Initialize()
 Const ProcName As String = "Class_Initialize"
-If mDiagnosticID <> "" Then diagnosticLog "Terminate", ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Terminate", ProcName, ModuleName
 End Sub
 
 '@================================================================================
@@ -73,7 +73,7 @@ Private Sub IDeferredAction_Run(ByVal pData As Variant)
 Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
-If mDiagnosticID <> "" Then diagnosticLog "", ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "", ProcName, ModuleName
 
 Dim lEv As FutureWaitCompletedEventData
 
@@ -82,10 +82,10 @@ If TypeOf pData Is IFuture Then
 Else
     gSetVariant lEv, pData
     If lEv.Future Is Nothing Then
-        If mDiagnosticID <> "" Then diagnosticLog "Notify all complete: " & getMyKey, ProcName, ModuleName
+        If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify all complete: " & getMyKey, ProcName, ModuleName
         RaiseEvent WaitAllCompleted(lEv)
     Else
-        If mDiagnosticID <> "" Then diagnosticLog "Notify completion: " & getFutureKey(lEv.Future) & "; data: " & gVariantToString(lEv.ContinuationData), ProcName, ModuleName
+        If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify completion: " & getFutureKey(lEv.Future) & "; data: " & gVariantToString(lEv.ContinuationData), ProcName, ModuleName
         RaiseEvent WaitCompleted(lEv)
     End If
 End If
@@ -104,7 +104,7 @@ Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
 Const ProcName As String = "IStateChangeListener_Change"
 On Error GoTo Err
 
-If mDiagnosticID <> "" Then diagnosticLog "", ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "", ProcName, ModuleName
 
 If ev.State <> FutureStates.FutureStatePending Then notifyCompletion ev.Source
 
@@ -179,7 +179,7 @@ gDatas.Add pContinuationData, lFutureKey
 If Not IsEmpty(pContinuationData) Then s = s & "; data: " & gVariantToString(pContinuationData)
 
 If mDiagnosticID <> "" Then
-    diagnosticLog s, ProcName, ModuleName
+    gDiagnosticLog mDiagnosticID, s, ProcName, ModuleName
 End If
 
 If pFuture.IsPending Then
@@ -199,7 +199,7 @@ Public Sub Cancel()
 Const ProcName As String = "Cancel"
 On Error GoTo Err
 
-If mDiagnosticID <> "" Then diagnosticLog "", ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "", ProcName, ModuleName
 
 Dim lCurrentFutures As New EnumerableCollection
 
@@ -228,6 +228,7 @@ Loop
 
 Dim lFuture As IFuture
 For Each lFuture In lCurrentFutures
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Cancelling: " & getFutureKey(lFuture), ProcName, ModuleName
     lFuture.Cancel
 Next
 
@@ -241,7 +242,7 @@ Public Sub Clear()
 Const ProcName As String = "Clear"
 On Error GoTo Err
 
-If mDiagnosticID <> "" Then diagnosticLog "", ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "", ProcName, ModuleName
 
 mCleared = True
 
@@ -282,7 +283,7 @@ Public Sub Remove(ByVal pFuture As IFuture)
 Const ProcName As String = "Remove"
 On Error GoTo Err
 
-If mDiagnosticID <> "" Then diagnosticLog getFutureKey(pFuture) & "; state=" & gGetFutureStateAsString(pFuture), ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, getFutureKey(pFuture) & "; state=" & gGetFutureStateAsString(pFuture), ProcName, ModuleName
 
 removeFuture pFuture
 
@@ -295,16 +296,6 @@ End Sub
 '@================================================================================
 ' Helper Functions
 '@================================================================================
-
-Private Sub diagnosticLog( _
-                ByVal pMessage As String, _
-                ByVal pProcName As String, _
-                ByVal pModuleName As String)
-
-Dim s As String: s = "ID=" & mDiagnosticID & ": " & pMessage
-'''Debug.Print pModuleName & "::" & pProcName & ": " & s
-gLogger.Log s, pProcName, pModuleName, LogLevelDetail
-End Sub
 
 Private Function getFutureKey(ByVal pFuture As IFuture) As String
 getFutureKey = getMyKey & "|" & gGetObjectKey(pFuture)
@@ -321,10 +312,10 @@ Const ProcName As String = "notifyCompletion"
 On Error GoTo Err
 
 Dim lFutureKey As String: lFutureKey = getFutureKey(pFuture)
-If mDiagnosticID <> "" Then diagnosticLog lFutureKey, ProcName, ModuleName
+If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, lFutureKey, ProcName, ModuleName
 
 If Not gFutures.Contains(lFutureKey) Then
-    If mDiagnosticID <> "" Then diagnosticLog "Future not found: " & lFutureKey, ProcName, ModuleName
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Future not found: " & lFutureKey, ProcName, ModuleName
     Exit Sub
 End If
 
@@ -343,7 +334,7 @@ If mDiagnosticID <> "" Then
         Set lDataEntry = lDatasEn.Current
         s = s & vbCrLf & "     DataEntry: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data)
     Loop
-    diagnosticLog s, ProcName, ModuleName
+    gDiagnosticLog mDiagnosticID, s, ProcName, ModuleName
 End If
 
 Set lDatasEn = gDatas.EntryEnumeratorFromKey(lFutureKey)
@@ -352,7 +343,7 @@ Do While lDatasEn.MoveNext
     If lDataEntry.Key <> lFutureKey Then Exit Do
     gSetVariant lEv.ContinuationData, lDataEntry.Data
     If mDiagnosticID <> "" Then
-        diagnosticLog "Defer action: notify completion: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data), ProcName, ModuleName
+        gDiagnosticLog mDiagnosticID, "Defer action: notify completion: key: " & lDataEntry.Key & "; data: " & gVariantToString(lDataEntry.Data), ProcName, ModuleName
     End If
     DeferredActionManager.DeferAction Me, lEv
 Loop
@@ -372,7 +363,7 @@ Else
             Exit Sub
         End If
     End If
-    If mDiagnosticID <> "" Then diagnosticLog "Defer action: notify all completed: key: " & getMyKey, ProcName, ModuleName
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Defer action: notify all completed: key: " & getMyKey, ProcName, ModuleName
     DeferredActionManager.DeferAction Me, lEv
 End If
 
@@ -393,7 +384,7 @@ Dim lDatasEn As Enumerator: Set lDatasEn = gDatas.EntryEnumeratorFromKey(lFuture
 Do While lDatasEn.MoveNext
     Dim lDataEntry As DictionaryEntry: Set lDataEntry = lDatasEn.Current
     If lDataEntry.Key <> lFutureKey Then Exit Do
-    If mDiagnosticID <> "" Then diagnosticLog lFutureKey & "; data: " & gVariantToString(lDataEntry.Data), ProcName, ModuleName
+    If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, lFutureKey & "; data: " & gVariantToString(lDataEntry.Data), ProcName, ModuleName
     lDatasEn.Remove
 Loop
 
