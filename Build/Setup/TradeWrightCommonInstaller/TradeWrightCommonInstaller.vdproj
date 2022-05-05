@@ -75,6 +75,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2006BF960CC44F108CC9E5D480B4A919"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2490F97FCC69431A82240255BB88A45C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,12 +106,6 @@
         "Entry"
         {
         "MsmKey" = "8:_43831FDBED344EC99F433928DCA34F66"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_490CDACEDCB5439C92520480E9F8EEDB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -315,12 +315,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_99F977F6C6C34295BC3513EF87208A3B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9DDD79D52626BFAF6AE121DF0C1A1E38"
         "OwnerKey" = "8:_B1FE6334E127428EAC3711C42693CEB0"
         "MsmSig" = "8:_UNDEFINED"
@@ -418,6 +412,12 @@
         "Entry"
         {
         "MsmKey" = "8:_B9865D3780894588BE11BFDA58AE8ECF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C019A3F2567A4FC79C34678431D1BCE5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -868,7 +868,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-125.msi"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-126.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -968,11 +968,11 @@
                 {
                     "_0CF692751EFBD1452C157CF4DDAD5786"
                     {
-                    "Name" = "8:Interop.ExtProps40.DLL"
+                    "Name" = "8:Interop.ExtProps40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.ExtProps40.DLL"
+            "SourcePath" = "8:Interop.ExtProps40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1158,7 +1158,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.TWUtilities40, Version=27.7.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Interop.TWUtilities40, Version=27.9.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_4143679BB2BC491F812D5CB6BA741D31"
@@ -1245,11 +1245,11 @@
                 {
                     "_55F78BB6B840783BA88E96EA9BB36B64"
                     {
-                    "Name" = "8:Interop.TWWin32API.DLL"
+                    "Name" = "8:Interop.TWWin32API.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.TWWin32API.DLL"
+            "SourcePath" = "8:Interop.TWWin32API.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1316,11 +1316,11 @@
                 {
                     "_6D79FB5D892AC354F38EDDF322EB6157"
                     {
-                    "Name" = "8:Interop.mscomctl.DLL"
+                    "Name" = "8:Interop.mscomctl.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.mscomctl.DLL"
+            "SourcePath" = "8:Interop.mscomctl.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1509,11 +1509,11 @@
                 {
                     "_7ECCB2ADC45F3AE1D5EE855206294CD9"
                     {
-                    "Name" = "8:Interop.GraphObjUtils40.DLL"
+                    "Name" = "8:Interop.GraphObjUtils40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.GraphObjUtils40.DLL"
+            "SourcePath" = "8:Interop.GraphObjUtils40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1611,11 +1611,11 @@
                 {
                     "_95E56866F351A0A1DB2D7D92AF190FB2"
                     {
-                    "Name" = "8:VBRUN.DLL"
+                    "Name" = "8:VBRUN.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:VBRUN.DLL"
+            "SourcePath" = "8:VBRUN.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1693,11 +1693,11 @@
                 {
                     "_9DDD79D52626BFAF6AE121DF0C1A1E38"
                     {
-                    "Name" = "8:Interop.TWControls40.DLL"
+                    "Name" = "8:Interop.TWControls40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.TWControls40.DLL"
+            "SourcePath" = "8:Interop.TWControls40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -1877,11 +1877,11 @@
                 {
                     "_AF5A1109CAC3FAE08DA01822BB2D3D73"
                     {
-                    "Name" = "8:Interop.GraphicsUtils40.DLL"
+                    "Name" = "8:Interop.GraphicsUtils40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.GraphicsUtils40.DLL"
+            "SourcePath" = "8:Interop.GraphicsUtils40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2041,11 +2041,11 @@
                 {
                     "_C690070F3E395DAF29E2BA11EA68CEF4"
                     {
-                    "Name" = "8:Interop.LayeredGraphics40.DLL"
+                    "Name" = "8:Interop.LayeredGraphics40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.LayeredGraphics40.DLL"
+            "SourcePath" = "8:Interop.LayeredGraphics40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2072,11 +2072,11 @@
                 {
                     "_CC853D88A242E8E236B601BA4C76D91D"
                     {
-                    "Name" = "8:ADODB.DLL"
+                    "Name" = "8:ADODB.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ADODB.DLL"
+            "SourcePath" = "8:ADODB.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2098,16 +2098,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.TWUtilities40, Version=27.7.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Interop.TWUtilities40, Version=27.9.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_CCC3F9658778CD1A9905AA97E4150FFB"
                     {
-                    "Name" = "8:Interop.TWUtilities40.DLL"
+                    "Name" = "8:Interop.TWUtilities40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.TWUtilities40.DLL"
+            "SourcePath" = "8:Interop.TWUtilities40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2134,11 +2134,11 @@
                 {
                     "_CE2EB64880325EB4B39C6764768613D0"
                     {
-                    "Name" = "8:Scripting.DLL"
+                    "Name" = "8:Scripting.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Scripting.DLL"
+            "SourcePath" = "8:Scripting.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2216,11 +2216,11 @@
                 {
                     "_E7F0F19F12CC976E965139EE855BCE34"
                     {
-                    "Name" = "8:Interop.ExtEvents40.DLL"
+                    "Name" = "8:Interop.ExtEvents40.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Interop.ExtEvents40.DLL"
+            "SourcePath" = "8:Interop.ExtEvents40.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2267,11 +2267,11 @@
                 {
                     "_F087E50F565A15BD8E6C8CF5A158BCAC"
                     {
-                    "Name" = "8:VBA.DLL"
+                    "Name" = "8:VBA.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:VBA.DLL"
+            "SourcePath" = "8:VBA.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_32E9C3C65F214B5A90D6ECA7C7AE15C4"
@@ -2387,15 +2387,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TradeWright Utilities v4.0"
-        "ProductCode" = "8:{1F3C006E-E9D4-4679-84F1-3EE9C62C9BFA}"
-        "PackageCode" = "8:{9E5BD0B1-478E-4515-92DC-0DEEB188C731}"
+        "ProductCode" = "8:{C45B9ED6-F7BC-48D7-9FD7-2C1E4D0EEA5C}"
+        "PackageCode" = "8:{4F2DCF88-8695-4D87-8268-20CEA5ED0BC9}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:4.0.125"
+        "ProductVersion" = "8:4.0.126"
         "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2951,16 +2951,16 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_490CDACEDCB5439C92520480E9F8EEDB"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2006BF960CC44F108CC9E5D480B4A919"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-125.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-126.msm"
                 "Properties"
                 {
-                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     {
-                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
@@ -2976,16 +2976,16 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_99F977F6C6C34295BC3513EF87208A3B"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C019A3F2567A4FC79C34678431D1BCE5"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-125.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-126.msm"
                 "Properties"
                 {
-                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     {
-                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
