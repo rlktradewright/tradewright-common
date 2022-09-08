@@ -1795,6 +1795,34 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Sub gWait( _
+                ByVal waitTimeMillisecs As Long)
+Const ProcName As String = "gWait"
+On Error GoTo Err
+
+doWait CCur(-waitTimeMillisecs)
+ 
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
+Public Sub gWaitUntilTime( _
+                ByVal waitUntil As Date)
+Const ProcName As String = "gWaitUntilTime"
+On Error GoTo Err
+
+gAssertArgument waitUntil >= gGetTimestamp, "Specified time is earlier than now"
+
+doWait gVbDateToFileTime(gLocalToUtc(waitUntil))
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
 Public Function gXMLEncode(ByVal Value As String) As String
 Const ProcName As String = "gXMLEncode"
 On Error GoTo Err
@@ -1841,6 +1869,38 @@ Exit Function
 Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
+
+Private Sub doWait( _
+                ByVal dueTime As Currency)
+Const ProcName As String = "doWait"
+On Error GoTo Err
+
+Dim hTimer As Long
+Dim ret As Long
+
+hTimer = CreateWaitableTimer(0, True, "")
+
+ret = SetWaitableTimer(hTimer, dueTime, 0, 0, 0, False)
+
+Do
+    ret = MsgWaitForMultipleObjects(1, _
+                                    hTimer, _
+                                    False, _
+                                    INFINITE, _
+                                    QS_ALLEVENTS)
+    gAssert ret <> WAIT_FAILED, "MsgWaitForMultipleObjects failed with Error code: " & Err.LastDllError, ErrorCodes.ErrRuntimeException
+
+    DoEvents
+    'gLogger.Log "ret=" & ret, ProcName, ModuleName
+Loop Until ret = WAIT_OBJECT_0
+
+CloseHandle hTimer
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
 
 Private Function findMainWindowHandle() As Long
 Const ProcName As String = "findMainWindowHandle"
