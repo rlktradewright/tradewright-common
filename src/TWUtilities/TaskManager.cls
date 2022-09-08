@@ -188,7 +188,7 @@ Set mTimerList = GTimerList.gGetTimerList
 End Sub
 
 '@================================================================================
-' Enumerable Interface Members
+' IEnumerable Interface Members
 '@================================================================================
 
 Private Property Get IEnumerable_Enumerator() As Enumerator
@@ -363,7 +363,7 @@ IEnumerable_UpdateSequence = mUpdateSequence
 End Property
 
 '@================================================================================
-' StateChangeListener Interface Members
+' IStateChangeListener Interface Members
 '@================================================================================
 
 Private Sub IStateChangeListener_Change(ev As StateChangeEventData)
@@ -1391,6 +1391,8 @@ On Error GoTo Err
 #If trace Then
     gNullTracer.EnterProcedure "postScheduleTasksMessage", ProjectName, ModuleName, ""
 #End If
+
+gLogger.Log "Request reschedule", ProcName, ModuleName, LogLevelHighDetail
 
 gPostUserMessage UserMessageScheduleTasks, 0, 0
 mScheduleInvoked = True

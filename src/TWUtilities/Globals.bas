@@ -2142,7 +2142,6 @@ ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
     Globals.gTerminate
     WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
 ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
-    DoEvents
     gTaskManager.ScheduleTasks
 ElseIf uMsg = UserMessages.UserMessageTimer Then
     GIntervalTimer.gProcessUserTimerMsg wParam
