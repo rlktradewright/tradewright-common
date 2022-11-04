@@ -153,6 +153,39 @@ If TimeGetDevCaps(TC, 8) <> TIMERR_NOERROR Then gHandleWin32Error
 mMinRes = IIf(TC.wPeriodMin < MinTimerResolution, MinTimerResolution, TC.wPeriodMin)
 If mMinRes > TC.wPeriodMax Then mMinRes = TC.wPeriodMax
 
+' HighQoS
+' Turn EXECUTION_SPEED throttling off.
+
+Dim lPowerThrottling As PROCESS_POWER_THROTTLING_STATE
+
+lPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
+lPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED
+lPowerThrottling.StateMask = 0
+
+Dim lResult As Long
+lResult = SetProcessInformation(GetCurrentProcess(), _
+                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
+                      VarPtr(lPowerThrottling), _
+                      Len(lPowerThrottling))
+If lResult = 0 Then
+    If GetLastError <> 87 Then gHandleWin32Error
+End If
+
+' Always honor Timer Resolution Requests.
+
+lPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
+lPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION
+lPowerThrottling.StateMask = 0
+lPowerThrottling.StateMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION
+
+lResult = SetProcessInformation(GetCurrentProcess(), _
+                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
+                      VarPtr(lPowerThrottling), _
+                      Len(lPowerThrottling))
+If lResult = 0 Then
+    If GetLastError <> 87 Then gHandleWin32Error
+End If
+
 TimeBeginPeriod mMinRes
 
 If DuplicateHandle(GetCurrentProcess, GetCurrentThread, GetCurrentProcess, VarPtr(mhThread), 0, 0, DUPLICATE_SAME_ACCESS) = 0 Then gHandleWin32Error

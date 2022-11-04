@@ -209,6 +209,22 @@ library TWWin32API
 //    Enums
 //---------------------------------------------------------------------
  
+	typedef [uuid(8426146B-CE11-42C9-A274-0A99AD4BF70A), version(1.0)]
+	enum {
+		ProcessMemoryPriority,
+		ProcessMemoryExhaustionInfo,
+		ProcessAppMemoryInfo,
+		ProcessInPrivateInfo,
+		ProcessPowerThrottling,
+		ProcessReservedValue1,
+		ProcessTelemetryCoverageInfo,
+		ProcessProtectionLevelInfo,
+		ProcessLeapSecondInfo,
+		ProcessMachineTypeInfo,
+		ProcessInformationClassMax
+	} PROCESS_INFORMATION_CLASS;
+	
+	
 //---------------------------------------------------------------------
 //    Structs
 //---------------------------------------------------------------------
@@ -386,6 +402,10 @@ library TWWin32API
         long lopnColor; 
     } LOGPEN; 
 
+	typedef struct MEMORY_PRIORITY_INFORMATION {
+		long MemoryPriority;
+	} MEMORY_PRIORITY_INFORMATION;
+
     typedef struct MINMAXINFO {
         GDI_POINT ptReserved;
         GDI_POINT ptMaxSize;
@@ -433,6 +453,17 @@ library TWWin32API
         GDI_RECT rcl;
         long pdx;
     } POLYTEXT;
+	
+	typedef struct PROCESS_LEAP_SECOND_INFO {
+		long Flags;
+		long Reserved;
+	} PROCESS_LEAP_SECOND_INFO;
+
+	typedef struct PROCESS_POWER_THROTTLING_STATE {
+		long Version;
+		long ControlMask;
+		long StateMask;
+	} PROCESS_POWER_THROTTLING_STATE;
 
     typedef struct RGNDATAHEADER { 
         long dwSize; 
@@ -1801,6 +1832,13 @@ library TWWin32API
             [in] long lpDest, 
             [in] long numBytes);
 
+        [entry("SetProcessInformation")]
+        long SetProcessInformation( 
+            [in] long hProcess,
+            [in] PROCESS_INFORMATION_CLASS ProcessInformationClass,
+                 long ProcessInformation,
+            [in] long ProcessInformationSize);
+
         [entry("SetThreadPriority")]
         long SetThreadPriority( 
             [in] long hThread,
@@ -2768,6 +2806,12 @@ library TWWin32API
         const long LWA_OPAQUE           = 0xFF;
 
         const long MAX_PATH             = 260;
+		
+		const long MEMORY_PRIORITY_VERY_LOW 	= 1;
+		const long MEMORY_PRIORITY_LOW 			= 2;
+		const long MEMORY_PRIORITY_MEDIUM 		= 3;
+		const long MEMORY_PRIORITY_BELOW_NORMAL = 4;
+		const long MEMORY_PRIORITY_NORMAL 		= 5;
 
         const long MK_CONTROL          =0x0008;
         const long MK_LBUTTON          =0x0001;
@@ -2838,6 +2882,10 @@ library TWWin32API
         const long FIXED_PITCH             = 1;
         const long VARIABLE_PITCH          = 2;
 
+        const long PROCESS_POWER_THROTTLING_CURRENT_VERSION = 1;
+        const long PROCESS_POWER_THROTTLING_EXECUTION_SPEED = 0x1;
+		const long PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION =0x4;
+		
         const long PS_ALTERNATE                     = 8;
         const long PS_COSMETIC                         = 0x0;
         const long PS_DASH                             = 1;

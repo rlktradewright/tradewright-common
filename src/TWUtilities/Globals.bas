@@ -648,6 +648,8 @@ mUnhandledErrorHandler.Notify pProcedureName, pModuleName, ProjectName, pFailpoi
 End Sub
 
 Public Sub gHandleWin32Error()
+Dim lErr As Long
+lErr = GetLastError
 Err.Raise ErrorCodes.ErrRuntimeException, , "Windows Error " & GetLastError
 End Sub
 
