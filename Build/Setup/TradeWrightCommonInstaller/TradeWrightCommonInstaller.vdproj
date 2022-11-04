@@ -75,12 +75,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2006BF960CC44F108CC9E5D480B4A919"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2490F97FCC69431A82240255BB88A45C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -112,6 +106,12 @@
         "Entry"
         {
         "MsmKey" = "8:_4AAFDF95C9264751B33A5B554D4AA93B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4CD5317BBC94471E8C417187437360CB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -285,6 +285,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_948C62CEED534D6A8525C7847FF1F5AB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_95E56866F351A0A1DB2D7D92AF190FB2"
         "OwnerKey" = "8:_2EF9658B9E354EC6914AE7FC10E86C7E"
         "MsmSig" = "8:_UNDEFINED"
@@ -412,12 +418,6 @@
         "Entry"
         {
         "MsmKey" = "8:_B9865D3780894588BE11BFDA58AE8ECF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C019A3F2567A4FC79C34678431D1BCE5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -868,7 +868,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-126.msi"
+        "OutputFilename" = "8:..\\Bin\\TradeWrightCommonInstaller4-0-127.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -2387,15 +2387,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TradeWright Utilities v4.0"
-        "ProductCode" = "8:{C45B9ED6-F7BC-48D7-9FD7-2C1E4D0EEA5C}"
-        "PackageCode" = "8:{4F2DCF88-8695-4D87-8268-20CEA5ED0BC9}"
+        "ProductCode" = "8:{D4A692C6-CD8D-45A3-A8E2-CC25022257FF}"
+        "PackageCode" = "8:{11CEC45B-272B-4925-8B7B-F0766908B3D8}"
         "UpgradeCode" = "8:{120FCB8B-5058-4058-AFEA-8B6CF8856206}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:4.0.126"
+        "ProductVersion" = "8:4.0.127"
         "Manufacturer" = "8:TradeWright Software Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2951,16 +2951,16 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2006BF960CC44F108CC9E5D480B4A919"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4CD5317BBC94471E8C417187437360CB"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-126.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-127.msm"
                 "Properties"
                 {
-                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     {
-                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
+                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
@@ -2976,16 +2976,16 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C019A3F2567A4FC79C34678431D1BCE5"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_948C62CEED534D6A8525C7847FF1F5AB"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:..\\Bin\\TradeWrightCommon4-0-126.msm"
+            "SourcePath" = "8:..\\Bin\\TradeWrightCommonExternalComponents4-0-127.msm"
                 "Properties"
                 {
-                    "_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     {
-                    "Name" = "8:_B6805193FBF747E796CBE61421A29A58.D788F584E95341F9BFCE168A4548C3FF"
+                    "Name" = "8:_9849EEBB245242168136938A0FB3E8A4.1B89D150F6B6407EA210D9517AA64D26"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
