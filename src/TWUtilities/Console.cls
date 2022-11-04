@@ -561,7 +561,6 @@ Do
             sNoInputOnPreviousCall = True
             mReadingFromConsole = False
             ReadLineFromConsole = ""
-            gLogger.Log "No input", ProcName, ModuleName, LogLevelMediumDetail
             Exit Function
         End If
         sNoInputOnPreviousCall = False
@@ -570,10 +569,8 @@ Do
     If Right$(s, 2) = vbCrLf Then Exit Do
     
     If mOverwriteMode Then
-        gLogger.Log "mStrBld.Overwrite " & s, ProcName, ModuleName, LogLevelMediumDetail
         mStrBld.Overwrite s, mCurrPosition
     Else
-        gLogger.Log "mStrBld.Insert " & s, ProcName, ModuleName, LogLevelMediumDetail
         mStrBld.Insert s, mCurrPosition
     End If
     
@@ -584,7 +581,6 @@ ReadLineFromConsole = mStrBld.ToString
 mReadingFromConsole = False
 
 If ReadLineFromConsole <> "" Then updateInputHistory ReadLineFromConsole
-gLogger.Log "Line from console=" & ReadLineFromConsole, ProcName, ModuleName, LogLevelMediumDetail
 
 Exit Function
 
@@ -728,9 +724,13 @@ If mReadingFromConsole Then
     ' we need to move the prompt and anything the user has already typed out of the
     ' way. We do this by clearing it all out, then writing the msg argument,
     ' then rewriting the prompt and the input so far
-    clearPromptAndUserInput
-    writeToConsole msg
-    writePromptAndUserInput
+    Dim s() As String: s = Split(msg, vbCrLf)
+    Dim i As Long
+    For i = 0 To UBound(s)
+        clearPromptAndUserInput
+        writeToConsole msg & vbCrLf
+        writePromptAndUserInput
+    Next
 Else
     writeToConsole msg
 End If
@@ -819,8 +819,6 @@ Const ProcName As String = "echoToConsole"
 On Error GoTo Err
 
 If Not mReadingFromConsole Then Err.Raise ErrorCodes.ErrIllegalStateException, , "Not reading from console - can't echo"
-
-gLogger.Log "Echoing: " & Value, ProcName, ModuleName, LogLevelMediumDetail
 
 Dim str As String
 If echoChar = "" Then
@@ -1038,7 +1036,6 @@ End If
 
 
 If Not waitForConsoleInput Then
-    gLogger.Log "waitForConsoleInput returned False", ProcName, ModuleName, LogLevelMediumDetail
     pValue = ""
     readInputFromConsole = False
     Exit Function
@@ -1070,7 +1067,6 @@ Case KEY_EVENT
             For i = 2 To gMin(keyEventRec.wRepeatCount, 10)
                 pValue = pValue & Key
             Next
-            gLogger.Log "ConsoleInput=" & pValue, ProcName, ModuleName, LogLevelMediumDetail
             echoToConsole pValue, pEchoChar, mOverwriteMode
         End If
     Else
@@ -1079,7 +1075,6 @@ Case KEY_EVENT
         Select Case keyEventRec.wVirtualKeyCode
         Case vbKeyReturn, vbKeySeparator
             If keyEventRec.bKeyDown Then
-                gLogger.Log "ConsoleInput is vbKeyReturn or vbKeySeparator", ProcName, ModuleName, LogLevelMediumDetail
                 pValue = vbCrLf
                 ' we'll ignore the repeat count because it's difficult to handle
                 echoToConsole pValue, ""
@@ -1432,7 +1427,6 @@ ret = MsgWaitForMultipleObjects(1, _
                                 INFINITE, _
                                 QS_ALLEVENTS)
 If ret = WAIT_FAILED Then gHandleWin32Error
-gLogger.Log "ret=" & ret, ProcName, ModuleName, LogLevelMediumDetail
 
 waitForConsoleInput = (ret = WAIT_OBJECT_0)
 
