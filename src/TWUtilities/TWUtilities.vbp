@@ -114,6 +114,7 @@ Class=EnumerableCollectionEnum; EnumerableCollectionEnum.cls
 Module=GLists; GLists.bas
 Class=BoxedValue; BoxedValue.cls
 Module=GFutureWaiter; GFutureWaiter.bas
+Class=DoEventsTask; DoEventsTask.cls
 Startup="Sub Main"
 HelpFile=""
 Title="TWUtilities"

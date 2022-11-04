@@ -736,6 +736,7 @@ ConcurrencyText = TaskConcurrency
 LowerPriorityCheck.Value = IIf(RunTasksAtLowerThreadPriority, vbChecked, vbUnchecked)
 Set mSchedulingIntervalTimer = CreateIntervalTimer(10, ExpiryTimeUnitSeconds, 10000)
 mSchedulingIntervalTimer.StartTimer
+RunEventDispatchTask
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

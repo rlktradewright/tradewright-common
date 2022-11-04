@@ -3620,6 +3620,21 @@ Public Function RedirectMethod( _
 RedirectMethod = gRedirectMethod(pObjectPointer, pvTableIndex, pNewAddress)
 End Function
 
+Public Sub RunEventDispatchTask( _
+                Optional ByVal pDispatchInterval As Long = 15)
+Const ProcName As String = "RunEventDispatchTask"
+On Error GoTo Err
+
+Dim lTask As New DoEventsTask
+lTask.Initialise pDispatchInterval
+StartTask lTask, PriorityLow
+
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Sub
+
 ''
 ' Saves an <code>StdFont</code> object to a <code>ConfigurationSection</code> object.
 ' @param aFont
