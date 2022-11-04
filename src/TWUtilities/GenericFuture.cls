@@ -83,6 +83,7 @@ Private Sub IFuture_Cancel()
 Const ProcName As String = "IFuture_Cancel"
 On Error GoTo Err
 
+mState = FutureStateCancelled
 If Not mFutureBuilder Is Nothing Then mFutureBuilder.Cancel
 
 Exit Sub
@@ -207,6 +208,11 @@ Friend Sub NotifyComplete()
 Const ProcName As String = "NotifyComplete"
 On Error GoTo Err
 
+If mState = FutureStateCancelled Then
+    NotifyCancel
+    Exit Sub
+End If
+
 gAssert mState = FutureStateCompleted, "Invalid state"
 fireStateChange FutureStateCompleted
 mListeners.Clear
@@ -222,6 +228,11 @@ End Sub
 Friend Sub NotifyFail()
 Const ProcName As String = "NotifyFail"
 On Error GoTo Err
+
+If mState = FutureStateCancelled Then
+    NotifyCancel
+    Exit Sub
+End If
 
 gAssert mState = FutureStateErrored, "Invalid state"
 
@@ -257,6 +268,8 @@ Friend Sub SetFail(ByVal pErrorNumber As Long, ByVal pErrorMessage As String, By
 Const ProcName As String = "SetFail"
 On Error GoTo Err
 
+If mState = FutureStateCancelled Then Exit Sub
+
 mErrorNumber = pErrorNumber
 mErrorMessage = pErrorMessage
 mErrorSource = pErrorSource
@@ -269,6 +282,8 @@ gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Friend Sub SetValue(ByVal pValue As Object)
+If mState = FutureStateCancelled Then Exit Sub
+
 Set mValue = pValue
 mState = FutureStateCompleted
 End Sub
