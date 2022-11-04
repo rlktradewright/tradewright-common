@@ -289,6 +289,8 @@ ApplicationGroupName = "TradeWright"
 ApplicationName = "LayeredGraphicsTest1"
 SetupDefaultLogging Command
 Randomize
+
+RunEventDispatchTask
 End Sub
 
 Private Sub Form_Resize()
