@@ -459,9 +459,20 @@ Const ProcName As String = "gDoubleFromString"
 On Error GoTo Err
 
 Static sDecimalSep As String
-If sDecimalSep = "" Then sDecimalSep = Mid$(CStr(0.5), 2, 1)
+Static sThousandsSep As String
+If sDecimalSep = "" Then
+    Dim s As String
+    s = Format(9999.9, "#,###.0")
+    sDecimalSep = Mid$(s, 6, 1)
+    sThousandsSep = Mid$(s, 2, 1)
+End If
 
-gDoubleFromString = CDbl(Replace$(v, ".", sDecimalSep))
+If sDecimalSep <> "." Then
+    v = Replace$(v, ".", sDecimalSep)
+    v = Replace$(v, ",", sThousandsSep)
+End If
+
+gDoubleFromString = CDbl(v)
 
 Exit Function
 
