@@ -74,8 +74,9 @@ Private mLastEnding As Long
 
 Private mNumRunningTimers As Long
 
-Private mhThread As Long
 Private mhTimerQueue As Long
+
+Private mPowerThrottling As PROCESS_POWER_THROTTLING_STATE
 
 '@================================================================================
 ' Class Event Handlers
@@ -104,6 +105,13 @@ Public Function BeginTimer( _
 Const ProcName As String = "BeginTimer"
 On Error GoTo Err
 
+Static sInitialised As Boolean
+If Not sInitialised Then
+    allowTimerResolution
+    TimeBeginPeriod 1   ' mMinRes
+    sInitialised = True
+End If
+
 Dim lTimerNumber As Long
 lTimerNumber = allocateEntry
 
@@ -111,7 +119,7 @@ With mTimers(lTimerNumber)
     Set .TimerObj = pTimerObj
     .Periodic = pPeriodic
     If CreateTimerQueueTimer(VarPtr(.Handle), mhTimerQueue, AddressOf TimerProc, lTimerNumber, pInterval, IIf(.Periodic, pInterval, 0), WT_EXECUTEINTIMERTHREAD) = 0 Then gHandleWin32Error
-    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log  "Started timer: handle: " & CStr(.Handle) & "; interval: " & CStr(pInterval), ProcName, ModuleName,LogLevelHighDetail
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Started timer: handle: " & CStr(.Handle) & "; interval: " & CStr(pInterval), ProcName, ModuleName, LogLevelHighDetail
     
     mNumRunningTimers = mNumRunningTimers + 1
     
@@ -153,42 +161,6 @@ If TimeGetDevCaps(TC, 8) <> TIMERR_NOERROR Then gHandleWin32Error
 mMinRes = IIf(TC.wPeriodMin < MinTimerResolution, MinTimerResolution, TC.wPeriodMin)
 If mMinRes > TC.wPeriodMax Then mMinRes = TC.wPeriodMax
 
-' HighQoS
-' Turn EXECUTION_SPEED throttling off.
-
-Dim lPowerThrottling As PROCESS_POWER_THROTTLING_STATE
-
-lPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
-lPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED
-lPowerThrottling.StateMask = 0
-
-Dim lResult As Long
-lResult = SetProcessInformation(GetCurrentProcess(), _
-                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
-                      VarPtr(lPowerThrottling), _
-                      Len(lPowerThrottling))
-If lResult = 0 Then
-    If GetLastError <> 87 Then gHandleWin32Error
-End If
-
-' Always honor Timer Resolution Requests.
-
-lPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
-lPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION
-lPowerThrottling.StateMask = 0
-lPowerThrottling.StateMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION
-
-lResult = SetProcessInformation(GetCurrentProcess(), _
-                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
-                      VarPtr(lPowerThrottling), _
-                      Len(lPowerThrottling))
-If lResult = 0 Then
-    If GetLastError <> 87 Then gHandleWin32Error
-End If
-
-TimeBeginPeriod mMinRes
-
-If DuplicateHandle(GetCurrentProcess, GetCurrentThread, GetCurrentProcess, VarPtr(mhThread), 0, 0, DUPLICATE_SAME_ACCESS) = 0 Then gHandleWin32Error
 mhTimerQueue = CreateTimerQueue
 If mhTimerQueue = 0 Then gHandleWin32Error
 
@@ -273,9 +245,9 @@ With mTimers(lIndex)
 End With
 
 If lIndex > sMaxIndex Then
-    If gLogger.IsLoggable(LogLevelHighDetail) Then
-        gLogger.Log "Max index: " & sMaxIndex, ProcName, ModuleName, LogLevelHighDetail
-    End If
+'    If gLogger.IsLoggable(LogLevelHighDetail) Then
+'        gLogger.Log "Max index: " & sMaxIndex, ProcName, ModuleName, LogLevelHighDetail
+'    End If
     sMaxIndex = lIndex
 End If
 allocateEntry = lIndex
@@ -309,9 +281,9 @@ If mFirstEnding <> NullIndex Then
             Exit Do
         End If
     Loop
-    If gLogger.IsLoggable(LogLevelHighDetail) Then
-        gLogger.Log "Released timers: " & lCount, ProcName, ModuleName, LogLevelHighDetail
-    End If
+'    If gLogger.IsLoggable(LogLevelHighDetail) Then
+'        gLogger.Log "Released timers: " & lCount, ProcName, ModuleName, LogLevelHighDetail
+'    End If
 End If
 
 If mFirstFree <> NullIndex Then
@@ -335,6 +307,65 @@ allocateFirstFree = mFirstFree
 mFirstFree = mTimers(mFirstFree).Next
 End Function
 
+Private Sub allowTimerResolution()
+Const ProcName As String = "allowTimerResolution"
+On Error GoTo Err
+
+Dim failPoint As String
+
+' HighQoS
+' Turn EXECUTION_SPEED throttling off.
+
+' Don't throttle speed
+failPoint = "Don't throttle speed"
+
+mPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
+mPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED
+mPowerThrottling.StateMask = 0
+
+Dim lResult As Long
+lResult = SetProcessInformation(GetCurrentProcess(), _
+                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
+                      VarPtr(mPowerThrottling), _
+                      Len(mPowerThrottling))
+If lResult = 0 Then
+    failPoint = "GetLastError 1"
+    Dim lLastError As Long: lLastError = GetLastError
+    'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_EXECUTION_SPEED"
+    If lLastError = 0 Then
+    ElseIf lLastError <> 87 Then
+        gHandleWin32Error
+    End If
+End If
+
+' Honor Timer Resolution Requests
+failPoint = "Honor Timer Resolution Requests"
+
+mPowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION
+mPowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION
+mPowerThrottling.StateMask = 0
+
+lResult = SetProcessInformation(GetCurrentProcess(), _
+                      PROCESS_INFORMATION_CLASS.ProcessPowerThrottling, _
+                      VarPtr(mPowerThrottling), _
+                      Len(mPowerThrottling))
+If lResult = 0 Then
+    failPoint = "GetLastError 2"
+    lLastError = GetLastError
+    'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION"
+    If lLastError = 0 Then
+    ElseIf lLastError <> 87 Then
+        gHandleWin32Error
+    End If
+End If
+
+Exit Sub
+
+Err:
+MsgBox Err.Description & vbCrLf & _
+        Err.Source & ": " & failPoint, , "Error!"
+gHandleUnexpectedError ProcName, ModuleName, failPoint
+End Sub
 
 Private Sub releaseEntry( _
                 ByVal pIndex As Long)

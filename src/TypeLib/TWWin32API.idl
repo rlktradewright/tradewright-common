@@ -1836,7 +1836,7 @@ library TWWin32API
         long SetProcessInformation( 
             [in] long hProcess,
             [in] PROCESS_INFORMATION_CLASS ProcessInformationClass,
-                 long ProcessInformation,
+            [in] long ProcessInformation,
             [in] long ProcessInformationSize);
 
         [entry("SetThreadPriority")]

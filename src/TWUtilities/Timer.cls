@@ -184,9 +184,11 @@ If Not mRepeat Then
 ElseIf mRandomIntervals Then
     stopTimerEx
     interval = Rnd * mTimerIntervalMillisecs + 1
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mTimerIntervalMillisecs & ", False, Me)", ProcName, ModuleName, LogLevelHighDetail
     mTimerNumber = BeginTimer(interval, False, Me)
 ElseIf mFirstInterval Then
     stopTimerEx
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mTimerIntervalMillisecs & ", True, Me)", ProcName, ModuleName, LogLevelHighDetail
     mTimerNumber = BeginTimer(mTimerIntervalMillisecs, True, Me)
 End If
 
@@ -237,14 +239,15 @@ If mFirstTimerIntervalMillisecs <> 0 Then
     If mRandomIntervals Then
         interval = Rnd * mFirstTimerIntervalMillisecs + 1
     End If
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mFirstTimerIntervalMillisecs & ", False, Me)", ProcName, ModuleName, LogLevelHighDetail
     mTimerNumber = BeginTimer(mFirstTimerIntervalMillisecs, False, Me)
+ElseIf mRandomIntervals Then
+    interval = Rnd * mTimerIntervalMillisecs + 1
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & interval & ", False, Me)", ProcName, ModuleName, LogLevelHighDetail
+    mTimerNumber = BeginTimer(interval, False, Me)
 Else
-    If mRandomIntervals Then
-        interval = Rnd * mTimerIntervalMillisecs + 1
-        mTimerNumber = BeginTimer(interval, False, Me)
-    Else
-        mTimerNumber = BeginTimer(mTimerIntervalMillisecs, True, Me)
-    End If
+    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mFirstTimerIntervalMillisecs & ", True, Me)", ProcName, ModuleName, LogLevelHighDetail
+    mTimerNumber = BeginTimer(mTimerIntervalMillisecs, True, Me)
 End If
 mState = TimerStates.TimerRunning
 

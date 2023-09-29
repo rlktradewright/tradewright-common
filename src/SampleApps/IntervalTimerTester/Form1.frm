@@ -617,12 +617,24 @@ Private mElapsedTimer2 As ElapsedTimer
 '================================================================================
 
 Private Sub Form_Initialize()
+Const ProcName As String = "Form_Initialize"
+On Error GoTo Err
+
 InitialiseCommonControls
 InitialiseTWUtilities
 ApplicationGroupName = "TradeWright"
 ApplicationName = "IntervalTimerTester"
-'DefaultLogLevel = LogLevelHighDetail
+DefaultLogLevel = LogLevelHighDetail
 SetupDefaultLogging Command
+
+Exit Sub
+
+Err:
+Dim errNumber As Long: errNumber = Err.Number
+Dim errSource As String: errSource = ProjectName & "." & ModuleName & ":" & ProcName & "." & IIf(errSource <> "", vbCrLf & errSource, "")
+Dim errDescription As String: errDescription = Err.Description
+MsgBox "Error " & errNumber & ": " & errDescription & vbCrLf & errSource
+Err.Raise errNumber, errSource, errDescription
 End Sub
 
 Private Sub Form_Load()
@@ -649,7 +661,7 @@ Exit Sub
 
 Err:
 Dim errNumber As Long: errNumber = Err.Number
-Dim errSource As String: errSource = ProjectName & "." & ModuleName & ":" & "Form_Load" & "." & failpoint & IIf(errSource <> "", vbCrLf & errSource, "")
+Dim errSource As String: errSource = ProjectName & "." & ModuleName & ":" & "Form_Terminate" & "." & failpoint & IIf(errSource <> "", vbCrLf & errSource, "")
 Dim errDescription As String: errDescription = Err.Description
 MsgBox "Error " & errNumber & ": " & errDescription & vbCrLf & errSource
 Err.Raise errNumber, errSource, errDescription
