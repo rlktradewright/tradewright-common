@@ -559,7 +559,6 @@ Do
         s = ""
         If Not readInputFromConsole(echoChar, s) Then
             sNoInputOnPreviousCall = True
-            mReadingFromConsole = False
             ReadLineFromConsole = ""
             Exit Function
         End If
@@ -724,13 +723,16 @@ If mReadingFromConsole Then
     ' we need to move the prompt and anything the user has already typed out of the
     ' way. We do this by clearing it all out, then writing the msg argument,
     ' then rewriting the prompt and the input so far
+    
+    clearPromptAndUserInput
+    
     Dim s() As String: s = Split(msg, vbCrLf)
     Dim i As Long
     For i = 0 To UBound(s)
-        clearPromptAndUserInput
-        writeToConsole msg & vbCrLf
-        writePromptAndUserInput
+        writeToConsole s(i)
+        If i < UBound(s) Then writeToConsole vbCrLf
     Next
+    writePromptAndUserInput
 Else
     writeToConsole msg
 End If
