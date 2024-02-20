@@ -115,6 +115,7 @@ Module=GLists; GLists.bas
 Class=BoxedValue; BoxedValue.cls
 Module=GFutureWaiter; GFutureWaiter.bas
 Class=DoEventsTask; DoEventsTask.cls
+Class=BoxedDecimal; BoxedDecimal.cls
 Startup="Sub Main"
 HelpFile=""
 Title="TWUtilities"

@@ -32,7 +32,12 @@ Public Const MinPositiveDoubleValue         As Double = 2 ^ -1074
 Public Const MaxLongValue                   As Long = &H7FFFFFFF
 Public Const MinLongValue                   As Long = &H80000000
 
+Public MaxDecimalValue                      As Variant
+
 Public Const NullIndex                      As Long = -1
+
+'Public Const Infinity                       As String = "Infinity"
+'Public Const NegativeInfinity               As String = "NegativeInfinity"
 
 
 
@@ -80,6 +85,9 @@ Private mPrevWndProc As Long
 Private mMainWindowHandle As Long
 
 Private mUnhandledErrorHandler As New UnhandledErrorHandler
+
+Private mDecimalPositiveInfinity As BoxedDecimal
+Private mDecimalNegativeInfinity As BoxedDecimal
 
 '@================================================================================
 ' Class Event Handlers
@@ -232,6 +240,25 @@ If cpuSpeed = 0 Then
 End If
 
 gCpuSpeedMhz = cpuSpeed
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function gCreateBoxedDecimal(ByVal pValue As Variant) As BoxedDecimal
+Const ProcName As String = "gCreateBoxedDecimal"
+On Error GoTo Err
+
+If pValue = 0 Then
+    Set gCreateBoxedDecimal = gDecimalZero
+ElseIf pValue = 1 Then
+    Set gCreateBoxedDecimal = gDecimalOne
+Else
+    Set gCreateBoxedDecimal = New BoxedDecimal
+    gCreateBoxedDecimal.Initialise CDec(pValue)
+End If
 
 Exit Function
 
@@ -454,6 +481,91 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function gDecimalFromString(ByVal v As String) As BoxedDecimal
+Const ProcName As String = "gDecimalFromString"
+On Error GoTo Err
+
+Static sDecimalSep As String
+Static sThousandsSep As String
+If sDecimalSep = "" Then
+    Dim s As String
+    s = Format(9999.9, "#,###.0")
+    sDecimalSep = Mid$(s, 6, 1)
+    sThousandsSep = Mid$(s, 2, 1)
+End If
+
+If sDecimalSep <> "." Then
+    v = Replace$(v, ".", sDecimalSep)
+    v = Replace$(v, ",", sThousandsSep)
+End If
+
+Set gDecimalFromString = New BoxedDecimal
+gDecimalFromString.Initialise CDec(v)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+'Public Function gDecimalPositiveInfinity() As BoxedDecimal
+'If mDecimalPositiveInfinity Is Nothing Then
+'    Set mDecimalPositiveInfinity = gCreateBoxedDecimal(Infinity)
+'End If
+'Set gDecimalPositiveInfinity = mDecimalPositiveInfinity
+'End Function
+'
+'Public Function gDecimalNegativeInfinity() As BoxedDecimal
+'If mDecimalNegativeInfinity Is Nothing Then
+'    Set mDecimalNegativeInfinity = gCreateBoxedDecimal(NegativeInfinity)
+'End If
+'Set gDecimalNegativeInfinity = mDecimalNegativeInfinity
+'End Function
+
+Public Function gDecimalOne() As BoxedDecimal
+Static sDecimalOne As BoxedDecimal
+If sDecimalOne Is Nothing Then
+    Set sDecimalOne = New BoxedDecimal
+    sDecimalOne.Initialise CDec(1)
+End If
+Set gDecimalOne = sDecimalOne
+End Function
+
+Public Function gDecimalToString(ByVal d As BoxedDecimal) As String
+Const ProcName As String = "gDecimalToString"
+On Error GoTo Err
+
+If d.DecimalValue = 0 Then gDecimalToString = "0.0": Exit Function
+If d.DecimalValue = MaxDecimalValue Then gDecimalToString = "79228162514264337593543950335": Exit Function
+
+Dim s As String: s = str(d)
+s = Right$(s, Len(s) - 1)
+If d.DecimalValue >= 1 Then
+ElseIf d.DecimalValue > 0 Then
+    s = "0" & s
+ElseIf d.DecimalValue <= -1 Then
+    s = "-" & s
+Else
+    s = "-0" & s
+End If
+
+gDecimalToString = s
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function gDecimalZero() As BoxedDecimal
+Static sDecimalZero As BoxedDecimal
+If sDecimalZero Is Nothing Then
+    Set sDecimalZero = New BoxedDecimal
+    sDecimalZero.Initialise CDec(0)
+End If
+Set gDecimalZero = sDecimalZero
+End Function
+
 Public Function gDoubleFromString(ByVal v As String) As Double
 Const ProcName As String = "gDoubleFromString"
 On Error GoTo Err
@@ -493,8 +605,6 @@ If d >= 1 Then
     s = Right$(s, Len(s) - 1)
 ElseIf d > 0 Then
     s = "0" & Right$(s, Len(s) - 1)
-ElseIf d = 0 Then
-    s = Right$(s, Len(s) - 1)
 ElseIf d <= -1 Then
     s = "-" & Right$(s, Len(s) - 1)
 Else
@@ -695,6 +805,8 @@ If mTerminated Then Err.Raise ErrorCodes.ErrIllegalStateException, , "TWUtilitie
 mInitialised = True
 
 Randomize
+
+MaxDecimalValue = CDec("79228162514264337593543950335")
 
 GLogging.gInit
 
@@ -2149,7 +2261,7 @@ If uMsg = WM_TIMECHANGE Then
     WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)
     gSetBaseTimes
     gResetClocks
-    Debug.Print "Time changed"
+    'Debug.Print "Time changed"
     gLogger.Log "Time changed", ProcName, ModuleName
 ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
     Globals.gTerminate
@@ -2157,9 +2269,14 @@ ElseIf uMsg = WM_NCDESTROY Or uMsg = WM_CLOSE Then
 ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
     gTaskManager.ScheduleTasks
 ElseIf uMsg = UserMessages.UserMessageTimer Then
+    'Debug.Print ProcName & " " & wParam & " " & CDbl(gGetTimestamp)
+    If gLogger.IsLoggable(LogLevelHighDetail) Then
+        Dim s As String: s = ProcName & " " & wParam & " " & gFormatTimestamp(gGetTimestamp)
+        gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
+    End If
     GIntervalTimer.gProcessUserTimerMsg wParam
 ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
-    Debug.Print "Globals::WindowProc: execute deferred action: " & wParam
+    'Debug.Print "Globals::WindowProc: execute deferred action: " & wParam
     GDeferredActions.RunDeferredAction wParam
 Else
     WindowProc = CallWindowProc(mPrevWndProc, hWnd, uMsg, wParam, lParam)

@@ -1709,6 +1709,19 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
+Public Function CreateBoxedDecimal(ByVal pValue As Variant) As BoxedDecimal
+Const ProcName As String = "CreateBoxedDecimal"
+On Error GoTo Err
+
+gAssertArgument Not IsEmpty(pValue), "A value must be supplied"
+Set CreateBoxedDecimal = gCreateBoxedDecimal(pValue)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
 Public Function CreateBoxedValue(ByVal pValue As Variant) As BoxedValue
 Const ProcName As String = "CreateBoxedValue"
 On Error GoTo Err
@@ -2314,6 +2327,38 @@ Exit Function
 
 Err:
 gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function DecimalFromString(ByVal v As String) As BoxedDecimal
+Const ProcName As String = "DecimalFromString"
+On Error GoTo Err
+
+Set DecimalFromString = gDecimalFromString(v)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function DecimalOne() As BoxedDecimal
+Set DecimalOne = gDecimalOne
+End Function
+
+Public Function DecimalToString(ByVal d As BoxedDecimal) As String
+Const ProcName As String = "gDecimalToString"
+On Error GoTo Err
+
+DecimalToString = gDecimalToString(d)
+
+Exit Function
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
+End Function
+
+Public Function DecimalZero() As BoxedDecimal
+Set DecimalZero = gDecimalZero
 End Function
 
 ''
@@ -3462,6 +3507,10 @@ End Function
 '@/
 Public Function MaxDate() As Date
 MaxDate = MaxDateValue
+End Function
+
+Public Function MaxDecimal() As Variant
+MaxDecimal = MaxDecimalValue
 End Function
 
 ''
