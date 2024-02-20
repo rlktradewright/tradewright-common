@@ -112,7 +112,7 @@ Do While lIndex <> pListTailIndex
 Loop
 End Sub
 
-Public Sub IntialiseList( _
+Public Sub InitialiseList( _
                 ByRef pListHeadIndex As Long, _
                 ByRef pListTailIndex As Long)
 pListHeadIndex = AllocateIndex

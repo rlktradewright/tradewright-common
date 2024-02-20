@@ -57,7 +57,7 @@ Private mCount                                      As Long
 '@================================================================================
 
 Private Sub Class_Initialize()
-GLists.IntialiseList mListHeadIndex, mListTailIndex
+GLists.InitialiseList mListHeadIndex, mListTailIndex
 End Sub
 
 Private Sub Class_Terminate()
