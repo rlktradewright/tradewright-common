@@ -794,7 +794,8 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function parseDigit( _
-                ByVal inputString As String) As String
+                ByVal inputString As String, _
+                ByRef numDigits As Long) As String
 Const ProcName As String = "parseDigit"
 On Error GoTo Err
 
@@ -802,6 +803,7 @@ Dim nextChar As String
 If Not getNextChar(inputString, nextChar) Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected digit at position " & mCurrPosn
 If nextChar < "0" Or nextChar > "9" Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected digit at position " & mCurrPosn
 
+numDigits = numDigits + 1
 parseDigit = nextChar
 
 Exit Function
@@ -811,12 +813,13 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function parseDigits( _
-                ByVal inputString As String) As String
+                ByVal inputString As String, _
+                ByRef numDigits As Long) As String
 Const ProcName As String = "parseDigits"
 On Error GoTo Err
 
 Do While peekDigit(inputString) <> ""
-    parseDigits = parseDigits & parseDigit(inputString)
+    parseDigits = parseDigits & parseDigit(inputString, numDigits)
 Loop
 
 Exit Function
@@ -826,15 +829,16 @@ gHandleUnexpectedError ProcName, ModuleName
 End Function
 
 Private Function parseInteger( _
-                ByVal inputString As String) As String
+                ByVal inputString As String, _
+                ByRef numDigits As Long) As String
 Const ProcName As String = "parseinteger"
 On Error GoTo Err
 
-parseInteger = parseDigit(inputString)
+parseInteger = parseDigit(inputString, numDigits)
 
 If parseInteger = "0" Then Err.Raise ErrorCodes.ErrIllegalArgumentException, , "Expected non-zero digit at position " & mCurrPosn
 
-parseInteger = parseInteger & parseDigits(inputString)
+parseInteger = parseInteger & parseDigits(inputString, numDigits)
 
 Exit Function
 
@@ -904,26 +908,29 @@ skipWhitespace inputString
 Dim Value As String
 If tryChars(inputString, "-") Then Value = "-"
 
+Dim numDigits As Long
+
 If tryChars(inputString, "0") Then
     Value = Value & "0"
+    numDigits = 1
 Else
-    Value = Value & parseInteger(inputString)
+    Value = Value & parseInteger(inputString, numDigits)
 End If
 
-Dim isDouble As Boolean
+Dim hasFractionalPart As Boolean
 If tryChars(inputString, ".") Then
-    isDouble = True
+    hasFractionalPart = True
     Value = Value & "."
     
-    Value = Value & parseDigit(inputString)
+    Value = Value & parseDigit(inputString, numDigits)
     
-    Value = Value & parseDigits(inputString)
+    Value = Value & parseDigits(inputString, numDigits)
 End If
 
 If tryChars(inputString, "E") Or _
     tryChars(inputString, "e") _
 Then
-    isDouble = True
+    hasFractionalPart = True
     Value = Value & "e"
     
     If tryChars(inputString, "-") Then
@@ -932,13 +939,19 @@ Then
         Value = Value & "+"
     End If
     
-    Value = Value & parseDigit(inputString)
+    Value = Value & parseDigit(inputString, numDigits)
     
-    Value = Value & parseDigits(inputString)
+    Value = Value & parseDigits(inputString, numDigits)
 End If
 
-If isDouble Then
-    parseNumber = CDbl(Value)
+If hasFractionalPart Then
+    If numDigits >= 14 Then
+        parseNumber = CDec(Value)
+    Else
+        parseNumber = CDbl(Value)
+    End If
+ElseIf numDigits >= 9 Then
+    parseNumber = CDec(Value)
 Else
     parseNumber = CLng(Value)
 End If
