@@ -111,7 +111,7 @@ Set mTaskNotificationListeners = New Listeners
 End Sub
 
 Private Sub Class_Terminate()
-Debug.Print "TaskController terminated"
+'Debug.Print "TaskController terminated"
 End Sub
 '@================================================================================
 ' XXXX Interface Members

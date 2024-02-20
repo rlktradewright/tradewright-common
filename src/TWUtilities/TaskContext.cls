@@ -98,7 +98,7 @@ Set mSelfRef = Me
 End Sub
 
 Private Sub Class_Terminate()
-Debug.Print "TaskContext terminated"
+'Debug.Print "TaskContext terminated"
 End Sub
 
 '@================================================================================

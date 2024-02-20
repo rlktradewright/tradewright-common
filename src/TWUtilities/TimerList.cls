@@ -70,7 +70,10 @@ Private Const ModuleName                    As String = "TimerList"
 
 Private WithEvents mTimer As IntervalTimer
 Attribute mTimer.VB_VarHelpID = -1
+Private mTimerNumber As Long
 Private mList As SortedDictionary
+
+'Private mElapsedTimer As ElapsedTimer
 
 Private mIsSimulated As Boolean
 
@@ -96,6 +99,7 @@ Private Sub Class_Initialize()
 Set mList = New SortedDictionary
 mList.Initialise KeyTypeDate, True
 Set mTimer = New IntervalTimer
+'Set mElapsedTimer = New ElapsedTimer
 mNextExpiry = MaxDateValue
 ReDim mItemsToNotify(15) As TimerListItem
 End Sub
@@ -129,6 +133,10 @@ Const ProcName As String = "mTimer_TimerExpired"
 On Error GoTo Err
 
 Dim Timestamp As Date
+
+'Dim et As Single: et = mElapsedTimer.ElapsedTimeMicroseconds / 1000
+'Dim s As String: s = "Timer " & mTimerNumber & " expired after " & et & "(" & CDbl(gGetTimestamp) & ")"
+'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log s, "mTimer1_TimerExpired", ModuleName, LogLevelHighDetail
 
 mNextExpiry = MaxDateValue
 Timestamp = gGetTimestampUtc
@@ -418,6 +426,8 @@ Else
     
     mTimer.Initialise interval, 0, False, Empty
     mTimer.StartTimer
+    mTimerNumber = mTimer.TimerNumber
+    'mElapsedTimer.StartTiming
 End If
 
 Exit Sub

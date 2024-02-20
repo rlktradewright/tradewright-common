@@ -297,7 +297,7 @@ Const ProcName As String = "fireStateChange"
 On Error GoTo Err
 
 Dim lKey As String: lKey = gGetObjectKey(Me)
-'''Debug.Print "GenericFuture::fireStateChange: " & lKey
+'Debug.Print "GenericFuture::fireStateChange: " & lKey
 
 Dim lListeners As Listeners
 Set lListeners = mListeners
@@ -323,7 +323,7 @@ If sSomeListeners Then
     Dim i As Long
     For i = 0 To UBound(sCurrentListeners)
         Set lListener = sCurrentListeners(i)
-        '''Debug.Print "GenericFuture::fireStateChange: notify listener: " & gGetObjectKey(lListener)
+        'Debug.Print "GenericFuture::fireStateChange: notify listener: " & gGetObjectKey(lListener)
         lListener.Change ev
     Next
 End If

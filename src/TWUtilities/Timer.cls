@@ -133,6 +133,10 @@ Public Property Get State() As TimerStates
 State = mState
 End Property
 
+Public Property Get TimerNumber() As Long
+TimerNumber = mTimerNumber
+End Property
+
 
 '@================================================================================
 ' Methods
@@ -178,6 +182,9 @@ On Error GoTo Err
 
 Dim interval As Long
 
+'Dim s As String: s = "Notify " & mTimerNumber & " " & CDbl(gGetTimestamp)
+'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
+
 If Not mRepeat Then
     stopTimerEx
     mState = TimerStates.TimerStopped
@@ -186,7 +193,8 @@ ElseIf mRandomIntervals Then
     interval = Rnd * mTimerIntervalMillisecs + 1
     'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mTimerIntervalMillisecs & ", False, Me)", ProcName, ModuleName, LogLevelHighDetail
     mTimerNumber = BeginTimer(interval, False, Me)
-ElseIf mFirstInterval Then
+ElseIf Not mFirstInterval Then
+Else
     stopTimerEx
     'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "BeginTimer(" & mTimerIntervalMillisecs & ", True, Me)", ProcName, ModuleName, LogLevelHighDetail
     mTimerNumber = BeginTimer(mTimerIntervalMillisecs, True, Me)

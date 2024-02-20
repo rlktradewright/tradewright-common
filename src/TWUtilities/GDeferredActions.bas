@@ -68,7 +68,7 @@ On Error GoTo Err
 
 Dim index As Long: index = CLng(Rnd * &H7FFFFFFF)
 mDeferredActions.Add dae, CStr(index)
-'''Debug.Print "GDeferredActions::InitiateDeferredAction: " & index
+'Debug.Print "GDeferredActions::InitiateDeferredAction: " & index
 gPostUserMessage UserMessageExecuteDeferredAction, index, 0
 
 Exit Sub

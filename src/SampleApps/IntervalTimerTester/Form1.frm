@@ -593,6 +593,7 @@ Private mTotalElapsed2 As Single
 
 Private WithEvents mTimer1 As IntervalTimer
 Attribute mTimer1.VB_VarHelpID = -1
+Private mTimer1Number As Long
 Private WithEvents mTimer2 As IntervalTimer
 Attribute mTimer2.VB_VarHelpID = -1
 Private WithEvents mBaseTimer1 As IntervalTimer
@@ -792,6 +793,9 @@ StopElapsedTimerButton.Enabled = True
 End Sub
 
 Private Sub StartTimerButton1_Click()
+Const ProcName As String = "StartTimerButton1_Click"
+On Error GoTo Err
+
 If mFirstIntervalUnit1 = ExpiryTimeUnitDateTime And _
     CDate(FirstIntervalValue1) <= Now _
 Then
@@ -815,14 +819,21 @@ If BaseTimerCheck1.Value = vbChecked Then
     Debug.Print "Starting timer 1"
     mBaseTimer1.StartTimer
 Else
+    Dim s As String: s = "Timer1 started " & CDbl(GetTimestamp)
+    If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
     Set mTimer1 = CreateIntervalTimer(FirstIntervalValue1, _
                             mFirstIntervalUnit1, _
                             IntervalValue1, _
                             IIf(RandomCheck1 = vbChecked, True, False))
     mElapsedTimer1.StartTiming
     mTimer1.StartTimer
+    mTimer1Number = mTimer1.TimerNumber
 End If
 
+Exit Sub
+
+Err:
+gHandleUnexpectedError ProcName, ModuleName
 End Sub
 
 Private Sub StartTimerButton2_Click()
@@ -942,6 +953,10 @@ Counter1.Caption = CStr(mCounter1)
 et = mElapsedTimer1.ElapsedTimeMicroseconds
 mElapsedTimer1.StartTiming
 mTotalElapsed1 = mTotalElapsed1 + et
+
+Dim s As String: s = "Timer1 " & mTimer1Number & " expired after " & et / 1000 & "(" & CDbl(GetTimestamp) & ")"
+If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log s, "mTimer1_TimerExpired", ModuleName, LogLevelHighDetail
+
 AvgInterval1Label.Caption = Format(mTotalElapsed1 / (1000 * mCounter1), "0.000")
 If Not mTimer1.RepeatNotifications Then
     StartTimerButton1.Enabled = True
@@ -1039,6 +1054,14 @@ mTimerListItems(Index).AddStateChangeListener Me
 ValueLabel(Index).Caption = newval
 End Sub
 
+Private Function gLogger() As FormattingLogger
+Static l As FormattingLogger
+If l Is Nothing Then
+    Set l = CreateFormattingLogger("log", ProjectName)
+End If
+Set gLogger = l
+End Function
+
 Private Sub processTimerListItemExpiry( _
                 ByVal Item As TimerListItem)
 Dim entryData As TimerItemData
@@ -1057,5 +1080,37 @@ Case Equal
 End Select
 Set mTimerListItems(entryData.Index) = Nothing
 End Sub
+
+
+Public Sub gHandleUnexpectedError( _
+                ByRef pProcedureName As String, _
+                ByRef pModuleName As String, _
+                Optional ByRef pFailpoint As String, _
+                Optional ByVal pReRaise As Boolean = True, _
+                Optional ByVal pLog As Boolean = False, _
+                Optional ByVal pErrorNumber As Long, _
+                Optional ByRef pErrorDesc As String, _
+                Optional ByRef pErrorSource As String)
+Dim errSource As String: errSource = IIf(pErrorSource <> "", pErrorSource, Err.Source)
+Dim errDesc As String: errDesc = IIf(pErrorDesc <> "", pErrorDesc, Err.Description)
+Dim errNum As Long: errNum = IIf(pErrorNumber <> 0, pErrorNumber, Err.Number)
+
+HandleUnexpectedError pProcedureName, ProjectName, pModuleName, pFailpoint, pReRaise, pLog, errNum, errDesc, errSource
+End Sub
+
+Public Sub gNotifyUnhandledError( _
+                ByRef pProcedureName As String, _
+                ByRef pModuleName As String, _
+                Optional ByRef pFailpoint As String, _
+                Optional ByVal pErrorNumber As Long, _
+                Optional ByRef pErrorDesc As String, _
+                Optional ByRef pErrorSource As String)
+Dim errSource As String: errSource = IIf(pErrorSource <> "", pErrorSource, Err.Source)
+Dim errDesc As String: errDesc = IIf(pErrorDesc <> "", pErrorDesc, Err.Description)
+Dim errNum As Long: errNum = IIf(pErrorNumber <> 0, pErrorNumber, Err.Number)
+
+UnhandledErrorHandler.Notify pProcedureName, pModuleName, ProjectName, pFailpoint, errNum, errDesc, errSource
+End Sub
+
 
 

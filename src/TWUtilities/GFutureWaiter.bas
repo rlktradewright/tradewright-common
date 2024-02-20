@@ -78,7 +78,7 @@ Public Sub gDiagnosticLog( _
                 ByVal pModuleName As String)
 
 Dim s As String: s = "ID=" & pDiagnosticID & ": " & pMessage
-'''Debug.Print pModuleName & "::" & pProcName & ": " & s
+'Debug.Print pModuleName & "::" & pProcName & ": " & s
 gLogger.Log s, pProcName, pModuleName, LogLevelDetail
 End Sub
 

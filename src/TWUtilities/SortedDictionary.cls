@@ -841,8 +841,8 @@ If lCurrentEntry Is mFirst Then Set mFirst = Nothing
 mCount = mCount - 1
 
 
-Debug.Print "Deleting: "; gPrintEntry(lCurrentEntry)
-If lCurrentEntry Is mRoot Then Debug.Print "Trying to delete mRoot: " & gPrintEntry(mRoot)
+'Debug.Print "Deleting: "; gPrintEntry(lCurrentEntry)
+'If lCurrentEntry Is mRoot Then Debug.Print "Trying to delete mRoot: " & gPrintEntry(mRoot)
 
 If deleteEntry(lCurrentEntry) Then
     ' the deleted entry was an internal one, and the current

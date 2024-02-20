@@ -160,7 +160,7 @@ Case adBSTR, _
                 "; value=" & IIf(IsNull(Value), "NULL", VariantToString(Value))
 End Select
 
-If IsNull(fld.Value) Or Value <> fld.Value Then
+If IsNull(Value) Or IsNull(fld.Value) Or Value <> fld.Value Then
     fld.Value = Value
     Dirty
 End If

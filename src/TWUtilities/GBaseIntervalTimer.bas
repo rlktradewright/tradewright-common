@@ -26,7 +26,7 @@ Private Const MinTimerResolution            As Long = 1
 
 Private Const TimerTableInitialSize         As Long = 16
 
-' defines the intervbal between ending a timer and allowing its table entry
+' defines the interval between ending a timer and allowing its table entry
 ' to be reused, to allow for the situation where a call to end the timer is made
 ' after the TimerProc was called but before the UserMessageTimer message arrives
 ' at the WindowProc - if the table entry has been reused, the new client would
@@ -119,8 +119,10 @@ With mTimers(lTimerNumber)
     Set .TimerObj = pTimerObj
     .Periodic = pPeriodic
     If CreateTimerQueueTimer(VarPtr(.Handle), mhTimerQueue, AddressOf TimerProc, lTimerNumber, pInterval, IIf(.Periodic, pInterval, 0), WT_EXECUTEINTIMERTHREAD) = 0 Then gHandleWin32Error
-    'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log "Started timer: handle: " & CStr(.Handle) & "; interval: " & CStr(pInterval), ProcName, ModuleName, LogLevelHighDetail
-    
+'    If gLogger.IsLoggable(LogLevelHighDetail) Then
+'        Dim s As String: s = "CreateTimerQueueTimer " & lTimerNumber & " " & pInterval & " " & CDbl(gGetTimestamp)
+'        gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
+'    End If
     mNumRunningTimers = mNumRunningTimers + 1
     
 End With
@@ -133,14 +135,14 @@ Err:
 gHandleUnexpectedError ProcName, ModuleName
 End Function
 
-Public Sub EndTimer(ByVal timerNumber As Long)
+Public Sub EndTimer(ByVal TimerNumber As Long)
 Const ProcName As String = "EndTimer"
 On Error GoTo Err
 
-With mTimers(timerNumber)
+With mTimers(TimerNumber)
     DeleteTimerQueueTimer mhTimerQueue, .Handle, 0
     If .Periodic Or Not .Fired Then mNumRunningTimers = mNumRunningTimers - 1
-    releaseEntry timerNumber
+    releaseEntry TimerNumber
 End With
 
 Exit Sub
@@ -160,6 +162,8 @@ If TimeGetDevCaps(TC, 8) <> TIMERR_NOERROR Then gHandleWin32Error
 
 mMinRes = IIf(TC.wPeriodMin < MinTimerResolution, MinTimerResolution, TC.wPeriodMin)
 If mMinRes > TC.wPeriodMax Then mMinRes = TC.wPeriodMax
+
+allowTimerResolution
 
 mhTimerQueue = CreateTimerQueue
 If mhTimerQueue = 0 Then gHandleWin32Error
@@ -213,9 +217,9 @@ For i = 1 To mTimersIndex - 1
         EndTimer i
     End If
 Next
-Debug.Print "Delete timer queue"
+'Debug.Print "Delete timer queue"
 DeleteTimerQueueEx mhTimerQueue, INVALID_HANDLE_VALUE
-Debug.Print "Deleted timer queue"
+'Debug.Print "Deleted timer queue"
 
 Exit Sub
 
@@ -293,7 +297,7 @@ End If
 
 If mTimersIndex > UBound(mTimers) Then
     ReDim Preserve mTimers(1 To 2 * UBound(mTimers)) As TimerTableEntry
-    Debug.Print "Timer table extended: size = " & UBound(mTimers)
+    'Debug.Print "Timer table extended: size = " & UBound(mTimers)
     If gLogger.IsLoggable(LogLevelHighDetail) Then
         gLogger.Log "Increased mTimers size", ProcName, ModuleName, LogLevelHighDetail, CStr(UBound(mTimers) + 1)
     End If
@@ -329,9 +333,10 @@ lResult = SetProcessInformation(GetCurrentProcess(), _
                       VarPtr(mPowerThrottling), _
                       Len(mPowerThrottling))
 If lResult = 0 Then
-    failPoint = "GetLastError 1"
     Dim lLastError As Long: lLastError = GetLastError
+    failPoint = "GetLastError 1"
     'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_EXECUTION_SPEED"
+    If lLastError <> 0 Then MsgBox "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_EXECUTION_SPEED", vbInformation, "Error"
     If lLastError = 0 Then
     ElseIf lLastError <> 87 Then
         gHandleWin32Error
@@ -353,6 +358,7 @@ If lResult = 0 Then
     failPoint = "GetLastError 2"
     lLastError = GetLastError
     'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION"
+    If lLastError <> 0 Then MsgBox "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION", vbInformation, "Error"
     If lLastError = 0 Then
     ElseIf lLastError <> 87 Then
         gHandleWin32Error
@@ -398,6 +404,10 @@ Private Sub TimerProc( _
 If Not gInitialised Then Exit Sub
 ' NB: trying to do anything else in this proc doesn't work because we're
 ' not on the VB thread
+
+'Dim s As String: s = "FireTimer " & pParam & " " & CDbl(gGetTimestamp)
+'If gLogger.IsLoggable(LogLevelHighDetail) Then gLogger.Log s, "TimerProc", ModuleName, LogLevelHighDetail
+
 gPostUserMessage UserMessageTimer, pParam, 0
 End Sub
 

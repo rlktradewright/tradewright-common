@@ -79,7 +79,7 @@ Private Sub IDeferredAction_Run(ByVal Data As Variant)
 Const ProcName As String = "IDeferredAction_Run"
 On Error GoTo Err
 
-'''Debug.Print "FutureBuilder::IDeferredAction_Run"
+'Debug.Print "FutureBuilder::IDeferredAction_Run"
 If Data = ActionComplete Then
     If mDiagnosticID <> "" Then gDiagnosticLog mDiagnosticID, "Notify complete", ProcName, ModuleName
     mFuture.NotifyComplete
@@ -191,7 +191,7 @@ gAssert mState = FutureStatePending, "Future is no longer pending"
 mFuture.SetValue mValue
 mState = FutureStateCompleted
 
-'''Debug.Print "FutureBuilder::Complete"
+'Debug.Print "FutureBuilder::Complete"
 If mDiagnosticID <> "" Then
     gDiagnosticLog mDiagnosticID, "Defer action: Complete", ProcName, ModuleName
 End If

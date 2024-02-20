@@ -89,7 +89,7 @@ Next
 Dim lOffset As Long
 lOffset = getClockOffset
 If lOffset > 20 And lOffset < 980 Then
-    Debug.Print "Restart clock timer: offset=" & lOffset
+    'Debug.Print "Restart clock timer: offset=" & lOffset
     startClockTimer lOffset
 End If
 

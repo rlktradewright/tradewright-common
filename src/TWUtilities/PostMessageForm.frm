@@ -18,7 +18,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Terminate()
-Debug.Print "PostMessageForm: Form_Terminate"
+'Debug.Print "PostMessageForm: Form_Terminate"
 Globals.gTerminate
 End Sub
 

@@ -100,22 +100,26 @@ If mTaskContext.CancelPending Then
 End If
 
 If mRs Is Nothing Then
+    failpoint = "010"
     Set mQueryExecutor = New QueryExecutor
     mQueryExecutor.Query mConnectionString, mSQL
     mTaskContext.Suspend -1
 ElseIf mRs.EOF Then
+    failpoint = "020"
     mRs.Close
     Set mRs = Nothing
     mTaskContext.Finish mDataObjs, False
 Else
+    failpoint = "030"
     mDataObjs.Add gBuildDataObjectFromRecordset(mFactory, mRs)
+    failpoint = "040"
     mRs.MoveNext
 End If
 
 Exit Sub
 
 Err:
-gHandleUnexpectedError ProcName, ModuleName
+gHandleUnexpectedError ProcName, ModuleName, failpoint
 End Sub
 
 Private Property Let ITask_TaskContext( _
