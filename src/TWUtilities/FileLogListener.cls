@@ -71,7 +71,7 @@ Private Sub ILogListener_finish()
 mFinished = True
 
 If mFormatter.Trailer <> "" Then mTs.WriteLine mFormatter.Trailer
-mTs.Close
+If Not mTs Is Nothing Then mTs.Close
 Set mTs = Nothing
 End Sub
 
