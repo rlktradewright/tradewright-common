@@ -2270,10 +2270,10 @@ ElseIf uMsg = UserMessages.UserMessageScheduleTasks Then
     gTaskManager.ScheduleTasks
 ElseIf uMsg = UserMessages.UserMessageTimer Then
     'Debug.Print ProcName & " " & wParam & " " & CDbl(gGetTimestamp)
-    If gLogger.IsLoggable(LogLevelHighDetail) Then
-        Dim s As String: s = ProcName & " " & wParam & " " & gFormatTimestamp(gGetTimestamp)
-        gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
-    End If
+'    If gLogger.IsLoggable(LogLevelHighDetail) Then
+'        Dim s As String: s = ProcName & " " & wParam & " " & gFormatTimestamp(gGetTimestamp)
+'        gLogger.Log s, ProcName, ModuleName, LogLevelHighDetail
+'    End If
     GIntervalTimer.gProcessUserTimerMsg wParam
 ElseIf uMsg = UserMessages.UserMessageExecuteDeferredAction Then
     'Debug.Print "Globals::WindowProc: execute deferred action: " & wParam
