@@ -7800,7 +7800,8 @@ For i = sel.RowMin To sel.RowMax
     Next
 Next
 
-showFocusRect getCell(mRow, mCol)
+Dim lCell As GridCell: Set lCell = getCell(mRow, mCol)
+If Not lCell Is Nothing Then showFocusRect lCell
 
 Exit Sub
 
