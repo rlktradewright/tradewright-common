@@ -7,6 +7,7 @@ Begin VB.UserControl TWGrid
    ClientWidth     =   6210
    ControlContainer=   -1  'True
    KeyPreview      =   -1  'True
+   Picture         =   "TWGrid.ctx":0000
    ScaleHeight     =   2790
    ScaleWidth      =   6210
    Begin VB.PictureBox FontPicture 
@@ -80,7 +81,7 @@ Begin VB.UserControl TWGrid
          Height          =   315
          Index           =   0
          Left            =   1800
-         MouseIcon       =   "TWGrid.ctx":0000
+         MouseIcon       =   "TWGrid.ctx":0342
          TabIndex        =   8
          Top             =   360
          Visible         =   0   'False
@@ -4953,12 +4954,11 @@ Public Sub RemoveItem( _
 Const ProcName As String = "RemoveItem"
 On Error GoTo Err
 
-Dim i As Long
-Dim j As Long
 Dim rte As RowTableEntry
 
 clearView
 
+Dim i As Long
 For i = 0 To mCols - 1
     removeCell pRow, i
 Next
@@ -4971,10 +4971,24 @@ mRows = mRows - 1
 ' now need to adjust the cellTable entries for all cells in rows following the removed
 ' row by decrementing the row number
 For i = pRow To mRows - 1
+    Dim j As Long
     For j = 0 To mCols - 1
         getCell(i, j).Row = getCell(i, j).Row - 1
     Next
 Next
+
+If pRow < mRow Then
+    mRow = mRow - 1
+    mRowSel = mRowSel - 1
+ElseIf pRow = mRow Then
+    mRowSel = mRowSel - 1
+ElseIf pRow < mRowSel Then
+    mRowSel = mRowSel - 1
+ElseIf pRow = mRowSel Then
+    mRowSel = mRowSel - 1
+End If
+
+If mRowSel < mRow Then clearSelection
 
 paintView
 
@@ -7785,22 +7799,23 @@ On Error GoTo Err
 clearFocusRect
 
 If mRow < 0 Or mCol < 0 Then Exit Sub
-
 If mHighlight = TwGridHighlightNever Then Exit Sub
 If mHighlight = TwGridHighlightWithFocus And Not mInFocus Then Exit Sub
 
 Dim sel As SelectionSpecifier
 sel = getSelection
 
+Dim lCell As GridCell
 Dim i As Long
 For i = sel.RowMin To sel.RowMax
     Dim j As Long
     For j = sel.ColMin To sel.ColMax
-        getCell(i, j).PaintSelected mForeColorSel, mBackColorSel
+        Set lCell = getCell(i, j)
+        If Not lCell Is Nothing Then lCell.PaintSelected mForeColorSel, mBackColorSel
     Next
 Next
 
-Dim lCell As GridCell: Set lCell = getCell(mRow, mCol)
+Set lCell = getCell(mRow, mCol)
 If Not lCell Is Nothing Then showFocusRect lCell
 
 Exit Sub
