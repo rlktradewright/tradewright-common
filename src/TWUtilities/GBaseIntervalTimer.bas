@@ -335,8 +335,6 @@ lResult = SetProcessInformation(GetCurrentProcess(), _
 If lResult = 0 Then
     Dim lLastError As Long: lLastError = GetLastError
     failPoint = "GetLastError 1"
-    'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_EXECUTION_SPEED"
-    If lLastError <> 0 Then MsgBox "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_EXECUTION_SPEED", vbInformation, "Error"
     If lLastError = 0 Then
     ElseIf lLastError <> 87 Then
         gHandleWin32Error
@@ -357,8 +355,6 @@ lResult = SetProcessInformation(GetCurrentProcess(), _
 If lResult = 0 Then
     failPoint = "GetLastError 2"
     lLastError = GetLastError
-    'Debug.Print "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION"
-    If lLastError <> 0 Then MsgBox "Error " & lLastError & " from SetProcessInformation() for PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION", vbInformation, "Error"
     If lLastError = 0 Then
     ElseIf lLastError <> 87 Then
         gHandleWin32Error
